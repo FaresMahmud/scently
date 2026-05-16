@@ -1,3 +1,5 @@
+"use client"
+
 // ============================================
 // ARQUIVO: components/ui/Botao.tsx
 // O QUE FAZ: botão reutilizável em três estilos — primário (terracota), secundário (borda) e fantasma (só texto)

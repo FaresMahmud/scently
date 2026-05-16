@@ -102,9 +102,29 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
 
       {/* Ações */}
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        <Botao onClick={onRecomecar} variante="secundario">
+        <button
+          type="button"
+          onClick={() => onRecomecar()}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            fontFamily: "var(--fonte-corpo)",
+            fontWeight: 500,
+            fontSize: "0.875rem",
+            letterSpacing: "0.07em",
+            padding: "0.875rem 2rem",
+            borderRadius: "var(--raio-borda)",
+            cursor: "pointer",
+            backgroundColor: "transparent",
+            color: "var(--cor-texto)",
+            border: "1px solid var(--cor-borda)",
+            transition: "opacity 0.2s",
+          }}
+        >
           {textosConsultor.botaoRecomecar}
-        </Botao>
+        </button>
       </div>
     </div>
   )
