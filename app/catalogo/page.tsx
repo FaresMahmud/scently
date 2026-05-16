@@ -1,8 +1,8 @@
 // ============================================
 // ARQUIVO: app/catalogo/page.tsx
-// O QUE FAZ: catálogo completo de perfumes com busca, filtros em pill (multi-select) e ordenação
+// O QUE FAZ: catálogo completo — perfumes eBay + contratipos brasileiros, filtros em pill multi-select
 // QUANDO MANDAR PRA IA: quando quiser mudar layout, filtros ou fonte dos dados
-// DEPENDE DE: lib/ebayData.ts, components/perfume/CardPerfume.tsx
+// DEPENDE DE: lib/ebayData.ts, lib/contratiposData.ts, components/perfume/CardPerfume.tsx
 // ============================================
 
 "use client"
@@ -12,18 +12,41 @@ import CardPerfume from "@/components/perfume/CardPerfume"
 import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
 import { PERFUMES_EBAY, ebayParaSlug } from "@/lib/ebayData"
 import type { PerfumeEbay } from "@/lib/ebayData"
+import { buscarTodosContratipos } from "@/lib/contratiposData"
+import type { PerfumeContratipo } from "@/lib/contratiposData"
 
 type Genero = "Masculino" | "Feminino" | "Unissex"
-type Tipo = "EDP" | "EDT" | "EDC" | "Extrait"
+type Tipo = "EDP" | "EDT" | "EDC" | "Extrait" | "Contratipo"
 type Ordenacao = "relevancia" | "mais-vendidos" | "menor-preco" | "maior-preco"
 
-function ebayParaCard(p: PerfumeEbay): DadosCardPerfume {
+interface CardUnificado extends DadosCardPerfume {
+  preco_brl?: number
+  vendidos?: number
+  inspiracaoInfo?: string
+}
+
+function ebayParaCard(p: PerfumeEbay): CardUnificado {
   return {
     id: ebayParaSlug(p.titulo, p.marca),
     nome: p.titulo,
     marca: p.marca,
     concentracao: p.tipo,
     familia: p.genero,
+    preco_brl: p.preco_brl,
+    vendidos: p.vendidos,
+  }
+}
+
+function contratipoParaCard(p: PerfumeContratipo): CardUnificado {
+  return {
+    id: p.id,
+    nome: p.nome,
+    marca: p.marca,
+    concentracao: p.tipo,
+    familia: p.genero,
+    preco_brl: p.preco_brl,
+    vendidos: 0,
+    inspiracaoInfo: `inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`,
   }
 }
 
@@ -69,6 +92,12 @@ function toggle<T>(arr: T[], val: T): T[] {
   return arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]
 }
 
+// Combina eBay + contratipos uma única vez
+const TODOS_PERFUMES: CardUnificado[] = [
+  ...PERFUMES_EBAY.map(ebayParaCard),
+  ...buscarTodosContratipos().map(contratipoParaCard),
+]
+
 export default function PaginaCatalogo() {
   const [busca, setBusca] = useState("")
   const [generos, setGeneros] = useState<Genero[]>([])
@@ -78,26 +107,40 @@ export default function PaginaCatalogo() {
   const resultados = useMemo(() => {
     const buscaNorm = busca.toLowerCase().trim()
 
-    let lista = PERFUMES_EBAY.filter((p) => {
-      if (buscaNorm && !p.titulo.toLowerCase().includes(buscaNorm) && !p.marca.toLowerCase().includes(buscaNorm)) return false
-      if (generos.length > 0 && !generos.includes(p.genero as Genero)) return false
-      if (tipos.length > 0 && !tipos.includes(p.tipo as Tipo)) return false
+    let lista = TODOS_PERFUMES.filter((p) => {
+      if (
+        buscaNorm &&
+        !p.nome.toLowerCase().includes(buscaNorm) &&
+        !p.marca.toLowerCase().includes(buscaNorm) &&
+        !(p.inspiracaoInfo ?? "").toLowerCase().includes(buscaNorm)
+      )
+        return false
+
+      if (generos.length > 0 && !generos.includes(p.familia as Genero)) return false
+
+      if (tipos.length > 0) {
+        const isContratipo = !!p.inspiracaoInfo
+        if (tipos.includes("Contratipo") && isContratipo) return true
+        if (tipos.some((t) => t !== "Contratipo") && tipos.includes(p.concentracao as Tipo)) return true
+        return false
+      }
+
       return true
     })
 
     switch (ordenacao) {
       case "mais-vendidos":
-        lista = [...lista].sort((a, b) => b.vendidos - a.vendidos)
+        lista = [...lista].sort((a, b) => (b.vendidos ?? 0) - (a.vendidos ?? 0))
         break
       case "menor-preco":
-        lista = [...lista].sort((a, b) => a.preco_brl - b.preco_brl)
+        lista = [...lista].sort((a, b) => (a.preco_brl ?? 0) - (b.preco_brl ?? 0))
         break
       case "maior-preco":
-        lista = [...lista].sort((a, b) => b.preco_brl - a.preco_brl)
+        lista = [...lista].sort((a, b) => (b.preco_brl ?? 0) - (a.preco_brl ?? 0))
         break
     }
 
-    return lista.map(ebayParaCard)
+    return lista
   }, [busca, generos, tipos, ordenacao])
 
   function limparFiltros() {
@@ -127,7 +170,7 @@ export default function PaginaCatalogo() {
         <div style={{ position: "relative", marginBottom: "1.5rem" }}>
           <input
             type="text"
-            placeholder="Buscar por nome ou marca..."
+            placeholder="Buscar por nome, marca ou inspiração..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             style={{
@@ -152,7 +195,7 @@ export default function PaginaCatalogo() {
           )}
         </div>
 
-        {/* Pills — linha 1: gênero + tipo */}
+        {/* Pills — linha 1: gênero */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
           <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
             {(["Masculino", "Feminino", "Unissex"] as Genero[]).map((g) => (
@@ -162,8 +205,9 @@ export default function PaginaCatalogo() {
 
           <div style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 0.5rem", alignSelf: "stretch" }} />
 
+          {/* Pills — tipo + Contratipo */}
           <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {(["EDP", "EDT", "EDC", "Extrait"] as Tipo[]).map((t) => (
+            {(["EDP", "EDT", "EDC", "Extrait", "Contratipo"] as Tipo[]).map((t) => (
               <Pill key={t} label={t} ativo={tipos.includes(t)} onClick={() => setTipos(toggle(tipos, t))} />
             ))}
           </div>
@@ -193,7 +237,22 @@ export default function PaginaCatalogo() {
         {resultados.length > 0 ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.25rem" }}>
             {resultados.map((perfume) => (
-              <CardPerfume key={perfume.id} perfume={perfume} />
+              <div key={perfume.id}>
+                <CardPerfume perfume={perfume} />
+                {perfume.inspiracaoInfo && (
+                  <p style={{
+                    fontFamily: "var(--fonte-corpo)",
+                    fontSize: "0.68rem",
+                    color: "var(--cor-destaque)",
+                    letterSpacing: "0.04em",
+                    marginTop: "0.4rem",
+                    paddingLeft: "0.1rem",
+                    opacity: 0.85,
+                  }}>
+                    {perfume.inspiracaoInfo}
+                  </p>
+                )}
+              </div>
             ))}
           </div>
         ) : (
