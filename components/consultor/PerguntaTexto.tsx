@@ -1,0 +1,103 @@
+// ============================================
+// ARQUIVO: components/consultor/PerguntaTexto.tsx
+// O QUE FAZ: pergunta com campo de texto livre — usada para "qual perfume você usa hoje?"
+// QUANDO MANDAR PRA IA: quando quiser mudar o comportamento da pergunta de texto
+// DEPENDE DE: components/ui/Botao.tsx, styles/globals.css
+// ============================================
+
+"use client"
+
+import { useState } from "react"
+import Botao from "@/components/ui/Botao"
+
+interface PropsPerguntaTexto {
+  pergunta: string
+  placeholder?: string
+  opcional?: boolean
+  progresso: string
+  onResponder: (valor: string) => void
+}
+
+export default function PerguntaTexto({
+  pergunta,
+  placeholder,
+  opcional,
+  progresso,
+  onResponder,
+}: PropsPerguntaTexto) {
+  const [valor, setValor] = useState("")
+
+  return (
+    <div style={{ maxWidth: "560px", margin: "0 auto" }}>
+      {/* Indicador de progresso */}
+      <p
+        style={{
+          fontSize: "0.72rem",
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: "var(--cor-destaque)",
+          marginBottom: "1.5rem",
+        }}
+      >
+        {progresso}
+      </p>
+
+      {/* Pergunta */}
+      <h2
+        style={{
+          fontFamily: "var(--fonte-titulo)",
+          fontWeight: 300,
+          fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+          marginBottom: opcional ? "0.5rem" : "2rem",
+          lineHeight: 1.2,
+        }}
+      >
+        {pergunta}
+      </h2>
+
+      {/* Indicador de campo opcional */}
+      {opcional && (
+        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "1.75rem" }}>
+          Campo opcional — pode pular se preferir.
+        </p>
+      )}
+
+      {/* Campo de texto */}
+      <input
+        type="text"
+        value={valor}
+        onChange={(e) => setValor(e.target.value)}
+        placeholder={placeholder ?? "Digite aqui..."}
+        onKeyDown={(e) => e.key === "Enter" && onResponder(valor)}
+        style={{
+          width: "100%",
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.95rem",
+          fontWeight: 300,
+          color: "var(--cor-texto)",
+          backgroundColor: "var(--cor-card)",
+          border: "1px solid var(--cor-borda)",
+          borderRadius: "var(--raio-borda-suave)",
+          padding: "0.9rem 1.1rem",
+          outline: "none",
+          marginBottom: "1.5rem",
+          transition: "border-color 0.2s",
+        }}
+      />
+
+      {/* Botões de ação */}
+      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+        <Botao onClick={() => onResponder(valor)} disabled={!opcional && !valor.trim()} style={{ opacity: !opcional && !valor.trim() ? 0.4 : 1 }}>
+          Continuar
+        </Botao>
+
+        {/* Botão de pular — só aparece em campos opcionais */}
+        {opcional && (
+          <Botao variante="fantasma" onClick={() => onResponder("")}>
+            Pular
+          </Botao>
+        )}
+      </div>
+    </div>
+  )
+}

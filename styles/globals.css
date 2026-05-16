@@ -1,0 +1,325 @@
+/* ============================================
+   ARQUIVO: styles/globals.css
+   O QUE FAZ: define toda a identidade visual do site — cores, fontes e espaçamentos
+   QUANDO MANDAR PRA IA: quando quiser mudar cores, tipografia ou espaçamentos globais
+   DEPENDE DE: nada (é o arquivo base de estilo)
+   ============================================ */
+
+/* Importação das fontes do Google */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* Tailwind v4 — sintaxe correta para esta versão */
+@import "tailwindcss";
+
+/* ----------------------------------------
+   Variáveis de identidade visual
+   Mude aqui para alterar todo o site de uma vez
+   ---------------------------------------- */
+:root {
+  /* Cores principais */
+  --cor-base: #F5F2ED;         /* bege acinzentado — fundo do site */
+  --cor-destaque: #C4714A;     /* terracota — botões e destaques */
+  --cor-texto: #1A1A18;        /* quase-preto — texto principal */
+  --cor-dourado: #C9A84C;      /* dourado sutil — acentos e detalhes */
+
+  /* Variações de cor para estados e hierarquia */
+  --cor-texto-suave: #4A4A47;  /* cinza escuro — textos secundários */
+  --cor-borda: #E2DDD6;        /* bege escuro — bordas e separadores */
+  --cor-card: #FDFAF7;         /* branco quase-bege — fundo dos cards */
+  --cor-destaque-hover: #B36340; /* terracota mais escuro — hover dos botões */
+
+  /* Fontes */
+  --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
+  --fonte-corpo: 'DM Sans', system-ui, sans-serif;
+
+  /* Espaçamentos padrão */
+  --espaco-secao: 6rem;        /* distância entre seções grandes */
+  --espaco-interno: 2rem;      /* padding interno dos containers */
+  --raio-borda: 2px;           /* bordas quase retas — identidade austrera */
+  --raio-borda-suave: 6px;     /* bordas levemente arredondadas */
+
+  /* Larguras de container */
+  --largura-max: 1200px;
+  --largura-texto: 680px;      /* largura ideal para leitura */
+}
+
+/* ----------------------------------------
+   Reset e estilos base
+   ---------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--cor-base);
+  color: var(--cor-texto);
+  font-family: var(--fonte-corpo);
+  font-weight: 300;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ----------------------------------------
+   Tipografia — títulos usam Cormorant Garamond
+   ---------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--fonte-titulo);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.4rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+
+p {
+  font-family: var(--fonte-corpo);
+  font-size: 1rem;
+  color: var(--cor-texto-suave);
+  line-height: 1.7;
+}
+
+/* Links sem sublinhado por padrão */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ----------------------------------------
+   Classes utilitárias do sistema de design
+   ---------------------------------------- */
+
+/* Container centralizado com largura máxima */
+.container-site {
+  width: 100%;
+  max-width: var(--largura-max);
+  margin: 0 auto;
+  padding: 0 var(--espaco-interno);
+}
+
+/* Separador dourado sutil */
+.separador {
+  width: 40px;
+  height: 1px;
+  background-color: var(--cor-dourado);
+  margin: 1.5rem 0;
+}
+
+/* Texto de destaque em terracota */
+.texto-destaque {
+  color: var(--cor-destaque);
+}
+
+/* Texto dourado para detalhes especiais */
+.texto-dourado {
+  color: var(--cor-dourado);
+}
+
+/* Texto suave para informações secundárias */
+.texto-suave {
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+/* Tag pequena (ex: família olfativa, concentração) */
+.tag {
+  display: inline-block;
+  font-family: var(--fonte-corpo);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cor-texto-suave);
+  border: 1px solid var(--cor-borda);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--raio-borda);
+}
+
+/* Linha divisória sutil */
+.divisor {
+  border: none;
+  border-top: 1px solid var(--cor-borda);
+  margin: var(--espaco-interno) 0;
+}
+
+/* ----------------------------------------
+   Animações suaves — sem exagero
+   ---------------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* ----------------------------------------
+   Responsividade base
+   ---------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --espaco-secao: 4rem;
+    --espaco-interno: 1.25rem;
+  }
+}
+
+/* ----------------------------------------
+   Hero — duas colunas em desktop, coluna única no mobile
+   ---------------------------------------- */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* Container dos frascos: posicionamento relativo para os filhos absolutos */
+.hero-frascos {
+  position: relative;
+  height: 400px;
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-frascos {
+    display: none;
+  }
+
+  .hero-texto {
+    text-align: center;
+  }
+
+  .hero-texto .separador {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Botões do hero — viram coluna e full-width no mobile */
+.hero-botoes {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .hero-botoes {
+    flex-direction: column;
+  }
+
+  .hero-botoes a {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  /* Botão CTA de seção central também full-width */
+  .btn-cta {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+}
+
+/* ----------------------------------------
+   Header responsivo
+   Desktop: mostra nav, esconde hambúrguer
+   Mobile: esconde nav, mostra hambúrguer
+   ---------------------------------------- */
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.menu-mobile-btn {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .menu-mobile-btn {
+    display: flex;
+  }
+}
+
+/* ----------------------------------------
+   Input — estilo global para foco
+   ---------------------------------------- */
+input:focus {
+  outline: none;
+  border-color: var(--cor-destaque) !important;
+}
+
+/* ----------------------------------------
+   Hover states — interatividade sutil
+   Botões e links ganham opacidade levemente
+   reduzida, cards ganham borda mais escura
+   ---------------------------------------- */
+
+/* Botões primários ficam mais escuros */
+button:hover:not(:disabled),
+a[href]:hover {
+  opacity: 0.88;
+}
+
+/* Botões desabilitados não têm hover */
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Cards clicáveis elevam a borda levemente */
+a article {
+  transition: border-color 0.2s;
+}
+
+a:hover article {
+  border-color: var(--cor-texto-suave) !important;
+  opacity: 1;
+}
+
+/* Seleção de texto usa a cor destaque */
+::selection {
+  background-color: var(--cor-destaque);
+  color: #fff;
+}
+
+/* ----------------------------------------
+   Scrollbar discreta — apenas Webkit
+   ---------------------------------------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cor-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--cor-borda);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cor-texto-suave);
+}
