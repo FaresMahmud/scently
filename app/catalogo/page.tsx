@@ -1,6 +1,6 @@
 // ============================================
 // ARQUIVO: app/catalogo/page.tsx
-// O QUE FAZ: catálogo completo de perfumes com busca, filtros e ordenação client-side
+// O QUE FAZ: catálogo completo de perfumes com busca, filtros em pill e ordenação client-side
 // QUANDO MANDAR PRA IA: quando quiser mudar layout, filtros ou fonte dos dados
 // DEPENDE DE: lib/ebayData.ts, components/perfume/CardPerfume.tsx
 // ============================================
@@ -13,7 +13,7 @@ import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
 import { PERFUMES_EBAY, ebayParaSlug } from "@/lib/ebayData"
 import type { PerfumeEbay } from "@/lib/ebayData"
 
-type Genero = "Todos" | "Masculino" | "Feminino"
+type Genero = "Todos" | "Masculino" | "Feminino" | "Unissex"
 type Tipo = "Todos" | "EDP" | "EDT" | "EDC" | "Extrait"
 type Ordenacao = "relevancia" | "mais-vendidos" | "menor-preco" | "maior-preco"
 
@@ -27,20 +27,43 @@ function ebayParaCard(p: PerfumeEbay): DadosCardPerfume {
   }
 }
 
-const TODOS_PERFUMES = PERFUMES_EBAY.map(ebayParaCard)
+function Pill({
+  label,
+  ativo,
+  onClick,
+}: {
+  label: string
+  ativo: boolean
+  onClick: () => void
+}) {
+  const [hover, setHover] = useState(false)
 
-const estiloSelect: React.CSSProperties = {
-  fontFamily: "var(--fonte-corpo)",
-  fontSize: "0.8rem",
-  color: "var(--cor-texto)",
-  backgroundColor: "var(--cor-card)",
-  border: "1px solid var(--cor-borda)",
-  borderRadius: "var(--raio-borda-suave)",
-  padding: "0.55rem 0.9rem",
-  cursor: "pointer",
-  appearance: "none" as const,
-  WebkitAppearance: "none" as const,
-  minWidth: "120px",
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        fontFamily: "var(--fonte-corpo)",
+        fontSize: "0.75rem",
+        letterSpacing: "0.08em",
+        padding: "0.4rem 1rem",
+        borderRadius: "99px",
+        cursor: "pointer",
+        background: ativo ? "rgba(196, 113, 74, 0.08)" : "transparent",
+        color: ativo ? "var(--cor-destaque)" : "var(--cor-texto-suave)",
+        border: ativo
+          ? "1px solid var(--cor-destaque)"
+          : hover
+          ? "1px solid var(--cor-texto-suave)"
+          : "1px solid var(--cor-borda)",
+        transition: "border-color 0.15s, background 0.15s, color 0.15s",
+        whiteSpace: "nowrap" as const,
+      }}
+    >
+      {label}
+    </button>
+  )
 }
 
 export default function PaginaCatalogo() {
@@ -54,6 +77,7 @@ export default function PaginaCatalogo() {
 
     let lista = PERFUMES_EBAY.filter((p) => {
       if (buscaNorm && !p.titulo.toLowerCase().includes(buscaNorm) && !p.marca.toLowerCase().includes(buscaNorm)) return false
+      if (genero === "Unissex") return false // sem dados unissex no dataset atual
       if (genero !== "Todos" && p.genero !== genero) return false
       if (tipo !== "Todos" && p.tipo !== tipo) return false
       return true
@@ -106,7 +130,7 @@ export default function PaginaCatalogo() {
         </div>
 
         {/* Barra de busca */}
-        <div style={{ position: "relative", marginBottom: "1.25rem" }}>
+        <div style={{ position: "relative", marginBottom: "1.5rem" }}>
           <input
             type="text"
             placeholder="Buscar por nome ou marca..."
@@ -145,41 +169,56 @@ export default function PaginaCatalogo() {
           )}
         </div>
 
-        {/* Filtros em linha */}
+        {/* Pills de filtro */}
         <div
           style={{
             display: "flex",
-            gap: "0.75rem",
             flexWrap: "wrap",
-            alignItems: "center",
-            marginBottom: "2rem",
+            gap: "0.5rem",
+            marginBottom: "0.75rem",
+            rowGap: "0.75rem",
           }}
         >
-          <div style={{ position: "relative" }}>
-            <select value={genero} onChange={(e) => setGenero(e.target.value as Genero)} style={estiloSelect}>
-              <option value="Todos">Todos os gêneros</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Feminino">Feminino</option>
-            </select>
+          {/* Grupo gênero */}
+          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+            {(["Todos", "Masculino", "Feminino", "Unissex"] as Genero[]).map((g) => (
+              <Pill key={g} label={g} ativo={genero === g} onClick={() => setGenero(g)} />
+            ))}
           </div>
 
-          <div style={{ position: "relative" }}>
-            <select value={tipo} onChange={(e) => setTipo(e.target.value as Tipo)} style={estiloSelect}>
-              <option value="Todos">Todos os tipos</option>
-              <option value="EDP">EDP</option>
-              <option value="EDT">EDT</option>
-              <option value="EDC">EDC</option>
-              <option value="Extrait">Extrait</option>
-            </select>
-          </div>
+          {/* Separador */}
+          <div style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 0.5rem", alignSelf: "stretch" }} />
 
-          <div style={{ position: "relative" }}>
-            <select value={ordenacao} onChange={(e) => setOrdenacao(e.target.value as Ordenacao)} style={estiloSelect}>
-              <option value="relevancia">Relevância</option>
-              <option value="mais-vendidos">Mais vendidos</option>
-              <option value="menor-preco">Menor preço</option>
-              <option value="maior-preco">Maior preço</option>
-            </select>
+          {/* Grupo tipo */}
+          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+            {(["Todos", "EDP", "EDT", "EDC", "Extrait"] as Tipo[]).map((t) => (
+              <Pill key={t} label={t} ativo={tipo === t} onClick={() => setTipo(t)} />
+            ))}
+          </div>
+        </div>
+
+        {/* Linha de ordenação + contador */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.4rem",
+            alignItems: "center",
+            marginBottom: "2.5rem",
+          }}
+        >
+          {/* Grupo ordenação */}
+          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+            {(
+              [
+                { valor: "relevancia", label: "Relevância" },
+                { valor: "mais-vendidos", label: "Mais vendidos" },
+                { valor: "menor-preco", label: "Menor preço" },
+                { valor: "maior-preco", label: "Maior preço" },
+              ] as { valor: Ordenacao; label: string }[]
+            ).map(({ valor, label }) => (
+              <Pill key={valor} label={label} ativo={ordenacao === valor} onClick={() => setOrdenacao(valor)} />
+            ))}
           </div>
 
           {/* Contador */}
@@ -191,7 +230,7 @@ export default function PaginaCatalogo() {
               color: "var(--cor-texto-suave)",
             }}
           >
-            {resultados.length.toLocaleString("pt-BR")} fragrâncias encontradas
+            {resultados.length.toLocaleString("pt-BR")} fragrâncias
           </p>
         </div>
 
@@ -227,10 +266,11 @@ export default function PaginaCatalogo() {
                 style={{
                   background: "none",
                   border: "1px solid var(--cor-borda)",
-                  borderRadius: "var(--raio-borda)",
-                  padding: "0.65rem 1.5rem",
+                  borderRadius: "99px",
+                  padding: "0.5rem 1.5rem",
                   fontFamily: "var(--fonte-corpo)",
-                  fontSize: "0.85rem",
+                  fontSize: "0.8rem",
+                  letterSpacing: "0.08em",
                   color: "var(--cor-destaque)",
                   cursor: "pointer",
                 }}
