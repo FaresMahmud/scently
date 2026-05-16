@@ -39,7 +39,6 @@ export default function MenuMobileToggle() {
           cursor: "pointer",
           padding: "0.5rem",
           color: "var(--cor-texto)",
-          display: "flex",
           flexDirection: "column",
           gap: "5px",
         }}
