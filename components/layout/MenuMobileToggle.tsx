@@ -7,7 +7,8 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 import Link from "next/link"
 
 // Links do menu mobile — adicione aqui quando tiver mais páginas
@@ -18,6 +19,12 @@ const links = [
 
 export default function MenuMobileToggle() {
   const [aberto, setAberto] = useState(false)
+  const pathname = usePathname()
+
+  // Fecha o menu sempre que a rota mudar
+  useEffect(() => {
+    setAberto(false)
+  }, [pathname])
 
   return (
     <>
@@ -84,6 +91,7 @@ export default function MenuMobileToggle() {
           zIndex: 50,
           transform: aberto ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.25s ease",
+          pointerEvents: aberto ? "auto" : "none",
           display: "flex",
           flexDirection: "column",
           padding: "2rem 1.5rem",
