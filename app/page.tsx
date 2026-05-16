@@ -59,7 +59,7 @@ export default async function PaginaInicial() {
                   {textosHome.heroBotao}
                 </Link>
                 <Link
-                  href="#destaques"
+                  href="/catalogo"
                   style={{
                     display: "inline-flex", alignItems: "center",
                     backgroundColor: "transparent", color: "var(--cor-texto)",

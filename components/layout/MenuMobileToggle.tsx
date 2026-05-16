@@ -12,6 +12,7 @@ import Link from "next/link"
 
 // Links do menu mobile — adicione aqui quando tiver mais páginas
 const links = [
+  { href: "/catalogo", texto: "Catálogo" },
   { href: "/consultor", texto: "Consultor" },
 ]
 

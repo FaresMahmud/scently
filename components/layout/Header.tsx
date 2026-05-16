@@ -45,6 +45,19 @@ export default function Header() {
           className="nav-desktop"
         >
           <Link
+            href="/catalogo"
+            style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "0.8rem",
+              fontWeight: 400,
+              letterSpacing: "0.08em",
+              color: "var(--cor-texto-suave)",
+            }}
+          >
+            catálogo
+          </Link>
+
+          <Link
             href="/consultor"
             style={{
               fontFamily: "var(--fonte-corpo)",
