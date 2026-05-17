@@ -19,6 +19,12 @@ export interface RespostasQuiz {
   referenciaCheiro?: string
   ousadia?: string
   prioridade?: string
+  estacao?: string
+  hora?: string
+  personalidade?: string
+  ambiente?: string
+  fixacaoProjecao?: string
+  inspiracaoSensorial?: string
   [key: string]: unknown
 }
 
@@ -95,7 +101,7 @@ const MARCAS_PROIBIDAS_MEDIO = [
   "tom ford private", "tobacco vanille", "lost cherry", "oud wood"
 ]
 
-function validarFaixaPreco(resultado: RecomendacaoIA, faixaPreco: string): boolean {
+export function validarFaixaPreco(resultado: RecomendacaoIA, faixaPreco: string): boolean {
   const marcaPrincipal = resultado.perfumePrincipal.marca.toLowerCase()
   const nomePrincipal = resultado.perfumePrincipal.nome.toLowerCase()
   const textoCompleto = `${marcaPrincipal} ${nomePrincipal}`
@@ -113,7 +119,7 @@ function validarFaixaPreco(resultado: RecomendacaoIA, faixaPreco: string): boole
   return true
 }
 
-function formatarRespostas(r: RespostasQuiz): string {
+export function formatarRespostas(r: RespostasQuiz): string {
   const partes: string[] = []
   if (r.perfil) partes.push(`perfil:${r.perfil}`)
   if (r.genero) partes.push(`genero:${r.genero}`)
@@ -128,6 +134,12 @@ function formatarRespostas(r: RespostasQuiz): string {
   if (r.referenciaCheiro) partes.push(`cheiro:${r.referenciaCheiro}`)
   if (r.ousadia) partes.push(`ousadia:${r.ousadia}`)
   if (r.prioridade) partes.push(`prioridade:${r.prioridade}`)
+  if (r.estacao) partes.push(`estacao:${r.estacao}`)
+  if (r.hora) partes.push(`hora:${r.hora}`)
+  if (r.personalidade) partes.push(`personalidade:${r.personalidade}`)
+  if (r.ambiente) partes.push(`ambiente:${r.ambiente}`)
+  if (r.fixacaoProjecao) partes.push(`projecao:${r.fixacaoProjecao}`)
+  if (r.inspiracaoSensorial) partes.push(`imagem:${r.inspiracaoSensorial}`)
   return partes.join("|")
 }
 
@@ -172,7 +184,51 @@ export async function gerarRecomendacao(
     return null
   }
 
-  const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}. Recomende um perfume.`
+  const climaExtra = (() => {
+    const clima = String((respostas as RespostasQuiz).clima ?? '')
+    const estacao = String((respostas as RespostasQuiz).estacao ?? '')
+    const hora = String((respostas as RespostasQuiz).hora ?? '')
+
+    const quente = clima === 'quente' || estacao === 'verao'
+    const frio = clima === 'frio' || estacao === 'inverno'
+    const noite = hora === 'noite' || (respostas as RespostasQuiz).ambiente === 'noite-balada'
+
+    const instrucoes = []
+    if (quente) instrucoes.push('Clima QUENTE: recomende frescos, aquáticos ou cítricos. PROIBIDO orientais pesados, gourmands densos, oud.')
+    if (frio) instrucoes.push('Clima FRIO: recomende orientais, amadeirados, gourmands ou especiados. PROIBIDO aquáticos, cítricos leves.')
+    if (noite) instrucoes.push('Uso NOTURNO: prefira orientais, florais intensos ou amadeirados sensuais.')
+
+    return instrucoes.length ? '\n' + instrucoes.join('\n') : ''
+  })()
+
+  const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}.${climaExtra}
+
+Responda APENAS com JSON válido seguindo exatamente este exemplo:
+{
+  "perfumePrincipal": {
+    "nome": "Carbon",
+    "marca": "La Rive",
+    "concentracao": "EDT",
+    "descricao": "Fresco e especiado com ambroxan. Abre cítrico e seca em almíscar quente.",
+    "notas": ["bergamota", "pimenta", "ambroxan", "cedro"]
+  },
+  "conselho": "Duas borrifadas no pescoço bastam. No calor projeta bem sozinho.",
+  "alternativa": {
+    "nome": "Aventhis 2010",
+    "marca": "In The Box",
+    "descricao": "Abacaxi defumado com bétula. Mais frutado e marcante que o Carbon."
+  }
+}
+
+REGRAS OBRIGATÓRIAS:
+- "nome" = nome do perfume específico NUNCA o nome da marca
+- "marca" = fabricante
+- "concentracao" = APENAS "EDP", "EDT" ou "EDC"
+- "descricao" = frase sensorial curta sem travessões
+- "conselho" = dica prática sem travessões
+- "alternativa" deve ter MESMA família olfativa e MESMA faixa de clima que o principal
+- Se clima quente, AMBOS principal e alternativa devem ser frescos ou aquáticos
+- Se clima frio, AMBOS principal e alternativa devem ser orientais ou amadeirados`
 
   console.log("[IA] Prompt enviado:", prompt)
 

@@ -31,9 +31,9 @@ export const textosConsultor = {
   titulo: "seu consultor",
   subtituloInicio: "Vamos encontrar o perfume certo para você.",
   botaoModoRapido: "Consulta rápida",
-  botaoModoRapidoDescricao: "6 perguntas — resultado em 1 minuto",
+  botaoModoRapidoDescricao: "8 perguntas — resultado em 1 minuto",
   botaoModoAprofundado: "Consulta completa",
-  botaoModoAprofundadoDescricao: "11 perguntas — recomendação mais precisa",
+  botaoModoAprofundadoDescricao: "18 perguntas — recomendação mais precisa",
   mensagemCarregando: "Analisando seu perfil...",
   mensagemErro: "Não consegui encontrar uma recomendação agora. Tente novamente.",
   tituloPerfumePrincipal: "Minha recomendação",
@@ -105,6 +105,26 @@ export const perguntasRapidas = [
       { valor: "variado", texto: "Os dois" },
     ],
   },
+  {
+    id: "estacao",
+    pergunta: "Em qual estação você mais usaria esse perfume?",
+    opcoes: [
+      { valor: "verao", texto: "Verão" },
+      { valor: "inverno", texto: "Inverno" },
+      { valor: "primavera-outono", texto: "Primavera e outono" },
+      { valor: "ano-todo", texto: "Ano todo" },
+    ],
+  },
+  {
+    id: "hora",
+    pergunta: "Quando costuma usar perfume?",
+    opcoes: [
+      { valor: "manha", texto: "Pela manhã" },
+      { valor: "noite", texto: "À noite" },
+      { valor: "trabalho", texto: "No trabalho" },
+      { valor: "qualquer", texto: "Qualquer hora" },
+    ],
+  },
 ]
 
 // Perguntas adicionais — modo aprofundado (mais 5 perguntas, total 11)
@@ -166,6 +186,46 @@ export const perguntasAprofundadas = [
       { valor: "sillage", texto: "Deixar rastro" },
       { valor: "discreto", texto: "Ser discreto" },
       { valor: "unico", texto: "Ser único" },
+    ],
+  },
+  {
+    id: "personalidade",
+    pergunta: "Qual dessas palavras mais te define?",
+    opcoes: [
+      { valor: "elegante", texto: "Elegante e refinado" },
+      { valor: "aventureiro", texto: "Aventureiro e livre" },
+      { valor: "romantico", texto: "Romântico e sensível" },
+      { valor: "intenso", texto: "Intenso e marcante" },
+    ],
+  },
+  {
+    id: "ambiente",
+    pergunta: "Em qual ambiente você mais usa perfume?",
+    opcoes: [
+      { valor: "trabalho-formal", texto: "Trabalho formal" },
+      { valor: "social-casual", texto: "Encontros casuais" },
+      { valor: "noite-balada", texto: "Noite e balada" },
+      { valor: "dia-a-dia", texto: "Dia a dia em casa" },
+    ],
+  },
+  {
+    id: "fixacao-projecao",
+    pergunta: "Como prefere que seu perfume se comporte?",
+    opcoes: [
+      { valor: "discreto-pele", texto: "Só quem se aproxima sente" },
+      { valor: "moderado", texto: "Presente mas não invasivo" },
+      { valor: "rastro", texto: "Deixa rastro por onde passa" },
+      { valor: "marcante", texto: "Anunciado antes de chegar" },
+    ],
+  },
+  {
+    id: "inspiracao-sensorial",
+    pergunta: "Qual dessas imagens mais combina com o perfume que você busca?",
+    opcoes: [
+      { valor: "floresta-chuva", texto: "Floresta depois da chuva" },
+      { valor: "cafeteria-madeira", texto: "Cafeteria com madeira e especiarias" },
+      { valor: "praia-maresia", texto: "Brisa do mar na praia" },
+      { valor: "jantar-elegante", texto: "Jantar elegante com velas" },
     ],
   },
 ]
