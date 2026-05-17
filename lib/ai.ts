@@ -49,22 +49,33 @@ preco:economico (até R$300):
 - Contratipos nacionais: In The Box, JA Essence, Maison Viegas, Azza Parfum (R$80–200)
 - Nacionais: O Boticário, Natura, Eudora (R$80–250)
 - Importados básicos: Cool Water Davidoff, Chrome Azzaro, Obsession Calvin Klein (R$150–300)
-Se preco:economico → recomendar APENAS contratipos ou nacionais. NUNCA recomendar Dior, Chanel, Tom Ford, Creed.
+Se preco:economico → recomendar APENAS contratipos ou nacionais. NUNCA recomendar Dior, Chanel, Tom Ford, Creed, Le Labo, Parfums de Marly.
 
 preco:medio (R$300–700):
 - Sauvage Dior EDT, Bleu de Chanel EDT, La Vie Est Belle Lancôme, Good Girl Carolina Herrera
-- Versace Eros EDP, Black Opium YSL, Boss Bottled Hugo Boss
-Se preco:medio → importados acessíveis. NUNCA recomendar nicho caro ou Creed.
+- Versace Eros EDP, Black Opium YSL, Boss Bottled Hugo Boss, Acqua di Giò EDT
+Se preco:medio → importados acessíveis. NUNCA recomendar Creed, Tom Ford Private Blend, Parfums de Marly, nicho acima de R$700.
 
 preco:premium (R$700–1.500):
 - Sauvage Dior EDP/Parfum, Tom Ford Black Orchid, Chanel N°5 EDP
-- Acqua di Giò Profumo, Chance Chanel EDP, Armani Code Absolu
+- Acqua di Giò Profumo, Chance Chanel EDP, Armani Code Absolu, Stronger With You Intensely
 
 preco:luxo (acima de R$1.500):
 - Creed Aventus (~R$2.600), Baccarat Rouge 540 (~R$2.000–3.000)
 - Tom Ford Private Blend: Tobacco Vanille, Lost Cherry, Oud Wood (~R$1.500–2.500)
 - Parfums de Marly Pegasus, Delina (~R$1.800–2.500)
-- Xerjoff, Amouage, Initio (R$2.000+)`
+- Xerjoff Erba Pura, Amouage Reflection, Initio (R$2.000+)
+
+REGRA DE VARIEDADE — evite sempre os mesmos perfumes:
+- NUNCA recomendar Sauvage, Bleu de Chanel, La Vie Est Belle ou Good Girl a menos que o perfil seja muito genérico e não haja outra opção melhor
+- Se ousadia:ousado ou ousadia:raro → recomendar obrigatoriamente algo fora do mainstream. Exemplos: Replica Jazz Club, Santal 33, Hacivat Nishane, Erba Pura Xerjoff, Percival Parfums de Marly, Baccarat Rouge 540
+- Se ousadia:equilibrado → perfumes conhecidos mas com personalidade: Acqua di Giò Profumo, Black Orchid, Stronger With You Intensely, Armani Code Absolu
+- Se ousadia:seguro → aí sim pode recomendar os clássicos populares
+- Se perfil:colecionador ou perfil:entusiasta → NUNCA recomendar os top 5 mais vendidos. Vá para nicho, indie ou algo menos óbvio
+- Se cheiro:café → considerar Replica Coffee Break, Jazz Club, Tobacco Vanille
+- Se cheiro:madeira → considerar Santal 33, Oud Wood, Bois d'Argent
+- Se cheiro:couro → considerar Tuscan Leather, Cuir de Russie, Cuoium
+- Combine TODAS as respostas para chegar a algo único, não só a vibe principal`
 
 function formatarRespostas(r: RespostasQuiz): string {
   const partes: string[] = []
@@ -138,6 +149,8 @@ export async function gerarRecomendacao(
 
   const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}. Recomende um perfume.`
 
+  console.log("[IA] Prompt enviado:", prompt)
+
   for (const modelo of MODELOS) {
     try {
       console.log(`[IA] Tentando modelo: ${modelo}`)
@@ -164,7 +177,28 @@ export async function gerarRecomendacao(
 function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
   const vibe = String(respostas.vibe ?? "")
   const clima = String(respostas.clima ?? "")
+  const preco = String(respostas.faixaPreco ?? "")
 
+  // Fallback econômico — sempre respeita a faixa de preço
+  if (preco === "economico") {
+    return {
+      perfumePrincipal: {
+        nome: "Carbon",
+        marca: "La Rive",
+        concentracao: "EDT",
+        descricao: "Fresco e especiado, inspirado no Sauvage. Boa fixação e projeção pra quem quer cheirar bem sem gastar muito.",
+        notas: ["bergamota", "pimenta", "ambroxan", "cedro"],
+      },
+      conselho: "Aplique no pescoço e punhos logo após o banho. Com até R$100, é uma das melhores opções nacionais disponíveis.",
+      alternativa: {
+        nome: "Aventhis 2010",
+        marca: "In The Box",
+        descricao: "Contratipo do Creed Aventus fórmula original. Um dos melhores custo-benefício do mercado nacional.",
+      },
+    }
+  }
+
+  // Fallback por vibe para médio, premium e luxo
   const mapa: Record<string, RecomendacaoIA> = {
     fresco: {
       perfumePrincipal: {
