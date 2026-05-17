@@ -77,6 +77,42 @@ REGRA DE VARIEDADE — evite sempre os mesmos perfumes:
 - Se cheiro:couro → considerar Tuscan Leather, Cuir de Russie, Cuoium
 - Combine TODAS as respostas para chegar a algo único, não só a vibe principal`
 
+const MARCAS_PROIBIDAS_ECONOMICO = [
+  "dior", "chanel", "tom ford", "creed", "le labo", "maison margiela",
+  "replica", "byredo", "parfums de marly", "xerjoff", "amouage", "initio",
+  "maison francis kurkdjian", "mfk", "nishane", "kilian", "serge lutens",
+  "memo paris", "louis vuitton", "hermès", "hermes", "guerlain", "bvlgari",
+  "versace", "yves saint laurent", "ysl", "paco rabanne", "armani",
+  "giorgio armani", "lancôme", "lancome", "carolina herrera", "hugo boss",
+  "burberry", "gucci", "dolce", "montblanc", "lacoste", "ralph lauren",
+  "givenchy", "valentino", "prada", "bulgari", "narciso rodriguez"
+]
+
+const MARCAS_PROIBIDAS_MEDIO = [
+  "creed", "le labo", "maison margiela", "byredo", "parfums de marly",
+  "xerjoff", "amouage", "initio", "maison francis kurkdjian", "mfk",
+  "nishane", "kilian", "serge lutens", "memo paris", "louis vuitton",
+  "tom ford private", "tobacco vanille", "lost cherry", "oud wood"
+]
+
+function validarFaixaPreco(resultado: RecomendacaoIA, faixaPreco: string): boolean {
+  const marcaPrincipal = resultado.perfumePrincipal.marca.toLowerCase()
+  const nomePrincipal = resultado.perfumePrincipal.nome.toLowerCase()
+  const textoCompleto = `${marcaPrincipal} ${nomePrincipal}`
+
+  if (faixaPreco === "economico") {
+    const proibida = MARCAS_PROIBIDAS_ECONOMICO.some(m => textoCompleto.includes(m))
+    if (proibida) console.warn(`[IA] BLOQUEADO econômico: "${resultado.perfumePrincipal.marca} ${resultado.perfumePrincipal.nome}"`)
+    return !proibida
+  }
+  if (faixaPreco === "medio") {
+    const proibida = MARCAS_PROIBIDAS_MEDIO.some(m => textoCompleto.includes(m))
+    if (proibida) console.warn(`[IA] BLOQUEADO médio: "${resultado.perfumePrincipal.marca} ${resultado.perfumePrincipal.nome}"`)
+    return !proibida
+  }
+  return true
+}
+
 function formatarRespostas(r: RespostasQuiz): string {
   const partes: string[] = []
   if (r.perfil) partes.push(`perfil:${r.perfil}`)
@@ -95,55 +131,44 @@ function formatarRespostas(r: RespostasQuiz): string {
   return partes.join("|")
 }
 
-async function chamarGemini(chave: string, modelo: string, prompt: string): Promise<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${chave}`
+async function chamarGroq(chave: string, prompt: string): Promise<string> {
+  const url = "https://api.groq.com/openai/v1/chat/completions"
 
   const body = {
-    system_instruction: {
-      parts: [{ text: SYSTEM_PROMPT }],
-    },
-    contents: [
-      {
-        role: "user",
-        parts: [{ text: prompt }],
-      },
+    model: "llama-3.3-70b-versatile",
+    messages: [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: prompt },
     ],
-    generationConfig: {
-      temperature: 0.7,
-      maxOutputTokens: 1024,
-      responseMimeType: "application/json",
-    },
+    temperature: 0.7,
+    max_tokens: 1024,
+    response_format: { type: "json_object" },
   }
 
   const res = await fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${chave}`,
+    },
     body: JSON.stringify(body),
   })
 
   if (!res.ok) {
     const err = await res.text()
-    throw new Error(`Gemini ${res.status}: ${err}`)
+    throw new Error(`Groq ${res.status}: ${err}`)
   }
 
   const dados = await res.json()
-  return dados?.candidates?.[0]?.content?.parts?.[0]?.text ?? ""
+  return dados?.choices?.[0]?.message?.content ?? ""
 }
-
-// Modelos em ordem de preferência — tenta o próximo se o anterior falhar
-const MODELOS = [
-  "gemini-2.0-flash",
-  "gemini-2.0-flash-lite",
-  "gemini-1.5-flash-latest",
-  "gemini-1.5-pro-latest",
-]
 
 export async function gerarRecomendacao(
   respostas: Record<string, unknown>
 ): Promise<RecomendacaoIA | null> {
-  const chave = process.env.GEMINI_API_KEY
-  if (!chave || chave === "COLOQUE_SUA_CHAVE_AQUI") {
-    console.error("[IA] GEMINI_API_KEY não configurada")
+  const chave = process.env.GROQ_API_KEY
+  if (!chave || chave === "sua_chave_aqui") {
+    console.error("[IA] GROQ_API_KEY não configurada")
     return null
   }
 
@@ -151,26 +176,30 @@ export async function gerarRecomendacao(
 
   console.log("[IA] Prompt enviado:", prompt)
 
-  for (const modelo of MODELOS) {
-    try {
-      console.log(`[IA] Tentando modelo: ${modelo}`)
-      const texto = await chamarGemini(chave, modelo, prompt)
-      console.log(`[IA] Resposta bruta (${modelo}):`, texto.slice(0, 200))
+  try {
+    console.log("[IA] Chamando Groq llama-3.3-70b-versatile")
+    const texto = await chamarGroq(chave, prompt)
+    console.log("[IA] Resposta bruta:", texto.slice(0, 200))
 
-      const jsonMatch = texto.match(/\{[\s\S]*\}/)
-      if (!jsonMatch) throw new Error("Sem JSON na resposta")
+    const jsonMatch = texto.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) throw new Error("Sem JSON na resposta")
 
-      const resultado = JSON.parse(jsonMatch[0]) as RecomendacaoIA
-      if (!resultado.perfumePrincipal?.nome) throw new Error("JSON incompleto")
+    const resultado = JSON.parse(jsonMatch[0]) as RecomendacaoIA
+    if (!resultado.perfumePrincipal?.nome) throw new Error("JSON incompleto")
 
-      console.log(`[IA] Sucesso com modelo: ${modelo}`)
-      return resultado
-    } catch (erro) {
-      console.error(`[IA] Falhou com ${modelo}:`, erro instanceof Error ? erro.message : erro)
+    const faixaPreco = String((respostas as RespostasQuiz).faixaPreco ?? "")
+    if (faixaPreco && !validarFaixaPreco(resultado, faixaPreco)) {
+      console.warn(`[IA] Marca "${resultado.perfumePrincipal.marca}" fora da faixa "${faixaPreco}" — usando fallback`)
+      return gerarFallback(respostas)
     }
+
+    console.log("[IA] Sucesso com Groq")
+    return resultado
+  } catch (erro) {
+    console.error("[IA] Groq falhou:", erro instanceof Error ? erro.message : erro)
   }
 
-  console.error("[IA] Todos os modelos falharam — usando fallback")
+  console.error("[IA] Groq falhou — usando fallback")
   return gerarFallback(respostas)
 }
 
@@ -232,17 +261,17 @@ function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
     },
     sofisticado: {
       perfumePrincipal: {
-        nome: "Santal 33",
-        marca: "Le Labo",
-        concentracao: "EDP",
-        descricao: "Sândalo defumado com couro suave e cardamomo. Cheira a algo pessoal, como uma segunda pele bem cuidada. Unissex sem esforço.",
-        notas: ["sândalo", "couro", "cardamomo", "cedro"],
-      },
-      conselho: "Tem projeção moderada e fixação longa — funciona melhor aplicado no pescoço e punhos do que na roupa.",
-      alternativa: {
         nome: "Bleu de Chanel",
         marca: "Chanel",
-        descricao: "Mais acessível, com o mesmo equilíbrio entre frescor e profundidade amadeirada.",
+        concentracao: "EDP",
+        descricao: "Cedro, sândalo e notas cítricas numa composição limpa e sofisticada. Versátil o suficiente para o dia, marcante o bastante para a noite.",
+        notas: ["limão siciliano", "gengibre", "cedro", "sândalo", "almíscar branco"],
+      },
+      conselho: "O EDP tem mais profundidade amadeirada que o EDT — vale a diferença. Aplique no pescoço e punhos logo após o banho.",
+      alternativa: {
+        nome: "Armani Code",
+        marca: "Giorgio Armani",
+        descricao: "Mais especiado e sedutor, com bergamota e notas de couro. Mesma sofisticação, tom mais noturno.",
       },
     },
     doce: {
