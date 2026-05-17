@@ -31,9 +31,9 @@ export const textosConsultor = {
   titulo: "seu consultor",
   subtituloInicio: "Vamos encontrar o perfume certo para você.",
   botaoModoRapido: "Consulta rápida",
-  botaoModoRapidoDescricao: "4 perguntas — resultado em 1 minuto",
+  botaoModoRapidoDescricao: "6 perguntas — resultado em 1 minuto",
   botaoModoAprofundado: "Consulta completa",
-  botaoModoAprofundadoDescricao: "8 perguntas — recomendação mais precisa",
+  botaoModoAprofundadoDescricao: "11 perguntas — recomendação mais precisa",
   mensagemCarregando: "Analisando seu perfil...",
   mensagemErro: "Não consegui encontrar uma recomendação agora. Tente novamente.",
   tituloPerfumePrincipal: "Minha recomendação",
@@ -44,7 +44,7 @@ export const textosConsultor = {
   botaoVerPerfume: "Ver detalhes",
 }
 
-// Perguntas do quiz — modo rápido (5 perguntas)
+// Perguntas do quiz — modo rápido (6 perguntas)
 export const perguntasRapidas = [
   {
     id: "perfil",
@@ -77,6 +77,16 @@ export const perguntasRapidas = [
     ],
   },
   {
+    id: "sensacao",
+    pergunta: "Que sensação você quer causar?",
+    opcoes: [
+      { valor: "intrigar", texto: "Intrigar — que as pessoas perguntem o que é" },
+      { valor: "acolher", texto: "Acolher — passar conforto e proximidade" },
+      { valor: "impressionar", texto: "Impressionar — presença marcante" },
+      { valor: "assinar", texto: "Assinar — algo sutil que seja só seu" },
+    ],
+  },
+  {
     id: "ocasiao",
     pergunta: "Quando vai usar?",
     opcoes: [
@@ -97,7 +107,7 @@ export const perguntasRapidas = [
   },
 ]
 
-// Perguntas adicionais — modo aprofundado (mais 4 perguntas, total 9)
+// Perguntas adicionais — modo aprofundado (mais 5 perguntas, total 11)
 export const perguntasAprofundadas = [
   {
     id: "notas",
@@ -130,6 +140,23 @@ export const perguntasAprofundadas = [
     tipo: "texto-livre",
     placeholder: "Ex: Sauvage, La Vie Est Belle, Aventus... (deixe em branco se não usa)",
     opcional: true,
+  },
+  {
+    id: "referencia-cheiro",
+    pergunta: "Tem algum cheiro do dia a dia que te agrada muito?",
+    tipo: "texto-livre",
+    placeholder: "Ex: café, madeira, terra molhada, baunilha, sabonete, couro...",
+    opcional: true,
+  },
+  {
+    id: "ousadia",
+    pergunta: "Como você prefere sua recomendação?",
+    opcoes: [
+      { valor: "seguro", texto: "Algo consagrado e aprovado por muitos" },
+      { valor: "equilibrado", texto: "Conhecido mas com personalidade" },
+      { valor: "ousado", texto: "Algo diferente, fora do óbvio" },
+      { valor: "raro", texto: "Nicho ou indie, pouca gente conhece" },
+    ],
   },
   {
     id: "prioridade",
