@@ -1,0 +1,1856 @@
+[
+  {
+    "nome": "Celtic Legacy",
+    "marca": "In The Box",
+    "familia": "Oriental Especiado",
+    "notasTopo": [
+      "Toranja",
+      "Mel",
+      "Conhaque",
+      "Alcaçuz",
+      "Frutas Vermelhas",
+      "Gengibre"
+    ],
+    "notasCoracao": [
+      "Resina de Mirra",
+      "Flor de Laranjeira",
+      "Dama-da-noite",
+      "Feno"
+    ],
+    "notasFundo": [
+      "Fava Tonka",
+      "Âmbar Vermelho",
+      "Bálsamo do Peru",
+      "Benjoim",
+      "Couro",
+      "Ládano",
+      "Musk"
+    ],
+    "genero": "Unissex",
+    "preco": 189.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/celtic-legacy-100ml-267"
+  },
+  {
+    "nome": "Fine Silk",
+    "marca": "In The Box",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [
+      "Açafrão",
+      "Osmanthus e Magnólia."
+    ],
+    "notasCoracao": [
+      "Tuberosa",
+      "Patchouli",
+      "Maracujá e Agarwood."
+    ],
+    "notasFundo": [
+      "Baunilha",
+      "Ambroxan",
+      "Mirra",
+      "Musk",
+      "Incenso",
+      "Cedro."
+    ],
+    "genero": "Unissex",
+    "preco": 189.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/fine-silk-100ml-266"
+  },
+  {
+    "nome": "Fatal Innocence",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "Osmanthus",
+      "Pêssego",
+      "Néroli",
+      "Bergamota",
+      "Mandarina",
+      "Canela"
+    ],
+    "notasCoracao": [
+      "Tuberosa Indiana",
+      "Jasmim",
+      "Narciso",
+      "Rosa de Maio"
+    ],
+    "notasFundo": [
+      "Âmbar",
+      "Cedro",
+      "Sândalo",
+      "Patchouli",
+      "Vetiver"
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/fatal-innocence-100ml-265"
+  },
+  {
+    "nome": "Litchi Fiorito",
+    "marca": "In The Box",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [
+      "Lichia",
+      "Groselha Preta",
+      "Maçã Vermelha e Limão Italiano"
+    ],
+    "notasCoracao": [
+      "Violeta",
+      "Rosa e Jasmim Sambac"
+    ],
+    "notasFundo": [
+      "Açúcar",
+      "Absoluto de Baunilha",
+      "Musk",
+      "Âmbar",
+      "Sândalo",
+      "Cedro"
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/litchi-fiorito-100ml-264"
+  },
+  {
+    "nome": "Dévoile",
+    "marca": "In The Box",
+    "familia": "Couro",
+    "notasTopo": [
+      "Laranja Amarga."
+    ],
+    "notasCoracao": [
+      "Especiarias",
+      "Cardamomo",
+      "Cominho."
+    ],
+    "notasFundo": [
+      "Couro",
+      "Cedro",
+      "Benjoim",
+      "Bálsamo-de-Tolu",
+      "Vetiver",
+      "Madeira de Âmbar."
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/devoile-100ml-263"
+  },
+  {
+    "nome": "Salt Crystal",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "Sal e Gengibre"
+    ],
+    "notasCoracao": [
+      "Algas Marinhas e Vetiver"
+    ],
+    "notasFundo": [
+      "Cedro e Musgo de Carvalho"
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/salt-crystal-100ml-262"
+  },
+  {
+    "nome": "Turim",
+    "marca": "In The Box",
+    "familia": "Cítrico Aromático",
+    "notasTopo": [
+      "Hortelã",
+      "Limão",
+      "Manjericão",
+      "Tomilho"
+    ],
+    "notasCoracao": [
+      "Groselha Preta",
+      "Lavanda",
+      "Alecrim",
+      "Jasmim"
+    ],
+    "notasFundo": [
+      "Musk",
+      "Verbena"
+    ],
+    "genero": "Unissex",
+    "preco": 209.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/turim-100ml-261"
+  },
+  {
+    "nome": "Taylor Made",
+    "marca": "In The Box",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [
+      "Folha de Violeta",
+      "Coentro e Bergamota."
+    ],
+    "notasCoracao": [
+      "Rosa",
+      "Pimenta Preta e Lírio-do-Vale."
+    ],
+    "notasFundo": [
+      "Patchouli",
+      "Baunilha de Bourbon e Âmbar Cinzento."
+    ],
+    "genero": "Unissex",
+    "preco": 199.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/taylor-made-100ml-260"
+  },
+  {
+    "nome": "Me And I Absolu",
+    "marca": "In The Box",
+    "familia": "Cítrico Aromático",
+    "notasTopo": [
+      "Bergamota",
+      "Gengibre e Cardamomo."
+    ],
+    "notasCoracao": [
+      "Notas Florais e Flor de Laranjeira."
+    ],
+    "notasFundo": [
+      "Patchouli."
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/me-and-i-absolu-100ml-259"
+  },
+  {
+    "nome": "Soft Splendor",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "Frutas Vermelhas",
+      "Framboesa",
+      "Pêssego",
+      "Rosa",
+      "Violeta."
+    ],
+    "notasCoracao": [
+      "Íris e Gerânio Rosa."
+    ],
+    "notasFundo": [
+      "Musk Branco",
+      "Cedro."
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/soft-splendor-100ml-258"
+  },
+  {
+    "nome": "Mystic Newlands",
+    "marca": "In The Box",
+    "familia": "Oriental Amadeirado",
+    "notasTopo": [
+      "Cardamomo",
+      "Bergamota",
+      "Limão",
+      "Pimenta Sichuan",
+      "Elemi e Olíbano."
+    ],
+    "notasCoracao": [
+      "Patchouli",
+      "Rosa",
+      "Flor de Laranjeira",
+      "Gerânio",
+      "Açafrão",
+      "Coentro",
+      "Cominho",
+      "Anis e Absinto."
+    ],
+    "notasFundo": [
+      "Olíbano",
+      "Benjoim",
+      "Ládano",
+      "Âmbar",
+      "Ambergris",
+      "Opoponax",
+      "Baunilha",
+      "Musk",
+      "Oud",
+      "Bétula e Maltol."
+    ],
+    "genero": "Unissex",
+    "preco": 209.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/mystic-newlands-100ml-257"
+  },
+  {
+    "nome": "Lumen Blue",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "Pera",
+      "Bergamota",
+      "Mandarina e Gengibre."
+    ],
+    "notasCoracao": [
+      "Flor de Laranjeira e Madeira"
+    ],
+    "notasFundo": [
+      "Ambroxan",
+      "Cedro e Musk."
+    ],
+    "genero": "Unissex",
+    "preco": 199.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/lumen-blue-100ml-256"
+  },
+  {
+    "nome": "Blanche Exquise",
+    "marca": "In The Box",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [
+      "Amêndoa",
+      "Mandarina",
+      "Bergamota."
+    ],
+    "notasCoracao": [
+      "Notas Atalcadas",
+      "Flores Brancas e Flor de Laranjeira."
+    ],
+    "notasFundo": [
+      "Baunilha",
+      "Ambroxan",
+      "Akigalawood",
+      "Sândalo."
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/blanche-exquise-100ml-255"
+  },
+  {
+    "nome": "Twice Love",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "Toranja",
+      "Laranja",
+      "Limão e Groselha Vermelha"
+    ],
+    "notasCoracao": [
+      "Cana-de-açúcar",
+      "Pau-de-Lagoa",
+      "Lírio-do-vale",
+      "Rosa-chá e Canela"
+    ],
+    "notasFundo": [
+      "Musk",
+      "Cedro e Thanaka"
+    ],
+    "genero": "Unissex",
+    "preco": 169.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/twice-love-100ml-254"
+  },
+  {
+    "nome": "Veneration",
+    "marca": "In The Box",
+    "familia": "Gourmand",
+    "notasTopo": [
+      "Limão"
+    ],
+    "notasCoracao": [
+      "Café"
+    ],
+    "notasFundo": [
+      "Patchouli"
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/veneration-100ml-253"
+  },
+  {
+    "nome": "Fruttato Oud",
+    "marca": "In The Box",
+    "familia": "Oriental Amadeirado",
+    "notasTopo": [
+      "Maracujá",
+      "Notas Frutadas",
+      "Rosa Turca e Açafrão"
+    ],
+    "notasCoracao": [
+      "Oud",
+      "Benjoim e Patchouli"
+    ],
+    "notasFundo": [
+      "Couro",
+      "Akigalawood",
+      "Âmbar",
+      "Baunilha e Ládano"
+    ],
+    "genero": "Unissex",
+    "preco": 219.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/fruttato-oud-100ml-252"
+  },
+  {
+    "nome": "Vanillush",
+    "marca": "In The Box",
+    "familia": "Oriental Especiado",
+    "notasTopo": [
+      "Pêra Glaceada",
+      "Creme de Baunilha",
+      "Marshmallow",
+      "Folhas de Violeta",
+      "Ylang-Ylang e Rum"
+    ],
+    "notasCoracao": [
+      "Caramelo",
+      "Chiclete",
+      "Jujuba",
+      "Jasmim e Ládano"
+    ],
+    "notasFundo": [
+      "Açúcar Cristalizado",
+      "Fava Tonka",
+      "Vetiver",
+      "Sândalo",
+      "Madeira de Cashmere",
+      "Patchouli"
+    ],
+    "genero": "Unissex",
+    "preco": 169.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/vanillush-100ml-251"
+  },
+  {
+    "nome": "Dolce Mallow",
+    "marca": "In The Box",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [
+      "Maçã",
+      "Flor de Nectarina",
+      "Frésia e Limão Italiano"
+    ],
+    "notasCoracao": [
+      "Marshmallow",
+      "Morango",
+      "Coco e Flor de Laranjeira"
+    ],
+    "notasFundo": [
+      "Chantilly",
+      "Açúcar",
+      "Baunilha",
+      "Musk",
+      "Framboesa e Ambroxan"
+    ],
+    "genero": "Unissex",
+    "preco": 169.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/dolce-mallow-100ml-250"
+  },
+  {
+    "nome": "Absolute Whoop",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "Ameixa Mirabelle"
+    ],
+    "notasCoracao": [
+      "Castanha"
+    ],
+    "notasFundo": [
+      "Sândalo"
+    ],
+    "genero": "Unissex",
+    "preco": 189.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/absolute-whoop-100ml-249"
+  },
+  {
+    "nome": "Looking For Something",
+    "marca": "In The Box",
+    "familia": "Amadeirado",
+    "notasTopo": [
+      "** Lima",
+      "Limão",
+      "Mandarina **"
+    ],
+    "notasCoracao": [
+      "** Pimenta Preta",
+      "Elemi e Olíbano **"
+    ],
+    "notasFundo": [
+      "** Vetiver",
+      "Madeira de Guaiac e Cade **"
+    ],
+    "genero": "Unissex",
+    "preco": 199.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/looking-for-something-100ml-248"
+  },
+  {
+    "nome": "Dominus Elixir",
+    "marca": "In The Box",
+    "familia": "Oriental Especiado",
+    "notasTopo": [
+      "Ameixa",
+      "Canela",
+      "Cardamomo",
+      "Bergamota"
+    ],
+    "notasCoracao": [
+      "Lavanda",
+      "Davana",
+      "Artemísia"
+    ],
+    "notasFundo": [
+      "Fava Tonka",
+      "Benjoim",
+      "Ambreta",
+      "Patchouli",
+      "Ládano"
+    ],
+    "genero": "Unissex",
+    "preco": 189.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/dominus-elixir-100ml-247"
+  },
+  {
+    "nome": "Citrus Craving",
+    "marca": "In The Box",
+    "familia": "Cítrico Aromático",
+    "notasTopo": [
+      "Bergamota Siciliana",
+      "Laranja Sanguínea",
+      "Lima",
+      "Limão",
+      "Toranja e Mandarina"
+    ],
+    "notasCoracao": [
+      "Pimenta Rosa",
+      "Groselha Preta e Âmbar Branco"
+    ],
+    "notasFundo": [
+      "Musk",
+      "Musgo de Carvalho e Patchouli"
+    ],
+    "genero": "Unissex",
+    "preco": 179.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/citrus-craving-100ml-245"
+  },
+  {
+    "nome": "Precious Dame",
+    "marca": "In The Box",
+    "familia": "Frutal",
+    "notasTopo": [
+      "Framboesa",
+      "Néroli e Laranja Amarga"
+    ],
+    "notasCoracao": [
+      "Jasmim Sambac",
+      "Flor de Laranjeira e Gardênia"
+    ],
+    "notasFundo": [
+      "Mel",
+      "Patchouli e Âmbar"
+    ],
+    "genero": "Unissex",
+    "preco": 169.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/precious-dame-100ml-244"
+  },
+  {
+    "nome": "Flow Vibes",
+    "marca": "In The Box",
+    "familia": "Cítrico Aromático",
+    "notasTopo": [
+      "Laranja Doce",
+      "Bergamota",
+      "Mandarina e Gengibre"
+    ],
+    "notasCoracao": [
+      "Flor de Nymphea"
+    ],
+    "notasFundo": [
+      "Âmbar Cinzento"
+    ],
+    "genero": "Unissex",
+    "preco": 189.9,
+    "urlOrigem": "https://www.intheboxperfumes.com.br/produto/flow-vibes-100ml-243"
+  },
+  {
+    "nome": "Ultramare",
+    "marca": "Maison Viegas",
+    "familia": "Aromático Aquático",
+    "notasTopo": [
+      "Bergamota",
+      "Limão"
+    ],
+    "notasCoracao": [
+      "Algas Marinhas",
+      "Calone",
+      "Hedione"
+    ],
+    "notasFundo": [
+      "Almíscar",
+      "Ambroxan",
+      "Cedro"
+    ],
+    "genero": "Masculino",
+    "preco": 149,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/ultramare-inspirado-em-megamare/"
+  },
+  {
+    "nome": "Grand Tygar",
+    "marca": "Maison Viegas",
+    "familia": "Cítrico, &Acirc;mbar",
+    "notasTopo": [
+      "Grapefruit",
+      "Bergamota",
+      "Mandarina"
+    ],
+    "notasCoracao": [
+      "Gengibre",
+      "Sementes de Ambrette",
+      "Coração de Patchouli"
+    ],
+    "notasFundo": [
+      "&Acirc",
+      "mbar",
+      "Vetiver",
+      "Madeiras Aveludadas",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: AltaPROJE&Ccedil",
+      "&Atilde",
+      "O: Alta/Moderada",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior das orel"
+    ],
+    "genero": "Masculino",
+    "preco": 139,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/grand-tygar-inspirado-em-tygar/"
+  },
+  {
+    "nome": "Corsário",
+    "marca": "Maison Viegas",
+    "familia": "Oriental, Foulgére",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 109,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/corsario-inspirado-em-le-male/"
+  },
+  {
+    "nome": "Dubai Gold",
+    "marca": "Maison Viegas",
+    "familia": "Aquático &bull; Amadeirado &bull; &Acirc;mbar",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar",
+      "Sândalo",
+      "Baunilha",
+      "Almíscar",
+      "Patchouli",
+      "Madeiras Preciosas",
+      "Immortelle",
+      "Oud",
+      "Vetiver",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES:",
+      "pu"
+    ],
+    "genero": "Masculino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/dubai-gold-inspirado-em-bahar-the-spirit-of-dubai-16xv0/"
+  },
+  {
+    "nome": "Vortex",
+    "marca": "Maison Viegas",
+    "familia": "Chypré Amadeirado Oriental",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Gálbano",
+      "Elemi",
+      "Patchouli",
+      "Musgo de Carvalho",
+      "Rum",
+      "Tabaco",
+      "Cipreste",
+      "Bálsamo de Abeto",
+      "Baga de Zimbro",
+      "Madeira de Cashmir",
+      "Sândalo",
+      "Benjoim",
+      "&Acirc",
+      "mbar",
+      "Incenso",
+      "Ládano",
+      "Couro",
+      "&Acirc",
+      "mbar-gris e Almíscar"
+    ],
+    "genero": "Masculino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/vortex-inspirado-em-apex-pour-homme/"
+  },
+  {
+    "nome": "Summer Citrus",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/summer-citrus-inspirado-em-perseus-parfums-de-marly/"
+  },
+  {
+    "nome": "Amber Absolu",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/amber-absolu-inspirado-em-boss-bottled-absolu/"
+  },
+  {
+    "nome": "The Sexy Elixir",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 189,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/the-sexy-elixir-inspirado-em-boss-the-scent-elixir-for-him/"
+  },
+  {
+    "nome": "Elite Pour Homme",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado, Especiado, Almiscarado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar Branco",
+      "Ambreta"
+    ],
+    "genero": "Masculino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/elite-pour-homme-inspirado-em-bvlgari-pour-homme-eau-de-parfum-versao-2024/"
+  },
+  {
+    "nome": "Gin Tonic",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 119,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/gin-tonic-inspirado-em-gntonic-m-micallef/"
+  },
+  {
+    "nome": "Heaven",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 189,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/heaven-inspirado-em-imagination-louis-vuitton/"
+  },
+  {
+    "nome": "Midnight",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/midnight-inspirado-em-althair-parfums-de-marly/"
+  },
+  {
+    "nome": "Black Sport Noire",
+    "marca": "Maison Viegas",
+    "familia": "Aquatíco Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [
+      "Cipreste",
+      "Notas aquosas",
+      "Lavanda"
+    ],
+    "notasFundo": [
+      "Vetiver de Borboun",
+      "Vetiver do Haiti",
+      "Madeira de Cashmere",
+      "Almíscar",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada / marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada / marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES"
+    ],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/black-sport-noire-inspirado-em-encre-noire-sport/"
+  },
+  {
+    "nome": "Le Patron Intense",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 109,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/le-patron-intense-inspirado-em-boss-bottled-intense-edp/"
+  },
+  {
+    "nome": "Hedonist - Inspirado God of Fire - Stéphane Humbert Lucas 777",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 109,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/hedonist-inspirado-god-of-fire-stephane-humbert-lucas-777/"
+  },
+  {
+    "nome": "Le Paradise",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 119,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/le-paradise-inspirado-em-le-beau-paradise-garden/"
+  },
+  {
+    "nome": "Spartan Elixir",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 169,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/spartan-elixir-inspirado-em-invictus-victory-elixir/"
+  },
+  {
+    "nome": "Glorious - Inspirado Haltane Parfums de Marly",
+    "marca": "Maison Viegas",
+    "familia": "Couro",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Patchouli",
+      "Vetiver",
+      "Almíscar",
+      "Couro",
+      "Agarwood",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Marcante / Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O:  Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "anteb"
+    ],
+    "genero": "Masculino",
+    "preco": 115,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/glorious-inspirado-haltane-parfums-de-marly/"
+  },
+  {
+    "nome": "Toxic Desire",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Musgo de Carvalho",
+      "Benjoin",
+      "Almíscar e Patchouli",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada / alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada / alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps"
+    ],
+    "genero": "Masculino",
+    "preco": 119,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/toxic-desire-inspirado-em-desirtoxic-m-micallef/"
+  },
+  {
+    "nome": "Ocean Pour Homme",
+    "marca": "Maison Viegas",
+    "familia": "Aromático, Fougére",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar",
+      "Vetiver do Haiti",
+      "Patchouli e Caramelo.",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior das orelhas",
+      "região do peitoral etc. Quando for aplicar a fragrânc"
+    ],
+    "genero": "Masculino",
+    "preco": 149,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/ocean-pour-homme-inspirado-em-prada-luna-rossa-ocean1/"
+  },
+  {
+    "nome": "Montecristo",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/montecristo-inspirado-em-acqua-di-parma/"
+  },
+  {
+    "nome": "Vetiver Absoluto",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/vetiver-absoluto-inspirado-em-grey-vetiver-tom-ford/"
+  },
+  {
+    "nome": "Selvaggio",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Cedro",
+      "Ládano e Ambroxam",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Marcante / Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior das orelhas",
+      "região do"
+    ],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/selvaggio-inspirado-em-sauvage/"
+  },
+  {
+    "nome": "Legend",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [
+      "Sândalo",
+      "Noz-moscada"
+    ],
+    "notasFundo": [
+      "Almíscar e &Acirc",
+      "mbar",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O:  moderada / alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada / alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte poste"
+    ],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/legend-inspirado-em-issey-miyake/"
+  },
+  {
+    "nome": "Legacy",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 119,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/legacy-inspirado-em-elysium-pour-homme-parfum-cologne/"
+  },
+  {
+    "nome": "Jazz Master",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/jazz-master-inspirado-em-jazz-club-maison-martin-margiela/"
+  },
+  {
+    "nome": "Honor - Contratipo Honour Man de Amouage",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/honor-contratipo-honour-man-de-amouage/"
+  },
+  {
+    "nome": "Hallure Sport",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Especiado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Fava Tonka",
+      "&Acirc",
+      "mbar",
+      "Baunilha",
+      "Vetiver e Almíscar branco",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Longa duração",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: De moderada a marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bícep"
+    ],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/hallure-sport-inspirado-em-allure-home-sport/"
+  },
+  {
+    "nome": "For Office - Inspirado Hugo Boss Bottled Infinite",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/for-office-inspirado-hugo-boss-bottled-infinite/"
+  },
+  {
+    "nome": "Dark Shelby",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/dark-shelby-inspirado-em-interlude-black-iris-amouage/"
+  },
+  {
+    "nome": "Corleone",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Especiado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar",
+      "Vetiver",
+      "Baunilha e Fava Tonka",
+      "FAM&Iacute",
+      "LIA OLFATIVA",
+      "&Acirc",
+      "mbar",
+      "Amadeirado",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada / ALTA",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: MODERADA / ALTA",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "Para melhor desempenho da fragrância borrife nas partes ma"
+    ],
+    "genero": "Masculino",
+    "preco": 119,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/corleone-inspirado-em-tom-ford-oud-wood/"
+  },
+  {
+    "nome": "Code Men",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/code-men-inspirado-em-armani-code/"
+  },
+  {
+    "nome": "Capone - Inspirado Bvlgari Le Gemme Garanat",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/capone-inspirado-bvlgari-le-gemme-garanat/"
+  },
+  {
+    "nome": "Celebration - Inspirado Jubilation XXV - Amouage",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/celebration-inspirado-jubilation-xxv-amouage/"
+  },
+  {
+    "nome": "Bomber",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/bomber-inspirado-em-polo-blue/"
+  },
+  {
+    "nome": "Bleu de Viegas",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Cistus labdanum",
+      "Patchouli",
+      "Sândalo",
+      "Olíbano",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Longa duração",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: De moderada a marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e"
+    ],
+    "genero": "Masculino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/bleu-de-viegas-inspirado-em-bleu/"
+  },
+  {
+    "nome": "Aventador",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar",
+      "Musgo de Carvalho",
+      "Baunilha e Ambargris"
+    ],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/aventador-inspirado-em-creed-aventus/"
+  },
+  {
+    "nome": "Acqua di Vale",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/acqua-di-vale-inspirado-em-acqua-di-gio/"
+  },
+  {
+    "nome": "Un Jardin",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar",
+      "&Iacute",
+      "ris",
+      "Incenso",
+      "Ládano e Canela"
+    ],
+    "genero": "Masculino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/un-jardin-inspirado-em-un-jardin-sur-le-nil/"
+  },
+  {
+    "nome": "Doulce Vitta",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar",
+      "Cedro",
+      "e Almíscar",
+      "ESTILO",
+      "Elegante",
+      "Casual",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada / alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulso"
+    ],
+    "genero": "Masculino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/doulce-vitta-inspirado-em-light-blue/"
+  },
+  {
+    "nome": "V.I.P. Men",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 89,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/v-i-p-men-inspirado-em-212-vip-men/"
+  },
+  {
+    "nome": "SPARTAN",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Madeira Guaiac",
+      "Musgo de Carvalho",
+      "Patchouli ou Oriza e Ambargris"
+    ],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/spartan-inspirado-em-invictus/"
+  },
+  {
+    "nome": "Royal for Glory - Inspirado Kalan Parfums de Marly",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/royal-for-glory-inspirado-kalan-parfums-de-marly/"
+  },
+  {
+    "nome": "Millionaire",
+    "marca": "Maison Viegas",
+    "familia": "Couro",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "couro aveludado",
+      "madeiras brancas",
+      "âmbar e patchouli da Indonésia.",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: alta / marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada / alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES"
+    ],
+    "genero": "Masculino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/millionaire-inspirado-em-1-million/"
+  },
+  {
+    "nome": "Cristal Rouge",
+    "marca": "Maison Viegas",
+    "familia": "Oriental, Floral",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Resina de Abeto e Cedro",
+      "Açúcar",
+      "Ambroxan e Musgo de Carvalho",
+      "FAMILIA OLFATIVA:",
+      "Oriental",
+      "Floral",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada a marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada e marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES"
+    ],
+    "genero": "Masculino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/cristal-rouge-inspirado-em-baccarat-rouge-540/"
+  },
+  {
+    "nome": "LUST IN DESIRE",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar",
+      "Extrato de Cedro Branco e Âmbar"
+    ],
+    "genero": "Feminino",
+    "preco": 129,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/lust-in-desire-inspirado-em-lust-in-paradise-ex-nihilo-q44zh/"
+  },
+  {
+    "nome": "Belíssima Rosée",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Ambroxan",
+      "Almíscar",
+      "Notas Amadeiradas",
+      "Sândalo",
+      "Musgo"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/belissima-rosee-inspirado-em-la-vie-est-belle-rose-extraordinaire/"
+  },
+  {
+    "nome": "Devocion",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Baunilha",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES:",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior das orelhas",
+      "reg"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/devocion-inspirado-em-devotion-dolce-gabbana/"
+  },
+  {
+    "nome": "Blush Girl",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Baunilha e Cumarina",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Moderada / Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Moderada / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES:",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior"
+    ],
+    "genero": "Feminino",
+    "preco": 115,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/blush-girl-inspirado-em-good-girl-blush/"
+  },
+  {
+    "nome": "Narcotique Flower",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Feminino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/narcotique-flower-inspirado-em-fleur-narcotique/"
+  },
+  {
+    "nome": "Liber Intense",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Feminino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/liber-intense-inspirado-em-libre-intense/"
+  },
+  {
+    "nome": "Acqua Mare",
+    "marca": "Maison Viegas",
+    "familia": "Floral Aquático",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Cedro da Virgínia",
+      "Ládano francês e Açúcar mascavo",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Moderada / Marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Moderada / Marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíce"
+    ],
+    "genero": "Feminino",
+    "preco": 99,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/acqua-mare-inspirado-em-acqua-di-gioia-eau-de-parfum/"
+  },
+  {
+    "nome": "Valentine",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Feminino",
+    "preco": 109,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/valentine-inspirado-em-delina-parfums-de-marly/"
+  },
+  {
+    "nome": "Turmalina",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Sândalo",
+      "Almíscar e &Acirc",
+      "mbar",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES:",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior d"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/turmalina-inspirado-em-crystal-noir/"
+  },
+  {
+    "nome": "Suprema",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar Branco",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O:  Alta",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Moderada / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/suprema-inspirado-em-alien-de-thierry-mugler/"
+  },
+  {
+    "nome": "Rosa dos Ventos",
+    "marca": "Maison Viegas",
+    "familia": "Floral",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Cedro",
+      "Raíz de Orris",
+      "ou Lírio Florentino",
+      "Pimenta",
+      "Folha de Violeta e Almícar Branco.",
+      "FAMILIA OLFATIVA:",
+      "Floral",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada a marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada e marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "Para melhor"
+    ],
+    "genero": "Feminino",
+    "preco": 169,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/rosa-dos-ventos-inspirado-em-louis-vuitton-rose-des-vents/"
+  },
+  {
+    "nome": "Mademoiselle",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Vetiver",
+      "Almíscar",
+      "Patchouli ou Oriza e Baunilha",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: média - longa duração",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e par"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/mademoiselle-inspirado-em-coco-mademoiselle-edp/"
+  },
+  {
+    "nome": "Le Diamant",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/le-diamant-inspirado-em-le-parfum-elie-saab/"
+  },
+  {
+    "nome": "Femme Intense",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/femme-intense-inspirado-em-narciso-rodriguez-for-her/"
+  },
+  {
+    "nome": "Duquesa",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/duquesa-inspirado-em-english-pear-and-freesia-jo-malone-london/"
+  },
+  {
+    "nome": "Code Woman",
+    "marca": "Maison Viegas",
+    "familia": "Floral / Aromático",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Madeira Preciosa e Mel.",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderado / alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posteri"
+    ],
+    "genero": "Feminino",
+    "preco": 89,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/code-woman-inspirado-em-armani-code/"
+  },
+  {
+    "nome": "Belíssima",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Especiado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Patchouli",
+      "Fava Tonka",
+      "Baunilha e Pranilê",
+      "FAM&Iacute",
+      "LIA OLFATIVA:",
+      "Floral",
+      "frutal",
+      "gustativo",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: moderada a marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/belissima-inspirado-em-la-vie-est-belle/"
+  },
+  {
+    "nome": "ANASTASIA",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar e Cedro",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior das"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/anastasia-inspirado-em-kilian-good-girl-gone-bad/"
+  },
+  {
+    "nome": "Amiris Inspirado em Amyris Femme - Maison Francis Kurkdjian",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar",
+      "Vetiver e Almíscar",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior"
+    ],
+    "genero": "Feminino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/amiris-inspirado-em-amyris-femme-maison-francis-kurkdjian/"
+  },
+  {
+    "nome": "Absoluta",
+    "marca": "Maison Viegas",
+    "familia": "Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Acirc",
+      "mbar e Cedro da Virgínia",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Média / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES:",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior d"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/absoluta-inspirado-em-chloe-eau-de-parfum/"
+  },
+  {
+    "nome": "Divine Bouquet",
+    "marca": "Maison Viegas",
+    "familia": "Floral Amadeirado",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar Branco",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Moderada / Alta",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: Moderada / Alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES:",
+      "pulsos",
+      "bíceps",
+      "antebraços e parte posterior das orelhas",
+      "região d"
+    ],
+    "genero": "Feminino",
+    "preco": 95,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/divine-bouquet-inspirado-em-blooming-bouquet-2023/"
+  },
+  {
+    "nome": "ENIGMA",
+    "marca": "Maison Viegas",
+    "familia": "&Acirc;mbar Floral",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Baunilha de Bourbon",
+      "Almíscar Branco",
+      "&Acirc",
+      "mbar e Benjoim"
+    ],
+    "genero": "Feminino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/enigma-inspirado-em-prada-paradoxe/"
+  },
+  {
+    "nome": "Roses Revenge",
+    "marca": "Maison Viegas",
+    "familia": "Chipre Floral",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "&Aacute",
+      "lmiscar Branco",
+      "Ambroxan e Baunilha.",
+      "FAMILIA OLFATIVA:",
+      "Chipre Floral",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: marcante",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada e marcante",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES",
+      "Para melhor desempenho da fragrância borrife nas partes ma"
+    ],
+    "genero": "Feminino",
+    "preco": 105,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/roses-revenge-inspirado-em-lady-vengeance-de-juliette-has-a-gun/"
+  },
+  {
+    "nome": "Adore",
+    "marca": "Maison Viegas",
+    "familia": "Oriental Gourmand",
+    "notasTopo": [],
+    "notasCoracao": [],
+    "notasFundo": [
+      "Almíscar",
+      "Baunilha",
+      "Cedro e Amora",
+      "Estilo",
+      "Para mulheres elegantes",
+      "audaciosas e absolutamente femininas",
+      "FIXA&Ccedil",
+      "&Atilde",
+      "O: Longa",
+      "PROJE&Ccedil",
+      "&Atilde",
+      "O: moderada / alta",
+      "INFORMA&Ccedil",
+      "&Otilde",
+      "ES IMPORTANTES"
+    ],
+    "genero": "Feminino",
+    "preco": 89,
+    "urlOrigem": "https://maisonviegas.com.br/produtos/adore-inspirado-em-jadore/"
+  }
+]

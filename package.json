@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "scrape": "npx ts-node scripts/scrape-perfumes.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -32,6 +33,7 @@
     "jest-environment-jsdom": "^30.4.1",
     "tailwindcss": "^4",
     "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
