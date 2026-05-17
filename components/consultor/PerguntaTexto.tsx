@@ -7,7 +7,7 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Botao from "@/components/ui/Botao"
 
 interface PropsPerguntaTexto {
@@ -15,6 +15,7 @@ interface PropsPerguntaTexto {
   placeholder?: string
   opcional?: boolean
   progresso: string
+  id?: string
   onResponder: (valor: string) => void
 }
 
@@ -23,9 +24,15 @@ export default function PerguntaTexto({
   placeholder,
   opcional,
   progresso,
+  id,
   onResponder,
 }: PropsPerguntaTexto) {
   const [valor, setValor] = useState("")
+
+  // Limpa o campo quando a pergunta muda
+  useEffect(() => {
+    setValor("")
+  }, [id])
 
   return (
     <div style={{ maxWidth: "560px", margin: "0 auto" }}>

@@ -212,6 +212,7 @@ export default function QuizConsultor() {
       <>
         {cabecalhoQuiz}
         <PerguntaTexto
+          id={perguntaAtual.id}
           pergunta={perguntaAtual.pergunta}
           placeholder={"placeholder" in perguntaAtual ? String(perguntaAtual.placeholder) : undefined}
           opcional={"opcional" in perguntaAtual ? Boolean(perguntaAtual.opcional) : false}

@@ -9,12 +9,15 @@ export interface RespostasQuiz {
   perfil?: string
   genero?: string
   vibe?: string
+  sensacao?: string
   ocasiao?: string
   clima?: string
   notasAmadas?: string[]
   notasOdiadas?: string[]
   faixaPreco?: string
   perfumeAtual?: string
+  referenciaCheiro?: string
+  ousadia?: string
   prioridade?: string
   [key: string]: unknown
 }
@@ -35,55 +38,50 @@ export interface RecomendacaoIA {
   }
 }
 
-const SYSTEM_PROMPT = `Você é o consultor de perfumaria do site scently, um portal sofisticado e brasileiro.
+const SYSTEM_PROMPT = `Consultor de perfumaria brasileiro. Responda APENAS em JSON válido, sem markdown, sem texto fora do JSON.
+Tom: sofisticado, próximo, sem travessões, sensorial, frases curtas.
+Schema obrigatório:
+{"perfumePrincipal":{"nome":"","marca":"","concentracao":"","descricao":"","notas":[]},"conselho":"","alternativa":{"nome":"","marca":"","descricao":""}}
 
-Tom de voz:
-- Sofisticado mas próximo, como um amigo entendido no assunto
-- Use "você" (nunca "tu")
-- Frases curtas e diretas, sem travessões
-- Sem jargão técnico desnecessário
-- Nunca use "incrível", "perfeito", "maravilhoso" — seja preciso e sensorial
-- Explique o porquê da recomendação de forma sensorial (o que você vai sentir na pele, no ar)
+REGRA OBRIGATÓRIA DE PREÇO — nunca recomendar fora da faixa informada:
 
-Responda APENAS com JSON válido, sem texto antes ou depois, neste formato exato:
-{
-  "perfumePrincipal": {
-    "nome": "nome do perfume",
-    "marca": "nome da marca",
-    "concentracao": "EDP ou EDT",
-    "descricao": "2 a 3 frases sensoriais explicando por que serve para este perfil",
-    "notas": ["nota1", "nota2", "nota3"]
-  },
-  "conselho": "dica prática ou ressalva importante",
-  "alternativa": {
-    "nome": "nome do perfume alternativo",
-    "marca": "nome da marca",
-    "descricao": "uma linha explicando por que é uma boa opção paralela"
-  }
-}`
+preco:economico (até R$300):
+- Contratipos nacionais: In The Box, JA Essence, Maison Viegas, Azza Parfum (R$80–200)
+- Nacionais: O Boticário, Natura, Eudora (R$80–250)
+- Importados básicos: Cool Water Davidoff, Chrome Azzaro, Obsession Calvin Klein (R$150–300)
+Se preco:economico → recomendar APENAS contratipos ou nacionais. NUNCA recomendar Dior, Chanel, Tom Ford, Creed.
 
-function formatarRespostas(respostas: Record<string, unknown>): string {
-  const linhas: string[] = []
+preco:medio (R$300–700):
+- Sauvage Dior EDT, Bleu de Chanel EDT, La Vie Est Belle Lancôme, Good Girl Carolina Herrera
+- Versace Eros EDP, Black Opium YSL, Boss Bottled Hugo Boss
+Se preco:medio → importados acessíveis. NUNCA recomendar nicho caro ou Creed.
 
-  if (respostas.perfil) linhas.push(`Perfil: ${respostas.perfil}`)
-  if (respostas.genero) linhas.push(`Preferência de fragrância: ${respostas.genero}`)
-  if (respostas.vibe) linhas.push(`Vibe desejada: ${respostas.vibe}`)
-  if (respostas.ocasiao) linhas.push(`Ocasião: ${respostas.ocasiao}`)
-  if (respostas.clima) linhas.push(`Clima: ${respostas.clima}`)
-  if (respostas.faixaPreco) linhas.push(`Faixa de preço: ${respostas.faixaPreco}`)
-  if (respostas.perfumeAtual) linhas.push(`Perfume atual: ${respostas.perfumeAtual}`)
-  if (respostas.prioridade) linhas.push(`O que mais importa: ${respostas.prioridade}`)
+preco:premium (R$700–1.500):
+- Sauvage Dior EDP/Parfum, Tom Ford Black Orchid, Chanel N°5 EDP
+- Acqua di Giò Profumo, Chance Chanel EDP, Armani Code Absolu
 
-  const notasAmadas = respostas.notasAmadas
-  if (Array.isArray(notasAmadas) && notasAmadas.length) {
-    linhas.push(`Notas que ama: ${notasAmadas.join(", ")}`)
-  }
-  const notasOdiadas = respostas.notasOdiadas
-  if (Array.isArray(notasOdiadas) && notasOdiadas.length) {
-    linhas.push(`Notas que odeia: ${notasOdiadas.join(", ")}`)
-  }
+preco:luxo (acima de R$1.500):
+- Creed Aventus (~R$2.600), Baccarat Rouge 540 (~R$2.000–3.000)
+- Tom Ford Private Blend: Tobacco Vanille, Lost Cherry, Oud Wood (~R$1.500–2.500)
+- Parfums de Marly Pegasus, Delina (~R$1.800–2.500)
+- Xerjoff, Amouage, Initio (R$2.000+)`
 
-  return linhas.join("\n")
+function formatarRespostas(r: RespostasQuiz): string {
+  const partes: string[] = []
+  if (r.perfil) partes.push(`perfil:${r.perfil}`)
+  if (r.genero) partes.push(`genero:${r.genero}`)
+  if (r.vibe) partes.push(`vibe:${r.vibe}`)
+  if (r.sensacao) partes.push(`sensacao:${r.sensacao}`)
+  if (r.ocasiao) partes.push(`ocasiao:${r.ocasiao}`)
+  if (r.clima) partes.push(`clima:${r.clima}`)
+  if (r.notasAmadas?.length) partes.push(`ama:${r.notasAmadas.join(",")}`)
+  if (r.notasOdiadas?.length) partes.push(`odeia:${r.notasOdiadas.join(",")}`)
+  if (r.faixaPreco) partes.push(`preco:${r.faixaPreco}`)
+  if (r.perfumeAtual) partes.push(`usa:${r.perfumeAtual}`)
+  if (r.referenciaCheiro) partes.push(`cheiro:${r.referenciaCheiro}`)
+  if (r.ousadia) partes.push(`ousadia:${r.ousadia}`)
+  if (r.prioridade) partes.push(`prioridade:${r.prioridade}`)
+  return partes.join("|")
 }
 
 async function chamarGemini(chave: string, modelo: string, prompt: string): Promise<string> {
@@ -138,7 +136,7 @@ export async function gerarRecomendacao(
     return null
   }
 
-  const prompt = `Respostas do quiz:\n${formatarRespostas(respostas)}`
+  const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}. Recomende um perfume.`
 
   for (const modelo of MODELOS) {
     try {
