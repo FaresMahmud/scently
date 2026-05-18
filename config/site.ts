@@ -16,13 +16,13 @@ export const siteMeta = {
 
 // Textos da página inicial
 export const textosHome = {
-  heroTitulo: "Encontre o perfume\nque é seu.",
-  heroSubtitulo: "Responda 4 perguntas. Seu consultor encontra a fragrância ideal para você.",
+  heroTitulo: "O perfume que você\nainda não conhece\nestá aqui.",
+  heroSubtitulo: "Responda algumas perguntas. Seu consultor encontra a fragrância que é sua.",
   heroBotao: "Iniciar consulta",
   heroBotaoSecundario: "Explorar perfumes",
   secaoConsultor: "Como funciona",
-  secaoConsultorDescricao: "Seu consultor de perfumaria pessoal, disponível a qualquer hora.",
-  secaoCatalogo: "Fragrâncias em destaque",
+  secaoConsultorDescricao: "Seu consultor particular de perfumaria. Gratuito, sem cadastro, resultado em minutos.",
+  secaoCatalogo: "Fragrâncias para descobrir",
   rodapeTexto: "Consultoria de perfumaria guiada por IA. Sem cadastro obrigatório.",
 }
 

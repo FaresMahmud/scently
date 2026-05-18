@@ -41,6 +41,23 @@
   /* Larguras de container */
   --largura-max: 1200px;
   --largura-texto: 680px;      /* largura ideal para leitura */
+
+  /* ----------------------------------------
+     Escala tipográfica — razão áurea 1.618
+     ---------------------------------------- */
+  --tipo-corpo: 1rem;           /* 16px */
+  --tipo-sub: 1.618rem;         /* ~26px */
+  --tipo-secao: 2.618rem;       /* ~42px */
+  --tipo-hero: 4.236rem;        /* ~68px */
+
+  /* Espaçamentos Fibonacci */
+  --fib-1: 0.5rem;    /*   8px */
+  --fib-2: 0.813rem;  /*  13px */
+  --fib-3: 1.313rem;  /*  21px */
+  --fib-4: 2.125rem;  /*  34px */
+  --fib-5: 3.438rem;  /*  55px */
+  --fib-6: 5.563rem;  /*  89px */
+  --fib-7: 9rem;      /* 144px */
 }
 
 /* ----------------------------------------
@@ -302,6 +319,81 @@ a:hover article {
 ::selection {
   background-color: var(--cor-destaque);
   color: #fff;
+}
+
+/* ----------------------------------------
+   Animação partículas hero
+   ---------------------------------------- */
+@keyframes particula-flutua {
+  0%   { transform: translate(0, 0) scale(1);        opacity: 0.3; }
+  33%  { transform: translate(8px, -12px) scale(1.2); opacity: 0.6; }
+  66%  { transform: translate(-6px, -8px) scale(0.9); opacity: 0.4; }
+  100% { transform: translate(0, 0) scale(1);        opacity: 0.3; }
+}
+
+.hero-particula {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--cor-destaque);
+  animation: particula-flutua 6s ease-in-out infinite;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ----------------------------------------
+   Em alta — grid / carrossel mobile
+   ---------------------------------------- */
+.em-alta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--fib-4);
+}
+
+@media (max-width: 768px) {
+  .em-alta-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--fib-3);
+    padding-bottom: var(--fib-3);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .em-alta-grid > a {
+    flex: 0 0 82vw;
+    scroll-snap-align: start;
+  }
+}
+
+/* ----------------------------------------
+   CTA fixo mobile — aparece só em telas pequenas
+   ---------------------------------------- */
+.cta-mobile-fixo {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .cta-mobile-fixo {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    border-top: 1px solid var(--cor-borda);
+    background: var(--cor-base);
+  }
+}
+
+/* Drawer mobile — oculto por padrão, visível só em mobile */
+.menu-mobile-drawer {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .menu-mobile-drawer {
+    display: flex;
+  }
 }
 
 /* ----------------------------------------

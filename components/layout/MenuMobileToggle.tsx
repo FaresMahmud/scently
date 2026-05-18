@@ -79,6 +79,7 @@ export default function MenuMobileToggle() {
 
       {/* Gaveta do menu */}
       <nav
+        className="menu-mobile-drawer"
         style={{
           position: "fixed",
           top: "64px",
@@ -91,7 +92,6 @@ export default function MenuMobileToggle() {
           transform: aberto ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.25s ease",
           pointerEvents: aberto ? "auto" : "none",
-          display: "flex",
           flexDirection: "column",
           padding: "2rem 1.5rem",
           gap: "0.25rem",
