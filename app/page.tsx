@@ -96,7 +96,7 @@ export default async function PaginaInicial() {
       <EmAltaAgora />
 
       {/* ── Como funciona ─────────────────────────────────── */}
-      <section style={{ borderBottom: "1px solid var(--cor-borda)" }}>
+      <section style={{ backgroundColor: "var(--cor-card)", borderTop: "1px solid var(--cor-borda)", borderBottom: "1px solid var(--cor-borda)" }}>
         <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)" }}>
           <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
             {textosHome.secaoConsultor}
@@ -176,7 +176,7 @@ export default async function PaginaInicial() {
       </section>
 
       {/* ── Destaques ─────────────────────────────────────── */}
-      <section id="destaques">
+      <section id="destaques" style={{ backgroundColor: "var(--cor-card)" }}>
         <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)" }}>
           <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
             do nosso catálogo

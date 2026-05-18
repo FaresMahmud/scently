@@ -23,19 +23,19 @@ function labelTipo(tipo: PerfumeTendencia["tipo"]): string {
 export default function EmAltaAgora() {
   return (
     <section style={{ borderBottom: "1px solid var(--cor-borda)" }}>
-      <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)" }}>
+      <div className="container-site" style={{ paddingTop: "7rem", paddingBottom: "7rem" }}>
 
         {/* Cabeçalho */}
         <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
           em alta esta semana
         </p>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "520px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "600px", fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}>
           O que o mundo está usando agora
         </h2>
         <div className="separador" />
 
         {/* Cards */}
-        <div className="em-alta-grid" style={{ marginTop: "var(--fib-4)" }}>
+        <div className="em-alta-grid" style={{ marginTop: "3.5rem", alignItems: "stretch" }}>
           {TENDENCIAS_SEMANA.map((p) => {
             const tipoStyle = corTipo(p.tipo)
             const href = `/catalogo?busca=${encodeURIComponent(p.nome + " " + p.marca)}`
@@ -46,13 +46,15 @@ export default function EmAltaAgora() {
                     backgroundColor: "var(--cor-card)",
                     border: "1px solid var(--cor-borda)",
                     borderRadius: "var(--raio-borda)",
-                    padding: "var(--fib-4)",
+                    padding: "2rem",
+                    minHeight: "320px",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     gap: "var(--fib-3)",
                     transition: "border-color 0.2s",
                     cursor: "pointer",
+                    boxSizing: "border-box",
                   }}
                 >
                   {/* Badge */}
@@ -82,12 +84,12 @@ export default function EmAltaAgora() {
                   </div>
 
                   {/* Descrição sensorial */}
-                  <p style={{ fontSize: "0.9rem", lineHeight: 1.6, flex: 1 }}>
+                  <p style={{ fontSize: "1rem", lineHeight: 1.8, flex: 1 }}>
                     {p.descricaoSensorial}
                   </p>
 
-                  {/* Preço */}
-                  <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "1.25rem", fontWeight: 300, color: "var(--cor-texto)", marginTop: "auto" }}>
+                  {/* Preço — sempre na base do card */}
+                  <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "1.25rem", fontWeight: 300, color: "var(--cor-texto)", marginTop: "auto", paddingTop: "1rem" }}>
                     {p.preco_estimado}
                   </p>
                 </article>
