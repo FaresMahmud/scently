@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌸 Scently
 
-## Getting Started
+Uma plataforma inteligente de descoberta e recomendação de perfumes alimentada por inteligência artificial. O Scently ajuda usuários a encontrar o perfume ideal através de um consultor interativo baseado em IA e um catálogo abrangente de fragrâncias.
 
-First, run the development server:
+## ✨ Funcionalidades
+
+- **Consultor de Perfumes com IA**: Assistente interativo que faz perguntas sobre preferências e recomenda perfumes personalizados
+- **Catálogo de Fragrâncias**: Banco de dados completo com informações sobre notas de saída, família olfativa e características
+- **Análise de Acordes**: Visualização detalhada das notas olfativas (topo, meio e base)
+- **Interface Responsiva**: Experiência otimizada para desktop e mobile
+- **Autenticação de API**: Integração segura com APIs de IA (Google Generative AI e Groq)
+
+## 🚀 Primeiros Passos
+
+### Pré-requisitos
+- Node.js 18+ instalado
+- npm ou yarn
+
+### Instalação
+
+1. Clone o repositório:
+```bash
+git clone <repository-url>
+cd scently
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Configure as variáveis de ambiente:
+
+Crie um arquivo `.env.local` na raiz do projeto com as seguintes chaves:
+```
+GEMINI_API_KEY=sua_chave_aqui
+GROQ_API_KEY=sua_chave_aqui
+```
+
+### Desenvolvimento
+
+Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+A aplicação será recarregada automaticamente quando você fizer alterações nos arquivos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Scripts Disponíveis
 
-## Learn More
+- `npm run dev` - Inicia o servidor de desenvolvimento
+- `npm run build` - Compila a aplicação para produção
+- `npm start` - Inicia o servidor de produção
+- `npm run lint` - Executa o linter do ESLint
+- `npm test` - Executa os testes com Jest
+- `npm run test:coverage` - Gera relatório de cobertura de testes
+- `npm run scrape` - Executa o script de coleta de dados de perfumes
 
-To learn more about Next.js, take a look at the following resources:
+## 🗂️ Estrutura do Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+scently/
+├── app/                 # Rotas e layouts Next.js
+│   ├── api/            # Rotas de API
+│   ├── catalogo/       # Página do catálogo
+│   ├── consultor/      # Página do consultor de IA
+│   └── perfume/        # Páginas de detalhes de perfumes
+├── components/         # Componentes React reutilizáveis
+│   ├── consultor/      # Componentes do consultor
+│   ├── layout/         # Componentes de layout
+│   ├── perfume/        # Componentes de perfume
+│   └── ui/             # Componentes UI genéricos
+├── lib/                # Funções utilitárias e lógica compartilhada
+├── config/             # Arquivos de configuração
+├── public/             # Arquivos estáticos
+└── styles/             # Estilos globais
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tecnologias Utilizadas
 
-## Deploy on Vercel
+- **Next.js 16** - Framework React moderno
+- **React 19** - Biblioteca de componentes
+- **TypeScript** - Tipagem de dados
+- **Tailwind CSS** - Framework de estilos
+- **Google Generative AI** - API de IA para recomendações
+- **Groq API** - Processamento de IA adicional
+- **Jest** - Framework de testes
+- **ESLint** - Linter de código
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Licença
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Este projeto é proprietário.
+
+## 🤝 Contribuições
+
+Contribuições são bem-vindas! Sinta-se à vontade para fazer um fork, criar uma branch e enviar um pull request.
+
+Para mais informações sobre Next.js, visite a [documentação oficial](https://nextjs.org/docs).
