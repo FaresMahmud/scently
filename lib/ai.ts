@@ -1,9 +1,11 @@
 // ============================================
 // ARQUIVO: lib/ai.ts
-// O QUE FAZ: integração com Gemini via fetch direto — monta prompt e retorna recomendação
+// O QUE FAZ: integração com Groq via fetch direto — monta prompt e retorna recomendação
 // QUANDO MANDAR PRA IA: quando quiser mudar tom de voz, estrutura do JSON ou modelo usado
-// DEPENDE DE: .env.local (GEMINI_API_KEY)
+// DEPENDE DE: .env.local (GROQ_API_KEY), lib/contratiposData.ts
 // ============================================
+
+import { buscarTodosContratipos } from "@/lib/contratiposData"
 
 export interface RespostasQuiz {
   perfil?: string
@@ -25,6 +27,7 @@ export interface RespostasQuiz {
   ambiente?: string
   fixacaoProjecao?: string
   inspiracaoSensorial?: string
+  identidade?: string | string[]
   [key: string]: unknown
 }
 
@@ -140,6 +143,10 @@ export function formatarRespostas(r: RespostasQuiz): string {
   if (r.ambiente) partes.push(`ambiente:${r.ambiente}`)
   if (r.fixacaoProjecao) partes.push(`projecao:${r.fixacaoProjecao}`)
   if (r.inspiracaoSensorial) partes.push(`imagem:${r.inspiracaoSensorial}`)
+  if (r.identidade) {
+    const val = Array.isArray(r.identidade) ? r.identidade.join(",") : r.identidade
+    partes.push(`identidade:${val}`)
+  }
   return partes.join("|")
 }
 
@@ -201,7 +208,20 @@ export async function gerarRecomendacao(
     return instrucoes.length ? '\n' + instrucoes.join('\n') : ''
   })()
 
-  const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}.${climaExtra}
+  const faixaPrecoPrompt = String((respostas as RespostasQuiz).faixaPreco ?? "")
+
+  const listaContratipos = faixaPrecoPrompt === "economico"
+    ? buscarTodosContratipos()
+        .slice(0, 30)
+        .map(p => `${p.nome} — ${p.marca} (${p.tipo}, ${p.genero}, ${p.familia})`)
+        .join("\n")
+    : null
+
+  const instrucaoContratipos = listaContratipos
+    ? `\nPERFUMES DISPONÍVEIS NO CATÁLOGO (escolha APENAS entre estes para faixa econômica):\n${listaContratipos}`
+    : ""
+
+  const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}.${climaExtra}${instrucaoContratipos}
 
 Responda APENAS com JSON válido seguindo exatamente este exemplo:
 {

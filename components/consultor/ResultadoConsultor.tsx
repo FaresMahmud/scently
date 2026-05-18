@@ -7,11 +7,22 @@
 
 "use client"
 
+import { useState } from "react"
+import Link from "next/link"
 import Card from "@/components/ui/Card"
 import Tag from "@/components/ui/Tag"
-import Botao from "@/components/ui/Botao"
 import type { RecomendacaoIA } from "@/lib/ai"
 import { textosConsultor } from "@/config/site"
+import { corDaNota } from "@/lib/coresNotas"
+
+function slugify(texto: string): string {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+}
 
 interface PropsResultado {
   recomendacao: RecomendacaoIA
@@ -20,6 +31,10 @@ interface PropsResultado {
 
 export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsResultado) {
   const { perfumePrincipal, conselho, alternativa } = recomendacao
+  const [notaHover, setNotaHover] = useState<string | null>(null)
+
+  const linkPrincipal = `/perfume/${slugify(perfumePrincipal.nome)}-${slugify(perfumePrincipal.marca)}`
+  const linkAlternativa = `/perfume/${slugify(alternativa.nome)}-${slugify(alternativa.marca)}`
 
   return (
     <div style={{ maxWidth: "620px", margin: "0 auto" }} className="fade-in">
@@ -54,24 +69,50 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
           {perfumePrincipal.descricao}
         </p>
 
+        {/* Link para o catálogo */}
+        <Link
+          href={linkPrincipal}
+          style={{
+            display: "inline-block",
+            color: "var(--cor-destaque)",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            marginBottom: "1.25rem",
+            background: "none",
+            border: "none",
+            padding: 0,
+            cursor: "pointer",
+          }}
+        >
+          Ver no catálogo →
+        </Link>
+
         {/* Notas olfativas */}
         {perfumePrincipal.notas?.length > 0 && (
           <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {perfumePrincipal.notas.map((nota) => (
-              <span
-                key={nota}
-                style={{
-                  fontSize: "0.78rem",
-                  color: "var(--cor-texto-suave)",
-                  backgroundColor: "var(--cor-base)",
-                  border: "1px solid var(--cor-borda)",
-                  padding: "0.25rem 0.65rem",
-                  borderRadius: "2rem",
-                }}
-              >
-                {nota}
-              </span>
-            ))}
+            {perfumePrincipal.notas.map((nota) => {
+              const cor = corDaNota(nota)
+              const ativo = notaHover === nota
+              return (
+                <span
+                  key={nota}
+                  onMouseEnter={() => setNotaHover(nota)}
+                  onMouseLeave={() => setNotaHover(null)}
+                  style={{
+                    fontSize: "0.78rem",
+                    padding: "0.25rem 0.65rem",
+                    borderRadius: "2rem",
+                    cursor: "default",
+                    transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
+                    backgroundColor: ativo ? cor.bg   : "var(--cor-base)",
+                    color:           ativo ? cor.text : "var(--cor-texto-suave)",
+                    border:          ativo ? `1px solid ${cor.bg}` : "1px solid var(--cor-borda)",
+                  }}
+                >
+                  {nota}
+                </span>
+              )
+            })}
           </div>
         )}
       </Card>
@@ -95,9 +136,26 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
         <p style={{ fontSize: "0.78rem", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
           {alternativa.marca}
         </p>
-        <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)", lineHeight: 1.65 }}>
+        <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)", lineHeight: 1.65, marginBottom: "1rem" }}>
           {alternativa.descricao}
         </p>
+
+        {/* Link para o catálogo */}
+        <Link
+          href={linkAlternativa}
+          style={{
+            display: "inline-block",
+            color: "var(--cor-destaque)",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            background: "none",
+            border: "none",
+            padding: 0,
+            cursor: "pointer",
+          }}
+        >
+          Ver no catálogo →
+        </Link>
       </Card>
 
       {/* Ações */}
