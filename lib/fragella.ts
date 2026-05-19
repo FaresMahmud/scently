@@ -101,24 +101,29 @@ export async function buscarPorNome(nome: string): Promise<PerfumeFragella[]> {
   }
 }
 
+// Converte um PerfumeEbay para PerfumeFragella (fallback quando a API não está disponível)
+function ebayParaFragella(p: { titulo: string; marca: string; tipo: string; genero: string; preco_brl: number }): PerfumeFragella {
+  return {
+    id: ebayParaSlug(p.titulo, p.marca),
+    nome: p.titulo.split(" by ")[0].split(/\s+\d/)[0].trim(),
+    marca: p.marca,
+    concentracao: p.tipo,
+    genero: p.genero === "Masculino" ? "masculino" : "feminino",
+    ano: 0,
+    notasTopo: [],
+    notasCoracao: [],
+    notasFundo: [],
+    familia: "",
+    descricao: "",
+    imagem: "",
+    preco: p.preco_brl,
+  }
+}
+
 // Busca perfumes em destaque para a página inicial
 export async function buscarDestaques(): Promise<PerfumeFragella[]> {
   if (!API_KEY) {
-    return buscarEbayPopulares(8).map((p) => ({
-      id: ebayParaSlug(p.titulo, p.marca),
-      nome: p.titulo.split(" by ")[0].split(/\s+\d/)[0].trim(),
-      marca: p.marca,
-      concentracao: p.tipo,
-      genero: p.genero === "Masculino" ? "masculino" : "feminino",
-      ano: 0,
-      notasTopo: [],
-      notasCoracao: [],
-      notasFundo: [],
-      familia: "",
-      descricao: "",
-      imagem: "",
-      preco: p.preco_brl,
-    }))
+    return buscarEbayPopulares(8).map(ebayParaFragella)
   }
 
   try {
@@ -128,20 +133,6 @@ export async function buscarDestaques(): Promise<PerfumeFragella[]> {
     return resposta.data.data ?? []
   } catch (erro) {
     console.error("[Fragella] Erro ao buscar destaques:", erro)
-    return buscarEbayPopulares(8).map((p) => ({
-      id: ebayParaSlug(p.titulo, p.marca),
-      nome: p.titulo.split(" by ")[0].split(/\s+\d/)[0].trim(),
-      marca: p.marca,
-      concentracao: p.tipo,
-      genero: p.genero === "Masculino" ? "masculino" : "feminino",
-      ano: 0,
-      notasTopo: [],
-      notasCoracao: [],
-      notasFundo: [],
-      familia: "",
-      descricao: "",
-      imagem: "",
-      preco: p.preco_brl,
-    }))
+    return buscarEbayPopulares(8).map(ebayParaFragella)
   }
 }

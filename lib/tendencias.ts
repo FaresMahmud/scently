@@ -2,8 +2,10 @@
 // ARQUIVO: lib/tendencias.ts
 // O QUE FAZ: perfumes em alta — atualizado semanalmente via curadoria
 // QUANDO MANDAR PRA IA: quando quiser atualizar os perfumes em destaque
-// DEPENDE DE: nada
+// DEPENDE DE: data/tendencias.json
 // ============================================
+
+import dadosJson from "@/data/tendencias.json"
 
 export interface PerfumeTendencia {
   id: string
@@ -17,38 +19,4 @@ export interface PerfumeTendencia {
   tipo: "importado" | "contratipo" | "nacional"
 }
 
-export const TENDENCIAS_SEMANA: PerfumeTendencia[] = [
-  {
-    id: "sauvage-dior-edp",
-    nome: "Sauvage EDP",
-    marca: "Dior",
-    concentracao: "EDP",
-    familia: "Fresco Especiado",
-    descricaoSensorial: "Bergamota fria encontra ambroxan quente. O perfume que todo mundo reconhece mas nunca cansa.",
-    badge: "🔥 Mais consultado",
-    preco_estimado: "R$ 700–900",
-    tipo: "importado",
-  },
-  {
-    id: "aventhis-in-the-box",
-    nome: "Aventhis 2010",
-    marca: "In The Box",
-    concentracao: "EDP",
-    familia: "Frutal Amadeirado",
-    descricaoSensorial: "Abacaxi defumado sobre musgo de carvalho. A versão do Aventus que o Brasil abraçou.",
-    badge: "⭐ Favorito nacional",
-    preco_estimado: "R$ 189",
-    tipo: "contratipo",
-  },
-  {
-    id: "baccarat-rouge-540",
-    nome: "Baccarat Rouge 540",
-    marca: "Maison Francis Kurkdjian",
-    concentracao: "EDP",
-    familia: "Floral Amadeirado",
-    descricaoSensorial: "Jasmim e ambroxan num acorde impossível de ignorar. O perfume mais imitado do mundo.",
-    badge: "✨ Tendência global",
-    preco_estimado: "R$ 2.000–3.000",
-    tipo: "importado",
-  },
-]
+export const TENDENCIAS_SEMANA: PerfumeTendencia[] = dadosJson as PerfumeTendencia[]

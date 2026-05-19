@@ -1,0 +1,18 @@
+{
+  "economico": [
+    "dior", "chanel", "tom ford", "creed", "le labo", "maison margiela",
+    "replica", "byredo", "parfums de marly", "xerjoff", "amouage", "initio",
+    "maison francis kurkdjian", "mfk", "nishane", "kilian", "serge lutens",
+    "memo paris", "louis vuitton", "hermès", "hermes", "guerlain", "bvlgari",
+    "versace", "yves saint laurent", "ysl", "paco rabanne", "armani",
+    "giorgio armani", "lancôme", "lancome", "carolina herrera", "hugo boss",
+    "burberry", "gucci", "dolce", "montblanc", "lacoste", "ralph lauren",
+    "givenchy", "valentino", "prada", "bulgari", "narciso rodriguez"
+  ],
+  "medio": [
+    "creed", "le labo", "maison margiela", "byredo", "parfums de marly",
+    "xerjoff", "amouage", "initio", "maison francis kurkdjian", "mfk",
+    "nishane", "kilian", "serge lutens", "memo paris", "louis vuitton",
+    "tom ford private", "tobacco vanille", "lost cherry", "oud wood"
+  ]
+}

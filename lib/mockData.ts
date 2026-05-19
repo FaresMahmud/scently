@@ -6,7 +6,7 @@
 // ============================================
 
 import type { PerfumeFragella } from "./fragella"
-import type { Acorde } from "@/components/perfume/AcordesPerfume"
+import type { Acorde } from "@/lib/types"
 
 // Perfume com acordes para a página de detalhe
 export interface PerfumeMock extends PerfumeFragella {

@@ -2,7 +2,7 @@
 // ARQUIVO: app/catalogo/page.tsx
 // O QUE FAZ: catálogo completo — perfumes eBay + contratipos brasileiros, filtros em pill multi-select
 // QUANDO MANDAR PRA IA: quando quiser mudar layout, filtros ou fonte dos dados
-// DEPENDE DE: lib/ebayData.ts, lib/contratiposData.ts, components/perfume/CardPerfume.tsx
+// DEPENDE DE: lib/repositories/EbayPerfumeRepository, lib/repositories/ContratipoRepository
 // ============================================
 
 "use client"
@@ -10,10 +10,10 @@
 import { useState, useMemo } from "react"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
-import { PERFUMES_EBAY, ebayParaSlug } from "@/lib/ebayData"
-import type { PerfumeEbay } from "@/lib/ebayData"
-import { buscarTodosContratipos } from "@/lib/contratiposData"
-import type { PerfumeContratipo } from "@/lib/contratiposData"
+import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
+import type { PerfumeEbay } from "@/lib/repositories/EbayPerfumeRepository"
+import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
+import type { PerfumeContratipo } from "@/lib/repositories/ContratipoRepository"
 
 type Genero = "Masculino" | "Feminino" | "Unissex"
 type Tipo = "EDP" | "EDT" | "EDC" | "Extrait" | "Contratipo"
@@ -27,7 +27,7 @@ interface CardUnificado extends DadosCardPerfume {
 
 function ebayParaCard(p: PerfumeEbay): CardUnificado {
   return {
-    id: ebayParaSlug(p.titulo, p.marca),
+    id: ebayRepository.toSlug(p.titulo, p.marca),
     nome: p.titulo,
     marca: p.marca,
     concentracao: p.tipo,
@@ -92,22 +92,22 @@ function toggle<T>(arr: T[], val: T): T[] {
   return arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]
 }
 
-// Combina eBay + contratipos uma única vez
-const TODOS_PERFUMES: CardUnificado[] = [
-  ...PERFUMES_EBAY.map(ebayParaCard),
-  ...buscarTodosContratipos().map(contratipoParaCard),
-]
-
 export default function PaginaCatalogo() {
   const [busca, setBusca] = useState("")
   const [generos, setGeneros] = useState<Genero[]>([])
   const [tipos, setTipos] = useState<Tipo[]>([])
   const [ordenacao, setOrdenacao] = useState<Ordenacao>("relevancia")
 
+  // Combina eBay + contratipos via repositórios — lazy, apenas na primeira renderização
+  const todosPerfu = useMemo<CardUnificado[]>(() => [
+    ...ebayRepository.findAll().map(ebayParaCard),
+    ...contratipoRepository.findAll().map(contratipoParaCard),
+  ], [])
+
   const resultados = useMemo(() => {
     const buscaNorm = busca.toLowerCase().trim()
 
-    let lista = TODOS_PERFUMES.filter((p) => {
+    let lista = todosPerfu.filter((p) => {
       if (
         buscaNorm &&
         !p.nome.toLowerCase().includes(buscaNorm) &&

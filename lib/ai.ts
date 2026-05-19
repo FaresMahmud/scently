@@ -2,10 +2,12 @@
 // ARQUIVO: lib/ai.ts
 // O QUE FAZ: integração com Groq via fetch direto — monta prompt e retorna recomendação
 // QUANDO MANDAR PRA IA: quando quiser mudar tom de voz, estrutura do JSON ou modelo usado
-// DEPENDE DE: .env.local (GROQ_API_KEY), lib/contratiposData.ts
+// DEPENDE DE: .env.local (GROQ_API_KEY), data/regras-preco.json, data/fallbacks-ia.json
 // ============================================
 
-import { buscarTodosContratipos } from "@/lib/contratiposData"
+import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
+import regrasPreco from "@/data/regras-preco.json"
+import fallbacksJson from "@/data/fallbacks-ia.json"
 
 export interface RespostasQuiz {
   perfil?: string
@@ -86,23 +88,8 @@ REGRA DE VARIEDADE — evite sempre os mesmos perfumes:
 - Se cheiro:couro → considerar Tuscan Leather, Cuir de Russie, Cuoium
 - Combine TODAS as respostas para chegar a algo único, não só a vibe principal`
 
-const MARCAS_PROIBIDAS_ECONOMICO = [
-  "dior", "chanel", "tom ford", "creed", "le labo", "maison margiela",
-  "replica", "byredo", "parfums de marly", "xerjoff", "amouage", "initio",
-  "maison francis kurkdjian", "mfk", "nishane", "kilian", "serge lutens",
-  "memo paris", "louis vuitton", "hermès", "hermes", "guerlain", "bvlgari",
-  "versace", "yves saint laurent", "ysl", "paco rabanne", "armani",
-  "giorgio armani", "lancôme", "lancome", "carolina herrera", "hugo boss",
-  "burberry", "gucci", "dolce", "montblanc", "lacoste", "ralph lauren",
-  "givenchy", "valentino", "prada", "bulgari", "narciso rodriguez"
-]
-
-const MARCAS_PROIBIDAS_MEDIO = [
-  "creed", "le labo", "maison margiela", "byredo", "parfums de marly",
-  "xerjoff", "amouage", "initio", "maison francis kurkdjian", "mfk",
-  "nishane", "kilian", "serge lutens", "memo paris", "louis vuitton",
-  "tom ford private", "tobacco vanille", "lost cherry", "oud wood"
-]
+const MARCAS_PROIBIDAS_ECONOMICO: string[] = regrasPreco.economico
+const MARCAS_PROIBIDAS_MEDIO: string[] = regrasPreco.medio
 
 export function validarFaixaPreco(resultado: RecomendacaoIA, faixaPreco: string): boolean {
   const marcaPrincipal = resultado.perfumePrincipal.marca.toLowerCase()
@@ -211,7 +198,7 @@ export async function gerarRecomendacao(
   const faixaPrecoPrompt = String((respostas as RespostasQuiz).faixaPreco ?? "")
 
   const listaContratipos = faixaPrecoPrompt === "economico"
-    ? buscarTodosContratipos()
+    ? contratipoRepository.findAll()
         .slice(0, 30)
         .map(p => `${p.nome} — ${p.marca} (${p.tipo}, ${p.genero}, ${p.familia})`)
         .join("\n")
@@ -284,89 +271,12 @@ function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
   const clima = String(respostas.clima ?? "")
   const preco = String(respostas.faixaPreco ?? "")
 
+  const FALLBACKS = fallbacksJson as Record<string, RecomendacaoIA>
+
   // Fallback econômico — sempre respeita a faixa de preço
-  if (preco === "economico") {
-    return {
-      perfumePrincipal: {
-        nome: "Carbon",
-        marca: "La Rive",
-        concentracao: "EDT",
-        descricao: "Fresco e especiado, inspirado no Sauvage. Boa fixação e projeção pra quem quer cheirar bem sem gastar muito.",
-        notas: ["bergamota", "pimenta", "ambroxan", "cedro"],
-      },
-      conselho: "Aplique no pescoço e punhos logo após o banho. Com até R$100, é uma das melhores opções nacionais disponíveis.",
-      alternativa: {
-        nome: "Aventhis 2010",
-        marca: "In The Box",
-        descricao: "Contratipo do Creed Aventus fórmula original. Um dos melhores custo-benefício do mercado nacional.",
-      },
-    }
-  }
+  if (preco === "economico") return FALLBACKS["economico"]
 
   // Fallback por vibe para médio, premium e luxo
-  const mapa: Record<string, RecomendacaoIA> = {
-    fresco: {
-      perfumePrincipal: {
-        nome: "Acqua di Giò",
-        marca: "Giorgio Armani",
-        concentracao: "EDT",
-        descricao: "Água do mar cristalizada na pele. Fresco, com fundo leve de almíscar que persiste sem pesar. Ideal para climas quentes e uso diário.",
-        notas: ["bergamota", "jasmim", "patchouli", "almíscar branco"],
-      },
-      conselho: "Em climas úmidos, EDT projeta bem. Se preferir mais duração, a versão Profumo (EDP) entrega o mesmo frescor com mais fixação.",
-      alternativa: {
-        nome: "Cool Water",
-        marca: "Davidoff",
-        descricao: "O clássico aquático que ainda resiste bem ao tempo, com excelente custo-benefício.",
-      },
-    },
-    quente: {
-      perfumePrincipal: {
-        nome: "Black Orchid",
-        marca: "Tom Ford",
-        concentracao: "EDP",
-        descricao: "Denso, escuro, com trufa e orquídea preta sobre um fundo amadeirado. Envolve quem está por perto sem anunciar — ele é sentido, não visto.",
-        notas: ["trufa preta", "orquídea", "patchouli", "baunilha"],
-      },
-      conselho: "Use com parcimônia — dois jatos no pulso bastam. Em dias quentes, o calor do corpo amplifica a projeção.",
-      alternativa: {
-        nome: "Oud Wood",
-        marca: "Tom Ford",
-        descricao: "Mais seco e madeiroso, para quem quer a intensidade sem o lado floral do Black Orchid.",
-      },
-    },
-    sofisticado: {
-      perfumePrincipal: {
-        nome: "Bleu de Chanel",
-        marca: "Chanel",
-        concentracao: "EDP",
-        descricao: "Cedro, sândalo e notas cítricas numa composição limpa e sofisticada. Versátil o suficiente para o dia, marcante o bastante para a noite.",
-        notas: ["limão siciliano", "gengibre", "cedro", "sândalo", "almíscar branco"],
-      },
-      conselho: "O EDP tem mais profundidade amadeirada que o EDT — vale a diferença. Aplique no pescoço e punhos logo após o banho.",
-      alternativa: {
-        nome: "Armani Code",
-        marca: "Giorgio Armani",
-        descricao: "Mais especiado e sedutor, com bergamota e notas de couro. Mesma sofisticação, tom mais noturno.",
-      },
-    },
-    doce: {
-      perfumePrincipal: {
-        nome: "La Vie Est Belle",
-        marca: "Lancôme",
-        concentracao: "EDP",
-        descricao: "Iris e pralinê sobre fundo de baunilha. Doce sem ser infantil — tem uma gourmand elegante que aquece sem enjoar.",
-        notas: ["iris", "pralinê", "baunilha", "patchouli"],
-      },
-      conselho: "Em climas frios, a baunilha ganha mais presença. No calor, aplique menos — o doce amplifica com a temperatura.",
-      alternativa: {
-        nome: "Good Girl",
-        marca: "Carolina Herrera",
-        descricao: "Mais especiado e noturno, com o mesmo equilíbrio doce-escuro para quem quer algo mais único.",
-      },
-    },
-  }
-
-  const chave = vibe in mapa ? vibe : clima === "frio" ? "quente" : "fresco"
-  return mapa[chave] ?? mapa["fresco"]
+  const chave = vibe in FALLBACKS ? vibe : clima === "frio" ? "quente" : "fresco"
+  return FALLBACKS[chave] ?? FALLBACKS["fresco"]
 }

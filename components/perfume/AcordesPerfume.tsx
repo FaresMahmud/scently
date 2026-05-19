@@ -9,11 +9,10 @@
 
 import { useState } from "react"
 import { corDaNota } from "@/lib/coresNotas"
+import type { Acorde } from "@/lib/types"
 
-export interface Acorde {
-  nome: string
-  porcentagem: number  // 0 a 100 — define o comprimento da barra
-}
+// Re-exporta para compatibilidade com imports existentes
+export type { Acorde }
 
 interface PropsAcordes {
   acordes: Acorde[]

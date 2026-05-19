@@ -2,11 +2,12 @@
 // ARQUIVO: components/home/EmAltaAgora.tsx
 // O QUE FAZ: exibe os 3 perfumes mais populares do momento — atualizado semanalmente
 // QUANDO MANDAR PRA IA: quando quiser mudar o visual desta seção
-// DEPENDE DE: lib/tendencias.ts
+// DEPENDE DE: lib/repositories/TendenciasRepository
 // ============================================
 
 import Link from "next/link"
-import { TENDENCIAS_SEMANA, PerfumeTendencia } from "@/lib/tendencias"
+import { tendenciasRepository } from "@/lib/repositories/TendenciasRepository"
+import type { PerfumeTendencia } from "@/lib/repositories/TendenciasRepository"
 
 function corTipo(tipo: PerfumeTendencia["tipo"]): { bg: string; cor: string } {
   if (tipo === "importado") return { bg: "rgba(196,113,74,0.12)", cor: "var(--cor-destaque)" }
@@ -36,7 +37,7 @@ export default function EmAltaAgora() {
 
         {/* Cards */}
         <div className="em-alta-grid" style={{ marginTop: "3.5rem", alignItems: "stretch" }}>
-          {TENDENCIAS_SEMANA.map((p) => {
+          {tendenciasRepository.findAll().map((p) => {
             const tipoStyle = corTipo(p.tipo)
             const href = `/catalogo?busca=${encodeURIComponent(p.nome + " " + p.marca)}`
             return (
