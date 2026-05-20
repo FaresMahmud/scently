@@ -9,6 +9,7 @@ import type { Metadata } from "next"
 import { siteMeta } from "@/config/site"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
+import BannerCookies from "@/components/ui/BannerCookies"
 import "@/styles/globals.css"
 
 // Metadados padrão para SEO
@@ -49,6 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Rodapé em todas as páginas */}
         <Footer />
+
+        {/* Banner de cookies — aparece na primeira visita */}
+        <BannerCookies />
       </body>
     </html>
   )

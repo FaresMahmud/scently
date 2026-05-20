@@ -2,11 +2,18 @@
 // ARQUIVO: app/api/consultor/route.ts
 // O QUE FAZ: endpoint POST que recebe as respostas do quiz e retorna a recomendação da IA
 // QUANDO MANDAR PRA IA: quando quiser mudar validação, rate limiting ou tratamento de erro
-// DEPENDE DE: lib/ai.ts, .env.local (GEMINI_API_KEY — nunca exposta ao cliente)
+// DEPENDE DE: lib/ai.ts, .env.local (GROQ_API_KEY — nunca exposta ao cliente)
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server"
 import { gerarRecomendacao } from "@/lib/ai"
+
+const ORIGENS_PERMITIDAS = [
+  "http://localhost:3000",
+  "https://scently.com.br",
+  "https://www.scently.com.br",
+  "https://scently-five.vercel.app",
+]
 
 // Rate limiting em memória: IP → { count, resetAt }
 const limites = new Map<string, { count: number; resetAt: number }>()
@@ -29,6 +36,18 @@ function verificarRateLimit(ip: string): boolean {
 }
 
 export async function POST(request: NextRequest) {
+  // Verificação de origem (CORS)
+  const origem = request.headers.get("origin") ?? ""
+  if (origem && !ORIGENS_PERMITIDAS.includes(origem)) {
+    return NextResponse.json({ erro: "Origem não permitida" }, { status: 403 })
+  }
+
+  // Limite de payload
+  const contentLength = request.headers.get("content-length")
+  if (contentLength && parseInt(contentLength) > 10240) {
+    return NextResponse.json({ erro: "Payload muito grande" }, { status: 413 })
+  }
+
   // Rate limiting por IP
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
