@@ -64,9 +64,10 @@ export default function MenuMobileToggle() {
         ))}
       </button>
 
-      {/* Overlay escuro quando menu está aberto */}
+      {/* Overlay escuro quando menu está aberto — só existe no mobile */}
       {aberto && (
         <div
+          className="menu-mobile-overlay"
           onClick={() => setAberto(false)}
           style={{
             position: "fixed",

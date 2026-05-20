@@ -256,6 +256,46 @@ REGRAS OBRIGATÓRIAS:
       return gerarFallback(respostas)
     }
 
+    // Segunda camada: verifica se o nome existe no banco quando econômico
+    if (faixaPreco === "economico") {
+      const todosContratipos = contratipoRepository.findAll()
+      const nomeExiste = todosContratipos.some(
+        p => p.nome.toLowerCase() === resultado.perfumePrincipal.nome.toLowerCase()
+      )
+      if (!nomeExiste) {
+        console.warn(`[IA] Nome "${resultado.perfumePrincipal.nome}" não encontrado no banco — substituindo por compatível`)
+        const genero = String((respostas as RespostasQuiz).genero ?? "")
+        const vibe   = String((respostas as RespostasQuiz).vibe   ?? "")
+
+        const vibeKeywords: Record<string, string[]> = {
+          fresco:       ["fresco", "citrico", "cítrico", "aquático", "aquatico", "verde"],
+          quente:       ["oriental", "amadeirado", "especiado"],
+          sofisticado:  ["amadeirado", "floral", "chypre"],
+          doce:         ["gourmand", "frutado", "floral"],
+        }
+        const keywords = vibeKeywords[vibe] ?? []
+
+        const candidatos = todosContratipos.filter(p => {
+          const generoMatch = !genero || p.genero.toLowerCase() === genero.toLowerCase()
+          const vibeMatch   = keywords.length === 0 || keywords.some(k => p.familia.toLowerCase().includes(k))
+          return generoMatch && vibeMatch
+        })
+
+        const melhor =
+          candidatos[0] ??
+          todosContratipos.find(p => !genero || p.genero.toLowerCase() === genero.toLowerCase()) ??
+          todosContratipos[0]
+
+        resultado.perfumePrincipal = {
+          nome:         melhor.nome,
+          marca:        melhor.marca,
+          concentracao: melhor.tipo,
+          descricao:    resultado.perfumePrincipal.descricao,
+          notas:        melhor.notas,
+        }
+      }
+    }
+
     console.log("[IA] Sucesso com Groq")
     return resultado
   } catch (erro) {

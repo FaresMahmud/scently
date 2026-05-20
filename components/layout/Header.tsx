@@ -5,9 +5,30 @@
 // DEPENDE DE: components/layout/MenuMobile.tsx, config/site.ts
 // ============================================
 
+"use client"
+
 import Link from "next/link"
+import { useRouter, usePathname } from "next/navigation"
 import { siteMeta } from "@/config/site"
 import MenuMobileToggle from "./MenuMobileToggle"
+
+function LinkConsultor({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  function handleClick(e: React.MouseEvent) {
+    if (pathname === "/consultor") {
+      e.preventDefault()
+      window.dispatchEvent(new CustomEvent("resetar-quiz"))
+    }
+  }
+
+  return (
+    <Link href="/consultor" onClick={handleClick} style={style}>
+      {children}
+    </Link>
+  )
+}
 
 export default function Header() {
   return (
@@ -41,9 +62,7 @@ export default function Header() {
         </Link>
 
         {/* Navegação desktop — esconde no mobile via CSS */}
-        <nav
-          className="nav-desktop"
-        >
+        <nav className="nav-desktop">
           <Link
             href="/catalogo"
             style={{
@@ -57,8 +76,7 @@ export default function Header() {
             catálogo
           </Link>
 
-          <Link
-            href="/consultor"
+          <LinkConsultor
             style={{
               fontFamily: "var(--fonte-corpo)",
               fontSize: "0.8rem",
@@ -68,10 +86,9 @@ export default function Header() {
             }}
           >
             consultor
-          </Link>
+          </LinkConsultor>
 
-          <Link
-            href="/consultor"
+          <LinkConsultor
             style={{
               fontFamily: "var(--fonte-corpo)",
               fontSize: "0.78rem",
@@ -84,7 +101,7 @@ export default function Header() {
             }}
           >
             iniciar consulta
-          </Link>
+          </LinkConsultor>
         </nav>
 
         {/* Ícone hambúrguer — só aparece no mobile */}

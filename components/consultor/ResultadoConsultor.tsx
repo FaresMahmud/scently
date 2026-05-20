@@ -24,6 +24,29 @@ function slugify(texto: string): string {
     .replace(/(^-|-$)/g, "")
 }
 
+function TagNota({ nota }: { nota: string }) {
+  const [hover, setHover] = useState(false)
+  const cor = corDaNota(nota)
+  return (
+    <span
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        fontSize: "0.78rem",
+        padding: "0.25rem 0.65rem",
+        borderRadius: "2rem",
+        cursor: "default",
+        transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
+        backgroundColor: hover ? cor.bg   : "var(--cor-base)",
+        color:           hover ? cor.text : "var(--cor-texto-suave)",
+        border:          hover ? `1px solid ${cor.bg}` : "1px solid var(--cor-borda)",
+      }}
+    >
+      {nota}
+    </span>
+  )
+}
+
 interface PropsResultado {
   recomendacao: RecomendacaoIA
   onRecomecar: () => void
@@ -31,13 +54,12 @@ interface PropsResultado {
 
 export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsResultado) {
   const { perfumePrincipal, conselho, alternativa } = recomendacao
-  const [notaHover, setNotaHover] = useState<string | null>(null)
 
   const linkPrincipal = `/perfume/${slugify(perfumePrincipal.nome)}-${slugify(perfumePrincipal.marca)}`
   const linkAlternativa = `/perfume/${slugify(alternativa.nome)}-${slugify(alternativa.marca)}`
 
   return (
-    <div style={{ maxWidth: "620px", margin: "0 auto" }} className="fade-in">
+    <div style={{ maxWidth: "620px", margin: "0 auto", opacity: 1, animation: "none" }}>
       {/* Label de resultado */}
       <p style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "1.5rem" }}>
         {textosConsultor.tituloPerfumePrincipal}
@@ -90,29 +112,9 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
         {/* Notas olfativas */}
         {perfumePrincipal.notas?.length > 0 && (
           <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {perfumePrincipal.notas.map((nota) => {
-              const cor = corDaNota(nota)
-              const ativo = notaHover === nota
-              return (
-                <span
-                  key={nota}
-                  onMouseEnter={() => setNotaHover(nota)}
-                  onMouseLeave={() => setNotaHover(null)}
-                  style={{
-                    fontSize: "0.78rem",
-                    padding: "0.25rem 0.65rem",
-                    borderRadius: "2rem",
-                    cursor: "default",
-                    transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
-                    backgroundColor: ativo ? cor.bg   : "var(--cor-base)",
-                    color:           ativo ? cor.text : "var(--cor-texto-suave)",
-                    border:          ativo ? `1px solid ${cor.bg}` : "1px solid var(--cor-borda)",
-                  }}
-                >
-                  {nota}
-                </span>
-              )
-            })}
+            {perfumePrincipal.notas.map((nota) => (
+              <TagNota key={nota} nota={nota} />
+            ))}
           </div>
         )}
       </Card>

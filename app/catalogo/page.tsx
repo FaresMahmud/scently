@@ -23,6 +23,7 @@ interface CardUnificado extends DadosCardPerfume {
   preco_brl?: number
   vendidos?: number
   inspiracaoInfo?: string
+  categoria?: string
 }
 
 function ebayParaCard(p: PerfumeEbay): CardUnificado {
@@ -47,6 +48,7 @@ function contratipoParaCard(p: PerfumeContratipo): CardUnificado {
     preco_brl: p.preco_brl,
     vendidos: 0,
     inspiracaoInfo: `inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`,
+    categoria: p.categoria,
   }
 }
 
@@ -99,10 +101,12 @@ export default function PaginaCatalogo() {
   const [ordenacao, setOrdenacao] = useState<Ordenacao>("relevancia")
 
   // Combina eBay + contratipos via repositórios — lazy, apenas na primeira renderização
-  const todosPerfu = useMemo<CardUnificado[]>(() => [
-    ...ebayRepository.findAll().map(ebayParaCard),
-    ...contratipoRepository.findAll().map(contratipoParaCard),
-  ], [])
+  const todosPerfu = useMemo<CardUnificado[]>(() =>
+    [
+      ...ebayRepository.findAll().map(ebayParaCard),
+      ...contratipoRepository.findAll().map(contratipoParaCard),
+    ].map((p, index) => ({ ...p, id: `${p.id}-${index}` }))
+  , [])
 
   const resultados = useMemo(() => {
     const buscaNorm = busca.toLowerCase().trim()
@@ -119,7 +123,7 @@ export default function PaginaCatalogo() {
       if (generos.length > 0 && !generos.includes(p.familia as Genero)) return false
 
       if (tipos.length > 0) {
-        const isContratipo = !!p.inspiracaoInfo
+        const isContratipo = p.categoria === "contratipo"
         if (tipos.includes("Contratipo") && isContratipo) return true
         if (tipos.some((t) => t !== "Contratipo") && tipos.includes(p.concentracao as Tipo)) return true
         return false

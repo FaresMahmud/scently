@@ -7,7 +7,7 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import SelecaoModo from "./SelecaoModo"
 import PerguntaOpcoes from "./PerguntaOpcoes"
 import PerguntaNotas from "./PerguntaNotas"
@@ -108,6 +108,14 @@ export default function QuizConsultor() {
     setRespostas({})
     setRecomendacao(null)
   }
+
+  useEffect(() => {
+    function handleReset() {
+      recomecar()
+    }
+    window.addEventListener("resetar-quiz", handleReset)
+    return () => window.removeEventListener("resetar-quiz", handleReset)
+  }, [])
 
   // ── Telas especiais (sem barra de progresso) ──
 

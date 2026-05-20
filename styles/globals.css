@@ -396,6 +396,17 @@ a:hover article {
   }
 }
 
+/* Overlay mobile — bloqueado no desktop para não capturar cliques nos links do header */
+.menu-mobile-overlay {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .menu-mobile-overlay {
+    display: block;
+  }
+}
+
 /* ----------------------------------------
    Scrollbar discreta — apenas Webkit
    ---------------------------------------- */

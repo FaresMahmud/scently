@@ -22,7 +22,6 @@ export default function PaginaConsultor() {
         minHeight: "calc(100vh - 64px)",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
       }}
     >
       <div className="container-site" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
