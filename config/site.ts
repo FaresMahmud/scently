@@ -145,7 +145,7 @@ export const perguntasAprofundadas = [
     ],
   },
   {
-    id: "preco",
+    id: "faixaPreco",
     pergunta: "Quanto você costuma investir em um perfume?",
     opcoes: [
       { valor: "economico", texto: "Até R$ 200" },
@@ -209,7 +209,7 @@ export const perguntasAprofundadas = [
     ],
   },
   {
-    id: "fixacao-projecao",
+    id: "fixacaoProjecao",
     pergunta: "Como prefere que seu perfume se comporte?",
     opcoes: [
       { valor: "discreto-pele", texto: "Só quem se aproxima sente" },

@@ -113,7 +113,7 @@ describe("perguntasAprofundadas", () => {
   })
 
   it("inclui pergunta de preço com 4 faixas", () => {
-    const pergunta = perguntasAprofundadas.find((p) => p.id === "preco")
+    const pergunta = perguntasAprofundadas.find((p) => p.id === "faixaPreco")
     expect(pergunta).toBeDefined()
     const valores = pergunta!.opcoes!.map((o) => o.valor)
     expect(valores).toContain("economico")
