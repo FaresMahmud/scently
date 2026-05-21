@@ -315,6 +315,29 @@ a:hover article {
   opacity: 1;
 }
 
+/* Card sem anchor wrapper — hover direto no article */
+.card-perfume {
+  transition: border-color 0.2s;
+}
+.card-perfume:hover {
+  border-color: var(--cor-texto-suave) !important;
+}
+
+/* Link de marca — suave com hover terracota */
+.link-marca {
+  font-family: var(--fonte-corpo);
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--cor-texto-suave);
+  text-decoration: none;
+  transition: color 0.15s;
+  display: block;
+}
+.link-marca:hover {
+  color: var(--cor-destaque) !important;
+  opacity: 1 !important;
+}
+
 /* Seleção de texto usa a cor destaque */
 ::selection {
   background-color: var(--cor-destaque);
