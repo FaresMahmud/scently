@@ -45,6 +45,7 @@ function contratipoParaCard(p: PerfumeContratipo): CardUnificado {
     marca: p.marca,
     concentracao: p.tipo,
     familia: p.genero,
+    notas: p.notas,
     preco_brl: p.preco_brl,
     vendidos: 0,
     inspiracaoInfo: `inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`,
@@ -90,6 +91,19 @@ function Pill({
   )
 }
 
+function perfumeMatchBusca(perfume: CardUnificado, termo: string): boolean {
+  if (!termo.trim()) return true
+  const t = termo.toLowerCase().trim()
+  return (
+    perfume.nome?.toLowerCase().includes(t) ||
+    perfume.marca?.toLowerCase().includes(t) ||
+    perfume.familia?.toLowerCase().includes(t) ||
+    perfume.notas?.some(n => n.toLowerCase().includes(t)) ||
+    perfume.inspiracaoInfo?.toLowerCase().includes(t) ||
+    false
+  )
+}
+
 function toggle<T>(arr: T[], val: T): T[] {
   return arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]
 }
@@ -112,13 +126,7 @@ export default function PaginaCatalogo() {
     const buscaNorm = busca.toLowerCase().trim()
 
     let lista = todosPerfu.filter((p) => {
-      if (
-        buscaNorm &&
-        !p.nome.toLowerCase().includes(buscaNorm) &&
-        !p.marca.toLowerCase().includes(buscaNorm) &&
-        !(p.inspiracaoInfo ?? "").toLowerCase().includes(buscaNorm)
-      )
-        return false
+      if (!perfumeMatchBusca(p, busca)) return false
 
       if (generos.length > 0 && !generos.includes(p.familia as Genero)) return false
 
@@ -174,7 +182,7 @@ export default function PaginaCatalogo() {
         <div style={{ position: "relative", marginBottom: "1.5rem" }}>
           <input
             type="text"
-            placeholder="Buscar por nome, marca ou inspiração..."
+            placeholder="Buscar por nome, marca, nota ou família..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             style={{
