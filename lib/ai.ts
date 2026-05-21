@@ -2,12 +2,11 @@
 // ARQUIVO: lib/ai.ts
 // O QUE FAZ: integração com Groq via fetch direto — monta prompt e retorna recomendação
 // QUANDO MANDAR PRA IA: quando quiser mudar tom de voz, estrutura do JSON ou modelo usado
-// DEPENDE DE: .env.local (GROQ_API_KEY), data/regras-preco.json, data/fallbacks-ia.json
+// DEPENDE DE: .env.local (GROQ_API_KEY), data/regras-preco.json
 // ============================================
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import regrasPreco from "@/data/regras-preco.json"
-import fallbacksJson from "@/data/fallbacks-ia.json"
 
 export interface RespostasQuiz {
   perfil?: string
@@ -265,43 +264,16 @@ REGRAS OBRIGATÓRIAS:
       return gerarFallback(respostas)
     }
 
-    // Segunda camada: verifica se o nome existe no banco quando econômico
+    // Se econômico, verifica se nome+marca existem no banco
     if (faixaPreco === "economico") {
-      const todosContratipos = contratipoRepository.findAll()
-      const nomeExiste = todosContratipos.some(
-        p => p.nome.toLowerCase() === resultado.perfumePrincipal.nome.toLowerCase()
+      const existe = contratipoRepository.findAll().some(
+        p =>
+          p.nome.toLowerCase() === resultado.perfumePrincipal.nome.toLowerCase() &&
+          p.marca.toLowerCase() === resultado.perfumePrincipal.marca.toLowerCase()
       )
-      if (!nomeExiste) {
-        console.warn(`[IA] Nome "${resultado.perfumePrincipal.nome}" não encontrado no banco — substituindo por compatível`)
-        const genero = String((respostas as RespostasQuiz).genero ?? "")
-        const vibe   = String((respostas as RespostasQuiz).vibe   ?? "")
-
-        const vibeKeywords: Record<string, string[]> = {
-          fresco:       ["fresco", "citrico", "cítrico", "aquático", "aquatico", "verde"],
-          quente:       ["oriental", "amadeirado", "especiado"],
-          sofisticado:  ["amadeirado", "floral", "chypre"],
-          doce:         ["gourmand", "frutado", "floral"],
-        }
-        const keywords = vibeKeywords[vibe] ?? []
-
-        const candidatos = todosContratipos.filter(p => {
-          const generoMatch = !genero || p.genero.toLowerCase() === genero.toLowerCase()
-          const vibeMatch   = keywords.length === 0 || keywords.some(k => p.familia.toLowerCase().includes(k))
-          return generoMatch && vibeMatch
-        })
-
-        const melhor =
-          candidatos[0] ??
-          todosContratipos.find(p => !genero || p.genero.toLowerCase() === genero.toLowerCase()) ??
-          todosContratipos[0]
-
-        resultado.perfumePrincipal = {
-          nome:         melhor.nome,
-          marca:        melhor.marca,
-          concentracao: melhor.tipo,
-          descricao:    resultado.perfumePrincipal.descricao,
-          notas:        melhor.notas,
-        }
+      if (!existe) {
+        console.warn(`[IA] Nome inventado: "${resultado.perfumePrincipal.nome} — ${resultado.perfumePrincipal.marca}" — substituindo por fallback`)
+        return gerarFallback(respostas)
       }
     }
 
@@ -316,16 +288,85 @@ REGRAS OBRIGATÓRIAS:
 }
 
 function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
-  const vibe = String(respostas.vibe ?? "")
-  const clima = String(respostas.clima ?? "")
-  const preco = String(respostas.faixaPreco ?? "")
+  const r = respostas as RespostasQuiz
+  const faixaPreco = String(r.faixaPreco ?? '')
+  const vibe = String(r.vibe ?? 'fresco')
+  const genero = String(r.genero ?? '')
+  const clima = String(r.clima ?? '')
 
-  const FALLBACKS = fallbacksJson as Record<string, RecomendacaoIA>
+  // Se econômico, usa contratipos reais do banco
+  if (faixaPreco === 'economico') {
+    const todos = contratipoRepository.findAll()
 
-  // Fallback econômico — sempre respeita a faixa de preço
-  if (preco === "economico") return FALLBACKS["economico"]
+    const porGenero = genero
+      ? todos.filter(p => p.genero === 'Unissex' || p.genero.toLowerCase().includes(genero))
+      : todos
 
-  // Fallback por vibe para médio, premium e luxo
-  const chave = vibe in FALLBACKS ? vibe : clima === "frio" ? "quente" : "fresco"
-  return FALLBACKS[chave] ?? FALLBACKS["fresco"]
+    const familiaPreferida = (() => {
+      if (clima === 'frio' || vibe === 'quente' || vibe === 'doce')
+        return ['oriental', 'amadeirado', 'gourmand', 'especiado']
+      if (clima === 'quente' || vibe === 'fresco')
+        return ['fresco', 'aquático', 'cítrico', 'aromático']
+      if (vibe === 'sofisticado')
+        return ['amadeirado', 'oriental', 'floral']
+      return ['amadeirado', 'floral', 'fresco']
+    })()
+
+    const compativel = porGenero.find(p =>
+      familiaPreferida.some(f => p.familia.toLowerCase().includes(f))
+    ) ?? porGenero[0]
+
+    const alternativa = porGenero.find(p =>
+      p.id !== compativel?.id &&
+      familiaPreferida.some(f => p.familia.toLowerCase().includes(f))
+    ) ?? porGenero[1]
+
+    if (compativel) {
+      return {
+        perfumePrincipal: {
+          nome: compativel.nome,
+          marca: compativel.marca,
+          concentracao: compativel.tipo,
+          descricao: `${compativel.familia}. Inspirado em ${compativel.inspiradoEm} da ${compativel.marcaOriginal}.`,
+          notas: compativel.notas.slice(0, 4),
+        },
+        conselho: clima === 'frio'
+          ? 'Aplique no pulso e pescoço. O frio potencializa a fixação.'
+          : 'Duas borrifadas no pescoço são suficientes. No calor projeta bem.',
+        alternativa: {
+          nome: alternativa?.nome ?? 'Aventhis 2010',
+          marca: alternativa?.marca ?? 'In The Box',
+          descricao: alternativa
+            ? `${alternativa.familia}. Inspirado em ${alternativa.inspiradoEm}.`
+            : 'Frutal amadeirado. Inspirado no Aventus Creed.',
+        },
+      }
+    }
+  }
+
+  // Para médio/premium/luxo — fallback por vibe com perfumes reais
+  const fallbacksPorVibe: Record<string, RecomendacaoIA> = {
+    fresco: {
+      perfumePrincipal: { nome: 'Acqua di Giò', marca: 'Giorgio Armani', concentracao: 'EDT', descricao: 'Água do mar cristalizada na pele. Fresco com fundo leve de almíscar.', notas: ['bergamota', 'jasmim', 'patchouli', 'almíscar'] },
+      conselho: 'Em climas úmidos projeta bem. Para mais duração, prefira a versão Profumo.',
+      alternativa: { nome: 'Cool Water', marca: 'Davidoff', descricao: 'O clássico aquático com excelente custo-benefício.' },
+    },
+    quente: {
+      perfumePrincipal: { nome: 'Stronger With You Intensely', marca: 'Giorgio Armani', concentracao: 'EDP', descricao: 'Castanha e baunilha com especiarias. Quente, envolvente, marcante.', notas: ['castanha', 'baunilha', 'cardamomo', 'âmbar'] },
+      conselho: 'Perfeito para o frio. Duas borrifadas no pulso e pescoço bastam.',
+      alternativa: { nome: 'Armani Code Absolu', marca: 'Giorgio Armani', descricao: 'Oriental mais seco, para quem quer intensidade sem o lado doce.' },
+    },
+    sofisticado: {
+      perfumePrincipal: { nome: 'Bleu de Chanel', marca: 'Chanel', concentracao: 'EDP', descricao: 'Amadeirado aromático com incenso e sândalo. Sofisticado sem esforço.', notas: ['limão', 'incenso', 'sândalo', 'almíscar'] },
+      conselho: 'Funciona em qualquer ocasião. A versão EDP tem mais profundidade que a EDT.',
+      alternativa: { nome: 'Sauvage', marca: 'Dior', descricao: 'Fresco especiado com ambroxan. O mais reconhecido da categoria.' },
+    },
+    doce: {
+      perfumePrincipal: { nome: 'La Vie Est Belle', marca: 'Lancôme', concentracao: 'EDP', descricao: 'Íris e pralinê sobre baunilha. Doce elegante que aquece sem enjoar.', notas: ['íris', 'pralinê', 'baunilha', 'patchouli'] },
+      conselho: 'No calor aplique menos. A baunilha amplifica com a temperatura.',
+      alternativa: { nome: 'Good Girl', marca: 'Carolina Herrera', descricao: 'Mais especiado e noturno. Mesmo equilíbrio doce-escuro.' },
+    },
+  }
+
+  return fallbacksPorVibe[vibe] ?? fallbacksPorVibe['fresco']
 }
