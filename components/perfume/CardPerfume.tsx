@@ -2,11 +2,12 @@
 // ARQUIVO: components/perfume/CardPerfume.tsx
 // O QUE FAZ: card de perfume para listagens — exibe imagem, nome, marca e família olfativa
 // QUANDO MANDAR PRA IA: quando quiser mudar como os perfumes aparecem no catálogo
-// DEPENDE DE: components/ui/Tag.tsx, styles/globals.css
+// DEPENDE DE: components/ui/Tag.tsx, styles/globals.css, lib/utils.ts
 // ============================================
 
 import Link from "next/link"
 import Tag from "@/components/ui/Tag"
+import { slugify } from "@/lib/utils"
 
 export interface DadosCardPerfume {
   id: string
@@ -24,20 +25,17 @@ interface PropsCardPerfume {
 
 export default function CardPerfume({ perfume }: PropsCardPerfume) {
   return (
-    <Link
-      href={`/perfume/${perfume.id}`}
-      style={{ display: "block", textDecoration: "none" }}
+    <article
+      className="card-perfume"
+      style={{
+        backgroundColor: "var(--cor-card)",
+        border: "1px solid var(--cor-borda)",
+        borderRadius: "var(--raio-borda-suave)",
+        overflow: "hidden",
+      }}
     >
-      <article
-        style={{
-          backgroundColor: "var(--cor-card)",
-          border: "1px solid var(--cor-borda)",
-          borderRadius: "var(--raio-borda-suave)",
-          overflow: "hidden",
-          transition: "border-color 0.2s",
-        }}
-      >
-        {/* Área da imagem — placeholder elegante quando não há foto */}
+      {/* Imagem — clica e vai para o perfume */}
+      <Link href={`/perfume/${perfume.id}`} style={{ display: "block" }}>
         <div
           style={{
             height: "200px",
@@ -58,29 +56,28 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
           ) : (
             // Placeholder minimalista: letra + linha de etiqueta + nome da marca
             <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              {/* Letra inicial */}
               <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "4rem", fontWeight: 300, color: "var(--cor-texto-suave)", opacity: 0.12, lineHeight: 1, marginBottom: "1rem" }}>
                 {perfume.marca.charAt(0)}
               </p>
-              {/* Linha de etiqueta */}
               <div style={{ width: "48px", height: "1px", backgroundColor: "var(--cor-borda)", marginBottom: "0.75rem" }} />
-              {/* Nome da marca */}
               <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", opacity: 0.35 }}>
                 {perfume.marca}
               </p>
             </div>
           )}
         </div>
+      </Link>
 
-        {/* Informações do perfume */}
-        <div style={{ padding: "1.25rem" }}>
-          {/* Família olfativa e concentração */}
-          <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
-            {perfume.familia && <Tag>{perfume.familia}</Tag>}
-            {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
-          </div>
+      {/* Informações do perfume */}
+      <div style={{ padding: "1.25rem" }}>
+        {/* Família olfativa e concentração */}
+        <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
+          {perfume.familia && <Tag>{perfume.familia}</Tag>}
+          {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
+        </div>
 
-          {/* Nome do perfume */}
+        {/* Nome do perfume — clica e vai para o perfume */}
+        <Link href={`/perfume/${perfume.id}`} style={{ display: "block", textDecoration: "none" }}>
           <h3
             style={{
               fontFamily: "var(--fonte-titulo)",
@@ -92,20 +89,16 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
           >
             {perfume.nome}
           </h3>
+        </Link>
 
-          {/* Marca */}
-          <p
-            style={{
-              fontFamily: "var(--fonte-corpo)",
-              fontSize: "0.8rem",
-              color: "var(--cor-texto-suave)",
-              fontWeight: 300,
-            }}
-          >
-            {perfume.marca}
-          </p>
-        </div>
-      </article>
-    </Link>
+        {/* Marca — clica e vai para a página da marca */}
+        <Link
+          href={`/marca/${slugify(perfume.marca)}`}
+          className="link-marca"
+        >
+          {perfume.marca}
+        </Link>
+      </div>
+    </article>
   )
 }

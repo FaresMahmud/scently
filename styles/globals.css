@@ -426,3 +426,29 @@ a:hover article {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--cor-texto-suave);
 }
+
+/* ----------------------------------------
+   Card de perfume — hover sem nested <a>
+   ---------------------------------------- */
+.card-perfume {
+  transition: border-color 0.2s;
+}
+
+.card-perfume:hover {
+  border-color: var(--cor-texto-suave) !important;
+}
+
+/* Link de marca — terracota no hover */
+.link-marca {
+  font-family: var(--fonte-corpo);
+  font-size: 0.8rem;
+  color: var(--cor-texto-suave);
+  font-weight: 300;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.link-marca:hover {
+  color: var(--cor-destaque) !important;
+  opacity: 1 !important;
+}

@@ -12,6 +12,7 @@ import { buscarMockPorId } from "@/lib/mockData"
 import NotasPerfume from "@/components/perfume/NotasPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import Tag from "@/components/ui/Tag"
+import { slugify } from "@/lib/utils"
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
@@ -55,7 +56,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
         <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "3rem" }}>
           <Link href="/" style={{ color: "var(--cor-destaque)" }}>scently</Link>
           {" / "}
-          <Link href="/" style={{ color: "var(--cor-texto-suave)" }}>{perfume.marca}</Link>
+          <Link href={`/marca/${slugify(perfume.marca)}`} style={{ color: "var(--cor-texto-suave)" }}>{perfume.marca}</Link>
         </p>
 
         {/* Layout duas colunas — stack no mobile */}
@@ -122,18 +123,20 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Marca */}
-            <p
+            <Link
+              href={`/marca/${slugify(perfume.marca)}`}
+              className="link-marca"
               style={{
                 fontFamily: "var(--fonte-titulo)",
                 fontSize: "0.95rem",
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "var(--cor-texto-suave)",
+                display: "block",
                 marginBottom: "0.4rem",
               }}
             >
               {perfume.marca}
-            </p>
+            </Link>
 
             {/* Nome */}
             <h1
