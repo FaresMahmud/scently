@@ -1,168 +1,132 @@
 // ============================================
 // ARQUIVO: app/catalogo/page.tsx
-// O QUE FAZ: catálogo completo — perfumes eBay + contratipos brasileiros, filtros em pill multi-select
+// O QUE FAZ: catálogo completo — Fragella (7.9k) + eBay + contratipos, filtros em pill multi-select
 // QUANDO MANDAR PRA IA: quando quiser mudar layout, filtros ou fonte dos dados
-// DEPENDE DE: lib/repositories/EbayPerfumeRepository, lib/repositories/ContratipoRepository
+// DEPENDE DE: lib/catalogoFragella, lib/repositories/*, components/catalogo/CatalogClient
 // ============================================
 
-"use client"
-
-import { useState, useMemo } from "react"
-import CardPerfume from "@/components/perfume/CardPerfume"
-import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
+import type { Metadata } from "next"
+import CatalogClient from "@/components/catalogo/CatalogClient"
+import type { CardUnificado } from "@/components/catalogo/CatalogClient"
+import { carregarCatalogo, totalPerfumes } from "@/lib/catalogoFragella"
 import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
-import type { PerfumeEbay } from "@/lib/repositories/EbayPerfumeRepository"
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
-import type { PerfumeContratipo } from "@/lib/repositories/ContratipoRepository"
+import { slugify } from "@/lib/utils"
 
-type Genero = "Masculino" | "Feminino" | "Unissex"
-type Tipo = "EDP" | "EDT" | "EDC" | "Extrait" | "Contratipo"
-type Ordenacao = "relevancia" | "mais-vendidos" | "menor-preco" | "maior-preco"
-
-interface CardUnificado extends DadosCardPerfume {
-  preco_brl?: number
-  vendidos?: number
-  inspiracaoInfo?: string
-  categoria?: string
+export const metadata: Metadata = {
+  title: "Catálogo — Scently",
+  description: "Explore milhares de fragrâncias — perfumes internacionais, nacionais e contratipos.",
 }
 
-function ebayParaCard(p: PerfumeEbay): CardUnificado {
+// Revalida a cada hora (dados do catálogo raramente mudam)
+export const revalidate = 3600
+
+// ── Mapeamento de gênero ──────────────────────────────────────────────────────
+
+type GeneroNorm = "Masculino" | "Feminino" | "Unissex"
+
+function normalizarGenero(g: string | undefined): GeneroNorm | undefined {
+  if (!g) return undefined
+  const lower = g.toLowerCase()
+  if (lower === "men"      || lower === "masculino") return "Masculino"
+  if (lower === "women"    || lower === "feminino")  return "Feminino"
+  if (lower === "unisex"   || lower === "unissex")   return "Unissex"
+  return undefined
+}
+
+// ── Conversores para CardUnificado ────────────────────────────────────────────
+
+function ebayParaCard(p: ReturnType<typeof ebayRepository.findAll>[number]): CardUnificado {
   return {
-    id: ebayRepository.toSlug(p.titulo, p.marca),
-    nome: p.titulo,
-    marca: p.marca,
-    concentracao: p.tipo,
-    familia: p.genero,
-    preco_brl: p.preco_brl,
-    vendidos: p.vendidos,
+    id:          `${ebayRepository.toSlug(p.titulo, p.marca)}-ebay`,
+    nome:        p.titulo,
+    marca:       p.marca,
+    concentracao:p.tipo,
+    familia:     p.genero,
+    preco_brl:   p.preco_brl,
+    vendidos:    p.vendidos,
+    generoNorm:  normalizarGenero(p.genero),
+    fonte:       "ebay",
   }
 }
 
-function contratipoParaCard(p: PerfumeContratipo): CardUnificado {
+function contratipoParaCard(p: ReturnType<typeof contratipoRepository.findAll>[number]): CardUnificado {
   return {
-    id: p.id,
-    nome: p.nome,
-    marca: p.marca,
-    concentracao: p.tipo,
-    familia: p.genero,
-    notas: p.notas,
-    preco_brl: p.preco_brl,
-    vendidos: 0,
-    inspiracaoInfo: `inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`,
-    categoria: p.categoria,
+    id:            p.id,
+    nome:          p.nome,
+    marca:         p.marca,
+    concentracao:  p.tipo,
+    familia:       p.genero,
+    notas:         p.notas,
+    preco_brl:     p.preco_brl,
+    vendidos:      0,
+    inspiracaoInfo:`inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`,
+    categoria:     p.categoria,
+    generoNorm:    normalizarGenero(p.genero),
+    fonte:         "contratipo",
   }
 }
 
-function Pill({
-  label,
-  ativo,
-  onClick,
-}: {
-  label: string
-  ativo: boolean
-  onClick: () => void
-}) {
-  const [hover, setHover] = useState(false)
-  return (
-    <button
-      onClick={onClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        fontFamily: "var(--fonte-corpo)",
-        fontSize: "0.75rem",
-        letterSpacing: "0.08em",
-        padding: "0.4rem 1rem",
-        borderRadius: "99px",
-        cursor: "pointer",
-        background: ativo ? "rgba(196, 113, 74, 0.08)" : "transparent",
-        color: ativo ? "var(--cor-destaque)" : "var(--cor-texto-suave)",
-        border: ativo
-          ? "1px solid var(--cor-destaque)"
-          : hover
-          ? "1px solid var(--cor-texto-suave)"
-          : "1px solid var(--cor-borda)",
-        transition: "border-color 0.15s, background 0.15s, color 0.15s",
-        whiteSpace: "nowrap" as const,
-      }}
-    >
-      {label}
-    </button>
-  )
+function fragellaParaCard(p: ReturnType<typeof carregarCatalogo>[number]): CardUnificado {
+  return {
+    id:           p.id,
+    nome:         p.nome,
+    marca:        p.marca,
+    concentracao: p.concentracao || undefined,
+    familia:      p.familia || undefined,
+    imagem:       p.imagemTransparente || p.imagem || undefined,
+    rating:       p.rating ?? undefined,
+    generoNorm:   normalizarGenero(p.genero),
+    fonte:        "fragella",
+  }
 }
 
-function perfumeMatchBusca(perfume: CardUnificado, termo: string): boolean {
-  if (!termo.trim()) return true
-  const t = termo.toLowerCase().trim()
-  return (
-    perfume.nome?.toLowerCase().includes(t) ||
-    perfume.marca?.toLowerCase().includes(t) ||
-    perfume.familia?.toLowerCase().includes(t) ||
-    perfume.notas?.some(n => n.toLowerCase().includes(t)) ||
-    perfume.inspiracaoInfo?.toLowerCase().includes(t) ||
-    false
-  )
+// ── Merge + deduplicação ──────────────────────────────────────────────────────
+
+function chave(nome: string, marca: string): string {
+  return `${nome.toLowerCase().trim()}|${marca.toLowerCase().trim()}`
 }
 
-function toggle<T>(arr: T[], val: T): T[] {
-  return arr.includes(val) ? arr.filter((v) => v !== val) : [...arr, val]
+function mesclarPerfumes(): CardUnificado[] {
+  const mapa = new Map<string, CardUnificado>()
+
+  // 1. eBay — base (tem dados de preço e vendas)
+  for (const p of ebayRepository.findAll()) {
+    const card = ebayParaCard(p)
+    mapa.set(chave(p.titulo, p.marca), card)
+  }
+
+  // 2. Contratipos — adicionam entradas novas
+  for (const p of contratipoRepository.findAll()) {
+    const k = chave(p.nome, p.marca)
+    if (!mapa.has(k)) mapa.set(k, contratipoParaCard(p))
+  }
+
+  // 3. Fragella — enriquece existentes (imagem + rating) e adiciona novos
+  for (const p of carregarCatalogo()) {
+    const k = chave(p.nome, p.marca)
+    const existente = mapa.get(k)
+    if (existente) {
+      // Enriquece com imagem e rating se não existiam
+      if (!existente.imagem && (p.imagemTransparente || p.imagem)) {
+        existente.imagem = p.imagemTransparente || p.imagem
+      }
+      if (!existente.rating && p.rating) {
+        existente.rating = p.rating
+      }
+    } else {
+      mapa.set(k, fragellaParaCard(p))
+    }
+  }
+
+  return Array.from(mapa.values())
 }
+
+// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PaginaCatalogo() {
-  const [busca, setBusca] = useState("")
-  const [generos, setGeneros] = useState<Genero[]>([])
-  const [tipos, setTipos] = useState<Tipo[]>([])
-  const [ordenacao, setOrdenacao] = useState<Ordenacao>("relevancia")
-
-  // Combina eBay + contratipos via repositórios — lazy, apenas na primeira renderização
-  const todosPerfu = useMemo<CardUnificado[]>(() =>
-    [
-      ...ebayRepository.findAll().map(ebayParaCard),
-      ...contratipoRepository.findAll().map(contratipoParaCard),
-    ].map((p, index) => ({ ...p, id: `${p.id}-${index}` }))
-  , [])
-
-  const resultados = useMemo(() => {
-    const buscaNorm = busca.toLowerCase().trim()
-
-    let lista = todosPerfu.filter((p) => {
-      if (!perfumeMatchBusca(p, busca)) return false
-
-      if (generos.length > 0 && !generos.includes(p.familia as Genero)) return false
-
-      if (tipos.length > 0) {
-        const isContratipo = p.categoria === "contratipo"
-        if (tipos.includes("Contratipo") && isContratipo) return true
-        if (tipos.some((t) => t !== "Contratipo") && tipos.includes(p.concentracao as Tipo)) return true
-        return false
-      }
-
-      return true
-    })
-
-    switch (ordenacao) {
-      case "mais-vendidos":
-        lista = [...lista].sort((a, b) => (b.vendidos ?? 0) - (a.vendidos ?? 0))
-        break
-      case "menor-preco":
-        lista = [...lista].sort((a, b) => (a.preco_brl ?? 0) - (b.preco_brl ?? 0))
-        break
-      case "maior-preco":
-        lista = [...lista].sort((a, b) => (b.preco_brl ?? 0) - (a.preco_brl ?? 0))
-        break
-    }
-
-    return lista
-  }, [busca, generos, tipos, ordenacao])
-
-  function limparFiltros() {
-    setBusca("")
-    setGeneros([])
-    setTipos([])
-    setOrdenacao("relevancia")
-  }
-
-  const temFiltros = busca || generos.length > 0 || tipos.length > 0
+  const perfumes = mesclarPerfumes()
+  const totalFrag = totalPerfumes()
 
   return (
     <main>
@@ -176,112 +140,15 @@ export default function PaginaCatalogo() {
           <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(2.5rem, 6vw, 4rem)", lineHeight: 1 }}>
             catálogo
           </h1>
-        </div>
-
-        {/* Busca */}
-        <div style={{ position: "relative", marginBottom: "1.5rem" }}>
-          <input
-            type="text"
-            placeholder="Buscar por nome, marca, nota ou família..."
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-            style={{
-              width: "100%",
-              fontFamily: "var(--fonte-corpo)",
-              fontSize: "0.9rem",
-              color: "var(--cor-texto)",
-              backgroundColor: "var(--cor-card)",
-              border: "1px solid var(--cor-borda)",
-              borderRadius: "var(--raio-borda-suave)",
-              padding: "0.85rem 1.25rem",
-              boxSizing: "border-box",
-            }}
-          />
-          {busca && (
-            <button
-              onClick={() => setBusca("")}
-              style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "var(--cor-texto-suave)", fontSize: "1rem", lineHeight: 1 }}
-            >
-              ×
-            </button>
-          )}
-        </div>
-
-        {/* Pills — linha 1: gênero */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
-          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {(["Masculino", "Feminino", "Unissex"] as Genero[]).map((g) => (
-              <Pill key={g} label={g} ativo={generos.includes(g)} onClick={() => setGeneros(toggle(generos, g))} />
-            ))}
-          </div>
-
-          <div style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 0.5rem", alignSelf: "stretch" }} />
-
-          {/* Pills — tipo + Contratipo */}
-          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {(["EDP", "EDT", "EDC", "Extrait", "Contratipo"] as Tipo[]).map((t) => (
-              <Pill key={t} label={t} ativo={tipos.includes(t)} onClick={() => setTipos(toggle(tipos, t))} />
-            ))}
-          </div>
-        </div>
-
-        {/* Pills — linha 2: ordenação + contador */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", alignItems: "center", marginBottom: "2.5rem" }}>
-          <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {(
-              [
-                { valor: "relevancia", label: "Relevância" },
-                { valor: "mais-vendidos", label: "Mais vendidos" },
-                { valor: "menor-preco", label: "Menor preço" },
-                { valor: "maior-preco", label: "Maior preço" },
-              ] as { valor: Ordenacao; label: string }[]
-            ).map(({ valor, label }) => (
-              <Pill key={valor} label={label} ativo={ordenacao === valor} onClick={() => setOrdenacao(valor)} />
-            ))}
-          </div>
-
-          <p style={{ marginLeft: "auto", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
-            {resultados.length.toLocaleString("pt-BR")} fragrâncias
+          <div className="separador" />
+          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.9rem", color: "var(--cor-texto-suave)" }}>
+            {perfumes.length.toLocaleString("pt-BR")} fragrâncias de{" "}
+            {totalFrag.toLocaleString("pt-BR")} do catálogo Fragella
           </p>
         </div>
 
-        {/* Grid */}
-        {resultados.length > 0 ? (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.25rem" }}>
-            {resultados.map((perfume) => (
-              <div key={perfume.id}>
-                <CardPerfume perfume={perfume} />
-                {perfume.inspiracaoInfo && (
-                  <p style={{
-                    fontFamily: "var(--fonte-corpo)",
-                    fontSize: "0.68rem",
-                    color: "var(--cor-destaque)",
-                    letterSpacing: "0.04em",
-                    marginTop: "0.4rem",
-                    paddingLeft: "0.1rem",
-                    opacity: 0.85,
-                  }}>
-                    {perfume.inspiracaoInfo}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div style={{ textAlign: "center", padding: "6rem 0" }}>
-            <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "1.5rem", fontWeight: 300, color: "var(--cor-texto-suave)", marginBottom: "1.5rem" }}>
-              Nenhuma fragrância encontrada.
-            </p>
-            {temFiltros && (
-              <button
-                onClick={limparFiltros}
-                style={{ background: "none", border: "1px solid var(--cor-borda)", borderRadius: "99px", padding: "0.5rem 1.5rem", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", letterSpacing: "0.08em", color: "var(--cor-destaque)", cursor: "pointer" }}
-              >
-                Limpar filtros
-              </button>
-            )}
-          </div>
-        )}
+        <CatalogClient perfumes={perfumes} totalFragella={totalFrag} />
+
       </div>
     </main>
   )
