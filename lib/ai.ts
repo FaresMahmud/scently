@@ -6,6 +6,7 @@
 // ============================================
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
+import { buscarSimilares } from "@/lib/fragella"
 import regrasPreco from "@/data/regras-preco.json"
 
 export interface RespostasQuiz {
@@ -85,7 +86,8 @@ REGRA DE VARIEDADE — evite sempre os mesmos perfumes:
 - Se cheiro:café → considerar Replica Coffee Break, Jazz Club, Tobacco Vanille
 - Se cheiro:madeira → considerar Santal 33, Oud Wood, Bois d'Argent
 - Se cheiro:couro → considerar Tuscan Leather, Cuir de Russie, Cuoium
-- Combine TODAS as respostas para chegar a algo único, não só a vibe principal`
+- Combine TODAS as respostas para chegar a algo único, não só a vibe principal
+Recomende APENAS perfumes que existem de verdade e são comercialmente disponíveis. Nunca invente nomes de perfumes. Se não tiver certeza absoluta de que o perfume existe, escolha outro que você tenha certeza.`
 
 const MARCAS_PROIBIDAS_ECONOMICO: string[] = regrasPreco.economico
 const MARCAS_PROIBIDAS_MEDIO: string[] = regrasPreco.medio
@@ -145,7 +147,7 @@ async function chamarGroq(chave: string, prompt: string): Promise<string> {
       { role: "system", content: SYSTEM_PROMPT },
       { role: "user", content: prompt },
     ],
-    temperature: 0.7,
+    temperature: 0.9,
     max_tokens: 1024,
     response_format: { type: "json_object" },
   }
@@ -217,6 +219,7 @@ export async function gerarRecomendacao(
     : ""
 
   const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}.${climaExtra}${instrucaoContratipos}
+Sessão: ${Math.random().toString(36).slice(2, 8)}
 
 Responda APENAS com JSON válido seguindo exatamente este exemplo:
 {
@@ -278,6 +281,63 @@ REGRAS OBRIGATÓRIAS:
     }
 
     console.log("[IA] Sucesso com Groq")
+
+    // Enriquece a alternativa com dados reais da Fragella
+    // (substitui a alternativa inventada pela IA por um perfume real, similar e dentro da faixa de preço)
+    if (faixaPreco !== "economico") {
+      const LIMITE_PRECO: Record<string, number> = {
+        economico: 150,
+        medio:     350,
+        premium:   700,
+        luxo:      Infinity,
+      }
+      const limitePreco = LIMITE_PRECO[faixaPreco] ?? Infinity
+      const generoUsuario = String((respostas as RespostasQuiz).genero ?? "")
+
+      const generoValido = (g: string) => {
+        if (!generoUsuario) return true
+        if (g?.toLowerCase() === "unisex") return true
+        if (generoUsuario === "masculino") return g?.toLowerCase() === "men"
+        if (generoUsuario === "feminino") return g?.toLowerCase() === "women"
+        return true
+      }
+      const dentroDoPreco = (p: { preco?: number }) => !p.preco || p.preco <= limitePreco
+
+      try {
+        const similares = await buscarSimilares(resultado.perfumePrincipal.nome, 3)
+        if (similares?.similar_fragrances?.length) {
+          const nomePrincipal = resultado.perfumePrincipal.nome.toLowerCase()
+          const marcaPrincipal = resultado.perfumePrincipal.marca.toLowerCase()
+
+          const alt = similares.similar_fragrances.find(p => {
+            const nomeSimilar  = p.nome?.toLowerCase() ?? ""
+            const marcaSimilar = p.marca?.toLowerCase() ?? ""
+
+            // Rejeita se for o mesmo perfume (match parcial no nome + mesma marca)
+            const mesmoPerfume = nomeSimilar.includes(nomePrincipal) || nomePrincipal.includes(nomeSimilar)
+            const mesmaMarca   = marcaSimilar === marcaPrincipal
+            if (mesmoPerfume && mesmaMarca) return false
+
+            return generoValido(p.genero) && dentroDoPreco(p)
+          })
+          if (alt) {
+            resultado.alternativa = {
+              nome: alt.nome,
+              marca: alt.marca,
+              descricao: alt.acordesPrincipais?.length
+                ? `${alt.acordesPrincipais.slice(0, 3).join(", ")}.${alt.longevidade ? ` Longevidade ${alt.longevidade.toLowerCase()}.` : ""}`
+                : resultado.alternativa.descricao,
+            }
+            console.log("[IA] Alternativa Fragella dentro da faixa:", alt.nome, "—", alt.marca, alt.preco ? `(R$${alt.preco})` : "(preço não informado)")
+          } else {
+            console.log("[IA] Nenhum similar compatível (faixa/gênero) — mantendo alternativa da IA")
+          }
+        }
+      } catch {
+        // Fragella indisponível — mantém alternativa gerada pela IA
+      }
+    }
+
     return resultado
   } catch (erro) {
     console.error("[IA] Groq falhou:", erro instanceof Error ? erro.message : erro)

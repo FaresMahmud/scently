@@ -1,39 +1,73 @@
 // ============================================
 // ARQUIVO: app/perfume/[id]/page.tsx
-// O QUE FAZ: página individual de cada perfume — notas, acordes, descrição e CTA para o consultor
+// O QUE FAZ: página individual de cada perfume — notas, acordes, descrição, rankings e CTA
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout da página de perfume
 // DEPENDE DE: lib/fragella.ts, lib/mockData.ts, components/perfume/
 // ============================================
 
 import type { Metadata } from "next"
 import Link from "next/link"
-import { buscarPerfumePorId } from "@/lib/fragella"
+import { buscarPerfumePorId, buscarPorNome } from "@/lib/fragella"
+import type { PerfumeFragella } from "@/lib/fragella"
 import { buscarMockPorId } from "@/lib/mockData"
 import NotasPerfume from "@/components/perfume/NotasPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
+import type { Acorde } from "@/lib/types"
+
+// Mapeia os descritores de força da Fragella para porcentagens numéricas
+const DESCRITOR_PARA_PCT: Record<string, number> = {
+  Dominant:  92,
+  Prominent: 76,
+  Moderate:  58,
+  Subtle:    38,
+  Trace:     22,
+}
+
+function acordesFragellaParaAcorde(pct: Record<string, string> | undefined): Acorde[] {
+  if (!pct) return []
+  return Object.entries(pct)
+    .map(([nome, desc]) => ({ nome, porcentagem: DESCRITOR_PARA_PCT[desc] ?? 50 }))
+    .sort((a, b) => b.porcentagem - a.porcentagem)
+    .slice(0, 6)
+}
+
+// Tenta encontrar o perfume por ID; se não achar no mock, tenta busca por nome na Fragella
+async function resolverPerfume(id: string): Promise<PerfumeFragella | null> {
+  // 1. Tenta API pelo ID (slug → nome)
+  const porId = await buscarPerfumePorId(id).catch(() => null)
+  if (porId?.nome && porId?.marca) return porId
+
+  // 2. Tenta busca livre pelo nome extraído do slug
+  const nomeBusca = id.replace(/-/g, " ").replace(/\s+\d+$/, "").trim()
+  if (nomeBusca.length >= 3) {
+    const resultados = await buscarPorNome(nomeBusca, 3).catch(() => [])
+    if (resultados.length > 0) return resultados[0]
+  }
+
+  return null
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
-  const api = await buscarPerfumePorId(id).catch(() => null)
+  const api = await resolverPerfume(id)
   const perfume = (api?.nome && api?.marca) ? api : buscarMockPorId(id)
   if (!perfume) return { title: "Perfume não encontrado" }
   return {
     title: `${perfume.nome} — ${perfume.marca}`,
-    description: perfume.descricao,
+    description: perfume.descricao || `${perfume.nome} da ${perfume.marca}.`,
   }
 }
 
 export default async function PaginaPerfume({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
 
-  // Tenta API real primeiro; fallback para mock
-  const perfumeApi = await buscarPerfumePorId(id).catch(() => null)
+  // Prioridade: Fragella API > mock local
+  const perfumeApi = await resolverPerfume(id)
   const perfumeMock = buscarMockPorId(id)
   const perfume = (perfumeApi?.nome && perfumeApi?.marca) ? perfumeApi : perfumeMock
 
-  // 404 amigável
   if (!perfume) {
     return (
       <main className="container-site" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
@@ -46,8 +80,14 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
     )
   }
 
-  // Acordes vêm do mock se disponível
-  const acordes = perfumeMock?.acordes ?? []
+  // Acordes: prefere porcentagens reais da Fragella; fallback para o mock
+  const acordes: Acorde[] =
+    acordesFragellaParaAcorde(perfumeApi?.acordesPorcentagem).length > 0
+      ? acordesFragellaParaAcorde(perfumeApi?.acordesPorcentagem)
+      : (perfumeMock?.acordes ?? [])
+
+  // Imagem: prefere versão transparente da Fragella (melhor visual no fundo claro)
+  const imagemSrc = perfumeApi?.imagemTransparente || perfumeApi?.imagem || perfumeMock?.imagem || ""
 
   return (
     <main>
@@ -59,50 +99,31 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
           <Link href={`/marca/${slugify(perfume.marca)}`} style={{ color: "var(--cor-texto-suave)" }}>{perfume.marca}</Link>
         </p>
 
-        {/* Layout duas colunas — stack no mobile */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-            gap: "4rem",
-            alignItems: "start",
-          }}
-        >
+        {/* Layout duas colunas */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: "4rem", alignItems: "start" }}>
+
           {/* Coluna esquerda — imagem */}
-          <div
-            style={{
-              backgroundColor: "var(--cor-borda)",
-              aspectRatio: "3/4",
-              borderRadius: "var(--raio-borda-suave)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              overflow: "hidden",
-              position: "sticky",
-              top: "84px",
-            }}
-          >
-            {perfume.imagem ? (
+          <div style={{
+            backgroundColor: "var(--cor-borda)",
+            aspectRatio: "3/4",
+            borderRadius: "var(--raio-borda-suave)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            position: "sticky",
+            top: "84px",
+          }}>
+            {imagemSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={perfume.imagem}
+                src={imagemSrc}
                 alt={`${perfume.nome} — ${perfume.marca}`}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "contain", padding: "1.5rem" }}
               />
             ) : (
-              // Placeholder com inicial da marca
               <div style={{ textAlign: "center" }}>
-                <p
-                  style={{
-                    fontFamily: "var(--fonte-titulo)",
-                    fontSize: "6rem",
-                    fontWeight: 300,
-                    color: "var(--cor-texto-suave)",
-                    opacity: 0.25,
-                    lineHeight: 1,
-                    marginBottom: "0.5rem",
-                  }}
-                >
+                <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "6rem", fontWeight: 300, color: "var(--cor-texto-suave)", opacity: 0.25, lineHeight: 1, marginBottom: "0.5rem" }}>
                   {perfume.marca.charAt(0)}
                 </p>
                 <p style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", opacity: 0.5 }}>
@@ -114,39 +135,32 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
           {/* Coluna direita — informações */}
           <div>
-            {/* Tags */}
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+            {/* Tags: família, concentração, gênero, ano, rating */}
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem", alignItems: "center" }}>
               {perfume.familia && <Tag>{perfume.familia}</Tag>}
               {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
               {perfume.genero && <Tag>{perfume.genero}</Tag>}
               {perfume.ano > 0 && <Tag>{perfume.ano}</Tag>}
+              {perfumeApi?.longevidade && <Tag>{perfumeApi.longevidade}</Tag>}
+              {perfumeApi?.sillage && <Tag>Sillage: {perfumeApi.sillage}</Tag>}
+              {perfumeApi?.rating && perfumeApi.rating > 0 && (
+                <span style={{ marginLeft: "auto", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-dourado)", letterSpacing: "0.04em" }}>
+                  ★ {perfumeApi.rating.toFixed(2)}
+                </span>
+              )}
             </div>
 
             {/* Marca */}
             <Link
               href={`/marca/${slugify(perfume.marca)}`}
               className="link-marca"
-              style={{
-                fontFamily: "var(--fonte-titulo)",
-                fontSize: "0.95rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: "0.4rem",
-              }}
+              style={{ fontFamily: "var(--fonte-titulo)", fontSize: "0.95rem", letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: "0.4rem" }}
             >
               {perfume.marca}
             </Link>
 
             {/* Nome */}
-            <h1
-              style={{
-                fontFamily: "var(--fonte-titulo)",
-                fontWeight: 300,
-                lineHeight: 1.08,
-                marginBottom: "2rem",
-              }}
-            >
+            <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, lineHeight: 1.08, marginBottom: "2rem" }}>
               {perfume.nome}
             </h1>
 
@@ -176,25 +190,59 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               </>
             )}
 
+            {/* Rankings de estação e ocasião (dados reais da Fragella) */}
+            {(perfumeApi?.rankingEstacao?.length || perfumeApi?.rankingOcasiao?.length) && (
+              <>
+                <div className="divisor" />
+                <div style={{ marginTop: "2rem", marginBottom: "2.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+                  {perfumeApi?.rankingEstacao?.length ? (
+                    <div>
+                      <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+                        Estação ideal
+                      </p>
+                      {perfumeApi.rankingEstacao.slice(0, 3).map(r => (
+                        <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{r.name}</span>
+                          <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "var(--cor-destaque)" : "var(--cor-borda)" }} />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  {perfumeApi?.rankingOcasiao?.length ? (
+                    <div>
+                      <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+                        Melhor ocasião
+                      </p>
+                      {perfumeApi.rankingOcasiao.slice(0, 3).map(r => (
+                        <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{r.name}</span>
+                          <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "var(--cor-dourado)" : "var(--cor-borda)" }} />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </>
+            )}
+
             <div className="divisor" />
 
-            {/* CTA para o consultor */}
+            {/* CTA consultor */}
             <div style={{ marginTop: "2rem" }}>
               <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
                 Não tem certeza se é o certo para você?
               </p>
               <Link
                 href="/consultor"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  color: "var(--cor-destaque)",
-                  fontFamily: "var(--fonte-corpo)",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.04em",
-                }}
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", fontWeight: 500, letterSpacing: "0.04em" }}
               >
                 Consultar seu consultor →
               </Link>

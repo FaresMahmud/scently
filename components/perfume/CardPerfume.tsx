@@ -17,6 +17,7 @@ export interface DadosCardPerfume {
   familia?: string
   notas?: string[]
   imagem?: string
+  rating?: number   // rating Bayesian da Fragella (0–10)
 }
 
 interface PropsCardPerfume {
@@ -70,10 +71,15 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
 
       {/* Informações do perfume */}
       <div style={{ padding: "1.25rem" }}>
-        {/* Família olfativa e concentração */}
-        <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.75rem", flexWrap: "wrap" }}>
+        {/* Família olfativa, concentração e rating */}
+        <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
           {perfume.familia && <Tag>{perfume.familia}</Tag>}
           {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
+          {perfume.rating && perfume.rating > 0 && (
+            <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.68rem", color: "var(--cor-dourado)", letterSpacing: "0.04em", marginLeft: "auto" }}>
+              ★ {perfume.rating.toFixed(1)}
+            </span>
+          )}
         </div>
 
         {/* Nome do perfume — clica e vai para o perfume */}
