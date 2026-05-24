@@ -7,37 +7,36 @@
 
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import Card from "@/components/ui/Card"
 import Tag from "@/components/ui/Tag"
 import type { RecomendacaoIA } from "@/lib/ai"
 import { textosConsultor } from "@/config/site"
 import { corDaNota } from "@/lib/coresNotas"
-
-function slugify(texto: string): string {
-  return texto
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
-}
+import { traduzir } from "@/lib/utils"
 
 function TagNota({ nota }: { nota: string }) {
+  const [hover, setHover] = useState(false)
   const cor = corDaNota(nota)
+  const rgb = cor.slice(1).match(/.{2}/g)!.map(h => parseInt(h, 16)).join(", ")
+
   return (
     <span
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       style={{
         fontSize: "0.78rem",
         padding: "0.25rem 0.65rem",
         borderRadius: "2rem",
         cursor: "default",
-        backgroundColor: `${cor}26`,
-        border:          `1px solid ${cor}99`,
-        color:           cor,
+        transition: "all 0.15s ease",
+        backgroundColor: hover ? cor : `rgba(${rgb}, 0.12)`,
+        border: `1.5px solid ${hover ? cor : `rgba(${rgb}, 0.5)`}`,
+        color: hover ? "#fff" : cor,
       }}
     >
-      {nota}
+      {traduzir(nota)}
     </span>
   )
 }
@@ -50,8 +49,9 @@ interface PropsResultado {
 export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsResultado) {
   const { perfumePrincipal, conselho, alternativa } = recomendacao
 
-  const linkPrincipal = `/perfume/${slugify(perfumePrincipal.nome)}-${slugify(perfumePrincipal.marca)}`
-  const linkAlternativa = `/perfume/${slugify(alternativa.nome)}-${slugify(alternativa.marca)}`
+  // Link aponta para busca no catálogo (a maioria não tem página individual)
+  const linkBusca = (nome: string, marca: string) =>
+    `/catalogo?busca=${encodeURIComponent(`${nome} ${marca}`)}`
 
   return (
     <div style={{ maxWidth: "620px", margin: "0 auto", opacity: 1, animation: "none" }}>
@@ -86,9 +86,9 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
           {perfumePrincipal.descricao}
         </p>
 
-        {/* Link para o catálogo */}
+        {/* Link para busca no catálogo */}
         <Link
-          href={linkPrincipal}
+          href={linkBusca(perfumePrincipal.nome, perfumePrincipal.marca)}
           style={{
             display: "inline-block",
             color: "var(--cor-destaque)",
@@ -107,7 +107,7 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
         {/* Notas olfativas */}
         {perfumePrincipal.notas?.length > 0 && (
           <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-            {perfumePrincipal.notas.map((nota) => (
+            {perfumePrincipal.notas.map(nota => (
               <TagNota key={nota} nota={nota} />
             ))}
           </div>
@@ -137,9 +137,9 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
           {alternativa.descricao}
         </p>
 
-        {/* Link para o catálogo */}
+        {/* Link para busca no catálogo */}
         <Link
-          href={linkAlternativa}
+          href={linkBusca(alternativa.nome, alternativa.marca)}
           style={{
             display: "inline-block",
             color: "var(--cor-destaque)",

@@ -10,7 +10,7 @@ import Link from "next/link"
 import { buscarPerfumePorId, buscarPorNome } from "@/lib/fragella"
 import type { PerfumeFragella } from "@/lib/fragella"
 import { buscarMockPorId } from "@/lib/mockData"
-import NotasPerfume from "@/components/perfume/NotasPerfume"
+import { NotasPerfume } from "@/components/perfume/NotasPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
@@ -173,13 +173,18 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             <div className="divisor" />
 
             {/* Pirâmide olfativa */}
-            <div style={{ marginTop: "2rem", marginBottom: "2.5rem" }}>
-              <NotasPerfume
-                notasTopo={perfume.notasTopo}
-                notasCoracao={perfume.notasCoracao}
-                notasFundo={perfume.notasFundo}
-              />
-            </div>
+            {(perfume.notasTopo?.length || perfume.notasCoracao?.length || perfume.notasFundo?.length) ? (
+              <div style={{ marginTop: "2rem", marginBottom: "2.5rem" }}>
+                <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.3rem", marginBottom: "1.5rem" }}>
+                  Pirâmide olfativa
+                </h3>
+                <NotasPerfume
+                  topo={(perfume.notasTopo ?? []).map(name => ({ name }))}
+                  coracao={(perfume.notasCoracao ?? []).map(name => ({ name }))}
+                  fundo={(perfume.notasFundo ?? []).map(name => ({ name }))}
+                />
+              </div>
+            ) : null}
 
             {/* Acordes principais */}
             {acordes.length > 0 && (

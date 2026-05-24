@@ -6,130 +6,70 @@
 // ============================================
 
 "use client"
-
 import { useState } from "react"
-import { corDaNota } from "@/lib/coresNotas"
 import { traduzir } from "@/lib/utils"
+import { corDaNota } from "@/lib/coresNotas"
 
-interface PropsNotasPerfume {
-  notasTopo?: string[]
-  notasCoracao?: string[]
-  notasFundo?: string[]
+interface Nota { name: string; imageUrl?: string }
+
+function hexToRgb(hex: string) {
+  const r = parseInt(hex.slice(1,3),16)
+  const g = parseInt(hex.slice(3,5),16)
+  const b = parseInt(hex.slice(5,7),16)
+  return `${r}, ${g}, ${b}`
 }
 
-const camadas = [
-  { chave: "topo"    as const, rotulo: "Topo",    descricao: "primeira impressão", cor: "var(--cor-destaque)" },
-  { chave: "coracao" as const, rotulo: "Coração", descricao: "a essência",         cor: "var(--cor-dourado)"  },
-  { chave: "fundo"   as const, rotulo: "Fundo",   descricao: "o que fica",         cor: "var(--cor-texto-suave)" },
-]
-
-function ChipNota({ nota, selecionada, onToggle }: {
-  nota: string
-  selecionada: boolean
-  onToggle: () => void
-}) {
+function ChipNota({ nota, selecionada, onToggle }: { nota: Nota, selecionada: boolean, onToggle: () => void }) {
   const [hover, setHover] = useState(false)
-  const cor = corDaNota(nota)
-  const nome = traduzir(nota)
+  const cor = corDaNota(nota.name)
+  const rgb = hexToRgb(cor)
 
-  // Hover: fundo sólido, texto branco
-  // Selecionada: borda 2px, ícone ✓
-  // Default: fundo 15%, borda 60%, texto na cor
-  const bg     = hover ? cor : `${cor}26`
-  const border = selecionada
-    ? `2px solid ${cor}`
+  const style = selecionada
+    ? { backgroundColor: cor, color: "#fff", border: `2px solid ${cor}` }
     : hover
-    ? `1px solid ${cor}`
-    : `1px solid ${cor}99`
-  const color  = hover ? "#fff" : cor
+    ? { backgroundColor: cor, color: "#fff", border: `1.5px solid ${cor}` }
+    : { backgroundColor: `rgba(${rgb}, 0.12)`, color: cor, border: `1.5px solid rgba(${rgb}, 0.5)` }
 
   return (
     <span
-      role="button"
-      tabIndex={0}
+      onClick={onToggle}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={onToggle}
-      onKeyDown={e => e.key === "Enter" && onToggle()}
-      style={{
-        fontFamily: "var(--fonte-corpo)",
-        fontSize: "0.8rem",
-        padding: selecionada ? "0.3rem 0.75rem" : "0.3rem 0.75rem",
-        borderRadius: "2rem",
-        cursor: "pointer",
-        userSelect: "none",
-        transition: "background-color 0.15s, color 0.15s, border-color 0.15s",
-        backgroundColor: bg,
-        border,
-        color,
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.3rem",
-      }}
+      style={{ ...style, cursor: "pointer", padding: "4px 12px", borderRadius: "999px", fontSize: "13px", display: "inline-flex", alignItems: "center", gap: "4px", transition: "all 0.15s ease", userSelect: "none" }}
     >
-      {selecionada && <span style={{ fontSize: "0.7rem", lineHeight: 1 }}>✓</span>}
-      {nome}
+      {selecionada && <span>✓</span>}
+      {traduzir(nota.name)}
     </span>
   )
 }
 
-export default function NotasPerfume({ notasTopo, notasCoracao, notasFundo }: PropsNotasPerfume) {
+export function NotasPerfume({ topo, coracao, fundo }: { topo: Nota[], coracao: Nota[], fundo: Nota[] }) {
   const [selecionadas, setSelecionadas] = useState<Set<string>>(new Set())
+  const toggle = (nome: string) => setSelecionadas(prev => {
+    const next = new Set(prev)
+    next.has(nome) ? next.delete(nome) : next.add(nome)
+    return next
+  })
 
-  const notas = {
-    topo:    notasTopo    ?? [],
-    coracao: notasCoracao ?? [],
-    fundo:   notasFundo   ?? [],
-  }
-
-  if (!notasTopo?.length && !notasCoracao?.length && !notasFundo?.length) return null
-
-  function toggleNota(nota: string) {
-    setSelecionadas(prev => {
-      const next = new Set(prev)
-      next.has(nota) ? next.delete(nota) : next.add(nota)
-      return next
-    })
-  }
+  const secao = (label: string, sub: string, notas: Nota[]) => notas.length === 0 ? null : (
+    <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+      <div style={{ minWidth: "110px" }}>
+        <div style={{ fontSize: "11px", letterSpacing: "0.1em", color: "#C9943A", fontWeight: 500 }}>{label}</div>
+        <div style={{ fontSize: "11px", color: "#999" }}>{sub}</div>
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+        {notas.map(n => (
+          <ChipNota key={n.name} nota={n} selecionada={selecionadas.has(n.name)} onToggle={() => toggle(n.name)} />
+        ))}
+      </div>
+    </div>
+  )
 
   return (
-    <section>
-      <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.3rem", marginBottom: "1.5rem" }}>
-        Pirâmide olfativa
-      </h3>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-        {camadas.map(camada => {
-          const notasDaCamada = notas[camada.chave]
-          if (!notasDaCamada.length) return null
-
-          return (
-            <div key={camada.chave} style={{ display: "flex", gap: "1rem", alignItems: "flex-start" }}>
-              {/* Rótulo da camada */}
-              <div style={{ minWidth: "80px" }}>
-                <p style={{ fontSize: "0.7rem", fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", color: camada.cor }}>
-                  {camada.rotulo}
-                </p>
-                <p style={{ fontSize: "0.65rem", color: "var(--cor-texto-suave)", marginTop: "0.1rem" }}>
-                  {camada.descricao}
-                </p>
-              </div>
-
-              {/* Chips interativos */}
-              <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                {notasDaCamada.map(nota => (
-                  <ChipNota
-                    key={nota}
-                    nota={nota}
-                    selecionada={selecionadas.has(nota)}
-                    onToggle={() => toggleNota(nota)}
-                  />
-                ))}
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </section>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      {secao("TOPO", "primeira impressão", topo)}
+      {secao("CORAÇÃO", "a essência", coracao)}
+      {secao("FUNDO", "o que fica", fundo)}
+    </div>
   )
 }
