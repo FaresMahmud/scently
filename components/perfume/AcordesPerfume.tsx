@@ -2,16 +2,16 @@
 // ARQUIVO: components/perfume/AcordesPerfume.tsx
 // O QUE FAZ: exibe barras horizontais com os acordes (características) principais do perfume
 // QUANDO MANDAR PRA IA: quando quiser mudar o visual das barras de acordes
-// DEPENDE DE: lib/coresNotas.ts, styles/globals.css
+// DEPENDE DE: lib/coresNotas.ts, lib/utils.ts
 // ============================================
 
 "use client"
 
 import { useState } from "react"
 import { corDaNota } from "@/lib/coresNotas"
+import { traduzir } from "@/lib/utils"
 import type { Acorde } from "@/lib/types"
 
-// Re-exporta para compatibilidade com imports existentes
 export type { Acorde }
 
 interface PropsAcordes {
@@ -32,11 +32,10 @@ export default function AcordesPerfume({ acordes }: PropsAcordes) {
       </h3>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-        {ordenados.map((acorde) => {
-          const cor = corDaNota(acorde.nome)
-          const ativo = acordeHover === acorde.nome
-          const corBarra = ativo ? cor.bg : acorde.porcentagem > 70 ? "var(--cor-destaque)" : "var(--cor-dourado)"
-          const corNome  = ativo ? cor.text : "var(--cor-texto)"
+        {ordenados.map(acorde => {
+          const cor    = corDaNota(acorde.nome)
+          const ativo  = acordeHover === acorde.nome
+          const corBarra = ativo ? cor : acorde.porcentagem > 70 ? "var(--cor-destaque)" : "var(--cor-dourado)"
 
           return (
             <div
@@ -45,16 +44,16 @@ export default function AcordesPerfume({ acordes }: PropsAcordes) {
               onMouseLeave={() => setAcordeHover(null)}
               style={{ cursor: "default" }}
             >
-              {/* Nome + porcentagem */}
+              {/* Nome traduzido + porcentagem */}
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
                 <span style={{
                   fontFamily: "var(--fonte-corpo)",
                   fontSize: "0.82rem",
                   fontWeight: 400,
                   transition: "color 0.2s",
-                  color: corNome,
+                  color: ativo ? cor : "var(--cor-texto)",
                 }}>
-                  {acorde.nome}
+                  {traduzir(acorde.nome)}
                 </span>
                 <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", color: "var(--cor-texto-suave)" }}>
                   {acorde.porcentagem}%

@@ -15,6 +15,7 @@ import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
 import type { Acorde } from "@/lib/types"
+import { traduzir } from "@/lib/utils"
 
 // Mapeia os descritores de força da Fragella para porcentagens numéricas
 const DESCRITOR_PARA_PCT: Record<string, number> = {
@@ -139,10 +140,10 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem", alignItems: "center" }}>
               {perfume.familia && <Tag>{perfume.familia}</Tag>}
               {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
-              {perfume.genero && <Tag>{perfume.genero}</Tag>}
+              {perfume.genero && <Tag>{traduzir(perfume.genero)}</Tag>}
               {perfume.ano > 0 && <Tag>{perfume.ano}</Tag>}
-              {perfumeApi?.longevidade && <Tag>{perfumeApi.longevidade}</Tag>}
-              {perfumeApi?.sillage && <Tag>Sillage: {perfumeApi.sillage}</Tag>}
+              {perfumeApi?.longevidade && <Tag>{traduzir(perfumeApi.longevidade)}</Tag>}
+              {perfumeApi?.sillage && <Tag>Sillage: {traduzir(perfumeApi.sillage)}</Tag>}
               {perfumeApi?.rating && perfumeApi.rating > 0 && (
                 <span style={{ marginLeft: "auto", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-dourado)", letterSpacing: "0.04em" }}>
                   ★ {perfumeApi.rating.toFixed(2)}
@@ -202,10 +203,10 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                       </p>
                       {perfumeApi.rankingEstacao.slice(0, 3).map(r => (
                         <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{r.name}</span>
+                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{traduzir(r.name)}</span>
                           <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
                             {Array.from({ length: 5 }).map((_, i) => (
-                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "var(--cor-destaque)" : "var(--cor-borda)" }} />
+                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "#8B6F5E" : "#E0D9D0" }} />
                             ))}
                           </div>
                         </div>
@@ -219,10 +220,10 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                       </p>
                       {perfumeApi.rankingOcasiao.slice(0, 3).map(r => (
                         <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{r.name}</span>
+                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{traduzir(r.name)}</span>
                           <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
                             {Array.from({ length: 5 }).map((_, i) => (
-                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "var(--cor-dourado)" : "var(--cor-borda)" }} />
+                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "#8B6F5E" : "#E0D9D0" }} />
                             ))}
                           </div>
                         </div>

@@ -2,13 +2,14 @@
 // ARQUIVO: components/perfume/NotasPerfume.tsx
 // O QUE FAZ: exibe a pirâmide olfativa — notas de topo, coração e fundo
 // QUANDO MANDAR PRA IA: quando quiser mudar como as notas aparecem na página do perfume
-// DEPENDE DE: lib/coresNotas.ts, styles/globals.css
+// DEPENDE DE: lib/coresNotas.ts, lib/utils.ts
 // ============================================
 
 "use client"
 
 import { useState } from "react"
 import { corDaNota } from "@/lib/coresNotas"
+import { traduzir } from "@/lib/utils"
 
 interface PropsNotasPerfume {
   notasTopo?: string[]
@@ -16,15 +17,64 @@ interface PropsNotasPerfume {
   notasFundo?: string[]
 }
 
-// Cada camada da pirâmide tem um rótulo e uma cor diferente
 const camadas = [
-  { chave: "topo" as const,    rotulo: "Topo",    descricao: "primeira impressão", cor: "var(--cor-destaque)" },
-  { chave: "coracao" as const, rotulo: "Coração", descricao: "a essência",         cor: "var(--cor-dourado)" },
-  { chave: "fundo" as const,   rotulo: "Fundo",   descricao: "o que fica",         cor: "var(--cor-texto-suave)" },
+  { chave: "topo"    as const, rotulo: "Topo",    descricao: "primeira impressão", cor: "var(--cor-destaque)" },
+  { chave: "coracao" as const, rotulo: "Coração", descricao: "a essência",         cor: "var(--cor-dourado)"  },
+  { chave: "fundo"   as const, rotulo: "Fundo",   descricao: "o que fica",         cor: "var(--cor-texto-suave)" },
 ]
 
+function ChipNota({ nota, selecionada, onToggle }: {
+  nota: string
+  selecionada: boolean
+  onToggle: () => void
+}) {
+  const [hover, setHover] = useState(false)
+  const cor = corDaNota(nota)
+  const nome = traduzir(nota)
+
+  // Hover: fundo sólido, texto branco
+  // Selecionada: borda 2px, ícone ✓
+  // Default: fundo 15%, borda 60%, texto na cor
+  const bg     = hover ? cor : `${cor}26`
+  const border = selecionada
+    ? `2px solid ${cor}`
+    : hover
+    ? `1px solid ${cor}`
+    : `1px solid ${cor}99`
+  const color  = hover ? "#fff" : cor
+
+  return (
+    <span
+      role="button"
+      tabIndex={0}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={onToggle}
+      onKeyDown={e => e.key === "Enter" && onToggle()}
+      style={{
+        fontFamily: "var(--fonte-corpo)",
+        fontSize: "0.8rem",
+        padding: selecionada ? "0.3rem 0.75rem" : "0.3rem 0.75rem",
+        borderRadius: "2rem",
+        cursor: "pointer",
+        userSelect: "none",
+        transition: "background-color 0.15s, color 0.15s, border-color 0.15s",
+        backgroundColor: bg,
+        border,
+        color,
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "0.3rem",
+      }}
+    >
+      {selecionada && <span style={{ fontSize: "0.7rem", lineHeight: 1 }}>✓</span>}
+      {nome}
+    </span>
+  )
+}
+
 export default function NotasPerfume({ notasTopo, notasCoracao, notasFundo }: PropsNotasPerfume) {
-  const [notaHover, setNotaHover] = useState<string | null>(null)
+  const [selecionadas, setSelecionadas] = useState<Set<string>>(new Set())
 
   const notas = {
     topo:    notasTopo    ?? [],
@@ -34,6 +84,14 @@ export default function NotasPerfume({ notasTopo, notasCoracao, notasFundo }: Pr
 
   if (!notasTopo?.length && !notasCoracao?.length && !notasFundo?.length) return null
 
+  function toggleNota(nota: string) {
+    setSelecionadas(prev => {
+      const next = new Set(prev)
+      next.has(nota) ? next.delete(nota) : next.add(nota)
+      return next
+    })
+  }
+
   return (
     <section>
       <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.3rem", marginBottom: "1.5rem" }}>
@@ -41,7 +99,7 @@ export default function NotasPerfume({ notasTopo, notasCoracao, notasFundo }: Pr
       </h3>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-        {camadas.map((camada) => {
+        {camadas.map(camada => {
           const notasDaCamada = notas[camada.chave]
           if (!notasDaCamada.length) return null
 
@@ -57,32 +115,16 @@ export default function NotasPerfume({ notasTopo, notasCoracao, notasFundo }: Pr
                 </p>
               </div>
 
-              {/* Notas da camada */}
+              {/* Chips interativos */}
               <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-                {notasDaCamada.map((nota) => {
-                  const cor = corDaNota(nota)
-                  const ativo = notaHover === nota
-                  return (
-                    <span
-                      key={nota}
-                      onMouseEnter={() => setNotaHover(nota)}
-                      onMouseLeave={() => setNotaHover(null)}
-                      style={{
-                        fontFamily: "var(--fonte-corpo)",
-                        fontSize: "0.8rem",
-                        padding: "0.3rem 0.75rem",
-                        borderRadius: "2rem",
-                        cursor: "default",
-                        transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
-                        backgroundColor: ativo ? cor.bg   : "var(--cor-base)",
-                        color:           ativo ? cor.text : "var(--cor-texto)",
-                        border:          ativo ? `1px solid ${cor.bg}` : "1px solid var(--cor-borda)",
-                      }}
-                    >
-                      {nota}
-                    </span>
-                  )
-                })}
+                {notasDaCamada.map(nota => (
+                  <ChipNota
+                    key={nota}
+                    nota={nota}
+                    selecionada={selecionadas.has(nota)}
+                    onToggle={() => toggleNota(nota)}
+                  />
+                ))}
               </div>
             </div>
           )

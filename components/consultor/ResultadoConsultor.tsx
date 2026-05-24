@@ -7,7 +7,6 @@
 
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import Card from "@/components/ui/Card"
 import Tag from "@/components/ui/Tag"
@@ -25,21 +24,17 @@ function slugify(texto: string): string {
 }
 
 function TagNota({ nota }: { nota: string }) {
-  const [hover, setHover] = useState(false)
   const cor = corDaNota(nota)
   return (
     <span
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       style={{
         fontSize: "0.78rem",
         padding: "0.25rem 0.65rem",
         borderRadius: "2rem",
         cursor: "default",
-        transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
-        backgroundColor: hover ? cor.bg   : "var(--cor-base)",
-        color:           hover ? cor.text : "var(--cor-texto-suave)",
-        border:          hover ? `1px solid ${cor.bg}` : "1px solid var(--cor-borda)",
+        backgroundColor: `${cor}26`,
+        border:          `1px solid ${cor}99`,
+        color:           cor,
       }}
     >
       {nota}

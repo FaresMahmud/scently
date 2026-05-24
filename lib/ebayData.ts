@@ -13,6 +13,8 @@ export interface PerfumeEbay {
   preco_brl: number
   vendidos: number
 }
+// arquivo separado e uma classe de leitura pro arquivo 
+
 
 export const PERFUMES_EBAY: PerfumeEbay[] = [
 { marca: "Azzaro", titulo: "Chrome", tipo: "EDT", genero: "Masculino", preco_brl: 236.28, vendidos: 30655 },
