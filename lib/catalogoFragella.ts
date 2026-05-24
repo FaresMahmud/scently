@@ -9,6 +9,7 @@
 import * as fs from "fs"
 import * as path from "path"
 import type { PerfumeFragella } from "@/lib/fragella"
+import { slugify } from "@/lib/utils"
 
 const CAMINHO = path.join(process.cwd(), "data", "catalogo-fragella.json")
 
@@ -72,4 +73,31 @@ export function marcasUnicas(): string[] {
 export function metadadosCatalogo() {
   carregarCatalogo() // garante que o cache foi populado
   return { timestamp: _timestamp, total: _cache?.length ?? 0 }
+}
+
+/** Busca um perfume pelo slug/id — match direto por id ou por slugify(nome-marca) */
+export function buscarPerfumePorSlug(slug: string): PerfumeFragella | null {
+  const catalogo = carregarCatalogo()
+
+  // 1. Match direto pelo campo id
+  const porId = catalogo.find(p => p.id === slug)
+  if (porId) return porId
+
+  // 2. Match via slugify(nome + "-" + marca) — para IDs gerados externamente
+  const porSlug = catalogo.find(p =>
+    `${slugify(p.nome)}-${slugify(p.marca)}` === slug ||
+    `${slugify(p.marca)}-${slugify(p.nome)}` === slug
+  )
+  return porSlug ?? null
+}
+
+/** Retorna os N perfumes mais populares (por campo popularidade, depois rating) */
+export function perfumesPopulares(limite = 500): PerfumeFragella[] {
+  return [...carregarCatalogo()]
+    .sort((a, b) => {
+      const popDiff = (b.popularidade ?? 0) - (a.popularidade ?? 0)
+      if (popDiff !== 0) return popDiff
+      return (b.rating ?? 0) - (a.rating ?? 0)
+    })
+    .slice(0, limite)
 }

@@ -1,59 +1,100 @@
 // ============================================
 // ARQUIVO: app/perfume/[id]/page.tsx
-// O QUE FAZ: página individual de cada perfume — notas, acordes, descrição, rankings e CTA
+// O QUE FAZ: página individual de perfume — cobre catálogo Fragella (7.9k) + mock
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout da página de perfume
-// DEPENDE DE: lib/fragella.ts, lib/mockData.ts, components/perfume/
+// DEPENDE DE: lib/catalogoFragella, lib/fragella, lib/mockData, components/perfume/
 // ============================================
 
 import type { Metadata } from "next"
 import Link from "next/link"
+import { buscarPerfumePorSlug, perfumesPopulares } from "@/lib/catalogoFragella"
 import { buscarPerfumePorId, buscarPorNome } from "@/lib/fragella"
-import type { PerfumeFragella } from "@/lib/fragella"
-import { buscarMockPorId } from "@/lib/mockData"
+import type { PerfumeFragella, NotaFragella } from "@/lib/fragella"
+import { buscarMockPorId, PERFUMES_MOCK } from "@/lib/mockData"
 import { NotasPerfume } from "@/components/perfume/NotasPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import Tag from "@/components/ui/Tag"
-import { slugify } from "@/lib/utils"
+import { slugify, traduzir } from "@/lib/utils"
 import type { Acorde } from "@/lib/types"
-import { traduzir } from "@/lib/utils"
 
-// Mapeia os descritores de força da Fragella para porcentagens numéricas
+// Páginas além do top 500 são geradas on-demand (ISR)
+export const dynamicParams = true
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
 const DESCRITOR_PARA_PCT: Record<string, number> = {
-  Dominant:  92,
-  Prominent: 76,
-  Moderate:  58,
-  Subtle:    38,
-  Trace:     22,
+  Dominant: 92, Prominent: 76, Moderate: 58, Subtle: 38, Trace: 22,
 }
 
 function acordesFragellaParaAcorde(pct: Record<string, string> | undefined): Acorde[] {
   if (!pct) return []
   return Object.entries(pct)
-    .map(([nome, desc]) => ({ nome, porcentagem: DESCRITOR_PARA_PCT[desc] ?? 50 }))
+    .map(([nome, desc]) => ({ nome: traduzir(nome), porcentagem: DESCRITOR_PARA_PCT[desc] ?? 50 }))
     .sort((a, b) => b.porcentagem - a.porcentagem)
     .slice(0, 6)
 }
 
-// Tenta encontrar o perfume por ID; se não achar no mock, tenta busca por nome na Fragella
-async function resolverPerfume(id: string): Promise<PerfumeFragella | null> {
-  // 1. Tenta API pelo ID (slug → nome)
-  const porId = await buscarPerfumePorId(id).catch(() => null)
-  if (porId?.nome && porId?.marca) return porId
+/** Retorna notas como Nota[] para o componente NotasPerfume */
+function resolverNotas(
+  completas: NotaFragella[] | undefined,
+  simples: string[] | undefined
+): { name: string; imageUrl?: string }[] {
+  if (completas?.length) return completas
+  return (simples ?? []).map(name => ({ name }))
+}
 
-  // 2. Tenta busca livre pelo nome extraído do slug
+/**
+ * Resolver em cascata:
+ * 1. Catálogo local (sem API call — O(n) em memória)
+ * 2. Fragella API por ID
+ * 3. Fragella API por nome extraído do slug
+ * 4. Mock local
+ */
+async function resolverPerfume(id: string): Promise<{
+  perfume: PerfumeFragella | null
+  fonte: "local" | "api" | "mock" | null
+}> {
+  // 1. Catálogo local
+  const local = buscarPerfumePorSlug(id)
+  if (local?.nome && local?.marca) return { perfume: local, fonte: "local" }
+
+  // 2. Fragella API — por ID
+  const porId = await buscarPerfumePorId(id).catch(() => null)
+  if (porId?.nome && porId?.marca) return { perfume: porId, fonte: "api" }
+
+  // 3. Fragella API — por nome extraído do slug
   const nomeBusca = id.replace(/-/g, " ").replace(/\s+\d+$/, "").trim()
   if (nomeBusca.length >= 3) {
     const resultados = await buscarPorNome(nomeBusca, 3).catch(() => [])
-    if (resultados.length > 0) return resultados[0]
+    if (resultados.length > 0) return { perfume: resultados[0], fonte: "api" }
   }
 
-  return null
+  // 4. Mock local
+  const mock = buscarMockPorId(id)
+  if (mock) return { perfume: mock as unknown as PerfumeFragella, fonte: "mock" }
+
+  return { perfume: null, fonte: null }
 }
+
+// ── Static params (top 500 por popularidade) ─────────────────────────────────
+
+export function generateStaticParams() {
+  const slugs = new Set<string>()
+
+  // Mocks existentes
+  for (const p of PERFUMES_MOCK) slugs.add(p.id)
+
+  // Top 500 do catálogo Fragella por popularidade/rating
+  for (const p of perfumesPopulares(500)) slugs.add(p.id)
+
+  return Array.from(slugs).map(id => ({ id }))
+}
+
+// ── Metadata ──────────────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
-  const api = await resolverPerfume(id)
-  const perfume = (api?.nome && api?.marca) ? api : buscarMockPorId(id)
+  const { perfume } = await resolverPerfume(id)
   if (!perfume) return { title: "Perfume não encontrado" }
   return {
     title: `${perfume.nome} — ${perfume.marca}`,
@@ -61,13 +102,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 }
 
+// ── Page ──────────────────────────────────────────────────────────────────────
+
 export default async function PaginaPerfume({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-
-  // Prioridade: Fragella API > mock local
-  const perfumeApi = await resolverPerfume(id)
-  const perfumeMock = buscarMockPorId(id)
-  const perfume = (perfumeApi?.nome && perfumeApi?.marca) ? perfumeApi : perfumeMock
+  const { perfume, fonte } = await resolverPerfume(id)
 
   if (!perfume) {
     return (
@@ -76,23 +115,31 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
           Perfume não encontrado
         </h1>
         <p style={{ marginBottom: "2rem" }}>O perfume que você procura não existe ou foi removido.</p>
-        <Link href="/" style={{ color: "var(--cor-destaque)" }}>← Voltar ao início</Link>
+        <Link href="/catalogo" style={{ color: "var(--cor-destaque)" }}>← Explorar catálogo</Link>
       </main>
     )
   }
 
-  // Acordes: prefere porcentagens reais da Fragella; fallback para o mock
+  // Acordes — prefere porcentagens reais, senão mock
+  const mockData = fonte === "mock" ? buscarMockPorId(id) : null
   const acordes: Acorde[] =
-    acordesFragellaParaAcorde(perfumeApi?.acordesPorcentagem).length > 0
-      ? acordesFragellaParaAcorde(perfumeApi?.acordesPorcentagem)
-      : (perfumeMock?.acordes ?? [])
+    acordesFragellaParaAcorde(perfume.acordesPorcentagem).length > 0
+      ? acordesFragellaParaAcorde(perfume.acordesPorcentagem)
+      : (mockData?.acordes ?? [])
 
-  // Imagem: prefere versão transparente da Fragella (melhor visual no fundo claro)
-  const imagemSrc = perfumeApi?.imagemTransparente || perfumeApi?.imagem || perfumeMock?.imagem || ""
+  // Imagem
+  const imagemSrc = perfume.imagemTransparente || perfume.imagem || ""
+
+  // Notas — usa notasCompletas (com imageUrl) se disponível
+  const notasTopo    = resolverNotas(perfume.notasCompletas?.Top,    perfume.notasTopo)
+  const notasCoracao = resolverNotas(perfume.notasCompletas?.Middle, perfume.notasCoracao)
+  const notasFundo   = resolverNotas(perfume.notasCompletas?.Base,   perfume.notasFundo)
+  const temNotas     = notasTopo.length > 0 || notasCoracao.length > 0 || notasFundo.length > 0
 
   return (
     <main>
       <div className="container-site" style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
+
         {/* Breadcrumb */}
         <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "3rem" }}>
           <Link href="/" style={{ color: "var(--cor-destaque)" }}>scently</Link>
@@ -136,17 +183,17 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
           {/* Coluna direita — informações */}
           <div>
-            {/* Tags: família, concentração, gênero, ano, rating */}
+            {/* Tags info */}
             <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem", alignItems: "center" }}>
-              {perfume.familia && <Tag>{perfume.familia}</Tag>}
+              {perfume.familia && <Tag>{traduzir(perfume.familia)}</Tag>}
               {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
               {perfume.genero && <Tag>{traduzir(perfume.genero)}</Tag>}
               {perfume.ano > 0 && <Tag>{perfume.ano}</Tag>}
-              {perfumeApi?.longevidade && <Tag>{traduzir(perfumeApi.longevidade)}</Tag>}
-              {perfumeApi?.sillage && <Tag>Sillage: {traduzir(perfumeApi.sillage)}</Tag>}
-              {perfumeApi?.rating && perfumeApi.rating > 0 && (
+              {perfume.longevidade && <Tag>{traduzir(perfume.longevidade)}</Tag>}
+              {perfume.sillage && <Tag>Sillage: {traduzir(perfume.sillage)}</Tag>}
+              {perfume.rating && perfume.rating > 0 && (
                 <span style={{ marginLeft: "auto", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-dourado)", letterSpacing: "0.04em" }}>
-                  ★ {perfumeApi.rating.toFixed(2)}
+                  ★ {perfume.rating.toFixed(2)}
                 </span>
               )}
             </div>
@@ -166,25 +213,54 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             </h1>
 
             {/* Descrição */}
-            <p style={{ lineHeight: 1.8, marginBottom: "2.5rem", fontSize: "0.95rem" }}>
-              {perfume.descricao}
-            </p>
+            {perfume.descricao && (
+              <p style={{ lineHeight: 1.8, marginBottom: "2.5rem", fontSize: "0.95rem" }}>
+                {perfume.descricao}
+              </p>
+            )}
+
+            {/* Botão comprar */}
+            {perfume.urlCompra && (
+              <a
+                href={perfume.urlCompra}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  backgroundColor: "var(--cor-destaque)",
+                  color: "#fff",
+                  fontFamily: "var(--fonte-corpo)",
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.06em",
+                  padding: "0.7rem 1.5rem",
+                  borderRadius: "var(--raio-borda)",
+                  textDecoration: "none",
+                  marginBottom: "2.5rem",
+                  transition: "opacity 0.15s",
+                }}
+              >
+                Comprar →
+              </a>
+            )}
 
             <div className="divisor" />
 
             {/* Pirâmide olfativa */}
-            {(perfume.notasTopo?.length || perfume.notasCoracao?.length || perfume.notasFundo?.length) ? (
+            {temNotas && (
               <div style={{ marginTop: "2rem", marginBottom: "2.5rem" }}>
                 <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.3rem", marginBottom: "1.5rem" }}>
                   Pirâmide olfativa
                 </h3>
                 <NotasPerfume
-                  topo={(perfume.notasTopo ?? []).map(name => ({ name }))}
-                  coracao={(perfume.notasCoracao ?? []).map(name => ({ name }))}
-                  fundo={(perfume.notasFundo ?? []).map(name => ({ name }))}
+                  topo={notasTopo}
+                  coracao={notasCoracao}
+                  fundo={notasFundo}
                 />
               </div>
-            ) : null}
+            )}
 
             {/* Acordes principais */}
             {acordes.length > 0 && (
@@ -196,19 +272,21 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               </>
             )}
 
-            {/* Rankings de estação e ocasião (dados reais da Fragella) */}
-            {(perfumeApi?.rankingEstacao?.length || perfumeApi?.rankingOcasiao?.length) && (
+            {/* Rankings estação + ocasião */}
+            {(perfume.rankingEstacao?.length || perfume.rankingOcasiao?.length) ? (
               <>
                 <div className="divisor" />
                 <div style={{ marginTop: "2rem", marginBottom: "2.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-                  {perfumeApi?.rankingEstacao?.length ? (
+                  {perfume.rankingEstacao?.length ? (
                     <div>
                       <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
                         Estação ideal
                       </p>
-                      {perfumeApi.rankingEstacao.slice(0, 3).map(r => (
+                      {perfume.rankingEstacao.slice(0, 3).map(r => (
                         <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{traduzir(r.name)}</span>
+                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
+                            {traduzir(r.name)}
+                          </span>
                           <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
                             {Array.from({ length: 5 }).map((_, i) => (
                               <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "#8B6F5E" : "#E0D9D0" }} />
@@ -218,14 +296,16 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                       ))}
                     </div>
                   ) : null}
-                  {perfumeApi?.rankingOcasiao?.length ? (
+                  {perfume.rankingOcasiao?.length ? (
                     <div>
                       <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
                         Melhor ocasião
                       </p>
-                      {perfumeApi.rankingOcasiao.slice(0, 3).map(r => (
+                      {perfume.rankingOcasiao.slice(0, 3).map(r => (
                         <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>{traduzir(r.name)}</span>
+                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
+                            {traduzir(r.name)}
+                          </span>
                           <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
                             {Array.from({ length: 5 }).map((_, i) => (
                               <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "#8B6F5E" : "#E0D9D0" }} />
@@ -237,7 +317,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                   ) : null}
                 </div>
               </>
-            )}
+            ) : null}
 
             <div className="divisor" />
 
