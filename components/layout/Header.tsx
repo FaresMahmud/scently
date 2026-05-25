@@ -8,10 +8,10 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { siteMeta } from "@/config/site"
 import MenuMobileToggle from "./MenuMobileToggle"
+import Logo from "@/components/ui/Logo"
 
 function LinkConsultor({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   const router = useRouter()
@@ -44,39 +44,13 @@ export default function Header() {
         WebkitBackdropFilter: "blur(8px)",
       }}
     >
-      <style>{`
-        .logo-scently { width: 160px !important; height: 44px !important; }
-        @media (max-width: 640px) { .logo-scently { width: 110px !important; height: 30px !important; } }
-      `}</style>
       <div
         className="container-site"
         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}
       >
         {/* Logo */}
-        <Link
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "21px 0",
-          }}
-          aria-label={siteMeta.nome}
-        >
-          <Image
-            src="/logo-scently.png"
-            alt={siteMeta.nome}
-            width={160}
-            height={44}
-            className="logo-scently"
-            style={{
-              objectFit: "contain",
-              mixBlendMode: "multiply",
-              border: "none",
-              boxShadow: "none",
-              borderRadius: 0,
-            }}
-            priority
-          />
+        <Link href="/" aria-label={siteMeta.nome} style={{ display: "flex", alignItems: "center" }}>
+          <Logo height={44} />
         </Link>
 
         {/* Navegação desktop — esconde no mobile via CSS */}
