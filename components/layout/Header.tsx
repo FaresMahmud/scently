@@ -46,11 +46,11 @@ export default function Header() {
     >
       <div
         className="container-site"
-        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "72px" }}
       >
         {/* Logo */}
         <Link href="/" aria-label={siteMeta.nome} style={{ display: "flex", alignItems: "center" }}>
-          <Logo height={44} />
+          <Logo height={65} />
         </Link>
 
         {/* Navegação desktop — esconde no mobile via CSS */}
