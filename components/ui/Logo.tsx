@@ -3,10 +3,10 @@
 // O QUE FAZ: logo SVG do Scently — borrifador + partículas + nome
 // ============================================
 
-export default function Logo({ height = 55 }: { height?: number }) {
+export default function Logo({ width = 220 }: { width?: number }) {
   return (
     <svg
-      height={height}
+      width={width}
       viewBox="0 0 680 180"
       role="img"
       xmlns="http://www.w3.org/2000/svg"
