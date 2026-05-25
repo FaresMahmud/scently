@@ -1,0 +1,3992 @@
+{
+  "timestamp": "2026-05-25T20:27:16.327Z",
+  "total": 215,
+  "por_marca": {
+    "In The Box": 146,
+    "Maison Viegas": 69
+  },
+  "contratipos": [
+    {
+      "id": "in-the-box-celtic-legacy-100ml",
+      "nome": "Celtic Legacy - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu de Chanel",
+      "marcaOriginal": "Chanel",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro"
+      ],
+      "preco_brl": 199.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis-colecao-exclusif/celtic-legacy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fatal-innocence-100ml",
+      "nome": "Fatal Innocence - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Innocent",
+      "marcaOriginal": "Thierry Mugler",
+      "familia": "Oriental",
+      "notas": [
+        "lavanda",
+        "couro",
+        "âmbar"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/fatal-innocence-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-litchi-fiorito-100ml",
+      "nome": "Litchi Fiorito - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie En Rose",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Lichia",
+        "Jasmim",
+        "Baunilha"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/litchi-fiorito-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-devoile-100ml",
+      "nome": "Dévoile - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/devoile-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-salt-crystal-100ml",
+      "nome": "Salt Crystal - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Unissex",
+      "inspiradoEm": "Salt Crystal",
+      "marcaOriginal": "In The Box",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/salt-crystal-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-turim-100ml",
+      "nome": "Turim - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 219.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/turim-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-taylor-made-100ml",
+      "nome": "Taylor Made - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Taylor Made",
+      "marcaOriginal": "Nicolai",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela"
+      ],
+      "preco_brl": 209.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/taylor-made-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-me-and-i-absolu-100ml",
+      "nome": "Me And I Absolu - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Dior Me And I",
+      "marcaOriginal": "Dior",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Baunilha",
+        "Sândalo"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/me-and-i-absolu-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-soft-splendor-100ml",
+      "nome": "Soft Splendor - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/soft-splendor-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-mystic-newlands-100ml",
+      "nome": "Mystic Newlands - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 219.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/mystic-newlands-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lumen-blue-100ml",
+      "nome": "Lumen Blue - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 209.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/lumen-blue-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-blanche-exquise-100ml",
+      "nome": "Blanche Exquise - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Blanche",
+      "marcaOriginal": "By Kilian",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/blanche-exquise-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-twice-love-100ml",
+      "nome": "Twice Love - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Twice",
+      "marcaOriginal": "Calvin Klein",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Lavanda",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/twice-love-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-veneration-100ml",
+      "nome": "Veneration - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/veneration-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fruttato-oud-100ml",
+      "nome": "Fruttato Oud - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage Oud",
+      "marcaOriginal": "Dior",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Oud",
+        "Vetiver",
+        "Baunilha"
+      ],
+      "preco_brl": 229.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/fruttato-oud-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-vanillush-100ml",
+      "nome": "Vanillush - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Unissex",
+      "inspiradoEm": "Vanilla",
+      "marcaOriginal": "Thierry Mugler",
+      "familia": "Gourmand",
+      "notas": [
+        "Baunilha",
+        "Açúcar",
+        "Caramelo"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/vanillush-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-dolce-mallow-100ml",
+      "nome": "Dolce Mallow - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Dolce",
+      "marcaOriginal": "Dolce & Gabbana",
+      "familia": "Gourmand",
+      "notas": [
+        "Baunilha",
+        "Caramelo",
+        "Nozes"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/dolce-mallow-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-absolute-whoop-100ml",
+      "nome": "Absolute Whoop - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/absolute-whoop-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-looking-for-something-100ml",
+      "nome": "Looking For Something - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 199.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/looking-for-something-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-dominus-elixir-100ml",
+      "nome": "Dominus Elixir - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/dominus-elixir-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-citrus-craving-100ml",
+      "nome": "Citrus Craving - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/citrus-craving-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-precious-dame-100ml",
+      "nome": "Precious Dame - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/precious-dame-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-flow-vibes-100ml",
+      "nome": "Flow Vibes - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu de Chanel",
+      "marcaOriginal": "Chanel",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis-colecao-exclusif/flow-vibes-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-prime-instinct-100ml",
+      "nome": "Prime Instinct - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/prime-instinct-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-infinite-horizon-100ml",
+      "nome": "Infinite Horizon - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/infinite-horizon-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-uomo-di-lusso-100ml",
+      "nome": "Uomo di Lusso - 100ML",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/uomo-di-lusso-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-all-flowers-in-one-100ml",
+      "nome": "All Flowers In One - 100ML",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Flowers",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Roseira",
+        "Lavanda"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/all-flowers-in-one-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-celestial-stone-100ml",
+      "nome": "Celestial Stone - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Terre d'Hermes",
+      "marcaOriginal": "Hermes",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "pimenta",
+        "couro",
+        "patchouli",
+        "vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis-colecao-exclusif/celestial-stone-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lemon-luxs-100ml",
+      "nome": "Lemon Luxs - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Limão",
+        "Bergamota",
+        "Lavanda"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/lemon-luxs-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-totally-scandalous-100ml",
+      "nome": "Totally Scandalous -100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Paco Rabanne Olympéa",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Oriental",
+      "notas": [
+        "Amêndoas",
+        "Jasmim",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/totally-scandalous-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sacred-love-100ml",
+      "nome": "Sacred Love - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Sacred Love",
+      "marcaOriginal": "By Kilian",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Vetiver",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/colecao-premium/sacred-love-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-man-s-illusion-100ml",
+      "nome": "Man's Illusion - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/man-s-illusion-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-celestial-fantasy-100ml",
+      "nome": "Celestial Fantasy -  100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Fantasy",
+      "marcaOriginal": "Britney Spears",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Baunilha",
+        "Amêndoas"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/celestial-fantasy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fresh-and-senses-100ml",
+      "nome": "Fresh and Senses - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis-colecao-exclusif/fresh-and-senses-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-brise-d-adventure-100ml",
+      "nome": "Brise D'Adventure - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/colecao-exclusif/brise-d-adventure-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-essenza-nobile-100ml",
+      "nome": "Essenza Nobile - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis-colecao-exclusif/essenza-nobile-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-glamorous-rose-100ml",
+      "nome": "Glamorous Rose - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/colecao-exclusif/glamorous-rose-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-brandie-1848-100ml",
+      "nome": "Brandie 1848 - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Black Orchid",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Orquídea",
+        "Sândalo"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/colecao-exclusif/brandie-1848-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-enigma-blend-100ml",
+      "nome": "Enigma Blend - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/enigma-blend-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-me-and-i-100ml",
+      "nome": "Me And I - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/me-and-i-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-my-duality-100ml",
+      "nome": "My Duality - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Duality",
+      "marcaOriginal": "Dolce & Gabbana",
+      "familia": "Oriental",
+      "notas": [
+        "Lavanda",
+        "Couro",
+        "Vetiver"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/my-duality-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fleur-imperiale-100ml",
+      "nome": "Fleur Impériale - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "J'Adore",
+      "marcaOriginal": "Dior",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Vetiver"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/fleur-imperiale-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fire-snake-100ml",
+      "nome": "Fire Snake - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu de Chanel",
+      "marcaOriginal": "Chanel",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/fire-snake-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-great-master-100ml",
+      "nome": "The Great Master - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/the-great-master-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-deep-dark-water-100ml",
+      "nome": "Deep Dark Water - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/deep-dark-water-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-always-on-the-way-100ml",
+      "nome": "Always On The Way - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/always-on-the-way-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-liberte-absolu-100ml",
+      "nome": "Liberté Absolu - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/liberte-absolu-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-trophy-elixir-100ml",
+      "nome": "The Trophy Elixir - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/the-trophy-elixir-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-unique-red-100ml",
+      "nome": "Unique Red - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Paco Rabanne Invictus",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Aquático",
+      "notas": [
+        "Grapefruit",
+        "Lavanda",
+        "Madeira"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis-colecao-exclusif/unique-red-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-supremo-absolu-100ml",
+      "nome": "Supremo Absolu - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-exclusif/supremo-absolu-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-envoy-100ml",
+      "nome": "Envoy - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/colecao-premium/envoy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-glam-celebration-100ml",
+      "nome": "Glam Celebration - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Champagne",
+      "marcaOriginal": "Yves Saint Laurent",
+      "familia": "Floral",
+      "notas": [
+        "bergamota",
+        "jasmim",
+        "baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/glam-celebration-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-earthy-icy-100ml",
+      "nome": "Earthy Icy - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/earthy-icy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sugarmellow-100ml",
+      "nome": "Sugarmellow - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Princess",
+      "marcaOriginal": "Vera Wang",
+      "familia": "Frutal",
+      "notas": [
+        "bergamota",
+        "amora",
+        "jasmim",
+        "baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/sugarmellow-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-grand-cheval-100ml",
+      "nome": "Grand Cheval - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/grand-cheval-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-blue-memory-100ml",
+      "nome": "Blue Memory - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu de Chanel",
+      "marcaOriginal": "Chanel",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/blue-memory-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-nuit-noir-100ml",
+      "nome": "Nuit Noir - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Unissex",
+      "inspiradoEm": "Black Orchid",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Oriental",
+      "notas": [
+        "baunilha",
+        "jasmim",
+        "sândalo"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/nuit-noir-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-nouvelle-angelique-100ml",
+      "nome": "Nouvelle Angélique - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Angélique",
+      "marcaOriginal": "Heure Exquise",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Lavanda",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/nouvelle-angelique-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-power-of-love-100ml",
+      "nome": "The Power of Love - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "The Power of Love",
+      "marcaOriginal": "Dana",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/the-power-of-love-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-kind-sweetness-100ml",
+      "nome": "Kind Sweetness - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Princess",
+      "marcaOriginal": "Vera Wang",
+      "familia": "Frutal",
+      "notas": [
+        "bergamota",
+        "amora",
+        "jasmim"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/kind-sweetness-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-black-couture-100ml",
+      "nome": "Black Couture - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Black Afgano",
+      "marcaOriginal": "Nasomatto",
+      "familia": "Oriental",
+      "notas": [
+        "Incenso",
+        "Mirra",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/black-couture-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sweet-fruity-juice-100ml",
+      "nome": "Sweet Fruity Juice - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Juice",
+      "marcaOriginal": "Juice",
+      "familia": "Frutal",
+      "notas": [
+        "morango",
+        "laranja",
+        "abacaxi"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-premium/sweet-fruity-juice-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-homine-elixir-100ml",
+      "nome": "Homine Elixir - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos-colecao-premium/homine-elixir-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-desire-man-parfum-100ml",
+      "nome": "The Desire Man Parfum - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Deseo",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/the-desire-man-parfum-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-desire-man-100ml",
+      "nome": "The Desire Man - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Desire",
+      "marcaOriginal": "Dunhill",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Canela"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/the-desire-man-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-real-commander-100ml",
+      "nome": "The Real Commander - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/the-real-commander-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sweet-from-heaven-100ml",
+      "nome": "Sweet From Heaven - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Angel",
+      "marcaOriginal": "Thierry Mugler",
+      "familia": "Gourmand",
+      "notas": [
+        "Chocolate",
+        "Caramelo",
+        "Baunilha"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis/sweet-from-heaven-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-helix-man-100ml",
+      "nome": "Helix Man - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu de Chanel",
+      "marcaOriginal": "Chanel",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/helix-man-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-so-screamy-100ml",
+      "nome": "So Screamy - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "1 Million",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Oriental",
+      "notas": [
+        "Grapefruit",
+        "Canela",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/so-screamy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-red-moon-100ml",
+      "nome": "The Red Moon - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Tom Ford Black Orchid",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Orquídea",
+        "Sândalo"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/the-red-moon-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lemon-vanilla-wood-100ml",
+      "nome": "Lemon Vanilla & Wood - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Limão",
+        "Baunilha",
+        "Madeira"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/lemon-vanilla-wood-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-aromatik-100ml",
+      "nome": "Aromatik - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/aromatik-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-oud-orientale-100ml",
+      "nome": "Oud Orientale - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Oud",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Oriental",
+      "notas": [
+        "Oud",
+        "Sândalo",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/oud-orientale-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-stant-aquae-100ml",
+      "nome": "Stant Aquae - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Acqua di Gio",
+      "marcaOriginal": "Giorgio Armani",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "limão",
+        "canela"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/stant-aquae-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-regnum-opus-100ml",
+      "nome": "Regnum Opus - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/regnum-opus-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-makathen-100ml",
+      "nome": "Makathén - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/makathen-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-real-lignum-100ml",
+      "nome": "Real Lignum - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis/real-lignum-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-whoop-100ml",
+      "nome": "Whoop - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "1 Million",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Oriental",
+      "notas": [
+        "Grapefruit",
+        "Canela",
+        "Patchouli"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/whoop-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-codex-supreme-100ml",
+      "nome": "Codex Supreme - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/codex-supreme-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-giocattolo-100ml",
+      "nome": "Giocattolo - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "La Nuit de l'Homme",
+      "marcaOriginal": "Yves Saint Laurent",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Pimenta",
+        "Cedro",
+        "Lavanda",
+        "Coumarina",
+        "Vetiver",
+        "Patchouli",
+        "Vainilla",
+        "Moscus"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/giocattolo-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-my-party-up-100ml",
+      "nome": "My Party Up - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "One Million",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "mandarina",
+        "canela",
+        "patchouli",
+        "vetiver",
+        "moss",
+        "baunilha",
+        "âmbar"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/my-party-up-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-magic-blue-blend-100ml",
+      "nome": "Magic Blue Blend - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/magic-blue-blend-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-thamus-100ml",
+      "nome": "Thamus - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/thamus-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-codice-d-oro-100ml",
+      "nome": "Codice D'oro - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/codice-d-oro-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-miss-d-noir-100ml",
+      "nome": "Miss D'Noir - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Black Opium",
+      "marcaOriginal": "Yves Saint Laurent",
+      "familia": "Oriental",
+      "notas": [
+        "baunilha",
+        "café",
+        "jasmim"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/miss-d-noir-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-profumo-di-salerno-100ml",
+      "nome": "Profumo Di Salerno - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/profumo-di-salerno-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-aurum-parfum-100ml",
+      "nome": "Aurum Parfum - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/aurum-parfum-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-barbarian-100ml",
+      "nome": "The Barbarian - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/the-barbarian-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-bluish-light-100ml",
+      "nome": "Bluish Light - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/bluish-light-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-tersus-parfum-100ml",
+      "nome": "Tersus Parfum - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/tersus-parfum-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-intensity-100ml",
+      "nome": "Intensity - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/intensity-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-angelique-100ml",
+      "nome": "Angélique - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Angelique",
+      "marcaOriginal": "Thierry Mugler",
+      "familia": "Oriental",
+      "notas": [
+        "Baunilha",
+        "Canela",
+        "Jasmin"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/angelique-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-versus-pour-homme-100ml",
+      "nome": "Versus Pour Homme - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/versus-pour-homme-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-colonia-aventhis-100ml",
+      "nome": "Colônia Aventhis - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/colonia-aventhis-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-la-deesse-100ml",
+      "nome": "La Déesse - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie En Rose",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/la-deesse-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-pinkish-100ml",
+      "nome": "Pinkish - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Rush",
+      "marcaOriginal": "Gucci",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Baunilha",
+        "Moscus"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/pinkish-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lux-de-vie-100ml",
+      "nome": "Lux de Vie - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie En Rose",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/lux-de-vie-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-idolyzed-100ml",
+      "nome": "Idolyzed - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Idole",
+      "marcaOriginal": "Lancôme",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/idolyzed-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-codice-uno-100ml",
+      "nome": "Codice Uno - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/codice-uno-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-passion-d-iris-100ml",
+      "nome": "Passion D'iris - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Black Orchid",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Floral",
+      "notas": [
+        "Íris",
+        "Jasmim",
+        "Sândalo"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis/passion-d-iris-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-la-belle-fleur-100ml",
+      "nome": "La Belle Fleur - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie En Rose",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/la-belle-fleur-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-homine-optimum-100ml",
+      "nome": "Homine Optimum - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/homine-optimum-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-pride-l-homme-100ml",
+      "nome": "Pride L'Homme - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/pride-l-homme-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-elian-100ml",
+      "nome": "Elian - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/elian-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-belle-femme-100ml",
+      "nome": "Belle Femme - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/belle-femme-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-green-pool-100ml",
+      "nome": "Green Pool - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Cool Water",
+      "marcaOriginal": "Davidoff",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "musgo"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/green-pool-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-terra-100ml",
+      "nome": "Terra - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Terre d'Hermès",
+      "marcaOriginal": "Hermès",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "pimenta",
+        "couro",
+        "patchouli",
+        "vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/terra-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-black-flower-100ml",
+      "nome": "Black Flower - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Black Orchid",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Orquídea",
+        "Sândalo"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis/black-flower-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-eau-de-sauvegy-1966-100ml",
+      "nome": "Eau de Sauvegy 1966 - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Ambrox"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/eau-de-sauvegy-1966-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-jaddy-100ml",
+      "nome": "Jaddy - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 174.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/jaddy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-scandalous-night-100ml",
+      "nome": "Scandalous Night - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "La Nuit de l'Homme",
+      "marcaOriginal": "Yves Saint Laurent",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Pimenta",
+        "Cedro",
+        "Lavanda",
+        "Coumarina",
+        "Vetiver",
+        "Patchouli",
+        "Vainilla",
+        "Moscus"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/scandalous-night-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-mademoiselle-100ml",
+      "nome": "Mademoiselle - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Mademoiselle",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Baunilha",
+        "Patchouli"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/mademoiselle-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lynternuit-100ml",
+      "nome": "Lynternuit - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/lynternuit-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-bad-girl-100ml",
+      "nome": "Bad Girl - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Bad Girl",
+      "marcaOriginal": "Dior",
+      "familia": "Oriental",
+      "notas": [
+        "Tangerina",
+        "Jasmim",
+        "Patchouli"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/bad-girl-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-my-chance-100ml",
+      "nome": "My Chance - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Grapefruit",
+        "Jasmim",
+        "Patchouli"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/my-chance-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-scandalous-100ml",
+      "nome": "Scandalous - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Scandal",
+      "marcaOriginal": "Jean Paul Gaultier",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Jasmim",
+        "Patchouli",
+        "Baunilha",
+        "Moscus"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/scandalous-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-kate-parfum-100ml",
+      "nome": "Kate Parfum - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/kate-parfum-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-new-aventhis-100ml",
+      "nome": "New Aventhis - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/new-aventhis-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fabulous-secret-100ml",
+      "nome": "Fabulous Secret - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Black Opium",
+      "marcaOriginal": "Yves Saint Laurent",
+      "familia": "Oriental",
+      "notas": [
+        "café",
+        "baunilha",
+        "jasmim"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/fabulous-secret-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fleur-delicate-100ml",
+      "nome": "Fleur Délicate - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "J'Adore",
+      "marcaOriginal": "Dior",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/fleur-delicate-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-omnia-iv-colecao-match-of-senses-parfum-50ml",
+      "nome": "Omnia IV - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Omnia",
+      "marcaOriginal": "Bvlgari",
+      "familia": "Oriental",
+      "notas": [
+        "Baunilha",
+        "Jasmim",
+        "Sândalo"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/omnia-iv-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-maxximus-ix-colecao-match-of-senses-parfum-50ml",
+      "nome": "Maxximus IX - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/maxximus-ix-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-altum-magnis-colecao-match-of-senses-parfum-50ml",
+      "nome": "Altum Magnis - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/altum-magnis-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-origine-un-colecao-match-of-senses-parfum-50ml",
+      "nome": "Origine Un - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/origine-un-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-euphoria-sensuale-colecao-match-of-senses-parfum-50ml",
+      "nome": "Euphoria Sensuale - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "Parfum",
+      "genero": "Feminino",
+      "inspiradoEm": "Euphoria",
+      "marcaOriginal": "Calvin Klein",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Pêssego",
+        "Jasmim",
+        "Sândalo",
+        "Vetiver",
+        "Moscus",
+        "Baunilha"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/euphoria-sensuale-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lumiere-enchantee-colecao-match-of-senses-parfum-50ml",
+      "nome": "Lumière Enchantée - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie En Rose",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/lumiere-enchantee-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sucre-juteux-colecao-match-of-senses-parfum-50ml",
+      "nome": "Sucré Juteux - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie En Rose",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Gourmand",
+      "notas": [
+        "Baunilha",
+        "Caramelo",
+        "Frutas Vermelhas"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/sucre-juteux-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fusion-enigmatique-colecao-match-of-senses-parfum-50ml",
+      "nome": "Fusion Énigmatique - Coleção Match Of Senses - Parfum 50ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 149.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/fusion-enigmatique-colecao-match-of-senses-parfum-50ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-malt-bottle-100ml",
+      "nome": "Malt Bottle - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "vétiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/malt-bottle-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-colossus-100ml",
+      "nome": "Colossus - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/colossus-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-lord-town-100ml",
+      "nome": "Lord Town - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/lord-town-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-irish-green-man-100ml",
+      "nome": "Irish Green Man - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Green Man",
+      "marcaOriginal": "Bvlgari",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "couro"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/irish-green-man-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-d-eau-extreme-100ml",
+      "nome": "D'eau Extrême - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "ambroxano"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/d-eau-extreme-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-miss-flowers-100ml",
+      "nome": "Miss Flowers - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/miss-flowers-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-si-vitta-100ml",
+      "nome": "Si Vitta - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/si-vitta-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-ultramen-100ml",
+      "nome": "Ultramen - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu de Chanel",
+      "marcaOriginal": "Chanel",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/ultramen-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-queen-100ml",
+      "nome": "The Queen - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Chanel Chance",
+      "marcaOriginal": "Chanel",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/the-queen-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sweetobacco-100ml",
+      "nome": "Sweetobacco - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Tom Ford Tobacco Vanille",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Oriental",
+      "notas": [
+        "baunilha",
+        "tabaco",
+        "âmbar"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis/sweetobacco-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-nero-del-porto-100ml",
+      "nome": "Nero Del Porto - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-compartilhaveis/nero-del-porto-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-crazy-poison-100ml",
+      "nome": "Crazy Poison - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Poison",
+      "marcaOriginal": "Dior",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Tuberosa",
+        "Baunilha"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos/crazy-poison-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-sauvegy-100ml",
+      "nome": "Sauvegy - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Ambrox"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/sauvegy-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-hall-ury-sport-100ml",
+      "nome": "Hall Ury Sport - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "vetiver"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/hall-ury-sport-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-the-blue-100ml",
+      "nome": "The Blue - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 189.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/the-blue-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-fine-silk-100ml",
+      "nome": "Fine Silk - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Silk",
+      "marcaOriginal": "Alfred Dunhill",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Violeta",
+        "Baunilha"
+      ],
+      "preco_brl": 199.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/fine-silk-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-cotton-veil-100ml",
+      "nome": "Cotton Veil - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "White Linen",
+      "marcaOriginal": "Estee Lauder",
+      "familia": "Floral",
+      "notas": [
+        "bergamota",
+        "jasmim",
+        "sândalo"
+      ],
+      "preco_brl": 179.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-femininos-colecao-exclusif/cotton-veil-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "in-the-box-dark-water-100ml",
+      "nome": "Dark Water - 100ml",
+      "marca": "In The Box",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Dior Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "ambrox"
+      ],
+      "preco_brl": 169.9,
+      "url": "https://intheboxperfumes.com.br/perfumes-masculinos/dark-water-100ml",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-lust-in-desire-inspirado-em-lust-in-paradise-ex-nihilo",
+      "nome": "LUST IN DESIRE - inspirado em Lust in Paradise - Ex Nihilo",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Unissex",
+      "inspiradoEm": "Lust in Paradise",
+      "marcaOriginal": "Ex Nihilo",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Jasmim",
+        "Vetiver",
+        "Moscus",
+        "Sândalo"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/lust-in-desire-inspirado-em-lust-in-paradise-ex-nihilo-q44zh/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-ultramare-inspirado-em-megamare",
+      "nome": "Ultramare - Inspirado em Megamare",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Megamare",
+      "marcaOriginal": "Desconhecida",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 139,
+      "url": "https://maisonviegas.com.br/produtos/ultramare-inspirado-em-megamare/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-grand-tygar-inspirado-em-tygar",
+      "nome": "Grand Tygar - inspirado em Tygar",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Tygar",
+      "marcaOriginal": "Desconhecida",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 139,
+      "url": "https://maisonviegas.com.br/produtos/grand-tygar-inspirado-em-tygar/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-corsario-inspirado-em-le-male-ano-2006",
+      "nome": "Corsário - inspirado em Le Male (ano 2006)",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Le Male",
+      "marcaOriginal": "Jean Paul Gaultier",
+      "familia": "Oriental",
+      "notas": [
+        "Lavanda",
+        "Menta",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/corsario-inspirado-em-le-male/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-dubai-gold-inspirado-em-bahar-the-spirit-of-dubai",
+      "nome": "Dubai Gold - inspirado em Bahar The Spirit Of Dubai",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Bahar The Spirit Of Dubai",
+      "marcaOriginal": "N/A",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Canela",
+        "Vetiver",
+        "Sândalo",
+        "Vainilla",
+        "Moscus",
+        "Amber"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/dubai-gold-inspirado-em-bahar-the-spirit-of-dubai-16xv0/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-vortex-inspirado-em-apex-pour-homme",
+      "nome": "Vortex - inspirado em Apex Pour Homme",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Apex Pour Homme",
+      "marcaOriginal": "Philippe Starck",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela",
+        "baunilha",
+        "musk"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/vortex-inspirado-em-apex-pour-homme/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-summer-citrus-inspirado-em-perseus-parfums-de-marly",
+      "nome": "Summer Citrus - Inspirado em Perseus Parfums de Marly",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Perseus",
+      "marcaOriginal": "Parfums de Marly",
+      "familia": "Cítrico",
+      "notas": [
+        "bergamota",
+        "limão",
+        "laranja"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/summer-citrus-inspirado-em-perseus-parfums-de-marly/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-belissima-rosee-inspirado-em-la-vie-est-belle-rose-extraordinaire",
+      "nome": "Belíssima Rosée - Inspirado em La Vie Est Belle Rose Extraordinaire",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie Est Belle Rose Extraordinaire",
+      "marcaOriginal": "Lancôme",
+      "familia": "Floral",
+      "notas": [
+        "rosa",
+        "jasmim",
+        "baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/belissima-rosee-inspirado-em-la-vie-est-belle-rose-extraordinaire/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-divine-bouquet-inspirado-em-blooming-bouquet-2023",
+      "nome": "Divine Bouquet - inspirado em Blooming Bouquet 2023",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Blooming Bouquet",
+      "marcaOriginal": "Viktor & Rolf",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Roseira",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/divine-bouquet-inspirado-em-blooming-bouquet-2023/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-amber-absolu-inspirado-em-boss-bottled-absolu",
+      "nome": "Amber Absolu - Inspirado em Boss Bottled Absolu",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Bottled Absolu",
+      "marcaOriginal": "Boss",
+      "familia": "Oriental",
+      "notas": [
+        "âmbar",
+        "canela",
+        "baunilha"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/amber-absolu-inspirado-em-boss-bottled-absolu/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-the-sexy-elixir-inspirado-em-boss-the-scent-elixir-for-him",
+      "nome": "The Sexy Elixir - Inspirado em Boss The Scent Elixir For Him",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "The Scent Elixir For Him",
+      "marcaOriginal": "Boss",
+      "familia": "Oriental",
+      "notas": [
+        "lavanda",
+        "mandarina",
+        "canela",
+        "baunilha",
+        "âmbar"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/the-sexy-elixir-inspirado-em-boss-the-scent-elixir-for-him/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-gin-tonic-inspirado-em-gntonic-m-micallef",
+      "nome": "Gin Tonic - Inspirado em GNTONIC M. Micallef",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Unissex",
+      "inspiradoEm": "GNTONIC",
+      "marcaOriginal": "M. Micallef",
+      "familia": "Cítrico",
+      "notas": [
+        "limão",
+        "tônica",
+        "junípero"
+      ],
+      "preco_brl": 119,
+      "url": "https://maisonviegas.com.br/produtos/gin-tonic-inspirado-em-gntonic-m-micallef/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-heaven-inspirado-em-imagination-louis-vuitton",
+      "nome": "Heaven - Inspirado em Imagination Louis Vuitton",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Unissex",
+      "inspiradoEm": "Imagination",
+      "marcaOriginal": "Louis Vuitton",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/heaven-inspirado-em-imagination-louis-vuitton/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-midnight-inspirado-em-althair-parfums-de-marly",
+      "nome": "Midnight - Inspirado em Althair Parfums de Marly",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Althair",
+      "marcaOriginal": "Parfums de Marly",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Canela",
+        "Vetiver",
+        "Moscus",
+        "Sândalo"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/midnight-inspirado-em-althair-parfums-de-marly/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-black-sport-noire-inspirado-em-encre-noire-sport",
+      "nome": "Black Sport Noire - Inspirado em Encre Noire Sport",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Encre Noire Sport",
+      "marcaOriginal": "Lalique",
+      "familia": "Oriental",
+      "notas": [
+        "Cedro",
+        "Couro",
+        "Vetiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/black-sport-noire-inspirado-em-encre-noire-sport/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-le-patron-intense-inspirado-em-boss-bottled-intense-edp",
+      "nome": "Le Patron Intense - Inspirado em Boss Bottled Intense EDP",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Boss Bottled Intense",
+      "marcaOriginal": "Hugo Boss",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela",
+        "âmbar",
+        "cumarina",
+        "vetiver",
+        "sândalo",
+        "musgo de carvalho",
+        "baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/le-patron-intense-inspirado-em-boss-bottled-intense-edp/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-hedonist-inspirado-god-of-fire-stephane-humbert-lucas-777",
+      "nome": "Hedonist - Inspirado God of Fire - Stéphane Humbert Lucas 777",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "God of Fire",
+      "marcaOriginal": "Stéphane Humbert Lucas 777",
+      "familia": "Oriental",
+      "notas": [
+        "baunilha",
+        "âmbar",
+        "tabaco"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/hedonist-inspirado-god-of-fire-stephane-humbert-lucas-777/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-le-paradise-inspirado-em-le-beau-paradise-garden",
+      "nome": "Le Paradise - Inspirado em Le Beau Paradise Garden",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Le Beau Paradise Garden",
+      "marcaOriginal": "Desconhecida",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Rose",
+        "Baunilha"
+      ],
+      "preco_brl": 119,
+      "url": "https://maisonviegas.com.br/produtos/le-paradise-inspirado-em-le-beau-paradise-garden/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-devocion-inspirado-em-devotion-dolce-amp-gabbana",
+      "nome": "Devocion - Inspirado em Devotion - Dolce &amp; Gabbana",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Devotion",
+      "marcaOriginal": "Dolce & Gabbana",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Lavanda",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/devocion-inspirado-em-devotion-dolce-gabbana/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-blush-girl-inspirado-em-good-girl-blush",
+      "nome": "Blush Girl - Inspirado em Good Girl Blush",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Good Girl Blush",
+      "marcaOriginal": "Carolina Herrera",
+      "familia": "Floral",
+      "notas": [
+        "Tuberose",
+        "Jasmim",
+        "Baunilha"
+      ],
+      "preco_brl": 115,
+      "url": "https://maisonviegas.com.br/produtos/blush-girl-inspirado-em-good-girl-blush/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-enigma-inspirado-em-prada-paradoxe",
+      "nome": "ENIGMA - Inspirado em Prada Paradoxe",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Paradoxe",
+      "marcaOriginal": "Prada",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Vetiver",
+        "Cedro",
+        "Íris",
+        "Baunilha",
+        "Moscus"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/enigma-inspirado-em-prada-paradoxe/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-spartan-elixir-inspirado-em-invictus-victory-elixir",
+      "nome": "Spartan Elixir - Inspirado em Invictus Victory Elixir",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Invictus Victory Elixir",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Aquático",
+      "notas": [
+        "Grapefruit",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/spartan-elixir-inspirado-em-invictus-victory-elixir/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-glorious-inspirado-haltane-parfums-de-marly",
+      "nome": "Glorious - Inspirado Haltane Parfums de Marly",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Haltane",
+      "marcaOriginal": "Parfums de Marly",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Canela",
+        "Vetiver",
+        "Moscus",
+        "Amber"
+      ],
+      "preco_brl": 115,
+      "url": "https://maisonviegas.com.br/produtos/glorious-inspirado-haltane-parfums-de-marly/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-narcotique-flower-inspirado-em-fleur-narcotique",
+      "nome": "Narcotique Flower - Inspirado em Fleur Narcotique",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Fleur Narcotique",
+      "marcaOriginal": "Ex Nihilo",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/narcotique-flower-inspirado-em-fleur-narcotique/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-liber-intense-inspirado-em-libre-intense",
+      "nome": "Liber Intense - Inspirado em Libre Intense",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Libre Intense",
+      "marcaOriginal": "Yves Saint Laurent",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/liber-intense-inspirado-em-libre-intense/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-toxic-desire-inspirado-em-desirtoxic-m-micallef",
+      "nome": "Toxic Desire - Inspirado em Desirtoxic M. Micallef",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Desirtoxic",
+      "marcaOriginal": "M. Micallef",
+      "familia": "Oriental",
+      "notas": [
+        "Baunilha",
+        "Jasmin",
+        "Patchouli"
+      ],
+      "preco_brl": 119,
+      "url": "https://maisonviegas.com.br/produtos/toxic-desire-inspirado-em-desirtoxic-m-micallef/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-ocean-pour-homme-inspirado-em-prada-luna-rossa-ocean",
+      "nome": "Ocean Pour Homme - Inspirado em Prada Luna Rossa Ocean",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Luna Rossa Ocean",
+      "marcaOriginal": "Prada",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "cedro",
+        "patchouli",
+        "vetiver",
+        "musc",
+        "âmbar"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/ocean-pour-homme-inspirado-em-prada-luna-rossa-ocean1/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-acqua-mare-inspirado-em-acqua-di-gioia-eau-de-parfum",
+      "nome": "Acqua Mare - Inspirado em Acqua di Gioia Eau de Parfum",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Acqua di Gioia",
+      "marcaOriginal": "Giorgio Armani",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "limão",
+        "jasmim"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/acqua-mare-inspirado-em-acqua-di-gioia-eau-de-parfum/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-montecristo-inspirado-em-acqua-di-parma",
+      "nome": "Montecristo - Inspirado em Acqua di Parma",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Acqua di Parma",
+      "marcaOriginal": "Acqua di Parma",
+      "familia": "Cítrico",
+      "notas": [
+        "bergamota",
+        "limão",
+        "lavanda"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/montecristo-inspirado-em-acqua-di-parma/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-spartan-inspirado-em-invictus",
+      "nome": "SPARTAN - Inspirado em Invictus",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Invictus",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Aquático",
+      "notas": [
+        "Grapefruit",
+        "Lavanda",
+        "Madeira"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/spartan-inspirado-em-invictus/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-selvaggio-inspirado-em-sauvage",
+      "nome": "Selvaggio - Inspirado em Sauvage",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Sauvage",
+      "marcaOriginal": "Dior",
+      "familia": "Cítrico",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "ambrox"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/selvaggio-inspirado-em-sauvage/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-royal-for-glory-inspirado-kalan-parfums-de-marly",
+      "nome": "Royal for Glory - Inspirado Kalan Parfums de Marly",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Kalan",
+      "marcaOriginal": "Parfums de Marly",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Canela",
+        "Vetiver",
+        "Moscus",
+        "Sândalo"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/royal-for-glory-inspirado-kalan-parfums-de-marly/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-millionaire-inspirado-em-1-million",
+      "nome": "Millionaire - Inspirado em 1 Million",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "1 Million",
+      "marcaOriginal": "Paco Rabanne",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "mandarina",
+        "canela",
+        "patchouli",
+        "vetiver",
+        "moscus",
+        "ambar"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/millionaire-inspirado-em-1-million/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-legend-inspirado-em-issey-miyake",
+      "nome": "Legend - Inspirado em Issey Miyake",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "L'Eau d'Issey",
+      "marcaOriginal": "Issey Miyake",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "limão",
+        "gerânio",
+        "cedro",
+        "patchouli",
+        "musk",
+        "âmbar"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/legend-inspirado-em-issey-miyake/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-legacy-inspirado-em-elysium-pour-homme-parfum-cologne",
+      "nome": "Legacy - Inspirado em Elysium Pour Homme Parfum Cologne",
+      "marca": "Maison Viegas",
+      "tipo": "EDC",
+      "genero": "Masculino",
+      "inspiradoEm": "Elysium Pour Homme Parfum Cologne",
+      "marcaOriginal": "Chanel",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela"
+      ],
+      "preco_brl": 119,
+      "url": "https://maisonviegas.com.br/produtos/legacy-inspirado-em-elysium-pour-homme-parfum-cologne/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-jazz-master-inspirado-em-jazz-club-maison-martin-margiela",
+      "nome": "Jazz Master - Inspirado em Jazz Club Maison Martin Margiela",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Jazz Club",
+      "marcaOriginal": "Maison Martin Margiela",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela",
+        "baunilha",
+        "âmbar"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/jazz-master-inspirado-em-jazz-club-maison-martin-margiela/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-honor-contratipo-honour-man-de-amouage",
+      "nome": "Honor - Contratipo Honour Man de Amouage",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Honour Man",
+      "marcaOriginal": "Amouage",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "pimenta",
+        "canela",
+        "incenso",
+        "sândalo",
+        "vetiver",
+        "musk",
+        "âmbar"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/honor-contratipo-honour-man-de-amouage/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-for-office-inspirado-hugo-boss-bottled-infinite",
+      "nome": "For Office - Inspirado Hugo Boss Bottled Infinite",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Bottled Infinite",
+      "marcaOriginal": "Hugo Boss",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela",
+        "âmbar",
+        "cédar",
+        "vetiver",
+        "musk"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/for-office-inspirado-hugo-boss-bottled-infinite/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-dark-shelby-inspirado-em-interlude-black-iris-amouage",
+      "nome": "Dark Shelby - Inspirado em Interlude Black Iris Amouage",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Interlude Black Iris",
+      "marcaOriginal": "Amouage",
+      "familia": "Oriental",
+      "notas": [
+        "Íris",
+        "Pimenta",
+        "Vetiver",
+        "Cedro",
+        "Sândalo",
+        "Vanilha",
+        "Moscus"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/dark-shelby-inspirado-em-interlude-black-iris-amouage/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-corleone-inspirado-em-tom-ford-oud-wood",
+      "nome": "Corleone - Inspirado em Tom Ford Oud Wood",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Oud Wood",
+      "marcaOriginal": "Tom Ford",
+      "familia": "Oriental",
+      "notas": [
+        "Lavanda",
+        "Bergamota",
+        "Ágar",
+        "Sândalo",
+        "Vetiver",
+        "Cedro",
+        "Moscus",
+        "Amber"
+      ],
+      "preco_brl": 119,
+      "url": "https://maisonviegas.com.br/produtos/corleone-inspirado-em-tom-ford-oud-wood/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-code-men-inspirado-em-armani-code",
+      "nome": "Code Men - inspirado em Armani Code",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Code",
+      "marcaOriginal": "Armani",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro",
+        "Vetiver",
+        "Vainilla",
+        "Moscus"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/code-men-inspirado-em-armani-code/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-capone-inspirado-bvlgari-le-gemme-garanat",
+      "nome": "Capone - Inspirado Bvlgari Le Gemme Garanat",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Le Gemme Garanat",
+      "marcaOriginal": "Bvlgari",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Canela",
+        "Vetiver",
+        "Vainilla",
+        "Amber"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/capone-inspirado-bvlgari-le-gemme-garanat/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-celebration-inspirado-jubilation-xxv-amouage",
+      "nome": "Celebration - Inspirado Jubilation XXV - Amouage",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Jubilation XXV",
+      "marcaOriginal": "Amouage",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Incenso",
+        "Mirra",
+        "Pimenta",
+        "Canela",
+        "Vetiver",
+        "Sândalo",
+        "Vainilla",
+        "Moscus"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/celebration-inspirado-jubilation-xxv-amouage/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-bomber-inspirado-em-polo-blue",
+      "nome": "Bomber - Inspirado em Polo Blue",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Polo Blue",
+      "marcaOriginal": "Ralph Lauren",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "canela",
+        "âmbar",
+        "cédar",
+        "musk"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/bomber-inspirado-em-polo-blue/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-bleu-de-viegas-inspirado-em-bleu",
+      "nome": "Bleu de Viegas - Inspirado em Bleu",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Bleu",
+      "marcaOriginal": "Desconhecida",
+      "familia": "Aquático",
+      "notas": [
+        "Bergamota",
+        "Lavanda",
+        "Cedro"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/bleu-de-viegas-inspirado-em-bleu/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-aventador-inspirado-em-creed-aventus",
+      "nome": "Aventador - Inspirado em Creed Aventus",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Aventus",
+      "marcaOriginal": "Creed",
+      "familia": "Cítrico",
+      "notas": [
+        "bergamota",
+        "laranja",
+        "pimenta"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/aventador-inspirado-em-creed-aventus/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-acqua-di-vale-inspirado-em-acqua-di-gio",
+      "nome": "Acqua di Vale - Inspirado em Acqua di Gio",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Acqua di Gio",
+      "marcaOriginal": "Giorgio Armani",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "limão",
+        "cedro"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/acqua-di-vale-inspirado-em-acqua-di-gio/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-un-jardin-inspirado-em-un-jardin-sur-le-nil",
+      "nome": "Un Jardin - Inspirado em Un Jardin Sur Le Nil",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Feminino",
+      "inspiradoEm": "Un Jardin Sur Le Nil",
+      "marcaOriginal": "Hermès",
+      "familia": "Floral",
+      "notas": [
+        "bergamota",
+        "mandarina",
+        "jasmim",
+        "sândalo"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/un-jardin-inspirado-em-un-jardin-sur-le-nil/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-valentine-inspirado-em-delina-parfums-de-marly",
+      "nome": "Valentine - Inspirado em Delina - Parfums de Marly",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Delina",
+      "marcaOriginal": "Parfums de Marly",
+      "familia": "Floral",
+      "notas": [
+        "Laranja",
+        "Jasmim",
+        "Vetiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/valentine-inspirado-em-delina-parfums-de-marly/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-suprema-inspirado-em-alien-de-thierry-mugler",
+      "nome": "Suprema - Inspirado em Alien de Thierry Mugler",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Alien",
+      "marcaOriginal": "Thierry Mugler",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Lavanda",
+        "Vetiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/suprema-inspirado-em-alien-de-thierry-mugler/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-mademoiselle-inspirado-em-coco-mademoiselle-edp",
+      "nome": "Mademoiselle - Inspirado em Coco Mademoiselle EDP",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Coco Mademoiselle",
+      "marcaOriginal": "Chanel",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "patchouli",
+        "vetiver",
+        "baunilha",
+        "musk"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/mademoiselle-inspirado-em-coco-mademoiselle-edp/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-le-diamant-inspirado-em-le-parfum-elie-saab",
+      "nome": "Le Diamant - Inspirado em Le Parfum - Elie Saab",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Le Parfum",
+      "marcaOriginal": "Elie Saab",
+      "familia": "Floral",
+      "notas": [
+        "jasmim",
+        "rosa",
+        "baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/le-diamant-inspirado-em-le-parfum-elie-saab/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-femme-intense-inspirado-em-narciso-rodriguez-for-her",
+      "nome": "Femme Intense - Inspirado em Narciso Rodriguez for Her",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Narciso Rodriguez for Her",
+      "marcaOriginal": "Narciso Rodriguez",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Gardenia",
+        "Vetiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/femme-intense-inspirado-em-narciso-rodriguez-for-her/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-duquesa-inspirado-em-english-pear-and-freesia-jo-malone-london",
+      "nome": "Duquesa - Inspirado em English Pear and Freesia - Jo Malone London",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "English Pear and Freesia",
+      "marcaOriginal": "Jo Malone London",
+      "familia": "Floral",
+      "notas": [
+        "Pêra",
+        "Freesia",
+        "Flores Brancas"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/duquesa-inspirado-em-english-pear-and-freesia-jo-malone-london/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-doulce-vitta-inspirado-em-light-blue",
+      "nome": "Doulce Vitta - Inspirado em Light Blue",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Light Blue",
+      "marcaOriginal": "Dolce & Gabbana",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "grapefruit",
+        "lavanda"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/doulce-vitta-inspirado-em-light-blue/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-cristal-rouge-inspirado-em-baccarat-rouge-540",
+      "nome": "Cristal Rouge - Inspirado em Baccarat Rouge 540",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Unissex",
+      "inspiradoEm": "Rouge 540",
+      "marcaOriginal": "Baccarat",
+      "familia": "Oriental",
+      "notas": [
+        "Bergamota",
+        "Jasmin",
+        "Amber",
+        "Vetiver",
+        "Moscus"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/cristal-rouge-inspirado-em-baccarat-rouge-540/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-code-woman-inspirado-em-armani-code",
+      "nome": "Code Woman - Inspirado em Armani Code",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Code",
+      "marcaOriginal": "Armani",
+      "familia": "Oriental",
+      "notas": [
+        "Jasmim",
+        "Vetiver",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/code-woman-inspirado-em-armani-code/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-belissima-inspirado-em-la-vie-est-belle",
+      "nome": "Belíssima - Inspirado em La Vie Est Belle",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "La Vie Est Belle",
+      "marcaOriginal": "Lancôme",
+      "familia": "Gourmand",
+      "notas": [
+        "Baunilha",
+        "Noz Moscada",
+        "Patchouli"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/belissima-inspirado-em-la-vie-est-belle/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-anastasia-inspirado-em-kilian-good-girl-gone-bad",
+      "nome": "ANASTASIA- Inspirado em Kilian Good Girl Gone Bad",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Good Girl Gone Bad",
+      "marcaOriginal": "Kilian",
+      "familia": "Oriental",
+      "notas": [
+        "Tâmara",
+        "Jasmim",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/anastasia-inspirado-em-kilian-good-girl-gone-bad/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-amiris-inspirado-em-amyris-femme-maison-francis-kurkdjian",
+      "nome": "Amiris Inspirado em Amyris Femme - Maison Francis Kurkdjian",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Amyris Femme",
+      "marcaOriginal": "Maison Francis Kurkdjian",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Sândalo",
+        "Baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/amiris-inspirado-em-amyris-femme-maison-francis-kurkdjian/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-absoluta-inspirado-em-chloe-eau-de-parfum",
+      "nome": "Absoluta - Inspirado em Chloe Eau de Parfum",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Eau de Parfum",
+      "marcaOriginal": "Chloe",
+      "familia": "Floral",
+      "notas": [
+        "rosa",
+        "jasmin",
+        "cereja"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/absoluta-inspirado-em-chloe-eau-de-parfum/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-elite-pour-homme-inspirado-em-bvlgari-pour-homme-eau-de-parfum-versao-2024",
+      "nome": "Elite Pour Homme - Inspirado em Bvlgari Pour Homme Eau De Parfum (versão 2024)",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Pour Homme",
+      "marcaOriginal": "Bvlgari",
+      "familia": "Oriental",
+      "notas": [
+        "Lavanda",
+        "Almiscar",
+        "Vetiver"
+      ],
+      "preco_brl": 129,
+      "url": "https://maisonviegas.com.br/produtos/elite-pour-homme-inspirado-em-bvlgari-pour-homme-eau-de-parfum-versao-2024/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-vetiver-absoluto-inspirado-em-grey-vetiver-tom-ford",
+      "nome": "Vetiver Absoluto - Inspirado em GREY VETIVER - TOM FORD",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Masculino",
+      "inspiradoEm": "Grey Vetiver",
+      "marcaOriginal": "TOM FORD",
+      "familia": "Oriental",
+      "notas": [
+        "Vetiver",
+        "Bergamota",
+        "Violeta"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/vetiver-absoluto-inspirado-em-grey-vetiver-tom-ford/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-v-i-p-men-inspirado-em-212-vip-men",
+      "nome": "V.I.P. Men - Inspirado em 212 Vip Men",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "212 Vip Men",
+      "marcaOriginal": "Carolina Herrera",
+      "familia": "Oriental",
+      "notas": [
+        "bergamota",
+        "absoluto de lavanda",
+        "vétiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/v-i-p-men-inspirado-em-212-vip-men/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-hallure-sport-inspirado-em-allure-home-sport",
+      "nome": "Hallure Sport - Inspirado em Allure Home Sport",
+      "marca": "Maison Viegas",
+      "tipo": "EDT",
+      "genero": "Masculino",
+      "inspiradoEm": "Allure Home Sport",
+      "marcaOriginal": "Chanel",
+      "familia": "Aquático",
+      "notas": [
+        "bergamota",
+        "lavanda",
+        "couro"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/hallure-sport-inspirado-em-allure-home-sport/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-turmalina-inspirado-em-crystal-noir",
+      "nome": "Turmalina - Inspirado em Crystal Noir",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Crystal Noir",
+      "marcaOriginal": "Versace",
+      "familia": "Oriental",
+      "notas": [
+        "baunilha",
+        "âmbar",
+        "jasmim"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/turmalina-inspirado-em-crystal-noir/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-roses-revenge-inspirado-em-lady-vengeance-de-juliette-has-a-gun",
+      "nome": "Roses Revenge - Inspirado em Lady Vengeance de Juliette Has a Gun",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Lady Vengeance",
+      "marcaOriginal": "Juliette Has a Gun",
+      "familia": "Floral",
+      "notas": [
+        "rosa",
+        "baunilha",
+        "patchouli"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/roses-revenge-inspirado-em-lady-vengeance-de-juliette-has-a-gun/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-rosa-dos-ventos-inspirado-em-louis-vuitton-rose-des-vents",
+      "nome": "Rosa dos Ventos - Inspirado em Louis Vuitton Rose Des Vents",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "Rose Des Vents",
+      "marcaOriginal": "Louis Vuitton",
+      "familia": "Floral",
+      "notas": [
+        "rosa",
+        "jasmim",
+        "baunilha"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/rosa-dos-ventos-inspirado-em-louis-vuitton-rose-des-vents/",
+      "categoria": "contratipo"
+    },
+    {
+      "id": "maison-viegas-adore-inspirado-em-j-adore",
+      "nome": "Adore - Inspirado em J´adore",
+      "marca": "Maison Viegas",
+      "tipo": "EDP",
+      "genero": "Feminino",
+      "inspiradoEm": "J´adore",
+      "marcaOriginal": "Dior",
+      "familia": "Floral",
+      "notas": [
+        "Jasmim",
+        "Tâmara",
+        "Vetiver"
+      ],
+      "preco_brl": 109,
+      "url": "https://maisonviegas.com.br/produtos/adore-inspirado-em-jadore/",
+      "categoria": "contratipo"
+    }
+  ]
+}
