@@ -8,6 +8,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter, usePathname } from "next/navigation"
 import { siteMeta } from "@/config/site"
 import MenuMobileToggle from "./MenuMobileToggle"
@@ -43,6 +44,10 @@ export default function Header() {
         WebkitBackdropFilter: "blur(8px)",
       }}
     >
+      <style>{`
+        .logo-scently { height: 34px !important; }
+        @media (max-width: 640px) { .logo-scently { height: 21px !important; } }
+      `}</style>
       <div
         className="container-site"
         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}
@@ -51,14 +56,26 @@ export default function Header() {
         <Link
           href="/"
           style={{
-            fontFamily: "var(--fonte-titulo)",
-            fontSize: "1.5rem",
-            fontWeight: 300,
-            letterSpacing: "0.08em",
-            color: "var(--cor-texto)",
+            display: "flex",
+            alignItems: "center",
+            padding: "21px 0",
           }}
+          aria-label={siteMeta.nome}
         >
-          {siteMeta.nome}
+          <Image
+            src="/logo-scently.png"
+            alt={siteMeta.nome}
+            height={34}
+            width={0}
+            sizes="200px"
+            className="logo-scently"
+            style={{
+              height: "34px",
+              width: "auto",
+              mixBlendMode: "multiply",
+            }}
+            priority
+          />
         </Link>
 
         {/* Navegação desktop — esconde no mobile via CSS */}
