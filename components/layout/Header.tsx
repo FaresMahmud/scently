@@ -38,15 +38,15 @@ export default function Header() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: "var(--cor-base)",
+        backgroundColor: "#F0EBE0",
         borderBottom: "1px solid var(--cor-borda)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
       }}
     >
       <style>{`
-        .logo-scently { height: 34px !important; }
-        @media (max-width: 640px) { .logo-scently { height: 21px !important; } }
+        .logo-scently { width: 160px !important; height: 44px !important; }
+        @media (max-width: 640px) { .logo-scently { width: 110px !important; height: 30px !important; } }
       `}</style>
       <div
         className="container-site"
@@ -65,14 +65,15 @@ export default function Header() {
           <Image
             src="/logo-scently.png"
             alt={siteMeta.nome}
-            height={34}
-            width={0}
-            sizes="200px"
+            width={160}
+            height={44}
             className="logo-scently"
             style={{
-              height: "34px",
-              width: "auto",
+              objectFit: "contain",
               mixBlendMode: "multiply",
+              border: "none",
+              boxShadow: "none",
+              borderRadius: 0,
             }}
             priority
           />
