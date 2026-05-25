@@ -36,7 +36,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
       }}
     >
       {/* Imagem — clica e vai para o perfume */}
-      <Link href={`/perfume/${perfume.id}`} style={{ display: "block" }}>
+      <Link href={`/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`} style={{ display: "block" }}>
         <div
           style={{
             height: "200px",
@@ -83,7 +83,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
         </div>
 
         {/* Nome do perfume — clica e vai para o perfume */}
-        <Link href={`/perfume/${perfume.id}`} style={{ display: "block", textDecoration: "none" }}>
+        <Link href={`/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`} style={{ display: "block", textDecoration: "none" }}>
           <h3
             style={{
               fontFamily: "var(--fonte-titulo)",

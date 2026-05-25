@@ -6,6 +6,7 @@
 // ============================================
 
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import CatalogClient from "@/components/catalogo/CatalogClient"
 import type { CardUnificado } from "@/components/catalogo/CatalogClient"
 import { carregarCatalogo, totalPerfumes } from "@/lib/catalogoFragella"
@@ -78,6 +79,7 @@ function fragellaParaCard(p: ReturnType<typeof carregarCatalogo>[number]): CardU
     rating:       p.rating ?? undefined,
     generoNorm:   normalizarGenero(p.genero),
     fonte:        "fragella",
+    acordes:      p.acordesPrincipais?.length ? p.acordesPrincipais : undefined,
   }
 }
 
@@ -147,7 +149,13 @@ export default function PaginaCatalogo() {
           </p>
         </div>
 
-        <CatalogClient perfumes={perfumes} totalFragella={totalFrag} />
+        <Suspense fallback={
+          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.85rem", color: "var(--cor-texto-suave)", padding: "4rem 0" }}>
+            Carregando catálogo…
+          </p>
+        }>
+          <CatalogClient perfumes={perfumes} totalFragella={totalFrag} />
+        </Suspense>
 
       </div>
     </main>

@@ -75,20 +75,26 @@ export function metadadosCatalogo() {
   return { timestamp: _timestamp, total: _cache?.length ?? 0 }
 }
 
-/** Busca um perfume pelo slug/id — match direto por id ou por slugify(nome-marca) */
+/** Busca um perfume pelo slug/id — tolera sufixos -ebay/-contratipo/-fragella */
 export function buscarPerfumePorSlug(slug: string): PerfumeFragella | null {
   const catalogo = carregarCatalogo()
 
-  // 1. Match direto pelo campo id
-  const porId = catalogo.find(p => p.id === slug)
+  // Remove sufixos de fonte do slug
+  const slugLimpo = slug.replace(/-(ebay|contratipo|fragella)$/, "")
+
+  // 1. Match direto por id
+  const porId = catalogo.find(p => p.id === slug || p.id === slugLimpo)
   if (porId) return porId
 
-  // 2. Match via slugify(nome + "-" + marca) — para IDs gerados externamente
-  const porSlug = catalogo.find(p =>
-    `${slugify(p.nome)}-${slugify(p.marca)}` === slug ||
-    `${slugify(p.marca)}-${slugify(p.nome)}` === slug
-  )
-  return porSlug ?? null
+  // 2. Match por slugify(nome)-slugify(marca)
+  const porNomeMarca = catalogo.find(p => {
+    const s1 = `${slugify(p.nome)}-${slugify(p.marca)}`
+    const s2 = `${slugify(p.marca)}-${slugify(p.nome)}`
+    return s1 === slugLimpo || s2 === slugLimpo || s1 === slug || s2 === slug
+  })
+  if (porNomeMarca) return porNomeMarca
+
+  return null
 }
 
 /** Retorna os N perfumes mais populares (por campo popularidade, depois rating) */

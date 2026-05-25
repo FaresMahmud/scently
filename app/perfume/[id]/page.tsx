@@ -11,9 +11,11 @@ import { buscarPerfumePorSlug, perfumesPopulares } from "@/lib/catalogoFragella"
 import { buscarPerfumePorId, buscarPorNome } from "@/lib/fragella"
 import type { PerfumeFragella, NotaFragella } from "@/lib/fragella"
 import { buscarMockPorId, PERFUMES_MOCK } from "@/lib/mockData"
+import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
+import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { NotasPerfume } from "@/components/perfume/NotasPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
-import Tag from "@/components/ui/Tag"
+import TagInfo from "@/components/perfume/TagInfo"
 import { slugify, traduzir } from "@/lib/utils"
 import type { Acorde } from "@/lib/types"
 
@@ -43,35 +45,79 @@ function resolverNotas(
   return (simples ?? []).map(name => ({ name }))
 }
 
+type FontePerfume = "local" | "api" | "mock" | "ebay" | "contratipo" | null
+
+/** Constrói um PerfumeFragella mínimo a partir de dados locais (eBay / contratipo) */
+function perfumeMinimo(
+  nome: string, marca: string, concentracao: string,
+  genero: string, familia: string, notas: string[], descricao = ""
+): PerfumeFragella {
+  return {
+    id: `${slugify(nome)}-${slugify(marca)}`,
+    nome, marca, concentracao, genero, ano: 0,
+    familia, descricao, imagem: "",
+    notasTopo: notas.slice(0, 3),
+    notasCoracao: notas.slice(3, 6),
+    notasFundo: notas.slice(6),
+  }
+}
+
 /**
  * Resolver em cascata:
- * 1. Catálogo local (sem API call — O(n) em memória)
+ * 1. Catálogo local Fragella (sem API call — O(n) em memória)
  * 2. Fragella API por ID
  * 3. Fragella API por nome extraído do slug
  * 4. Mock local
+ * 5. eBay repository
+ * 6. Contratipos repository
  */
 async function resolverPerfume(id: string): Promise<{
   perfume: PerfumeFragella | null
-  fonte: "local" | "api" | "mock" | null
+  fonte: FontePerfume
 }> {
+  const slugLimpo = id.replace(/-(ebay|contratipo|fragella)$/, "")
+
   // 1. Catálogo local
   const local = buscarPerfumePorSlug(id)
   if (local?.nome && local?.marca) return { perfume: local, fonte: "local" }
 
   // 2. Fragella API — por ID
-  const porId = await buscarPerfumePorId(id).catch(() => null)
+  const porId = await buscarPerfumePorId(slugLimpo).catch(() => null)
   if (porId?.nome && porId?.marca) return { perfume: porId, fonte: "api" }
 
   // 3. Fragella API — por nome extraído do slug
-  const nomeBusca = id.replace(/-/g, " ").replace(/\s+\d+$/, "").trim()
+  const nomeBusca = slugLimpo.replace(/-/g, " ").replace(/\s+\d+$/, "").trim()
   if (nomeBusca.length >= 3) {
     const resultados = await buscarPorNome(nomeBusca, 3).catch(() => [])
     if (resultados.length > 0) return { perfume: resultados[0], fonte: "api" }
   }
 
   // 4. Mock local
-  const mock = buscarMockPorId(id)
+  const mock = buscarMockPorId(id) ?? buscarMockPorId(slugLimpo)
   if (mock) return { perfume: mock as unknown as PerfumeFragella, fonte: "mock" }
+
+  // 5. eBay — busca por slug do título+marca
+  for (const p of ebayRepository.findAll()) {
+    const s = `${slugify(p.titulo)}-${slugify(p.marca)}`
+    if (s === slugLimpo || s === id) {
+      return {
+        perfume: perfumeMinimo(p.titulo, p.marca, p.tipo, p.genero, p.genero, []),
+        fonte: "ebay",
+      }
+    }
+  }
+
+  // 6. Contratipos — busca por id ou slug nome+marca
+  for (const p of contratipoRepository.findAll()) {
+    const s = `${slugify(p.nome)}-${slugify(p.marca)}`
+    if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {
+      const descricao = `Contratipo inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`
+      return {
+        perfume: perfumeMinimo(p.nome, p.marca, p.tipo, p.genero, p.familia, p.notas, descricao),
+        fonte: "contratipo",
+      }
+    }
+  }
 
   return { perfume: null, fonte: null }
 }
@@ -183,14 +229,14 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
           {/* Coluna direita — informações */}
           <div>
-            {/* Tags info */}
+            {/* Tags info com hover */}
             <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem", alignItems: "center" }}>
-              {perfume.familia && <Tag>{traduzir(perfume.familia)}</Tag>}
-              {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
-              {perfume.genero && <Tag>{traduzir(perfume.genero)}</Tag>}
-              {perfume.ano > 0 && <Tag>{perfume.ano}</Tag>}
-              {perfume.longevidade && <Tag>{traduzir(perfume.longevidade)}</Tag>}
-              {perfume.sillage && <Tag>Sillage: {traduzir(perfume.sillage)}</Tag>}
+              {perfume.familia && <TagInfo>{traduzir(perfume.familia)}</TagInfo>}
+              {perfume.concentracao && <TagInfo cor="dourado">{perfume.concentracao}</TagInfo>}
+              {perfume.genero && <TagInfo>{traduzir(perfume.genero)}</TagInfo>}
+              {perfume.ano > 0 && <TagInfo>{perfume.ano}</TagInfo>}
+              {perfume.longevidade && <TagInfo>{traduzir(perfume.longevidade)}</TagInfo>}
+              {perfume.sillage && <TagInfo>Sillage: {traduzir(perfume.sillage)}</TagInfo>}
               {perfume.rating && perfume.rating > 0 && (
                 <span style={{ marginLeft: "auto", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-dourado)", letterSpacing: "0.04em" }}>
                   ★ {perfume.rating.toFixed(2)}
@@ -272,49 +318,71 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               </>
             )}
 
-            {/* Rankings estação + ocasião */}
+            {/* Rankings estação + ocasião com bolinhas coloridas por score */}
             {(perfume.rankingEstacao?.length || perfume.rankingOcasiao?.length) ? (
               <>
                 <div className="divisor" />
                 <div style={{ marginTop: "2rem", marginBottom: "2.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-                  {perfume.rankingEstacao?.length ? (
-                    <div>
-                      <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
-                        Estação ideal
-                      </p>
-                      {perfume.rankingEstacao.slice(0, 3).map(r => (
-                        <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
-                            {traduzir(r.name)}
-                          </span>
-                          <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "#8B6F5E" : "#E0D9D0" }} />
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
-                  {perfume.rankingOcasiao?.length ? (
-                    <div>
-                      <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
-                        Melhor ocasião
-                      </p>
-                      {perfume.rankingOcasiao.slice(0, 3).map(r => (
-                        <div key={r.name} style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                          <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
-                            {traduzir(r.name)}
-                          </span>
-                          <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
-                            {Array.from({ length: 5 }).map((_, i) => (
-                              <div key={i} style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: i < Math.round(r.score / 20) ? "#8B6F5E" : "#E0D9D0" }} />
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : null}
+                  {perfume.rankingEstacao?.length ? (() => {
+                    const maxScore = Math.max(...perfume.rankingEstacao!.map(r => r.score), 1)
+                    return (
+                      <div>
+                        <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+                          Estação ideal
+                        </p>
+                        {perfume.rankingEstacao!.slice(0, 4).map(r => {
+                          const preenchidas = Math.round((r.score / maxScore) * 5)
+                          const corDot = r.score > 2.5 ? "#C9943A" : r.score > 1.5 ? "#D4B896" : "#E0D9D0"
+                          return (
+                            <div key={r.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                              <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
+                                {traduzir(r.name)}
+                              </span>
+                              <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                  <div key={i} style={{
+                                    width: "7px", height: "7px", borderRadius: "50%",
+                                    backgroundColor: i < preenchidas ? corDot : "#E0D9D0",
+                                    transition: "background-color 0.2s",
+                                  }} />
+                                ))}
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )
+                  })() : null}
+                  {perfume.rankingOcasiao?.length ? (() => {
+                    const maxScore = Math.max(...perfume.rankingOcasiao!.map(r => r.score), 1)
+                    return (
+                      <div>
+                        <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+                          Melhor ocasião
+                        </p>
+                        {perfume.rankingOcasiao!.slice(0, 4).map(r => {
+                          const preenchidas = Math.round((r.score / maxScore) * 5)
+                          const corDot = r.score > 2.5 ? "#C9943A" : r.score > 1.5 ? "#D4B896" : "#E0D9D0"
+                          return (
+                            <div key={r.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                              <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
+                                {traduzir(r.name)}
+                              </span>
+                              <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                  <div key={i} style={{
+                                    width: "7px", height: "7px", borderRadius: "50%",
+                                    backgroundColor: i < preenchidas ? corDot : "#E0D9D0",
+                                    transition: "background-color 0.2s",
+                                  }} />
+                                ))}
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )
+                  })() : null}
                 </div>
               </>
             ) : null}

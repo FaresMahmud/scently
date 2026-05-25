@@ -61,6 +61,21 @@ const TRADUCOES: Record<string, string> = {
   "ylang-ylang": "Ylang-Ylang",
 }
 
+// ── Mapa PT→EN para filtro de família no catálogo ────────────────────────────
+
+export const familiaParaIngles: Record<string, string[]> = {
+  "citrico":     ["citrus", "citric"],
+  "floral":      ["floral", "white floral", "rose", "flower"],
+  "amadeirado":  ["woody", "wood", "cedar", "sandalwood"],
+  "oriental":    ["oriental", "amber", "ambery", "balsamic"],
+  "aquatico":    ["aquatic", "marine", "water", "fresh", "ozonic"],
+  "especiado":   ["spicy", "fresh spicy", "spice"],
+  "gourmand":    ["gourmand", "sweet", "vanilla", "caramel"],
+  "almiscarado": ["musky", "musk", "powdery"],
+  "verde":       ["green", "aromatic", "herbal", "fougere"],
+  "frutal":      ["fruity", "fruit"],
+}
+
 export function traduzir(texto: string | undefined | null): string {
   if (!texto) return ""
   const lower = texto.toLowerCase().trim()

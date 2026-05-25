@@ -8,8 +8,10 @@
 "use client"
 
 import { useState, useMemo, useEffect, useRef } from "react"
+import { useSearchParams } from "next/navigation"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
+import { familiaParaIngles } from "@/lib/utils"
 
 const PAGE_SIZE = 48
 
@@ -25,6 +27,7 @@ export interface CardUnificado extends DadosCardPerfume {
   categoria?: string
   generoNorm?: Genero
   fonte?: FontePerfume
+  acordes?: string[]
 }
 
 function Pill({ label, ativo, onClick }: { label: string; ativo: boolean; onClick: () => void }) {
@@ -57,15 +60,20 @@ function Pill({ label, ativo, onClick }: { label: string; ativo: boolean; onClic
   )
 }
 
+// Remove acentos para busca tolerante (ex: "aquatico" encontra "Aquático")
+function normalizar(s: string): string {
+  return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
+}
+
 function perfumeMatchBusca(perfume: CardUnificado, termo: string): boolean {
   if (!termo.trim()) return true
-  const t = termo.toLowerCase().trim()
+  const t = normalizar(termo)
   return (
-    perfume.nome?.toLowerCase().includes(t) ||
-    perfume.marca?.toLowerCase().includes(t) ||
-    perfume.familia?.toLowerCase().includes(t) ||
-    perfume.notas?.some(n => n.toLowerCase().includes(t)) ||
-    perfume.inspiracaoInfo?.toLowerCase().includes(t) ||
+    normalizar(perfume.nome ?? "").includes(t) ||
+    normalizar(perfume.marca ?? "").includes(t) ||
+    normalizar(perfume.familia ?? "").includes(t) ||
+    perfume.notas?.some(n => normalizar(n).includes(t)) ||
+    normalizar(perfume.inspiracaoInfo ?? "").includes(t) ||
     false
   )
 }
@@ -80,17 +88,40 @@ interface Props {
 }
 
 export default function CatalogClient({ perfumes, totalFragella }: Props) {
-  const [busca, setBusca]         = useState("")
-  const [generos, setGeneros]     = useState<Genero[]>([])
-  const [tipos, setTipos]         = useState<Tipo[]>([])
-  const [ordenacao, setOrdenacao] = useState<Ordenacao>("relevancia")
-  const [limite, setLimite]       = useState(PAGE_SIZE)
-  const sentinelaRef              = useRef<HTMLDivElement>(null)
+  const searchParams = useSearchParams()
+
+  const [busca, setBusca]               = useState(searchParams.get("busca") ?? "")
+  const [familiaAtiva, setFamiliaAtiva] = useState(searchParams.get("familia") ?? "")
+  const [generos, setGeneros]           = useState<Genero[]>([])
+  const [tipos, setTipos]               = useState<Tipo[]>([])
+  const [ordenacao, setOrdenacao]       = useState<Ordenacao>("relevancia")
+  const [limite, setLimite]             = useState(PAGE_SIZE)
+  const sentinelaRef                    = useRef<HTMLDivElement>(null)
 
   // Filtra + ordena todos os resultados
   const resultados = useMemo(() => {
     let lista = perfumes.filter(p => {
-      if (!perfumeMatchBusca(p, busca)) return false
+      // Busca por texto (nome/marca)
+      if (busca.trim()) {
+        const q = normalizar(busca)
+        const bate =
+          normalizar(p.nome ?? "").includes(q) ||
+          normalizar(p.marca ?? "").includes(q) ||
+          p.notas?.some(n => normalizar(n).includes(q)) ||
+          normalizar(p.inspiracaoInfo ?? "").includes(q)
+        if (!bate) return false
+      }
+      // Filtro de família — traduz PT→EN e busca nos acordes e campo família
+      if (familiaAtiva) {
+        const f = normalizar(familiaAtiva)
+        const termosEN = familiaParaIngles[f] ?? [f]
+        const familia  = normalizar(p.familia ?? "")
+        const acordes  = (p.acordes ?? []).map(a => normalizar(a))
+        const bate = termosEN.some(termo =>
+          familia.includes(termo) || acordes.some(a => a.includes(termo))
+        )
+        if (!bate) return false
+      }
       if (generos.length > 0) {
         const gn = p.generoNorm
         if (!gn || !generos.includes(gn)) return false
@@ -111,12 +142,12 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
     }
 
     return lista
-  }, [perfumes, busca, generos, tipos, ordenacao])
+  }, [perfumes, busca, familiaAtiva, generos, tipos, ordenacao])
 
   // Reinicia a paginação sempre que os filtros mudarem
   useEffect(() => {
     setLimite(PAGE_SIZE)
-  }, [busca, generos, tipos, ordenacao])
+  }, [busca, familiaAtiva, generos, tipos, ordenacao])
 
   // IntersectionObserver — carrega +48 ao chegar no sentinela
   useEffect(() => {
@@ -134,12 +165,13 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
 
   function limparFiltros() {
     setBusca("")
+    setFamiliaAtiva("")
     setGeneros([])
     setTipos([])
     setOrdenacao("relevancia")
   }
 
-  const temFiltros  = busca || generos.length > 0 || tipos.length > 0
+  const temFiltros  = busca || familiaAtiva || generos.length > 0 || tipos.length > 0
   const visiveis    = resultados.slice(0, limite)
   const temMais     = limite < resultados.length
 
@@ -173,6 +205,33 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
           </button>
         )}
       </div>
+
+      {/* Badge de família ativa */}
+      {familiaAtiva && (
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+          <span style={{
+            fontFamily: "var(--fonte-corpo)",
+            fontSize: "0.75rem",
+            letterSpacing: "0.08em",
+            padding: "0.35rem 0.9rem",
+            borderRadius: "99px",
+            background: "rgba(196, 113, 74, 0.08)",
+            color: "var(--cor-destaque)",
+            border: "1px solid var(--cor-destaque)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}>
+            Família: {familiaAtiva.charAt(0).toUpperCase() + familiaAtiva.slice(1)}
+            <button
+              onClick={() => setFamiliaAtiva("")}
+              style={{ background: "none", border: "none", cursor: "pointer", color: "var(--cor-destaque)", fontSize: "1rem", lineHeight: 1, padding: 0, display: "flex", alignItems: "center" }}
+            >
+              ×
+            </button>
+          </span>
+        </div>
+      )}
 
       {/* Pills — gênero */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
