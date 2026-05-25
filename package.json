@@ -12,11 +12,13 @@
     "scrape": "npx ts-node scripts/scrape-perfumes.ts",
     "scrape:tendencias": "npx ts-node --project tsconfig.json scripts/scrape-tendencias.ts",
     "catalogo:popular": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts",
-    "catalogo:continuar": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts --continuar"
+    "catalogo:continuar": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts --continuar",
+    "contratipos:scrape": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/scrape-contratipos.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "axios": "^1.16.1",
+    "groq-sdk": "^1.2.0",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"

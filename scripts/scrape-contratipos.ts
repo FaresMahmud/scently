@@ -1,10 +1,13 @@
 // ============================================
 // SCRIPT: scripts/scrape-contratipos.ts
 // O QUE FAZ: raspa produtos reais de sites brasileiros de contratipos
-//   - In The Box (VNDA)      → dataLayer no HTML estático (render_js=false)
-//   - Maison Viegas (Nuvem)  → blocos data-product-id no HTML renderizado (render_js=true)
-//   - JA Essence, Azza       → pulados (offline)
-// COMO RODAR: npm run contratipos:scrape
+//   - In The Box (VNDA)        → dataLayer no HTML estático (render_js=false)
+//   - Maison Viegas (Nuvemshop)→ blocos data-product-id (render_js=true)
+//   - JA Essence (wBuy)        → blocos data-id em /lancamentos/ (render_js=true)
+//   - Azza Parfums (Nuvemshop) → blocos data-product-id (render_js=true)
+// COMO RODAR:
+//   npm run contratipos:scrape                          (todos)
+//   npm run contratipos:scrape -- --marca="JA Essence" (só um)
 // SALVA EM:  data/contratipos-novos.json
 // ============================================
 
@@ -20,10 +23,14 @@ if (fs.existsSync(envPath)) {
 }
 
 import Groq from "groq-sdk"
+import { GoogleGenerativeAI } from "@google/generative-ai"
 
-const SBEE_KEY = process.env.SCRAPINGBEE_API_KEY ?? ""
-const GROQ_KEY = process.env.GROQ_API_KEY ?? ""
-const SAIDA    = path.join(process.cwd(), "data", "contratipos-novos.json")
+const SBEE_KEY     = process.env.SCRAPINGBEE_API_KEY ?? ""
+const GROQ_KEY     = process.env.GROQ_API_KEY ?? ""
+const GEMINI_KEY   = process.env.GEMINI_API_KEY ?? ""
+const SAIDA        = path.join(process.cwd(), "data", "contratipos-novos.json")
+const MARCA_FILTER = process.argv.find(a => a.startsWith("--marca="))?.split("=")?.[1]?.toLowerCase()
+const APPEND_MODE  = process.argv.includes("--append")
 
 // ── Interfaces ────────────────────────────────────────────────────────────────
 
@@ -83,14 +90,9 @@ async function scrapeInTheBox(): Promise<ProdutoBruto[]> {
   for (let page = 1; page <= 20; page++) {
     const url = `${BASE}${CATEG}?page=${page}`
     let html: string
-    try {
-      html = await sbFetch(url, false)
-    } catch (e) {
-      console.error(`  ✗ Página ${page}: ${(e as Error).message}`)
-      break
-    }
+    try { html = await sbFetch(url, false) }
+    catch (e) { console.error(`  ✗ Página ${page}: ${(e as Error).message}`); break }
 
-    // Extrai o array dataLayer do script inline
     const dlMatch = html.match(/dataLayer\s*=\s*(\[[\s\S]*?\]);\s*(?:<\/script>|window\.)/)
     if (!dlMatch) { console.log(`  Página ${page}: sem dataLayer — fim`); break }
 
@@ -127,22 +129,17 @@ async function scrapeInTheBox(): Promise<ProdutoBruto[]> {
 // ── Maison Viegas — Nuvemshop (render_js=true) ───────────────────────────────
 
 async function scrapeMaisonViegas(): Promise<ProdutoBruto[]> {
-  const MARCA   = "Maison Viegas"
-  const BASE    = "https://maisonviegas.com.br"
+  const MARCA  = "Maison Viegas"
+  const BASE   = "https://maisonviegas.com.br"
+  const vistos = new Set<string>()
   const produtos: ProdutoBruto[] = []
-  const vistos  = new Set<string>()
 
   console.log(`\n[Maison Viegas] Iniciando scrape via Nuvemshop render_js=true…`)
 
   for (let page = 1; page <= 10; page++) {
-    const url = `${BASE}/produtos/?page=${page}`
     let html: string
-    try {
-      html = await sbFetch(url, true, 3000)
-    } catch (e) {
-      console.error(`  ✗ Página ${page}: ${(e as Error).message}`)
-      break
-    }
+    try { html = await sbFetch(`${BASE}/produtos/?page=${page}`, true, 3000) }
+    catch (e) { console.error(`  ✗ Página ${page}: ${(e as Error).message}`); break }
 
     const blocos = [...html.matchAll(/data-product-id="(\d+)"([\s\S]*?)(?=data-product-id="\d+"|<\/ul>|<\/section>)/g)]
     if (blocos.length === 0) { console.log(`  Página ${page}: sem produtos — fim`); break }
@@ -152,20 +149,65 @@ async function scrapeMaisonViegas(): Promise<ProdutoBruto[]> {
       const id = bloco[1]
       if (vistos.has(id)) continue
       vistos.add(id)
+      const corpo   = bloco[2]
+      const nome    = corpo.match(/alt="([^"]+?)(?:\s*-\s*comprar[^"]*)?"/)?.[1]?.trim() ?? ""
+      if (!nome) continue
+      const precoM  = corpo.match(/price_number&quot;:([\d.]+)/)
+      const preco   = precoM ? parseFloat(precoM[1]) : 0
+      const hrefM   = corpo.match(/href="(https:\/\/maisonviegas\.com\.br\/produtos\/[^"]+)"/)
+      produtos.push({ nome, marca: MARCA, preco_brl: preco, descricao: nome, url: hrefM?.[1] ?? `${BASE}/produtos/` })
+      novos++
+    }
 
+    console.log(`  Página ${page}: ${novos} produtos novos (total: ${produtos.length})`)
+    if (novos === 0) break
+    await sleep(2000)
+  }
+
+  return produtos
+}
+
+// ── JA Essence — wBuy (render_js=true) ───────────────────────────────────────
+
+async function scrapeJAEssence(): Promise<ProdutoBruto[]> {
+  const MARCA  = "JA Essence"
+  const BASE   = "https://www.jaessencedelavie.com.br"
+  const vistos = new Set<string>()
+  const produtos: ProdutoBruto[] = []
+
+  console.log(`\n[JA Essence] Iniciando scrape via wBuy render_js=true…`)
+
+  for (let page = 1; page <= 5; page++) {
+    const url  = page === 1 ? `${BASE}/lancamentos/` : `${BASE}/lancamentos/?pg=${page}`
+    let html: string
+    try { html = await sbFetch(url, true, 3000) }
+    catch (e) { console.error(`  ✗ Página ${page}: ${(e as Error).message}`); break }
+
+    const blocos = [...html.matchAll(/data-id="(\d+)"([\s\S]*?)(?=data-id="\d+"|<\/section>|class="mais-produtos")/g)]
+    if (blocos.length === 0) { console.log(`  Página ${page}: sem produtos — fim`); break }
+
+    let novos = 0
+    for (const bloco of blocos) {
+      const id = bloco[1]
+      if (vistos.has(id)) continue
+      vistos.add(id)
       const corpo = bloco[2]
 
-      // Nome: alt da imagem (já contém "inspirado em X — Marca")
-      const nome = corpo.match(/alt="([^"]+?)(?:\s*-\s*comprar[^"]*)?"/)?.[1]?.trim() ?? ""
+      // Nome: h3.produto title (já contém "inspirado em X")
+      const nome = corpo.match(/class="produto"[^>]*title="([^"]+)"/)?.[1]?.trim()
+                ?? corpo.match(/alt="([^"]+)"/)?.[1]?.trim()
+                ?? ""
       if (!nome) continue
 
-      // Preço: price_number no JSON HTML-escaped de data-variants
-      const precoM = corpo.match(/price_number&quot;:(\d+)/)
-      const preco  = precoM ? parseInt(precoM[1]) : 0
+      // Preço: span dentro de .valor_final
+      const precoM = corpo.match(/valor_final[\s\S]*?<span>R\$([\d.,]+)/)
+      const preco  = precoM ? parseFloat(precoM[1].replace(/\./g, "").replace(",", ".")) : 0
 
-      // URL absoluta do produto
-      const hrefM = corpo.match(/href="(https:\/\/maisonviegas\.com\.br\/produtos\/[^"]+)"/)
-      const prodUrl = hrefM?.[1] ?? `${BASE}/produtos/`
+      // URL: href relativo → absoluto
+      const hrefM  = corpo.match(/href="([^"]+)"/)
+      const prodUrl = hrefM
+        ? (hrefM[1].startsWith("http") ? hrefM[1] : `${BASE}/${hrefM[1].replace(/^\//, "")}`)
+        : BASE
 
       produtos.push({ nome, marca: MARCA, preco_brl: preco, descricao: nome, url: prodUrl })
       novos++
@@ -179,9 +221,133 @@ async function scrapeMaisonViegas(): Promise<ProdutoBruto[]> {
   return produtos
 }
 
+// ── Azza Parfums — Nuvemshop (render_js=true) ────────────────────────────────
+
+async function scrapeAzzaParfums(): Promise<ProdutoBruto[]> {
+  const MARCA  = "Azza Parfums"
+  const BASE   = "https://www.azzaparfums.com.br"
+  const vistos = new Set<string>()
+  const produtos: ProdutoBruto[] = []
+
+  console.log(`\n[Azza Parfums] Iniciando scrape via Nuvemshop render_js=true…`)
+
+  for (let page = 1; page <= 10; page++) {
+    let html: string
+    try { html = await sbFetch(`${BASE}/produtos/?page=${page}`, true, 3000) }
+    catch (e) { console.error(`  ✗ Página ${page}: ${(e as Error).message}`); break }
+
+    const blocos = [...html.matchAll(/data-product-id="(\d+)"([\s\S]*?)(?=data-product-id="\d+"|<\/ul>|<\/section>)/g)]
+    if (blocos.length === 0) { console.log(`  Página ${page}: sem produtos — fim`); break }
+
+    let novos = 0
+    for (const bloco of blocos) {
+      const id = bloco[1]
+      if (vistos.has(id)) continue
+      vistos.add(id)
+      const corpo   = bloco[2]
+      const nome    = corpo.match(/alt="([^"]+?)(?:\s*-\s*comprar[^"]*)?"/)?.[1]?.trim() ?? ""
+      if (!nome) continue
+      const precoM  = corpo.match(/price_number&quot;:([\d.]+)/)
+      const preco   = precoM ? parseFloat(precoM[1]) : 0
+      const hrefM   = corpo.match(/href="(https:\/\/www\.azzaparfums\.com\.br\/[^"]+)"/)
+      produtos.push({ nome, marca: MARCA, preco_brl: preco, descricao: nome, url: hrefM?.[1] ?? `${BASE}/produtos/` })
+      novos++
+    }
+
+    console.log(`  Página ${page}: ${novos} produtos novos (total: ${produtos.length})`)
+    if (novos === 0) break
+    await sleep(2000)
+  }
+
+  return produtos
+}
+
+// ── Catálogo lookup ───────────────────────────────────────────────────────────
+
+interface CatalogoEntry { nome: string; marca: string; familia: string; acordesPrincipais: string[]; genero?: string }
+
+const familiaPT: Record<string, string> = {
+  "citrus":"Cítrico","citric":"Cítrico",
+  "floral":"Floral","white floral":"Floral","rose":"Floral","flower":"Floral",
+  "woody":"Amadeirado","wood":"Amadeirado","cedar":"Amadeirado","sandalwood":"Amadeirado",
+  "oriental":"Oriental","amber":"Oriental","ambery":"Oriental","balsamic":"Oriental",
+  "aquatic":"Aquático","marine":"Aquático","water":"Aquático","fresh":"Aquático","ozonic":"Aquático",
+  "spicy":"Especiado","spice":"Especiado","fresh spicy":"Especiado",
+  "gourmand":"Gourmand","sweet":"Gourmand","vanilla":"Gourmand","caramel":"Gourmand",
+  "musky":"Almiscarado","musk":"Almiscarado","powdery":"Almiscarado",
+  "green":"Verde","aromatic":"Verde","herbal":"Verde","fougere":"Verde","fougère":"Verde",
+  "fruity":"Frutal","fruit":"Frutal",
+}
+
+let _catalogo: CatalogoEntry[] | null = null
+function getCatalogo(): CatalogoEntry[] {
+  if (_catalogo) return _catalogo
+  const fp = path.join(process.cwd(), "data", "catalogo-fragella.json")
+  if (fs.existsSync(fp)) {
+    const raw = JSON.parse(fs.readFileSync(fp, "utf-8"))
+    _catalogo = (Array.isArray(raw) ? raw : (raw.perfumes ?? [])) as CatalogoEntry[]
+  } else {
+    _catalogo = []
+  }
+  return _catalogo
+}
+
+const norm = (s: string) =>
+  s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ").trim()
+
+function buscarNoCatalogo(ref: string): { inspiradoEm: string; marcaOriginal: string; familia: string; notas: string[] } | null {
+  const cat = getCatalogo()
+  const r   = norm(ref)
+  const hit = cat.find(c => {
+    const n = norm(c.nome); const m = norm(c.marca)
+    return (r.includes(n) && n.length > 3) && (r.includes(m) || m.length <= 3)
+  }) ?? cat.find(c => { const n = norm(c.nome); return r.includes(n) && n.length > 4 })
+  if (!hit) return null
+  const familiaEN = (hit.familia ?? "").toLowerCase()
+  return {
+    inspiradoEm:   hit.nome,
+    marcaOriginal: hit.marca,
+    familia:       familiaPT[familiaEN] ?? "Indefinida",
+    notas:         (hit.acordesPrincipais ?? []).slice(0, 5),
+  }
+}
+
+// ── Extração via regex do nome ────────────────────────────────────────────────
+
+function extrairDoNome(nome: string): { referencia: string | null; genero: ContratipoNovo["genero"]; tipo: ContratipoNovo["tipo"] } {
+  const genero: ContratipoNovo["genero"] =
+    /\bMasculino\b/i.test(nome)                         ? "Masculino" :
+    /\bFeminino\b/i.test(nome)                          ? "Feminino"  :
+    /\b(Compartilh[aá]vel|Unissex)\b/i.test(nome)      ? "Unissex"   : "Unissex"
+
+  const tipo: ContratipoNovo["tipo"] =
+    /\bExtrait\b/i.test(nome)  ? "Extrait" :
+    /\bEDT\b/i.test(nome)      ? "EDT"     :
+    /\bEDC\b/i.test(nome)      ? "EDC"     : "EDP"
+
+  // "Inspiração Olfativa: X" (Azza)
+  const azzaM = nome.match(/Inspira[çc][aã]o Olfativa\s*:?\s*(.+?)(?:\s*-\s*(?:Masculino|Feminino|Unissex|Compartilh[aá]vel)|\s*$)/i)
+  if (azzaM) return { referencia: azzaM[1].trim(), genero, tipo }
+
+  // "inspirado em X" / "inspirado n[ao] X" (JA Essence, Maison Viegas, In The Box)
+  const inspM = nome.match(/inspirad[ao]s?\s+(?:em\s+|n[ao]\s+)?(.+)/i)
+  if (inspM) {
+    const ref = inspM[1]
+      .replace(/\s*[-–]\s*(Masculino|Feminino|Unissex|EDP|EDT|EDC|Extrait)\s*$/i, "")
+      .replace(/\s+(Masculino|Feminino|Unissex)\s*$/i, "")
+      .replace(/\s+Compartilh\S*\s*$/i, "") // "Compartilhável" (any encoding)
+      .trim()
+    return { referencia: ref, genero, tipo }
+  }
+
+  return { referencia: null, genero, tipo }
+}
+
 // ── Groq enriquecimento ───────────────────────────────────────────────────────
 
-const groq = new Groq({ apiKey: GROQ_KEY })
+const groq   = new Groq({ apiKey: GROQ_KEY })
+const gemini = GEMINI_KEY ? new GoogleGenerativeAI(GEMINI_KEY).getGenerativeModel({ model: "gemini-2.0-flash" }) : null
+let groqEsgotado = false
 
 interface GroqResposta {
   inspiradoEm: string; marcaOriginal: string
@@ -190,53 +356,126 @@ interface GroqResposta {
 }
 
 async function enriquecer(p: ProdutoBruto): Promise<GroqResposta> {
-  const prompt = `Você é especialista em perfumaria. Analise este contratipo brasileiro e responda SOMENTE com JSON válido, sem markdown.
+  // 1. Extração via regex
+  const { referencia, genero, tipo } = extrairDoNome(p.nome)
 
-Nome: "${p.nome}"
-Descrição: "${p.descricao}"
-Marca: "${p.marca}"
+  // 2. Lookup no catálogo
+  if (referencia) {
+    const cat = buscarNoCatalogo(referencia)
+    if (cat) {
+      return { inspiradoEm: cat.inspiradoEm, marcaOriginal: cat.marcaOriginal, tipo, genero, familia: cat.familia, notas: cat.notas }
+    }
+    // Referência extraída mas não encontrada no catálogo — tenta Groq só para split nome/marca
+    try {
+      return await chamarGroq(p, genero, tipo)
+    } catch (e) {
+      const msg = (e as Error).message
+      if (msg.includes("429")) {
+        groqEsgotado = true
+        console.warn("  ⚠ Groq: limite atingido — tentando Gemini")
+        try { if (gemini) return await chamarGemini(p, genero, tipo) } catch { /* Gemini também falhou */ }
+      }
+    }
+    // Sem IA disponível: usa referência extraída pelo regex
+    return { inspiradoEm: referencia, marcaOriginal: "Desconhecida", tipo, genero, familia: "Indefinida", notas: [] }
+  }
+
+  // 3. Sem padrão no nome — usa IA
+  try {
+    return await chamarGroq(p, genero, tipo)
+  } catch (e) {
+    const msg = (e as Error).message
+    if (msg.includes("429")) {
+      groqEsgotado = true
+      console.warn("  ⚠ Groq: limite atingido — tentando Gemini")
+      try { if (gemini) return await chamarGemini(p, genero, tipo) } catch { /* Gemini também falhou */ }
+    }
+  }
+  return { inspiradoEm: p.nome, marcaOriginal: "Desconhecida", tipo, genero, familia: "Indefinida", notas: [] }
+}
+
+function buildPrompt(nome: string, marca: string, genero: string, tipo: string): string {
+  return `Você é especialista em perfumaria. Analise este contratipo brasileiro e responda SOMENTE com JSON válido, sem markdown.
+
+Nome: "${nome}"
+Marca: "${marca}"
 
 Retorne exatamente:
 {
   "inspiradoEm": "nome do perfume original (sem a marca)",
   "marcaOriginal": "marca do original",
-  "tipo": "EDP" | "EDT" | "EDC" | "Extrait",
-  "genero": "Masculino" | "Feminino" | "Unissex",
+  "tipo": "${tipo}",
+  "genero": "${genero}",
   "familia": "família olfativa em português (Amadeirado, Floral, Oriental, Cítrico, Aquático, Gourmand, Frutal, Almiscarado, etc.)",
   "notas": ["nota1","nota2","nota3"]
 }`
+}
 
+function parseJsonResposta(txt: string, tipo: string, genero: string): GroqResposta {
+  try {
+    return JSON.parse(txt.replace(/^```json?\s*/i, "").replace(/```\s*$/i, "").trim()) as GroqResposta
+  } catch {
+    console.warn(`  ⚠ JSON inválido`)
+    return { inspiradoEm: "", marcaOriginal: "Desconhecida", tipo: tipo as GroqResposta["tipo"], genero: genero as GroqResposta["genero"], familia: "Indefinida", notas: [] }
+  }
+}
+
+async function chamarGroq(p: ProdutoBruto, genero: string, tipo: string): Promise<GroqResposta> {
+  if (groqEsgotado && gemini) return chamarGemini(p, genero, tipo)
+
+  const prompt = buildPrompt(p.nome, p.marca, genero, tipo)
   const r = await groq.chat.completions.create({
     model: "llama-3.3-70b-versatile",
     messages: [{ role: "user", content: prompt }],
     temperature: 0.2,
-    max_tokens: 300,
+    max_tokens: 200,
   })
   const txt = r.choices[0]?.message?.content?.trim() ?? "{}"
-  try {
-    return JSON.parse(txt.replace(/^```json?\s*/i, "").replace(/```\s*$/i, "").trim()) as GroqResposta
-  } catch {
-    console.warn(`  ⚠ JSON inválido do Groq para "${p.nome}"`)
-    return { inspiradoEm: p.nome, marcaOriginal: "Desconhecida", tipo: "EDP", genero: "Unissex", familia: "Indefinida", notas: [] }
-  }
+  if (txt.includes('"error"')) throw new Error("429 " + txt)
+  return parseJsonResposta(txt, tipo, genero)
+}
+
+async function chamarGemini(p: ProdutoBruto, genero: string, tipo: string): Promise<GroqResposta> {
+  if (!gemini) throw new Error("Gemini não configurado")
+  const prompt = buildPrompt(p.nome, p.marca, genero, tipo)
+  const result = await gemini.generateContent(prompt)
+  const txt    = result.response.text().trim()
+  return parseJsonResposta(txt, tipo, genero)
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
+const TODOS_SCRAPERS = [
+  { nome: "In The Box",    fn: scrapeInTheBox    },
+  { nome: "Maison Viegas", fn: scrapeMaisonViegas },
+  { nome: "JA Essence",    fn: scrapeJAEssence   },
+  { nome: "Azza Parfums",  fn: scrapeAzzaParfums  },
+]
+
 async function main() {
+  const scrapers = MARCA_FILTER
+    ? TODOS_SCRAPERS.filter(s => s.nome.toLowerCase().includes(MARCA_FILTER))
+    : TODOS_SCRAPERS
+
   console.log("╔══════════════════════════════════════════════════════════╗")
   console.log("║       SCRAPE CONTRATIPOS — Scently                       ║")
+  console.log(`║  Sites: ${scrapers.map(s => s.nome).join(", ").padEnd(49)}║`)
   console.log("╚══════════════════════════════════════════════════════════╝")
 
   if (!SBEE_KEY) { console.error("✗ SCRAPINGBEE_API_KEY não configurada"); process.exit(1) }
   if (!GROQ_KEY) { console.error("✗ GROQ_API_KEY não configurada");        process.exit(1) }
 
-  // 1. Coleta por site
+  if (scrapers.length === 0) {
+    console.error(`✗ Nenhum site corresponde ao filtro "--marca=${MARCA_FILTER}"`)
+    console.error(`  Disponíveis: ${TODOS_SCRAPERS.map(s => s.nome).join(", ")}`)
+    process.exit(1)
+  }
+
+  // 1. Coleta
   const brutos: ProdutoBruto[] = []
-  brutos.push(...await scrapeInTheBox())
-  brutos.push(...await scrapeMaisonViegas())
-  console.log("\n⚠ JA Essence (jaessence.com.br) — offline, pulado")
-  console.log("⚠ Azza Parfum (azzaperfum.com.br) — offline, pulado")
+  for (const { fn } of scrapers) {
+    brutos.push(...await fn())
+  }
 
   console.log(`\nTotal bruto: ${brutos.length} produtos`)
   if (brutos.length === 0) { console.error("✗ Nenhum produto coletado — abortando"); process.exit(1) }
@@ -246,7 +485,7 @@ async function main() {
   const resultado: ContratipoNovo[] = []
 
   for (let i = 0; i < brutos.length; i++) {
-    const p = brutos[i]
+    const p   = brutos[i]
     const pfx = `[${String(i + 1).padStart(String(brutos.length).length, " ")}/${brutos.length}]`
     try {
       const info = await enriquecer(p)
@@ -271,19 +510,30 @@ async function main() {
     if (i < brutos.length - 1) await sleep(200)
   }
 
-  // 3. Salva
-  const marcas = ["In The Box", "Maison Viegas"]
+  // 3. Salva (com suporte a --append)
+  let contratiposAcumulados = resultado
+  if (APPEND_MODE && fs.existsSync(SAIDA)) {
+    try {
+      const existente = JSON.parse(fs.readFileSync(SAIDA, "utf-8"))
+      const existentes: ContratipoNovo[] = existente.contratipos ?? []
+      const ids = new Set(resultado.map(p => p.id))
+      contratiposAcumulados = [...existentes.filter(p => !ids.has(p.id)), ...resultado]
+      console.log(`  → Modo --append: ${existentes.length} existentes + ${resultado.length} novos = ${contratiposAcumulados.length} total`)
+    } catch { /* ignora arquivo corrompido */ }
+  }
   const saida = {
     timestamp:   new Date().toISOString(),
-    total:       resultado.length,
-    por_marca:   Object.fromEntries(marcas.map(m => [m, resultado.filter(p => p.marca === m).length])),
-    contratipos: resultado,
+    total:       contratiposAcumulados.length,
+    por_marca:   Object.fromEntries(
+      [...new Set(contratiposAcumulados.map(p => p.marca))].map(m => [m, contratiposAcumulados.filter(p => p.marca === m).length])
+    ),
+    contratipos: contratiposAcumulados,
   }
   fs.writeFileSync(SAIDA, JSON.stringify(saida, null, 2), "utf-8")
 
   console.log("\n" + "━".repeat(60))
   console.log("CONCLUÍDO")
-  marcas.forEach(m => console.log(`  ${m}: ${saida.por_marca[m]} produtos`))
+  scrapers.forEach(s => console.log(`  ${s.nome}: ${saida.por_marca[s.nome]} produtos`))
   console.log(`\n  ✓ Total: ${resultado.length} contratipos`)
   console.log(`  ✓ Salvo em: ${SAIDA}`)
   console.log("  ⚠ Revise antes de fazer merge com contratipos.json")
