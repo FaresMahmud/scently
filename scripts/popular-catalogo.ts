@@ -2,8 +2,8 @@
 // SCRIPT: scripts/popular-catalogo.ts
 // O QUE FAZ: busca perfumes de todas as marcas do ebayData via Fragella API
 //            e salva em data/catalogo-fragella.json
-// COMO RODAR: npm run catalogo:popular
-//             (ou: npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts)
+// COMO RODAR: npm run catalogo:popular    (completo)
+//             npm run catalogo:continuar  (só marcas faltantes)
 // ============================================
 
 import * as path from "path"
@@ -21,11 +21,15 @@ if (fs.existsSync(envPath)) {
 import { PERFUMES_EBAY } from "@/lib/ebayData"
 import type { PerfumeFragella } from "@/lib/fragella"
 
-const BASE_URL = "https://api.fragella.com/api/v1"
-const API_KEY  = process.env.FRAGELLA_API_KEY ?? ""
-const LIMIT    = 50
-const DELAY_MS = 300
-const SAIDA    = path.join(process.cwd(), "data", "catalogo-fragella.json")
+const BASE_URL   = "https://api.fragella.com/api/v1"
+const API_KEY    = process.env.FRAGELLA_API_KEY ?? ""
+const LIMIT      = 50
+const DELAY_MS   = 800
+const MAX_RETRY  = 3
+const RETRY_WAIT = 5000
+const SAIDA      = path.join(process.cwd(), "data", "catalogo-fragella.json")
+
+const MODO_CONTINUAR = process.argv.includes("--continuar")
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -33,13 +37,15 @@ function sleep(ms: number) {
   return new Promise<void>(r => setTimeout(r, ms))
 }
 
+function slugify(s: string): string {
+  return s.toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+}
+
 function ebayParaSlug(nome: string, marca: string): string {
-  const slugify = (s: string) =>
-    s.toLowerCase()
-      .normalize("NFD")
-      .replace(/[̀-ͯ]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "")
   return `${slugify(nome)}-${slugify(marca)}`
 }
 
@@ -93,33 +99,66 @@ async function buscarPorMarca(marca: string): Promise<PerfumeFragella[]> {
   const url = new URL(`${BASE_URL}/brands/${encodeURIComponent(marca)}`)
   url.searchParams.set("limit", String(LIMIT))
 
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 15000)
+  for (let tentativa = 1; tentativa <= MAX_RETRY; tentativa++) {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 15000)
 
-  try {
-    const res = await fetch(url.toString(), {
-      headers: { "x-api-key": API_KEY, "Content-Type": "application/json" },
-      signal: controller.signal,
-    })
+    try {
+      const res = await fetch(url.toString(), {
+        headers: { "x-api-key": API_KEY, "Content-Type": "application/json" },
+        signal: controller.signal,
+      })
 
-    if (res.status === 404) return []   // marca não existe na Fragella — normal
-    if (!res.ok) {
-      console.error(`  ✗ HTTP ${res.status} para "${marca}"`)
+      if (res.status === 404) return []
+      if (res.status === 429) {
+        console.warn(`  ⚠ 429 Rate limit para "${marca}" — tentativa ${tentativa}/${MAX_RETRY}, aguardando ${RETRY_WAIT / 1000}s…`)
+        await sleep(RETRY_WAIT)
+        continue
+      }
+      if (!res.ok) {
+        console.error(`  ✗ HTTP ${res.status} para "${marca}"`)
+        return []
+      }
+
+      const dados = await res.json() as Record<string, unknown>[]
+      if (!Array.isArray(dados)) return []
+      return dados.map(normalizarPerfume)
+    } catch (e) {
+      if ((e as Error).name === "AbortError") {
+        console.error(`  ✗ Timeout para "${marca}"`)
+      } else {
+        console.error(`  ✗ Erro para "${marca}": ${(e as Error).message}`)
+      }
       return []
+    } finally {
+      clearTimeout(timeout)
     }
+  }
 
-    const dados = await res.json() as Record<string, unknown>[]
-    if (!Array.isArray(dados)) return []
-    return dados.map(normalizarPerfume)
-  } catch (e) {
-    if ((e as Error).name === "AbortError") {
-      console.error(`  ✗ Timeout para "${marca}"`)
-    } else {
-      console.error(`  ✗ Erro para "${marca}": ${(e as Error).message}`)
-    }
-    return []
-  } finally {
-    clearTimeout(timeout)
+  console.error(`  ✗ "${marca}" falhou após ${MAX_RETRY} tentativas (429 persistente)`)
+  return []
+}
+
+// ── Carrega catálogo existente ────────────────────────────────────────────────
+
+interface CatalogoJSON {
+  timestamp: string
+  total: number
+  marcas_com_resultado: number
+  marcas_total: number
+  perfumes: PerfumeFragella[]
+}
+
+function carregarExistente(): { perfumes: PerfumeFragella[]; marcasComDados: Set<string> } {
+  if (!fs.existsSync(SAIDA)) return { perfumes: [], marcasComDados: new Set() }
+  try {
+    const raw = JSON.parse(fs.readFileSync(SAIDA, "utf-8")) as CatalogoJSON
+    const perfumes = Array.isArray(raw.perfumes) ? raw.perfumes : []
+    const marcasComDados = new Set(perfumes.map(p => p.marca.toLowerCase()))
+    return { perfumes, marcasComDados }
+  } catch {
+    console.warn("⚠ Não foi possível ler o catálogo existente — iniciando do zero")
+    return { perfumes: [], marcasComDados: new Set() }
   }
 }
 
@@ -128,6 +167,7 @@ async function buscarPorMarca(marca: string): Promise<PerfumeFragella[]> {
 async function main() {
   console.log("╔══════════════════════════════════════════════════════════╗")
   console.log("║         POPULAR CATÁLOGO — Fragella API — Scently        ║")
+  console.log(`║  Modo: ${MODO_CONTINUAR ? "CONTINUAR (só marcas faltantes)          " : "COMPLETO (todas as marcas)               "}║`)
   console.log("╚══════════════════════════════════════════════════════════╝\n")
 
   if (!API_KEY) {
@@ -135,18 +175,35 @@ async function main() {
     process.exit(1)
   }
 
-  // 1. Extrai marcas únicas do ebayData (preserva grafia original)
-  const marcasSet = new Map<string, string>() // lowercase → original
+  // 1. Marcas únicas do ebayData
+  const marcasSet = new Map<string, string>()
   for (const p of PERFUMES_EBAY) {
     const key = p.marca.toLowerCase()
     if (!marcasSet.has(key)) marcasSet.set(key, p.marca)
   }
-  const marcas = Array.from(marcasSet.values()).sort()
-  console.log(`Marcas únicas encontradas: ${marcas.length}\n`)
+  const todasMarcas = Array.from(marcasSet.values()).sort()
 
-  // 2. Busca perfumes de cada marca
-  const todosPerfumes: PerfumeFragella[] = []
-  const vistos = new Set<string>()          // deduplica por id
+  // 2. Carrega catálogo existente
+  const { perfumes: perfumesExistentes, marcasComDados } = carregarExistente()
+
+  // 3. Filtra marcas a buscar
+  let marcas: string[]
+  if (MODO_CONTINUAR) {
+    marcas = todasMarcas.filter(m => !marcasComDados.has(m.toLowerCase()))
+    console.log(`Catálogo existente: ${perfumesExistentes.length} perfumes de ${marcasComDados.size} marcas`)
+    console.log(`Marcas faltantes:   ${marcas.length} de ${todasMarcas.length} total\n`)
+    if (marcas.length === 0) {
+      console.log("✓ Todas as marcas já foram coletadas. Nada a fazer.")
+      return
+    }
+  } else {
+    marcas = todasMarcas
+    console.log(`Marcas únicas encontradas: ${marcas.length}\n`)
+  }
+
+  // 4. Busca marcas faltantes
+  const novosPerfumes: PerfumeFragella[] = []
+  const vistos = new Set<string>(perfumesExistentes.map(p => p.id))
   let marcasComResultado = 0
 
   for (let i = 0; i < marcas.length; i++) {
@@ -154,29 +211,34 @@ async function main() {
     const prefixo = `[${String(i + 1).padStart(String(marcas.length).length, " ")}/${marcas.length}]`
 
     const perfumes = await buscarPorMarca(marca)
-
-    // Deduplica
     const novos = perfumes.filter(p => !vistos.has(p.id))
     novos.forEach(p => vistos.add(p.id))
-    todosPerfumes.push(...novos)
+    novosPerfumes.push(...novos)
 
     if (novos.length > 0) {
       marcasComResultado++
-      console.log(`${prefixo} ${marca} — ${novos.length} perfume${novos.length !== 1 ? "s" : ""} encontrado${novos.length !== 1 ? "s" : ""}`)
+      console.log(`${prefixo} ${marca} — ${novos.length} perfume${novos.length !== 1 ? "s" : ""}`)
     } else {
       console.log(`${prefixo} ${marca} — sem resultados`)
     }
 
-    // Delay entre chamadas (exceto na última)
     if (i < marcas.length - 1) await sleep(DELAY_MS)
   }
 
-  // 3. Salva resultado
-  const resultado = {
+  // 5. Merge com existentes e salva
+  const todosPerfumes = MODO_CONTINUAR
+    ? [...perfumesExistentes, ...novosPerfumes]
+    : novosPerfumes
+
+  const totalMarcasComDados = MODO_CONTINUAR
+    ? marcasComDados.size + marcasComResultado
+    : marcasComResultado
+
+  const resultado: CatalogoJSON = {
     timestamp: new Date().toISOString(),
     total: todosPerfumes.length,
-    marcas_com_resultado: marcasComResultado,
-    marcas_total: marcas.length,
+    marcas_com_resultado: totalMarcasComDados,
+    marcas_total: todasMarcas.length,
     perfumes: todosPerfumes,
   }
 
@@ -184,7 +246,12 @@ async function main() {
 
   console.log("\n" + "━".repeat(60))
   console.log("CONCLUÍDO")
-  console.log(`  ✓ ${todosPerfumes.length} perfumes coletados de ${marcasComResultado}/${marcas.length} marcas`)
+  if (MODO_CONTINUAR) {
+    console.log(`  ✓ ${novosPerfumes.length} novos perfumes coletados (${marcasComResultado} marcas novas)`)
+    console.log(`  ✓ Total no catálogo: ${todosPerfumes.length} perfumes`)
+  } else {
+    console.log(`  ✓ ${todosPerfumes.length} perfumes coletados de ${marcasComResultado}/${todasMarcas.length} marcas`)
+  }
   console.log(`  ✓ Salvo em: ${SAIDA}`)
 }
 

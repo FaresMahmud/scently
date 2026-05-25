@@ -11,7 +11,8 @@
     "test:coverage": "jest --coverage",
     "scrape": "npx ts-node scripts/scrape-perfumes.ts",
     "scrape:tendencias": "npx ts-node --project tsconfig.json scripts/scrape-tendencias.ts",
-    "catalogo:popular": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts"
+    "catalogo:popular": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts",
+    "catalogo:continuar": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts --continuar"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
