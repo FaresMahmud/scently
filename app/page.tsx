@@ -152,7 +152,7 @@ export default async function PaginaInicial() {
           </p>
           {/* Prova social — reduz fricção */}
           <p style={{ fontSize: "0.75rem", color: "var(--cor-texto-suave)", marginBottom: "2rem", letterSpacing: "0.05em" }}>
-            Mais de 1.200 fragrâncias no catálogo · Sem cadastro · Resultado em 2 minutos
+            Mais de 12.000 fragrâncias no catálogo · Sem cadastro · Resultado em 2 minutos
           </p>
           <Link
             href="/consultor"

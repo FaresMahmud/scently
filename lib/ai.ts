@@ -7,6 +7,7 @@
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { buscarSimilares } from "@/lib/fragella"
+import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 
 export interface RespostasQuiz {
@@ -325,7 +326,7 @@ REGRAS OBRIGATÓRIAS:
               nome: alt.nome,
               marca: alt.marca,
               descricao: alt.acordesPrincipais?.length
-                ? `${alt.acordesPrincipais.slice(0, 3).join(", ")}.${alt.longevidade ? ` Longevidade ${alt.longevidade.toLowerCase()}.` : ""}`
+                ? `${alt.acordesPrincipais.slice(0, 3).map(a => traduzir(a)).join(", ")}.${alt.longevidade ? ` Longevidade ${alt.longevidade.toLowerCase()}.` : ""}`
                 : resultado.alternativa.descricao,
             }
             console.log("[IA] Alternativa Fragella dentro da faixa:", alt.nome, "—", alt.marca, alt.preco ? `(R$${alt.preco})` : "(preço não informado)")
