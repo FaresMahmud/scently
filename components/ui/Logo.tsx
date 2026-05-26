@@ -18,7 +18,7 @@ export default function Logo({ width = 220 }: { width?: number }) {
         .bt { fill: none; stroke: #3A2E28; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
         .bf { fill: #3A2E28; }
         .dv { stroke: #3A2E28; stroke-width: 0.7; opacity: 0.4; }
-        .br { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: 36px; fill: #3A2E28; letter-spacing: 0.1em; }
+        .br { font-family: 'Cormorant Garamond', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif; font-weight: 300; font-size: 34px; fill: #3A2E28; letter-spacing: 0.1em; }
       `}</style>
 
       {/* Corpo do frasco */}
