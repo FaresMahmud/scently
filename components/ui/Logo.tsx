@@ -18,7 +18,7 @@ export default function Logo({ width = 220 }: { width?: number }) {
         .bt { fill: none; stroke: #3A2E28; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; }
         .bf { fill: #3A2E28; }
         .dv { stroke: #3A2E28; stroke-width: 0.7; opacity: 0.4; }
-        .br { font-family: 'Cormorant Garamond', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif; font-weight: 300; font-size: 34px; fill: #3A2E28; letter-spacing: 0.1em; }
+        .br { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: 32px; fill: #3A2E28; letter-spacing: 0.15em; }
       `}</style>
 
       {/* Corpo do frasco */}
@@ -86,7 +86,7 @@ export default function Logo({ width = 220 }: { width?: number }) {
       <circle cx="122" cy="70" r="0.6" className="sp" opacity="0.28"/>
 
       {/* Texto */}
-      <text x="132" y="68" className="br">scently</text>
+      <text x="132" y="68" className="br" dominantBaseline="auto" xmlSpace="preserve">scently</text>
     </svg>
   )
 }
