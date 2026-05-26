@@ -75,7 +75,7 @@ export default function Logo({ width = 60 }: { width?: number }) {
       <span style={{
         fontFamily: "'Cormorant Garamond', Georgia, serif",
         fontWeight: 300,
-        fontSize: "22px",
+        fontSize: "18px",
         letterSpacing: "0.12em",
         color: "#3A2E28",
         lineHeight: 1,
