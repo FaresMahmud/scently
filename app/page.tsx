@@ -9,8 +9,7 @@ import Link from "next/link"
 import { siteMeta, textosHome } from "@/config/site"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import EmAltaAgora from "@/components/home/EmAltaAgora"
-import { buscarDestaques } from "@/lib/fragella"
-import { buscarMockDestaques } from "@/lib/mockData"
+import { perfumesPopulares } from "@/lib/catalogoFragella"
 
 // Os três passos da seção "como funciona"
 const passos = [
@@ -19,9 +18,8 @@ const passos = [
   { numero: "03", titulo: "Descubra", descricao: "Receba uma recomendação personalizada com explicação sensorial." },
 ]
 
-export default async function PaginaInicial() {
-  let perfumes = await buscarDestaques().catch(() => [])
-  if (!perfumes.length) perfumes = buscarMockDestaques(4)
+export default function PaginaInicial() {
+  const perfumes = perfumesPopulares(8)
 
   return (
     <main>
