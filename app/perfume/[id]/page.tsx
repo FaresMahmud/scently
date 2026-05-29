@@ -282,7 +282,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                     <MetricaCard
                       label="DURAÇÃO"
                       valor={traduzir(perfume.longevidade!)}
-                      bg={c.bg} borda={c.borda} texto={c.texto}
+                      bg="var(--cor-card)" borda="var(--cor-borda)" texto={c.texto}
                       tooltip={tooltipDaMetrica(traduzir(perfume.longevidade!), "longevidade")}
                     />
                   )
@@ -293,7 +293,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                     <MetricaCard
                       label="SILLAGE"
                       valor={traduzir(perfume.sillage!)}
-                      bg={c.bg} borda={c.borda} texto={c.texto}
+                      bg="var(--cor-card)" borda="var(--cor-borda)" texto={c.texto}
                       tooltip={tooltipDaMetrica(traduzir(perfume.sillage!), "sillage")}
                     />
                   )
@@ -302,7 +302,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                   <MetricaCard
                     label="AVALIAÇÃO"
                     valor={`★ ${perfume.rating.toFixed(1)}`}
-                    bg="#FFF8E7" borda="#D4A050" texto="#8B6000"
+                    bg="var(--cor-card)" borda="var(--cor-borda)" texto="#8B6000"
                     tooltip={tooltipDaMetrica(perfume.rating.toFixed(1), "rating")}
                   />
                 )}
