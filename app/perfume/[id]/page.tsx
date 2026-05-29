@@ -186,6 +186,19 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
     .filter(Boolean)
     .join(", ")
 
+  // Cores das métricas de longevidade / sillage / rating
+  function corDaMetrica(valor: string, tipo: "longevidade" | "sillage") {
+    const v = valor.toLowerCase()
+    if (tipo === "longevidade") {
+      if (/very long|excepcional|long lasting|longa/.test(v)) return { bg: "#EAF3DE", borda: "#8FBD6A", texto: "#3B6D11" }
+      if (/moderate|moderada/.test(v))                        return { bg: "#FFF8E7", borda: "#D4A050", texto: "#8B6000" }
+      return { bg: "#FCEBEB", borda: "#E09090", texto: "#A32D2D" }
+    }
+    if (/enormous|strong|forte|muito/.test(v)) return { bg: "#EAF3DE", borda: "#8FBD6A", texto: "#3B6D11" }
+    if (/moderate|moderada|soft|suave/.test(v)) return { bg: "#FFF8E7", borda: "#D4A050", texto: "#8B6000" }
+    return { bg: "#F5EFE8", borda: "#C0946A", texto: "#6B4A28" }
+  }
+
   // Notas — usa notasCompletas (com imageUrl) se disponível
   const notasTopo    = resolverNotas(perfume.notasCompletas?.Top,    perfume.notasTopo)
   const notasCoracao = resolverNotas(perfume.notasCompletas?.Middle, perfume.notasCoracao)
@@ -228,19 +241,42 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
           {/* Coluna direita — informações */}
           <div>
             {/* Tags info com hover */}
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem", alignItems: "center" }}>
               {perfume.familia && <TagInfo>{traduzir(perfume.familia)}</TagInfo>}
               {perfume.concentracao && <TagInfo cor="dourado">{perfume.concentracao}</TagInfo>}
               {perfume.genero && <TagInfo>{traduzir(perfume.genero)}</TagInfo>}
               {perfume.ano > 0 && <TagInfo>{perfume.ano}</TagInfo>}
-              {perfume.longevidade && <TagInfo>{traduzir(perfume.longevidade)}</TagInfo>}
-              {perfume.sillage && <TagInfo>Sillage: {traduzir(perfume.sillage)}</TagInfo>}
-              {perfume.rating && perfume.rating > 0 && (
-                <span style={{ marginLeft: "auto", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-dourado)", letterSpacing: "0.04em" }}>
-                  ★ {perfume.rating.toFixed(2)}
-                </span>
-              )}
             </div>
+
+            {/* Métricas em destaque: Duração, Sillage, Avaliação */}
+            {(perfume.longevidade || perfume.sillage || (perfume.rating && perfume.rating > 0)) && (
+              <div style={{ display: "flex", gap: "10px", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+                {perfume.longevidade && (() => {
+                  const c = corDaMetrica(perfume.longevidade!, "longevidade")
+                  return (
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px", borderRadius: "8px", background: c.bg, border: `1px solid ${c.borda}`, minWidth: "90px" }}>
+                      <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>DURAÇÃO</span>
+                      <span style={{ fontSize: "13px", fontWeight: 500, color: c.texto, fontFamily: "var(--fonte-corpo)" }}>{traduzir(perfume.longevidade!)}</span>
+                    </div>
+                  )
+                })()}
+                {perfume.sillage && (() => {
+                  const c = corDaMetrica(perfume.sillage!, "sillage")
+                  return (
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px", borderRadius: "8px", background: c.bg, border: `1px solid ${c.borda}`, minWidth: "90px" }}>
+                      <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>SILLAGE</span>
+                      <span style={{ fontSize: "13px", fontWeight: 500, color: c.texto, fontFamily: "var(--fonte-corpo)" }}>{traduzir(perfume.sillage!)}</span>
+                    </div>
+                  )
+                })()}
+                {perfume.rating && perfume.rating > 0 && (
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px", borderRadius: "8px", background: "#FFF8E7", border: "1px solid #D4A050", minWidth: "90px" }}>
+                    <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>AVALIAÇÃO</span>
+                    <span style={{ fontSize: "13px", fontWeight: 500, color: "#8B6000", fontFamily: "var(--fonte-corpo)" }}>★ {perfume.rating.toFixed(1)}</span>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Marca */}
             <Link

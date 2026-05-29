@@ -37,9 +37,21 @@ function corDaTag(texto: string): CorTag {
   if (/masculino/.test(t))                       return { bg: "#EAF2FA", text: "#1E5F8C", hover: "#1E5F8C" }
   if (/feminino/.test(t))                        return { bg: "#FAE8F0", text: "#8C1E50", hover: "#8C1E50" }
   if (/unissex/.test(t))                         return { bg: "#F0EAF5", text: "#5A1E8C", hover: "#5A1E8C" }
-  // Longevidade / sillage
-  if (/dura[çc]|lasting/.test(t))                return { bg: "#EEFAF5", text: "#1E7848", hover: "#1E7848" }
-  if (/forte|strong|sillage/.test(t))            return { bg: "#FFF0E8", text: "#A04828", hover: "#A04828" }
+  // Longevidade — nível forte
+  if (/longa dura[çc]|very long|excepcional/.test(t))       return { bg: "#EAF3DE", text: "#3B6D11", hover: "#3B6D11" }
+  // Longevidade — nível moderado
+  if (/moderada|moderate/.test(t))                          return { bg: "#FFF8E7", text: "#8B6000", hover: "#8B6000" }
+  // Longevidade — nível fraco
+  if (/fraca|weak|curta/.test(t))                           return { bg: "#FCEBEB", text: "#A32D2D", hover: "#A32D2D" }
+  // Sillage — forte
+  if (/sillage.*(forte|enorme)|enormous|strong/.test(t))    return { bg: "#EAF3DE", text: "#3B6D11", hover: "#3B6D11" }
+  // Sillage — moderado
+  if (/sillage.*(moderada|soft)/.test(t))                   return { bg: "#FFF8E7", text: "#8B6000", hover: "#8B6000" }
+  // Sillage — íntimo
+  if (/sillage.*([ií]ntimo|intimate)/.test(t))              return { bg: "#F5EFE8", text: "#6B4A28", hover: "#6B4A28" }
+  // Legado genérico
+  if (/dura[çc]|lasting/.test(t))                           return { bg: "#EEFAF5", text: "#1E7848", hover: "#1E7848" }
+  if (/forte|strong|sillage/.test(t))                       return { bg: "#FFF0E8", text: "#A04828", hover: "#A04828" }
   // Default
   return { bg: "#F0EDE8", text: "#6B5848", hover: "#4A3828" }
 }
