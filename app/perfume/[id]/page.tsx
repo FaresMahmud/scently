@@ -22,6 +22,7 @@ import type { Acorde } from "@/lib/types"
 
 // Páginas além do top 500 são geradas on-demand (ISR)
 export const dynamicParams = true
+export const revalidate = 86400 // 24h
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

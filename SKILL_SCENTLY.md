@@ -44,10 +44,14 @@ scently/
 ├── lib/
 │   ├── ai.ts                     # Lógica IA (Groq + Gemini fallback)
 │   ├── fragella.ts               # API Fragella (interface + funções)
-│   ├── catalogoFragella.ts       # Leitura do JSON local com cache
+│   ├── catalogoFragella.ts       # Leitura do JSON local com cache (server-only)
 │   ├── ebayData.ts               # 1.211 perfumes base
 │   ├── coresNotas.ts             # Cores por nota olfativa
 │   ├── utils.ts                  # slugify, traduzir, familiaParaIngles
+│   ├── types.ts                  # Tipos compartilhados (Acorde, etc.)
+│   ├── mockData.ts               # Dados mock para desenvolvimento
+│   ├── tendencias.ts             # Helpers para tendências semanais
+│   ├── fragrancefinder.ts        # Integração RapidAPI (dupes e alternativas)
 │   └── repositories/
 │       ├── EbayPerfumeRepository.ts
 │       ├── ContratipoRepository.ts
@@ -71,7 +75,7 @@ scently/
 ### Design
 
 - Espaçamentos seguem Fibonacci: 8, 13, 21, 34, 55px
-- Paleta correta: `#F0EBE0` base, `#C9943A` dourado, `#3A2E28` charcoal
+- Paleta correta: `#F5F2ED` base, `#C4714A` terracota destaque, `#C9A84C` dourado, `#3A2E28` charcoal
 - Fontes: Cormorant Garamond títulos, DM Sans corpo
 - Nenhum texto hardcoded em inglês visível ao usuário
 

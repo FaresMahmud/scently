@@ -6,6 +6,7 @@
 // ATENÇÃO: módulo server-only — usa fs, não importar em "use client"
 // ============================================
 
+import "server-only"
 import * as fs from "fs"
 import * as path from "path"
 import type { PerfumeFragella } from "@/lib/fragella"

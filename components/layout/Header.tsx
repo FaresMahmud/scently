@@ -38,7 +38,7 @@ export default function Header() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: "#F0EBE0",
+        backgroundColor: "var(--cor-base)",
         borderBottom: "1px solid var(--cor-borda)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
