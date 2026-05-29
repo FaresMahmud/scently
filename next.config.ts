@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
   },
   headers: async () => [
     {
+      // Remove Referer nas requisições de imagem — contorna hotlink protection (fimgs.net)
+      source: "/_next/image(.*)",
+      headers: [
+        { key: "Referrer-Policy", value: "no-referrer" },
+      ],
+    },
+    {
       source: "/(.*)",
       headers: [
         { key: "X-Frame-Options", value: "DENY" },

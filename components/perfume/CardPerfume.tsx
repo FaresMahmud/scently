@@ -59,6 +59,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 240px"
               style={{ objectFit: "cover" }}
+              referrerPolicy="no-referrer"
               onError={() => setImgError(true)}
             />
           ) : (

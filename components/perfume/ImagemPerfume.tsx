@@ -52,6 +52,7 @@ export default function ImagemPerfume({ src, alt, marca }: Props) {
         fill
         sizes="(max-width: 768px) 100vw, 500px"
         style={{ objectFit: "contain" }}
+        referrerPolicy="no-referrer"
         onError={() => setImgError(true)}
       />
     </div>

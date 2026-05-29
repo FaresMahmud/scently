@@ -95,6 +95,16 @@ export function buscarPerfumePorSlug(slug: string): PerfumeFragella | null {
   })
   if (porNomeMarca) return porNomeMarca
 
+  // 3. Fuzzy match — divide o slug em palavras e busca perfume que contenha todas
+  const palavras = slugLimpo.split("-").filter(p => p.length > 2)
+  if (palavras.length > 0) {
+    const porFuzzy = catalogo.find(p => {
+      const textoP = slugify(p.nome + " " + p.marca)
+      return palavras.every(palavra => textoP.includes(palavra))
+    })
+    if (porFuzzy) return porFuzzy
+  }
+
   return null
 }
 
