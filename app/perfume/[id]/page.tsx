@@ -17,6 +17,7 @@ import { NotasPerfume } from "@/components/perfume/NotasPerfume"
 import ImagemPerfume from "@/components/perfume/ImagemPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import { RankingPerfume } from "@/components/perfume/RankingPerfume"
+import MetricaCard from "@/components/perfume/MetricaCard"
 import TagInfo from "@/components/perfume/TagInfo"
 import { slugify, traduzir } from "@/lib/utils"
 import type { Acorde } from "@/lib/types"
@@ -186,6 +187,30 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
     .filter(Boolean)
     .join(", ")
 
+  // Tooltips das métricas
+  function tooltipDaMetrica(valor: string, tipo: "longevidade" | "sillage" | "rating"): string {
+    const v = valor.toLowerCase()
+    if (tipo === "longevidade") {
+      if (/excepcional|very long/.test(v))    return "Dura mais de 12 horas. Uma ou duas borrifadas são suficientes para o dia todo."
+      if (/longa|long lasting/.test(v))       return "Dura mais de 8 horas na pele. Ideal para quem não quer reaplicar ao longo do dia."
+      if (/moderada|moderate/.test(v))        return "Dura entre 4 e 6 horas. Considere reaplicar no meio do dia."
+      return "Dura menos de 3 horas. Prefira aplicar em roupas ou cabelo para mais persistência."
+    }
+    if (tipo === "sillage") {
+      if (/muito forte|enormous/.test(v))     return "Projeção máxima. Uma borrifada já é suficiente. Evite usar em espaços pequenos ou reuniões."
+      if (/forte|strong/.test(v))             return "Deixa rastro intenso. As pessoas ao redor vão perceber. Use com moderação em ambientes fechados."
+      if (/moderada|moderate/.test(v))        return "Projeção equilibrada. Perceptível para quem está perto, discreto para os demais."
+      if (/suave|soft/.test(v))               return "Projeção íntima. Só quem está bem próximo vai sentir. Perfeito para ambientes formais."
+      return "Praticamente um perfume de pele. Quase só você vai sentir. Ideal para quem prefere discrição total."
+    }
+    // rating (valor numérico como string)
+    const r = parseFloat(valor)
+    if (r >= 4.5) return "Avaliação excepcional. Um dos perfumes mais bem avaliados do mundo."
+    if (r >= 4.0) return "Avaliação excelente. Amplamente amado pela comunidade de perfumaria."
+    if (r >= 3.5) return "Boa avaliação. Perfume sólido com boa aceitação geral."
+    return "Avaliação moderada. Pode não agradar a todos os gostos."
+  }
+
   // Cores das métricas de longevidade / sillage / rating
   function corDaMetrica(valor: string, tipo: "longevidade" | "sillage") {
     const v = valor.toLowerCase()
@@ -254,26 +279,32 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                 {perfume.longevidade && (() => {
                   const c = corDaMetrica(perfume.longevidade!, "longevidade")
                   return (
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px", borderRadius: "8px", background: c.bg, border: `1px solid ${c.borda}`, minWidth: "90px" }}>
-                      <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>DURAÇÃO</span>
-                      <span style={{ fontSize: "13px", fontWeight: 500, color: c.texto, fontFamily: "var(--fonte-corpo)" }}>{traduzir(perfume.longevidade!)}</span>
-                    </div>
+                    <MetricaCard
+                      label="DURAÇÃO"
+                      valor={traduzir(perfume.longevidade!)}
+                      bg={c.bg} borda={c.borda} texto={c.texto}
+                      tooltip={tooltipDaMetrica(traduzir(perfume.longevidade!), "longevidade")}
+                    />
                   )
                 })()}
                 {perfume.sillage && (() => {
                   const c = corDaMetrica(perfume.sillage!, "sillage")
                   return (
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px", borderRadius: "8px", background: c.bg, border: `1px solid ${c.borda}`, minWidth: "90px" }}>
-                      <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>SILLAGE</span>
-                      <span style={{ fontSize: "13px", fontWeight: 500, color: c.texto, fontFamily: "var(--fonte-corpo)" }}>{traduzir(perfume.sillage!)}</span>
-                    </div>
+                    <MetricaCard
+                      label="SILLAGE"
+                      valor={traduzir(perfume.sillage!)}
+                      bg={c.bg} borda={c.borda} texto={c.texto}
+                      tooltip={tooltipDaMetrica(traduzir(perfume.sillage!), "sillage")}
+                    />
                   )
                 })()}
                 {perfume.rating && perfume.rating > 0 && (
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "10px 18px", borderRadius: "8px", background: "#FFF8E7", border: "1px solid #D4A050", minWidth: "90px" }}>
-                    <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>AVALIAÇÃO</span>
-                    <span style={{ fontSize: "13px", fontWeight: 500, color: "#8B6000", fontFamily: "var(--fonte-corpo)" }}>★ {perfume.rating.toFixed(1)}</span>
-                  </div>
+                  <MetricaCard
+                    label="AVALIAÇÃO"
+                    valor={`★ ${perfume.rating.toFixed(1)}`}
+                    bg="#FFF8E7" borda="#D4A050" texto="#8B6000"
+                    tooltip={tooltipDaMetrica(perfume.rating.toFixed(1), "rating")}
+                  />
                 )}
               </div>
             )}
