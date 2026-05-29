@@ -5,6 +5,9 @@
 // DEPENDE DE: components/ui/Tag.tsx, styles/globals.css, lib/utils.ts
 // ============================================
 
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
@@ -25,6 +28,8 @@ interface PropsCardPerfume {
 }
 
 export default function CardPerfume({ perfume }: PropsCardPerfume) {
+  const [imgError, setImgError] = useState(false)
+
   return (
     <article
       className="card-perfume"
@@ -47,23 +52,31 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
             overflow: "hidden",
           }}
         >
-          {perfume.imagem ? (
+          {perfume.imagem && !imgError ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={perfume.imagem}
               alt={`${perfume.nome} — ${perfume.marca}`}
+              onError={() => setImgError(true)}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            // Placeholder minimalista: letra + linha de etiqueta + nome da marca
-            <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-              <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "4rem", fontWeight: 300, color: "var(--cor-texto-suave)", opacity: 0.12, lineHeight: 1, marginBottom: "1rem" }}>
-                {perfume.marca.charAt(0)}
-              </p>
-              <div style={{ width: "48px", height: "1px", backgroundColor: "var(--cor-borda)", marginBottom: "0.75rem" }} />
-              <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.65rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", opacity: 0.35 }}>
-                {perfume.marca}
-              </p>
+            <div style={{
+              width: "100%",
+              aspectRatio: "1",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}>
+              <span style={{
+                fontFamily: "var(--fonte-titulo)",
+                fontSize: "2rem",
+                fontWeight: 300,
+                color: "var(--cor-texto-suave)",
+                letterSpacing: "0.1em",
+              }}>
+                {perfume.marca.slice(0, 2).toUpperCase()}
+              </span>
             </div>
           )}
         </div>

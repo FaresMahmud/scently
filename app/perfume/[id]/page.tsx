@@ -14,6 +14,7 @@ import { buscarMockPorId, PERFUMES_MOCK } from "@/lib/mockData"
 import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { NotasPerfume } from "@/components/perfume/NotasPerfume"
+import ImagemPerfume from "@/components/perfume/ImagemPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
 import TagInfo from "@/components/perfume/TagInfo"
 import { slugify, traduzir } from "@/lib/utils"
@@ -208,23 +209,11 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             position: "sticky",
             top: "84px",
           }}>
-            {imagemSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={imagemSrc}
-                alt={`${perfume.nome} — ${perfume.marca}`}
-                style={{ width: "100%", height: "100%", objectFit: "contain", padding: "1.5rem" }}
-              />
-            ) : (
-              <div style={{ textAlign: "center" }}>
-                <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "6rem", fontWeight: 300, color: "var(--cor-texto-suave)", opacity: 0.25, lineHeight: 1, marginBottom: "0.5rem" }}>
-                  {perfume.marca.charAt(0)}
-                </p>
-                <p style={{ fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", opacity: 0.5 }}>
-                  {perfume.marca}
-                </p>
-              </div>
-            )}
+            <ImagemPerfume
+              src={imagemSrc}
+              alt={`${perfume.nome} — ${perfume.marca}`}
+              marca={perfume.marca}
+            />
           </div>
 
           {/* Coluna direita — informações */}
@@ -263,33 +252,6 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               <p style={{ lineHeight: 1.8, marginBottom: "2.5rem", fontSize: "0.95rem" }}>
                 {perfume.descricao}
               </p>
-            )}
-
-            {/* Botão comprar */}
-            {perfume.urlCompra && (
-              <a
-                href={perfume.urlCompra}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  backgroundColor: "var(--cor-destaque)",
-                  color: "#fff",
-                  fontFamily: "var(--fonte-corpo)",
-                  fontSize: "0.85rem",
-                  fontWeight: 500,
-                  letterSpacing: "0.06em",
-                  padding: "0.7rem 1.5rem",
-                  borderRadius: "var(--raio-borda)",
-                  textDecoration: "none",
-                  marginBottom: "2.5rem",
-                  transition: "opacity 0.15s",
-                }}
-              >
-                Comprar →
-              </a>
             )}
 
             <div className="divisor" />
