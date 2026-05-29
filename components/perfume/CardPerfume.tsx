@@ -8,6 +8,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
@@ -29,6 +30,7 @@ interface PropsCardPerfume {
 
 export default function CardPerfume({ perfume }: PropsCardPerfume) {
   const [imgError, setImgError] = useState(false)
+  const href = `/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`
 
   return (
     <article
@@ -41,29 +43,28 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
       }}
     >
       {/* Imagem — clica e vai para o perfume */}
-      <Link href={`/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`} style={{ display: "block" }}>
+      <Link href={href} style={{ display: "block" }}>
         <div
           style={{
             height: "200px",
             backgroundColor: "var(--cor-card)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             overflow: "hidden",
+            position: "relative",
           }}
         >
           {perfume.imagem && !imgError ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={perfume.imagem}
               alt={`${perfume.nome} — ${perfume.marca}`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 240px"
+              style={{ objectFit: "cover" }}
               onError={() => setImgError(true)}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
             <div style={{
               width: "100%",
-              aspectRatio: "1",
+              height: "100%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -96,7 +97,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
         </div>
 
         {/* Nome do perfume — clica e vai para o perfume */}
-        <Link href={`/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`} style={{ display: "block", textDecoration: "none" }}>
+        <Link href={href} style={{ display: "block", textDecoration: "none" }}>
           <h3
             style={{
               fontFamily: "var(--fonte-titulo)",

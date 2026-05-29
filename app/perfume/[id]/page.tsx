@@ -271,7 +271,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
     description: descricaoTraduzida || perfume.descricao || "",
     ...(imagemSrc ? { image: imagemSrc } : {}),
     ...(perfume.rating && perfume.rating > 0
-      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: perfume.rating.toFixed(1), bestRating: "5", worstRating: "1", ratingCount: "1" } }
+      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: perfume.rating.toFixed(1), bestRating: "5", worstRating: "1" } }
       : {}),
     url: `${BASE_URL}/perfume/${id}`,
   }
@@ -418,6 +418,30 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                 />
               </>
             )}
+
+            {/* Onde comprar */}
+            <div style={{ marginTop: "2rem" }}>
+              <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--cor-texto-suave)", marginBottom: "1rem" }}>
+                Onde comprar
+              </p>
+              <div style={{ display: "flex", gap: "1.25rem", flexWrap: "wrap" }}>
+                {[
+                  { nome: "Sephora",       url: `https://www.sephora.com.br/search?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
+                  { nome: "Beleza na Web", url: `https://www.belezanaweb.com.br/busca?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
+                  { nome: "Amazon",        url: `https://www.amazon.com.br/s?k=${encodeURIComponent(perfume.nome + " " + perfume.marca)}&tag=scently-20` },
+                ].map(({ nome, url }) => (
+                  <a
+                    key={nome}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em", textDecoration: "none" }}
+                  >
+                    Buscar na {nome} →
+                  </a>
+                ))}
+              </div>
+            </div>
 
             <div className="divisor" />
 

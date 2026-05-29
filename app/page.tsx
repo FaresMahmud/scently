@@ -5,11 +5,41 @@
 // DEPENDE DE: config/site.ts, lib/mockData.ts, lib/fragella.ts, components/perfume/CardPerfume.tsx, components/home/EmAltaAgora.tsx
 // ============================================
 
+import type { Metadata } from "next"
 import Link from "next/link"
 import { siteMeta, textosHome } from "@/config/site"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import EmAltaAgora from "@/components/home/EmAltaAgora"
 import { perfumesPopulares } from "@/lib/catalogoFragella"
+
+export const metadata: Metadata = {
+  title: { absolute: "Scently — Encontre o perfume certo para você" },
+  description: "Consultor de perfumaria com IA. Responda algumas perguntas e descubra fragrâncias perfeitas para o seu estilo, clima e ocasião. Mais de 12.000 perfumes.",
+  keywords: ["perfume", "fragrância", "consultor de perfume", "recomendação de perfume", "perfume masculino", "perfume feminino", "perfume unissex"],
+  openGraph: {
+    title: "Scently — Encontre o perfume certo para você",
+    description: "Consultor de perfumaria com IA. Grátis, sem cadastro.",
+    type: "website",
+    url: "https://scently.com.br",
+  },
+  twitter: {
+    card: "summary",
+    title: "Scently — Encontre o perfume certo para você",
+    description: "Consultor de perfumaria com IA. Grátis, sem cadastro.",
+  },
+}
+
+const jsonLdWebSite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Scently",
+  url: "https://scently.com.br",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://scently.com.br/catalogo?busca={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+}
 
 // Os três passos da seção "como funciona"
 const passos = [
@@ -23,6 +53,10 @@ export default function PaginaInicial() {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
+      />
       {/* ── Hero ──────────────────────────────────────────── */}
       <section style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", borderBottom: "1px solid var(--cor-borda)" }}>
         <div className="container-site" style={{ paddingTop: "5rem", paddingBottom: "5rem", width: "100%" }}>

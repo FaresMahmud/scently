@@ -114,6 +114,39 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
         )}
       </Card>
 
+      {/* CTA de compra */}
+      <div style={{ marginBottom: "1.25rem", padding: "1.25rem", border: "1px solid var(--cor-borda)", borderRadius: "var(--raio-borda)" }}>
+        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+          Encontrou seu perfume? Veja onde comprar:
+        </p>
+        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <a
+            href={`https://www.sephora.com.br/search?q=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)" }}
+          >
+            Buscar na Sephora →
+          </a>
+          <a
+            href={`https://www.belezanaweb.com.br/busca?q=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)" }}
+          >
+            Beleza na Web →
+          </a>
+          <a
+            href={`https://www.amazon.com.br/s?k=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}&tag=scently-20`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)" }}
+          >
+            Amazon →
+          </a>
+        </div>
+      </div>
+
       {/* Card do conselho de especialista */}
       <Card style={{ marginBottom: "1.25rem" }}>
         <p style={{ fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--cor-dourado)", marginBottom: "0.6rem" }}>

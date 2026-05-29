@@ -4,9 +4,7 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "fimgs.net" },
-      { protocol: "https", hostname: "img.fragrantica.com" },
-      { protocol: "https", hostname: "**.fimgs.net" },
+      { protocol: "https", hostname: "**" },
     ],
   },
   headers: async () => [

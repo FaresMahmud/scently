@@ -6,6 +6,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 
 interface Props {
   src: string
@@ -44,12 +45,15 @@ export default function ImagemPerfume({ src, alt, marca }: Props) {
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt={alt}
-      onError={() => setImgError(true)}
-      style={{ width: "100%", height: "100%", objectFit: "contain", padding: "1.5rem" }}
-    />
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, 500px"
+        style={{ objectFit: "contain" }}
+        onError={() => setImgError(true)}
+      />
+    </div>
   )
 }
