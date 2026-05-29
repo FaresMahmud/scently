@@ -177,6 +177,13 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
   // Imagem
   const imagemSrc = perfume.imagemTransparente || perfume.imagem || ""
 
+  // Descrição traduzida (Fragella retorna em inglês)
+  const descricaoTraduzida = perfume.descricao
+    ?.split(/[,.]/)
+    .map(p => traduzir(p.trim()))
+    .filter(Boolean)
+    .join(", ")
+
   // Notas — usa notasCompletas (com imageUrl) se disponível
   const notasTopo    = resolverNotas(perfume.notasCompletas?.Top,    perfume.notasTopo)
   const notasCoracao = resolverNotas(perfume.notasCompletas?.Middle, perfume.notasCoracao)
@@ -248,9 +255,9 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             </h1>
 
             {/* Descrição */}
-            {perfume.descricao && (
+            {descricaoTraduzida && (
               <p style={{ lineHeight: 1.8, marginBottom: "2.5rem", fontSize: "0.95rem" }}>
-                {perfume.descricao}
+                {descricaoTraduzida}
               </p>
             )}
 
