@@ -16,6 +16,7 @@ import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { NotasPerfume } from "@/components/perfume/NotasPerfume"
 import ImagemPerfume from "@/components/perfume/ImagemPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
+import { RankingPerfume } from "@/components/perfume/RankingPerfume"
 import TagInfo from "@/components/perfume/TagInfo"
 import { slugify, traduzir } from "@/lib/utils"
 import type { Acorde } from "@/lib/types"
@@ -288,74 +289,18 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               </>
             )}
 
-            {/* Rankings estação + ocasião com bolinhas coloridas por score */}
-            {(perfume.rankingEstacao?.length || perfume.rankingOcasiao?.length) ? (
+            {/* Rankings estação + ocasião */}
+            {(perfume.rankingEstacao?.length || perfume.rankingOcasiao?.length) && (
               <>
-                <div className="divisor" />
-                <div style={{ marginTop: "2rem", marginBottom: "2.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
-                  {perfume.rankingEstacao?.length ? (() => {
-                    const maxScore = Math.max(...perfume.rankingEstacao!.map(r => r.score), 1)
-                    return (
-                      <div>
-                        <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
-                          Estação ideal
-                        </p>
-                        {perfume.rankingEstacao!.slice(0, 4).map(r => {
-                          const preenchidas = Math.round((r.score / maxScore) * 5)
-                          const corDot = r.score > 2.5 ? "#C9943A" : r.score > 1.5 ? "#D4B896" : "#E0D9D0"
-                          return (
-                            <div key={r.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                              <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
-                                {traduzir(r.name)}
-                              </span>
-                              <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                  <div key={i} style={{
-                                    width: "7px", height: "7px", borderRadius: "50%",
-                                    backgroundColor: i < preenchidas ? corDot : "#E0D9D0",
-                                    transition: "background-color 0.2s",
-                                  }} />
-                                ))}
-                              </div>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    )
-                  })() : null}
-                  {perfume.rankingOcasiao?.length ? (() => {
-                    const maxScore = Math.max(...perfume.rankingOcasiao!.map(r => r.score), 1)
-                    return (
-                      <div>
-                        <p style={{ fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
-                          Melhor ocasião
-                        </p>
-                        {perfume.rankingOcasiao!.slice(0, 4).map(r => {
-                          const preenchidas = Math.round((r.score / maxScore) * 5)
-                          const corDot = r.score > 2.5 ? "#C9943A" : r.score > 1.5 ? "#D4B896" : "#E0D9D0"
-                          return (
-                            <div key={r.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                              <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", color: "var(--cor-texto-suave)" }}>
-                                {traduzir(r.name)}
-                              </span>
-                              <div style={{ display: "flex", gap: "3px", alignItems: "center" }}>
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                  <div key={i} style={{
-                                    width: "7px", height: "7px", borderRadius: "50%",
-                                    backgroundColor: i < preenchidas ? corDot : "#E0D9D0",
-                                    transition: "background-color 0.2s",
-                                  }} />
-                                ))}
-                              </div>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    )
-                  })() : null}
-                </div>
+                <hr style={{ border: "none", borderTop: "0.5px solid var(--cor-borda)", margin: "0" }} />
+                <RankingPerfume
+                  estacao={perfume.rankingEstacao ?? []}
+                  ocasiao={perfume.rankingOcasiao ?? []}
+                  nomePerfume={perfume.nome}
+                  familia={perfume.familia ?? ""}
+                />
               </>
-            ) : null}
+            )}
 
             <div className="divisor" />
 
