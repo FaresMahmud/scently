@@ -26,7 +26,7 @@ export default function PaginaPrivacidade() {
           O que coletamos
         </h2>
         <p>
-          Coletamos apenas as respostas que você fornece no quiz de consultoria — preferências de fragrância, estilo e faixa de preço. Não coletamos nome, e-mail, CPF ou qualquer dado que permita identificar você pessoalmente.
+          Coletamos apenas as respostas que você fornece no quiz de consultoria: preferências de fragrância, estilo e faixa de preço. Não coletamos nome, e-mail, CPF ou qualquer dado que permita identificar você pessoalmente.
         </p>
       </section>
 
@@ -44,7 +44,7 @@ export default function PaginaPrivacidade() {
           Cookies
         </h2>
         <p>
-          Usamos apenas cookies essenciais para o funcionamento do site — como a confirmação de que você leu este aviso. Não usamos cookies de rastreamento, publicidade ou análise comportamental.
+          Usamos apenas cookies essenciais para o funcionamento do site, como a confirmação de que você leu este aviso. Não usamos cookies de rastreamento, publicidade ou análise comportamental.
         </p>
       </section>
 

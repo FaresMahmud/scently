@@ -61,7 +61,7 @@ function contratipoParaCard(p: ReturnType<typeof contratipoRepository.findAll>[n
     notas:         p.notas,
     preco_brl:     p.preco_brl,
     vendidos:      0,
-    inspiracaoInfo:`inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`,
+    inspiracaoInfo:`inspirado em ${p.inspiradoEm} da ${p.marcaOriginal}`,
     categoria:     p.categoria,
     generoNorm:    normalizarGenero(p.genero),
     fonte:         "contratipo",

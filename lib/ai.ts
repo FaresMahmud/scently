@@ -246,11 +246,11 @@ REGRAS OBRIGATÓRIAS:
 - "descricao" = frase sensorial curta sem travessões
 - "conselho" = dica ESPECÍFICA e ÚTIL sobre como usar ou quando usar esse perfume.
   Exemplos de boas dicas:
-  - "Aplique no pescoço e punhos 30 minutos antes de sair — o calor do corpo ativa as notas de baunilha progressivamente"
-  - "Ideal para ambientes fechados com ar-condicionado — o sillage moderado não incomoda em escritórios"
-  - "Use 2 borrifadas máximo: uma no peito, uma no pulso. Mais que isso vira excessivo neste tipo oriental"
-  - "Perfeito para noites de outono/inverno — as notas amadeiradas ganham profundidade com o frio"
-  - "Evite usar na praia ou calor intenso — a fixação cai e o álcool resseca a pele"
+  - "Aplique no pescoço e punhos 30 minutos antes de sair. O calor do corpo ativa as notas de baunilha progressivamente."
+  - "Ideal para ambientes fechados com ar-condicionado. O sillage moderado não incomoda em escritórios."
+  - "Use 2 borrifadas máximo: uma no peito, uma no pulso. Mais que isso vira excessivo neste tipo oriental."
+  - "Perfeito para noites de outono e inverno. As notas amadeiradas ganham profundidade com o frio."
+  - "Evite usar na praia ou calor intenso. A fixação cai e o álcool resseca a pele."
   Nunca dê conselhos genéricos como "use moderadamente" ou "aplique nos pontos de pulso". Sempre explique o PORQUÊ.
 - "alternativa" deve ter MESMA família olfativa e MESMA faixa de clima que o principal
 - Se clima quente, AMBOS principal e alternativa devem ser frescos ou aquáticos

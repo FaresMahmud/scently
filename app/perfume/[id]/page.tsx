@@ -114,7 +114,7 @@ async function resolverPerfume(id: string): Promise<{
   for (const p of contratipoRepository.findAll()) {
     const s = `${slugify(p.nome)}-${slugify(p.marca)}`
     if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {
-      const descricao = `Contratipo inspirado em ${p.inspiradoEm} — ${p.marcaOriginal}`
+      const descricao = `Contratipo inspirado em ${p.inspiradoEm} da ${p.marcaOriginal}`
       return {
         perfume: perfumeMinimo(p.nome, p.marca, p.tipo, p.genero, p.familia, p.notas, descricao),
         fonte: "contratipo",

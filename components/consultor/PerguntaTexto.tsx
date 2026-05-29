@@ -65,7 +65,7 @@ export default function PerguntaTexto({
       {/* Indicador de campo opcional */}
       {opcional && (
         <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "1.75rem" }}>
-          Campo opcional — pode pular se preferir.
+          Campo opcional. Pode pular se preferir.
         </p>
       )}
 
