@@ -25,53 +25,82 @@ function gerarExplicacao(
   nomePerfume: string,
   familia: string
 ): string {
+  const fam = familia?.toLowerCase() ?? ""
   const nome = traduzir(itemNome)
-  const fam = familia?.toLowerCase() ?? "olfativa"
+
+  // Categorias de família
+  const isQuente = /oriental|amadeirado|woody|amber|oud|especiado|spicy|gourmand|vanilla|baunilha/.test(fam)
+  const isFresco = /cítrico|citrus|aquático|aquatic|fresh|verde|green|aromatic/.test(fam)
+  const isFloral = /floral|rose|jasmine/.test(fam)
+  const isFrutal = /frutal|fruity/.test(fam)
 
   if (tipo === "estacao") {
+    const estacao = itemNome
+
     if (nivel === "Ótimo") {
-      if (itemNome === "spring") return `Na primavera, as notas ${fam} do ${nomePerfume} se abrem com mais naturalidade. O frescor do ar ativa a composição sem precisar forçar a projeção.`
-      if (itemNome === "summer") return `O calor do verão potencializa as notas ${fam} do ${nomePerfume}. A pele aquecida projeta mais longe e a fixação aumenta ao longo do dia.`
-      if (itemNome === "fall")   return `O outono é onde o ${nomePerfume} se destaca. Com a queda de temperatura, as notas ${fam} se desenvolvem mais lentamente e ganham profundidade.`
-      if (itemNome === "winter") return `No inverno, o ${nomePerfume} funciona como uma segunda pele. O frio concentra a projeção e as notas ${fam} duram mais em ambientes aquecidos.`
+      if (estacao === "fall" || estacao === "autumn") {
+        if (isQuente) return `O outono é a estação perfeita para o ${nomePerfume}. Perfumes ${fam} ganham profundidade com a queda de temperatura e se desenvolvem lentamente na pele, criando uma presença envolvente.`
+        if (isFresco) return `O ${nomePerfume} funciona bem no outono pelos dias ainda amenos. Aplique um pouco mais que o habitual conforme as temperaturas caem.`
+        return `O outono equilibra bem as notas do ${nomePerfume}. Nem quente demais para sobrecarregar, nem frio demais para apagar a projeção.`
+      }
+      if (estacao === "winter") {
+        if (isQuente) return `No inverno, o ${nomePerfume} está no seu elemento. O frio intensifica as notas ${fam} e cria uma presença quente e envolvente em ambientes fechados.`
+        if (isFresco) return `O ${nomePerfume} é surpreendentemente bom no inverno. As notas frescas criam um contraste elegante com o frio e duram mais na pele seca do inverno.`
+        return `O inverno favorece o ${nomePerfume}, especialmente em ambientes aquecidos onde as notas se desenvolvem com mais intensidade.`
+      }
+      if (estacao === "spring") {
+        if (isFresco || isFloral || isFrutal) return `A primavera é a estação ideal para o ${nomePerfume}. As notas ${fam} se harmonizam perfeitamente com o ar fresco e o clima ameno, sem pesar.`
+        if (isQuente) return `Na primavera o ${nomePerfume} ganha leveza. O clima ameno suaviza as notas mais pesadas e cria uma versão mais acessível da fragrância.`
+        return `O ${nomePerfume} abre bem na primavera. O clima equilibrado permite que todas as camadas da pirâmide olfativa se desenvolvam naturalmente.`
+      }
+      if (estacao === "summer") {
+        if (isFresco) return `O verão é feito para o ${nomePerfume}. O calor potencializa as notas ${fam} e cria uma projeção natural sem precisar forçar a aplicação.`
+        if (isQuente) return `No verão o ${nomePerfume} surpreende. Aplique com moderação, pois o calor intensifica as notas ${fam} e a projeção aumenta consideravelmente.`
+        return `O ${nomePerfume} funciona bem no verão. Use 1 ou 2 borrifadas nos pulsos e deixe o calor fazer o trabalho.`
+      }
     }
+
     if (nivel === "Bom") {
-      if (itemNome === "spring") return `Na primavera o ${nomePerfume} funciona bem, mas não é onde brilha mais. Em dias quentes da estação, aplique com um pouco mais de generosidade.`
-      if (itemNome === "summer") return `No calor intenso o ${nomePerfume} perde um pouco da elegância. Use menos quantidade e prefira aplicar no cabelo ou nas roupas para durar mais.`
-      if (itemNome === "fall")   return `O ${nomePerfume} funciona no outono, especialmente nos dias mais amenos. Nos dias frios prefira fragrâncias mais densas para a estação.`
-      if (itemNome === "winter") return `No inverno o ${nomePerfume} pode parecer leve para alguns ambientes. Compense aplicando em pontos que retêm calor, como pescoço e pulsos internos.`
-      return `${nomePerfume} funciona bem no(a) ${nome}, mas não é onde brilha mais. Aplique um pouco mais que o habitual.`
+      if (estacao === "fall" || estacao === "autumn") {
+        if (isFresco) return `O ${nomePerfume} funciona no outono nos dias ainda amenos. Conforme o frio aumenta, considere adicionar uma borrifada extra para compensar a menor volatilidade.`
+        return `O ${nomePerfume} se adapta ao outono, mas não é onde brilha mais. Funciona bem nos dias de transição entre o calor e o frio.`
+      }
+      if (estacao === "winter") {
+        if (isFresco) return `O inverno não é o forte do ${nomePerfume}, mas funciona. O frio reduz a projeção, então aplique em pontos quentes como pescoço e pulsos para compensar.`
+        return `O ${nomePerfume} sobrevive bem ao inverno. Não é a escolha mais óbvia para o frio, mas tem seu charme nos dias menos rigorosos.`
+      }
+      if (estacao === "summer") {
+        if (isQuente) return `No verão o ${nomePerfume} pede cuidado. O calor amplifica as notas ${fam} e pode ficar intenso demais. Use com moderação, 1 borrifada no máximo.`
+        return `O ${nomePerfume} funciona no verão com moderação. Evite aplicar em excesso, pois o calor já potencializa a projeção naturalmente.`
+      }
+      return `O ${nomePerfume} funciona bem no(a) ${nome}, mas existem estações onde brilha mais. Vale a pena experimentar.`
     }
-    if (itemNome === "spring") return `O outono pede perfumes mais quentes. O ${nomePerfume} pode parecer leve demais para a estação, mas ainda funciona em dias ainda amenos.`
-    if (itemNome === "summer") return `As notas ${fam} do ${nomePerfume} não combinam bem com o calor intenso. Reserve para dias ou ambientes mais frescos.`
-    if (itemNome === "fall")   return `O ${nomePerfume} tende a parecer deslocado no outono. As notas ${fam} ficam desequilibradas com a queda de temperatura.`
-    if (itemNome === "winter") return `No frio do inverno as notas ${fam} do ${nomePerfume} podem sumir rápido. Não é a escolha mais eficiente para essa estação.`
-    return `As notas ${fam} do ${nomePerfume} ficam desequilibradas no(a) ${nome}. Guarde para uma estação mais adequada.`
+
+    // Fraco
+    if (estacao === "summer" && isQuente) return `O verão não combina com o ${nomePerfume}. As notas ${fam} ficam pesadas demais no calor e podem incomodar. Reserve para os meses mais frios.`
+    if ((estacao === "fall" || estacao === "winter") && isFresco) return `O frio do(a) ${nome} apaga as notas ${fam} do ${nomePerfume}. A projeção cai muito e o perfume perde o que tem de melhor.`
+    if (estacao === "spring" && isQuente) return `A primavera ainda é quente demais para as notas ${fam} do ${nomePerfume}. Aguarde o outono para tirar o máximo dessa fragrância.`
+    return `O(a) ${nome} não é a melhor época para o ${nomePerfume}. As condições climáticas trabalham contra as notas ${fam} da fragrância.`
   }
 
   if (tipo === "ocasiao") {
     if (nivel === "Ótimo") {
-      if (itemNome === "professional") return `O ${nomePerfume} tem a presença certa para o ambiente de trabalho. Elegante sem invadir o espaço dos outros, deixa uma impressão positiva sem chamar atenção demais.`
-      if (itemNome === "casual")       return `Para o dia a dia, o ${nomePerfume} é uma escolha acertada. Versátil o suficiente para qualquer situação, confortável de usar e fácil de combinar com qualquer humor.`
-      if (itemNome === "night out")    return `O ${nomePerfume} foi pensado para a noite. As notas ${fam} ganham intensidade sob as luzes e deixam um rastro que as pessoas ao redor vão notar e lembrar.`
-      if (itemNome === "romantic")     return `A complexidade ${fam} do ${nomePerfume} cria uma atmosfera de intimidade. É o tipo de perfume que fica na memória de quem está perto, sem precisar anunciar a presença.`
-      if (itemNome === "sport")        return `O ${nomePerfume} aguenta bem a atividade física. As notas ${fam} resistem ao movimento, e o resultado final na pele aquecida costuma ser ainda mais agradável.`
-      return `O ${nomePerfume} cria a atmosfera certa para essa ocasião. As notas ${fam} se adaptam bem ao contexto e deixam uma impressão adequada.`
+      if (itemNome === "professional") return `O ${nomePerfume} tem a presença certa para ambientes de trabalho. Discreto o suficiente para não incomodar, marcante o suficiente para ser lembrado.`
+      if (itemNome === "casual")       return `Para o dia a dia, o ${nomePerfume} é uma escolha certeira. Versátil, confortável e sem exagero, funciona em qualquer situação informal.`
+      if (itemNome === "night out")    return `O ${nomePerfume} foi feito para a noite. As notas ${fam} ganham intensidade sob o calor do corpo e criam uma presença marcante que fica na memória.`
+      if (itemNome === "romantic")     return `Para momentos íntimos, o ${nomePerfume} cria a atmosfera certa. A profundidade ${fam} é sedutora sem ser óbvia, exatamente o que uma fragrância romântica precisa ser.`
+      if (itemNome === "sport")        return `O ${nomePerfume} aguenta bem a atividade física. As notas ${fam} resistem ao movimento e deixam um rastro limpo e agradável mesmo após esforço.`
+      return `O ${nomePerfume} é uma escolha excelente para essa ocasião pelas suas notas ${fam}.`
     }
     if (nivel === "Bom") {
-      if (itemNome === "professional") return `O ${nomePerfume} é aceitável no trabalho, mas use com cautela. Duas borrifadas são suficientes para não ultrapassar o limite do espaço compartilhado.`
-      if (itemNome === "casual")       return `Para o casual, o ${nomePerfume} funciona mas pode ser um pouco intenso demais para o contexto. Aplique apenas uma borrifada em dias mais quentes.`
-      if (itemNome === "night out")    return `O ${nomePerfume} serve para uma saída à noite sem ser a escolha mais impactante. Funciona melhor em ambientes menores e mais intimistas.`
-      if (itemNome === "romantic")     return `Para um encontro, o ${nomePerfume} funciona com moderação. Não é a escolha mais sedutora, mas é agradável e não vai errar.`
-      if (itemNome === "sport")        return `O ${nomePerfume} aguenta uma atividade leve, mas não foi feito para isso. Para treinos intensos considere algo mais refrescante.`
-      return `${nomePerfume} funciona nessa ocasião, mas existem escolhas mais certeiras. Use com moderação.`
+      if (itemNome === "professional") return `O ${nomePerfume} funciona no trabalho, mas aplique com moderação. As notas ${fam} podem ser um pouco marcantes em espaços fechados.`
+      if (itemNome === "night out")    return `Para a noite o ${nomePerfume} funciona, mas não é a escolha mais impactante. Se quiser algo mais intenso para sair, considere uma borrifada extra no cabelo.`
+      return `O ${nomePerfume} funciona bem nessa ocasião. Não é a combinação mais óbvia, mas tem seu charme.`
     }
-    if (itemNome === "professional") return `O ${nomePerfume} pode ser invasivo demais no ambiente de trabalho. As notas ${fam} projetam forte e podem incomodar quem está perto.`
-    if (itemNome === "casual")       return `Para o dia a dia, o ${nomePerfume} pode ser pesado demais. Guarde para momentos especiais onde a intensidade ${fam} seja bem-vinda.`
-    if (itemNome === "night out")    return `Para uma noite fora, as notas ${fam} do ${nomePerfume} podem não criar o impacto esperado. Considere algo com mais projeção e presença noturna.`
-    if (itemNome === "romantic")     return `Para momentos românticos, o ${nomePerfume} pode não criar o clima certo. As notas ${fam} não são as mais sedutoras para essa ocasião específica.`
-    if (itemNome === "sport")        return `O ${nomePerfume} não foi pensado para atividade física. Em movimento e com suor, as notas ${fam} podem ficar desagradáveis.`
-    return `Essa não é a ocasião ideal para o ${nomePerfume}. As notas ${fam} podem ser inadequadas para esse contexto específico.`
+    // Fraco
+    if (itemNome === "professional") return `As notas ${fam} do ${nomePerfume} podem ser fortes demais para ambientes de trabalho. Se precisar usar, limite a 1 borrifada em ponto discreto.`
+    if (itemNome === "sport")        return `O ${nomePerfume} não foi feito para atividade física. As notas ${fam} ficam estranhas misturadas com suor e a fixação cai rapidamente.`
+    return `Essa ocasião não favorece o ${nomePerfume}. As notas ${fam} pedem um contexto diferente para brilhar.`
   }
 
   return ""
