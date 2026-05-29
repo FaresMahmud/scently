@@ -1,40 +1,40 @@
 // ============================================
 // ARQUIVO: app/sitemap.ts
-// O QUE FAZ: gera o sitemap.xml automaticamente para o Google indexar o site
+// O QUE FAZ: gera o sitemap.xml — top 500 perfumes + todas as marcas + páginas estáticas
 // QUANDO MANDAR PRA IA: quando quiser adicionar novas páginas ao sitemap
-// DEPENDE DE: config/site.ts, lib/mockData.ts
+// DEPENDE DE: lib/catalogoFragella, lib/utils
 // ============================================
 
 import type { MetadataRoute } from "next"
-import { siteMeta } from "@/config/site"
-import { PERFUMES_MOCK } from "@/lib/mockData"
+import { perfumesPopulares, marcasUnicas } from "@/lib/catalogoFragella"
+import { slugify } from "@/lib/utils"
+
+const BASE = "https://scently.com.br"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = siteMeta.url
-
-  // Páginas estáticas do site
-  const paginasEstaticas: MetadataRoute.Sitemap = [
-    {
-      url: base,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${base}/consultor`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
+  // Páginas estáticas
+  const estaticas: MetadataRoute.Sitemap = [
+    { url: BASE,                    lastModified: new Date(), changeFrequency: "weekly",  priority: 1.0 },
+    { url: `${BASE}/catalogo`,      lastModified: new Date(), changeFrequency: "daily",   priority: 0.9 },
+    { url: `${BASE}/consultor`,     lastModified: new Date(), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/privacidade`,   lastModified: new Date(), changeFrequency: "yearly",  priority: 0.3 },
   ]
 
-  // Página de cada perfume do catálogo
-  const paginasPerfumes: MetadataRoute.Sitemap = PERFUMES_MOCK.map((perfume) => ({
-    url: `${base}/perfume/${perfume.id}`,
+  // Top 500 perfumes por popularidade
+  const perfumes: MetadataRoute.Sitemap = perfumesPopulares(500).map(p => ({
+    url: `${BASE}/perfume/${slugify(p.nome)}-${slugify(p.marca)}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }))
+
+  // Páginas de marca
+  const marcas: MetadataRoute.Sitemap = marcasUnicas().map(m => ({
+    url: `${BASE}/marca/${slugify(m)}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }))
 
-  return [...paginasEstaticas, ...paginasPerfumes]
+  return [...estaticas, ...perfumes, ...marcas]
 }

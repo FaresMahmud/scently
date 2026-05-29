@@ -124,6 +124,8 @@ export function generateStaticParams() {
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
+const BASE_URL = "https://scently.com.br"
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const nome = resolverNomeMarca(slug)
@@ -132,10 +134,28 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const locais    = coletarPerfumesLocais(slug)
   const fragLocal = buscarPorMarcaLocal(nome)
   const total     = Math.max(locais.length, fragLocal.length)
+  const url       = `${BASE_URL}/marca/${slug}`
+  const titulo    = `${nome} — Fragrâncias | Scently`
+  const descricao = `Explore ${total > 0 ? total + " " : ""}fragrâncias da ${nome} no Scently. Notas, avaliações e consultoria personalizada.`
 
   return {
-    title: `${nome} — ${total} fragrâncias`,
-    description: `Explore todas as fragrâncias ${nome} disponíveis no catálogo Scently.`,
+    title: titulo,
+    description: descricao,
+    keywords: `${nome}, perfumes ${nome}, fragrâncias ${nome}, comprar ${nome}`,
+    alternates: { canonical: url },
+    openGraph: {
+      title:       `${nome} — Fragrâncias`,
+      description: descricao,
+      url,
+      siteName:    "Scently",
+      locale:      "pt_BR",
+      type:        "website",
+    },
+    twitter: {
+      card:        "summary",
+      title:       `${nome} — Fragrâncias`,
+      description: descricao,
+    },
   }
 }
 

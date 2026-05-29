@@ -142,13 +142,45 @@ export function generateStaticParams() {
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
+const BASE_URL = "https://scently.com.br"
+
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
   const { perfume } = await resolverPerfume(id)
   if (!perfume) return { title: "Perfume não encontrado" }
+
+  const titulo      = `${perfume.nome} — ${perfume.marca} | Scently`
+  const descricao   = perfume.descricao
+    ? perfume.descricao.slice(0, 155) + (perfume.descricao.length > 155 ? "…" : "")
+    : `${perfume.nome} da ${perfume.marca}. Descubra notas, sillage, duração e avaliações.`
+  const imagem      = perfume.imagemTransparente || perfume.imagem || ""
+  const url         = `${BASE_URL}/perfume/${id}`
+
+  const keywords: string[] = [perfume.nome, perfume.marca]
+  if (perfume.familia)      keywords.push(perfume.familia)
+  if (perfume.concentracao) keywords.push(perfume.concentracao)
+  if (perfume.notasTopo?.length) keywords.push(...perfume.notasTopo.slice(0, 3))
+
   return {
-    title: `${perfume.nome} — ${perfume.marca}`,
-    description: perfume.descricao || `${perfume.nome} da ${perfume.marca}.`,
+    title: titulo,
+    description: descricao,
+    keywords: keywords.join(", "),
+    alternates: { canonical: url },
+    openGraph: {
+      title:       `${perfume.nome} — ${perfume.marca}`,
+      description: descricao,
+      url,
+      siteName:    "Scently",
+      locale:      "pt_BR",
+      type:        "website",
+      ...(imagem ? { images: [{ url: imagem, alt: `${perfume.nome} — ${perfume.marca}` }] } : {}),
+    },
+    twitter: {
+      card:        imagem ? "summary_large_image" : "summary",
+      title:       `${perfume.nome} — ${perfume.marca}`,
+      description: descricao,
+      ...(imagem ? { images: [imagem] } : {}),
+    },
   }
 }
 
@@ -230,8 +262,26 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
   const notasFundo   = resolverNotas(perfume.notasCompletas?.Base,   perfume.notasFundo)
   const temNotas     = notasTopo.length > 0 || notasCoracao.length > 0 || notasFundo.length > 0
 
+  // JSON-LD
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: perfume.nome,
+    brand: { "@type": "Brand", name: perfume.marca },
+    description: descricaoTraduzida || perfume.descricao || "",
+    ...(imagemSrc ? { image: imagemSrc } : {}),
+    ...(perfume.rating && perfume.rating > 0
+      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: perfume.rating.toFixed(1), bestRating: "5", worstRating: "1", ratingCount: "1" } }
+      : {}),
+    url: `${BASE_URL}/perfume/${id}`,
+  }
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="container-site" style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
 
         {/* Breadcrumb */}
