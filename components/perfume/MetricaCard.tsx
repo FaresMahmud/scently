@@ -1,6 +1,6 @@
 // ============================================
 // ARQUIVO: components/perfume/MetricaCard.tsx
-// O QUE FAZ: card de métrica (duração, sillage, avaliação) com tooltip no hover
+// O QUE FAZ: card de métrica pill (duração, sillage, avaliação) com tooltip no hover
 // QUANDO MANDAR PRA IA: quando quiser mudar visual ou textos das métricas
 // DEPENDE DE: nada
 // ============================================
@@ -12,38 +12,44 @@ import { useState } from "react"
 interface Props {
   label: string
   valor: string
-  bg: string
-  borda: string
-  texto: string
+  corTexto: string
   tooltip: string
 }
 
-export default function MetricaCard({ label, valor, bg, borda, texto, tooltip }: Props) {
+export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) {
   const [hover, setHover] = useState(false)
 
   return (
-    <div
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "8px 16px",
-        borderRadius: "8px",
-        background: bg,
-        border: `1px solid ${borda}`,
-        minWidth: "85px",
-        cursor: "help",
-      }}
-    >
-      <span style={{ fontSize: "10px", color: "var(--cor-texto-suave)", letterSpacing: "0.1em", marginBottom: "4px", fontFamily: "var(--fonte-corpo)" }}>
-        {label}
-      </span>
-      <span style={{ fontSize: "13px", fontWeight: 500, color: texto, fontFamily: "var(--fonte-corpo)" }}>
-        {valor}
-      </span>
+    <div style={{ position: "relative" }}>
+      <div
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          display: "inline-flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1px",
+          padding: "6px 16px",
+          borderRadius: "999px",
+          border: "1px solid #D4C8B8",
+          background: hover ? "#F5F0EA" : "transparent",
+          cursor: "help",
+          transition: "background 0.15s",
+        }}
+      >
+        <span style={{
+          fontSize: "9px",
+          letterSpacing: "0.12em",
+          color: "#9B8B78",
+          fontWeight: 500,
+          textTransform: "uppercase" as const,
+        }}>
+          {label}
+        </span>
+        <span style={{ fontSize: "12px", fontWeight: 500, color: corTexto }}>
+          {valor}
+        </span>
+      </div>
       {hover && (
         <div style={{
           position: "absolute",
