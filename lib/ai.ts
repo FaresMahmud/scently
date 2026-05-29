@@ -6,7 +6,7 @@
 // ============================================
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
-import { buscarSimilares } from "@/lib/fragella"
+import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
 import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 
@@ -289,6 +289,28 @@ REGRAS OBRIGATÓRIAS:
     }
 
     console.log("[IA] Sucesso com Groq")
+
+    // Enriquece as notas do perfume principal com dados reais da Fragella
+    try {
+      const query = `${resultado.perfumePrincipal.nome} ${resultado.perfumePrincipal.marca}`
+      const dadosReais = await buscarPorNome(query, 1)
+      if (dadosReais.length > 0) {
+        const perfume = dadosReais[0]
+        const notasReais = [
+          ...perfume.notasTopo,
+          ...perfume.notasCoracao,
+          ...perfume.notasFundo,
+        ].slice(0, 6)
+        if (notasReais.length > 0) {
+          resultado.perfumePrincipal.notas = notasReais
+          console.log("[IA] Notas reais Fragella:", notasReais.join(", "))
+        }
+      } else {
+        console.log("[IA] Fragella sem resultado para notas — mantendo notas da IA")
+      }
+    } catch {
+      // Fragella indisponível — mantém notas geradas pela IA
+    }
 
     // Enriquece a alternativa com dados reais da Fragella
     // (substitui a alternativa inventada pela IA por um perfume real, similar e dentro da faixa de preço)
