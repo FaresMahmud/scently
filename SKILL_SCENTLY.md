@@ -1,4 +1,4 @@
-# Skill: Revisão de Arquitetura — Scently
+# Skill: Revisão de Arquitetura — Nozze
 
 ## Quando usar
 - "revisa a arquitetura do projeto"
@@ -18,7 +18,7 @@
 ## Estrutura de pastas esperada
 
 ```
-scently/
+nozze/
 ├── app/
 │   ├── page.tsx                  # Página inicial
 │   ├── catalogo/page.tsx         # Catálogo com filtros

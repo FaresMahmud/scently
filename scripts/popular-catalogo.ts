@@ -166,7 +166,7 @@ function carregarExistente(): { perfumes: PerfumeFragella[]; marcasComDados: Set
 
 async function main() {
   console.log("╔══════════════════════════════════════════════════════════╗")
-  console.log("║         POPULAR CATÁLOGO — Fragella API — Scently        ║")
+  console.log("║         POPULAR CATÁLOGO — Fragella API — Nozze          ║")
   console.log(`║  Modo: ${MODO_CONTINUAR ? "CONTINUAR (só marcas faltantes)          " : "COMPLETO (todas as marcas)               "}║`)
   console.log("╚══════════════════════════════════════════════════════════╝\n")
 

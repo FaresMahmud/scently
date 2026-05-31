@@ -28,7 +28,7 @@ export default function Carregando() {
           animation: "fadeIn 1s infinite alternate",
         }}
       >
-        scently
+        nozze
       </p>
 
       {/* Linha animada */}

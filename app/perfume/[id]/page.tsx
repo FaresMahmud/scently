@@ -142,14 +142,14 @@ export function generateStaticParams() {
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
-const BASE_URL = "https://scently.com.br"
+const BASE_URL = "https://nozze.app"
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
   const { perfume } = await resolverPerfume(id)
   if (!perfume) return { title: "Perfume não encontrado" }
 
-  const titulo      = `${perfume.nome} — ${perfume.marca} | Scently`
+  const titulo      = `${perfume.nome} — ${perfume.marca} | Nozze`
   const descricao   = perfume.descricao
     ? perfume.descricao.slice(0, 155) + (perfume.descricao.length > 155 ? "…" : "")
     : `${perfume.nome} da ${perfume.marca}. Descubra notas, sillage, duração e avaliações.`
@@ -170,7 +170,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title:       `${perfume.nome} — ${perfume.marca}`,
       description: descricao,
       url,
-      siteName:    "Scently",
+      siteName:    "Nozze",
       locale:      "pt_BR",
       type:        "website",
       ...(imagem ? { images: [{ url: imagem, alt: `${perfume.nome} — ${perfume.marca}` }] } : {}),
@@ -286,7 +286,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
         {/* Breadcrumb */}
         <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "3rem" }}>
-          <Link href="/" style={{ color: "var(--cor-destaque)" }}>scently</Link>
+          <Link href="/" style={{ color: "var(--cor-destaque)" }}>nozze</Link>
           {" / "}
           <Link href={`/marca/${slugify(perfume.marca)}`} style={{ color: "var(--cor-texto-suave)" }}>{perfume.marca}</Link>
         </p>
@@ -428,7 +428,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                 {[
                   { nome: "Sephora",       url: `https://www.sephora.com.br/search?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
                   { nome: "Beleza na Web", url: `https://www.belezanaweb.com.br/busca?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
-                  { nome: "Amazon",        url: `https://www.amazon.com.br/s?k=${encodeURIComponent(perfume.nome + " " + perfume.marca)}&tag=scently-20` },
+                  { nome: "Amazon",        url: `https://www.amazon.com.br/s?k=${encodeURIComponent(perfume.nome + " " + perfume.marca)}&tag=nozze-20` },
                 ].map(({ nome, url }) => (
                   <a
                     key={nome}

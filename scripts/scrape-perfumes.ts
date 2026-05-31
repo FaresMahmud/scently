@@ -262,7 +262,7 @@ async function scrapeMaisonViegas(): Promise<PerfumeExtraido[]> {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log("🔍 Scently — scraper de perfumes verificados")
+  console.log("🔍 Nozze — scraper de perfumes verificados")
   console.log("=".repeat(60))
 
   const outputDir = path.join(__dirname, "output")

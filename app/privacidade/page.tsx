@@ -71,7 +71,7 @@ export default function PaginaPrivacidade() {
           Contato
         </h2>
         <p>
-          Para dúvidas sobre privacidade, entre em contato: <a href="mailto:contato@scently.com.br" style={{ color: "var(--cor-destaque)" }}>contato@scently.com.br</a>
+          Para dúvidas sobre privacidade, entre em contato: <a href="mailto:contato@nozze.app" style={{ color: "var(--cor-destaque)" }}>contato@nozze.app</a>
         </p>
       </section>
     </main>

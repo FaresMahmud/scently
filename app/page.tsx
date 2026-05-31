@@ -13,18 +13,18 @@ import EmAltaAgora from "@/components/home/EmAltaAgora"
 import { perfumesPopulares } from "@/lib/catalogoFragella"
 
 export const metadata: Metadata = {
-  title: { absolute: "Scently — Encontre o perfume certo para você" },
+  title: { absolute: "Nozze — Encontre o perfume certo para você" },
   description: "Consultor de perfumaria com IA. Responda algumas perguntas e descubra fragrâncias perfeitas para o seu estilo, clima e ocasião. Mais de 12.000 perfumes.",
   keywords: ["perfume", "fragrância", "consultor de perfume", "recomendação de perfume", "perfume masculino", "perfume feminino", "perfume unissex"],
   openGraph: {
-    title: "Scently — Encontre o perfume certo para você",
+    title: "Nozze — Encontre o perfume certo para você",
     description: "Consultor de perfumaria com IA. Grátis, sem cadastro.",
     type: "website",
-    url: "https://scently.com.br",
+    url: "https://nozze.app",
   },
   twitter: {
     card: "summary",
-    title: "Scently — Encontre o perfume certo para você",
+    title: "Nozze — Encontre o perfume certo para você",
     description: "Consultor de perfumaria com IA. Grátis, sem cadastro.",
   },
 }
@@ -32,11 +32,11 @@ export const metadata: Metadata = {
 const jsonLdWebSite = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "Scently",
-  url: "https://scently.com.br",
+  name: "Nozze",
+  url: "https://nozze.app",
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://scently.com.br/catalogo?busca={search_term_string}",
+    target: "https://nozze.app/catalogo?busca={search_term_string}",
     "query-input": "required name=search_term_string",
   },
 }

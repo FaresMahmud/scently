@@ -15,7 +15,7 @@ import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { slugify } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: "Catálogo — Scently",
+  title: "Catálogo — Nozze",
   description: "Explore milhares de fragrâncias — perfumes internacionais, nacionais e contratipos.",
 }
 

@@ -1,6 +1,6 @@
-# 🌸 Scently
+# 🌸 Nozze
 
-Uma plataforma inteligente de descoberta e recomendação de perfumes alimentada por inteligência artificial. O Scently ajuda usuários a encontrar o perfume ideal através de um consultor interativo baseado em IA e um catálogo abrangente de fragrâncias.
+Uma plataforma inteligente de descoberta e recomendação de perfumes alimentada por inteligência artificial. O Nozze ajuda usuários a encontrar o perfume ideal através de um consultor interativo baseado em IA e um catálogo abrangente de fragrâncias.
 
 ## ✨ Funcionalidades
 
@@ -21,7 +21,7 @@ Uma plataforma inteligente de descoberta e recomendação de perfumes alimentada
 1. Clone o repositório:
 ```bash
 git clone <repository-url>
-cd scently
+cd nozze
 ```
 
 2. Instale as dependências:
@@ -62,7 +62,7 @@ A aplicação será recarregada automaticamente quando você fizer alterações 
 ## 🗂️ Estrutura do Projeto
 
 ```
-scently/
+nozze/
 ├── app/                 # Rotas e layouts Next.js
 │   ├── api/            # Rotas de API
 │   ├── catalogo/       # Página do catálogo

@@ -137,7 +137,7 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
             Beleza na Web →
           </a>
           <a
-            href={`https://www.amazon.com.br/s?k=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}&tag=scently-20`}
+            href={`https://www.amazon.com.br/s?k=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}&tag=nozze-20`}
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)" }}

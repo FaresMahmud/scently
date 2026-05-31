@@ -97,10 +97,10 @@ export default function Footer() {
             Contato
           </p>
           <a
-            href="mailto:contato@scently.com.br"
+            href="mailto:contato@nozze.app"
             style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-destaque)", letterSpacing: "0.04em" }}
           >
-            contato@scently.com.br
+            contato@nozze.app
           </a>
         </div>
       </div>
@@ -117,7 +117,7 @@ export default function Footer() {
         }}
       >
         <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", color: "var(--cor-texto-suave)", letterSpacing: "0.05em" }}>
-          © {ano} Scently. Todos os direitos reservados.
+          © {ano} Nozze. Todos os direitos reservados.
         </p>
       </div>
     </footer>

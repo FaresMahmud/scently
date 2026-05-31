@@ -458,7 +458,7 @@ async function main() {
     : TODOS_SCRAPERS
 
   console.log("╔══════════════════════════════════════════════════════════╗")
-  console.log("║       SCRAPE CONTRATIPOS — Scently                       ║")
+  console.log("║       SCRAPE CONTRATIPOS — Nozze                         ║")
   console.log(`║  Sites: ${scrapers.map(s => s.nome).join(", ").padEnd(49)}║`)
   console.log("╚══════════════════════════════════════════════════════════╝")
 

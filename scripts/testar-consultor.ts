@@ -171,7 +171,7 @@ async function rodarTeste(titulo: string, respostas: Record<string, string>, idx
 
 async function main() {
   console.log("╔══════════════════════════════════════════════════════════╗")
-  console.log("║          TESTES DO CONSULTOR DE IA — Scently             ║")
+  console.log("║          TESTES DO CONSULTOR DE IA — Nozze               ║")
   console.log("╚══════════════════════════════════════════════════════════╝")
 
   if (!process.env.GROQ_API_KEY || process.env.GROQ_API_KEY === "sua_chave_aqui") {

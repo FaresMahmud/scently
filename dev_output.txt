@@ -1,5 +1,5 @@
 
-> scently@0.1.0 dev
+> nozze@0.1.0 dev
 > next dev
 
 ▲ Next.js 16.2.6 (Turbopack)

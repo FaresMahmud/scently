@@ -9,7 +9,7 @@ import type { MetadataRoute } from "next"
 import { perfumesPopulares, marcasUnicas } from "@/lib/catalogoFragella"
 import { slugify } from "@/lib/utils"
 
-const BASE = "https://scently.com.br"
+const BASE = "https://nozze.app"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Páginas estáticas

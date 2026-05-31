@@ -30,7 +30,7 @@ export default function PaginaTermos() {
           1. Aceitação dos termos
         </h2>
         <p>
-          Ao acessar e utilizar o Scently, você concorda com estes Termos de Uso. Se não concordar com qualquer parte destes termos, não utilize o serviço.
+          Ao acessar e utilizar o Nozze, você concorda com estes Termos de Uso. Se não concordar com qualquer parte destes termos, não utilize o serviço.
         </p>
       </section>
 
@@ -39,7 +39,7 @@ export default function PaginaTermos() {
           2. Uso do serviço
         </h2>
         <p>
-          O Scently é uma plataforma gratuita de consultoria de perfumaria baseada em inteligência artificial. As recomendações geradas são personalizadas com base nas preferências informadas pelo usuário e têm caráter exclusivamente informativo. Não nos responsabilizamos por decisões de compra tomadas com base nas recomendações.
+          O Nozze é uma plataforma gratuita de consultoria de perfumaria baseada em inteligência artificial. As recomendações geradas são personalizadas com base nas preferências informadas pelo usuário e têm caráter exclusivamente informativo. Não nos responsabilizamos por decisões de compra tomadas com base nas recomendações.
         </p>
       </section>
 
@@ -48,7 +48,7 @@ export default function PaginaTermos() {
           3. Propriedade intelectual
         </h2>
         <p>
-          Todo o conteúdo do Scently, incluindo textos, design, logotipos e código-fonte, é de propriedade do Scently ou de seus licenciadores. É proibida a reprodução, distribuição ou modificação sem autorização expressa. Os nomes e marcas de perfumes mencionados são propriedade de seus respectivos fabricantes.
+          Todo o conteúdo do Nozze, incluindo textos, design, logotipos e código-fonte, é de propriedade do Nozze ou de seus licenciadores. É proibida a reprodução, distribuição ou modificação sem autorização expressa. Os nomes e marcas de perfumes mencionados são propriedade de seus respectivos fabricantes.
         </p>
       </section>
 
@@ -57,7 +57,7 @@ export default function PaginaTermos() {
           4. Divulgação de links de afiliados
         </h2>
         <p>
-          O Scently participa de programas de afiliados, incluindo o Programa de Afiliados da Amazon.com.br, Sephora e Beleza na Web. Isso significa que podemos receber uma comissão sobre compras realizadas por meio de links presentes neste site, sem custo adicional para você. Essa comissão nos permite manter o serviço gratuito para todos os usuários. Os links de afiliados são identificados pelo sufixo <code style={{ fontFamily: "monospace", fontSize: "0.85em" }}>&tag=scently-20</code> (Amazon) ou redirecionamentos similares.
+          O Nozze participa de programas de afiliados, incluindo o Programa de Afiliados da Amazon.com.br, Sephora e Beleza na Web. Isso significa que podemos receber uma comissão sobre compras realizadas por meio de links presentes neste site, sem custo adicional para você. Essa comissão nos permite manter o serviço gratuito para todos os usuários. Os links de afiliados são identificados pelo sufixo <code style={{ fontFamily: "monospace", fontSize: "0.85em" }}>&tag=nozze-20</code> (Amazon) ou redirecionamentos similares.
         </p>
       </section>
 
@@ -66,7 +66,7 @@ export default function PaginaTermos() {
           5. Limitação de responsabilidade
         </h2>
         <p>
-          O Scently é fornecido no estado em que se encontra, sem garantias de qualquer tipo. Não garantimos que as recomendações de IA sejam adequadas para todos os usuários ou que os produtos indicados estejam disponíveis. Não somos responsáveis por eventuais danos decorrentes do uso do serviço ou de compras realizadas por meio de links externos.
+          O Nozze é fornecido no estado em que se encontra, sem garantias de qualquer tipo. Não garantimos que as recomendações de IA sejam adequadas para todos os usuários ou que os produtos indicados estejam disponíveis. Não somos responsáveis por eventuais danos decorrentes do uso do serviço ou de compras realizadas por meio de links externos.
         </p>
       </section>
 
@@ -93,7 +93,7 @@ export default function PaginaTermos() {
           8. Contato
         </h2>
         <p>
-          Para dúvidas sobre estes termos, entre em contato: <a href="mailto:contato@scently.com.br" style={{ color: "var(--cor-destaque)" }}>contato@scently.com.br</a>
+          Para dúvidas sobre estes termos, entre em contato: <a href="mailto:contato@nozze.app" style={{ color: "var(--cor-destaque)" }}>contato@nozze.app</a>
         </p>
       </section>
     </main>

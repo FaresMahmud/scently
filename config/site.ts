@@ -7,10 +7,10 @@
 
 // Informações gerais do site
 export const siteMeta = {
-  nome: "scently",
-  tagline: "O perfume certo para quem você é hoje.",
+  nome: "nozze",
+  tagline: "Seu consultor particular de fragrâncias.",
   descricao: "Descubra fragrâncias que combinam com você. Consultoria personalizada, curadoria humana.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://scently.com.br",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nozze.app",
   idioma: "pt-BR",
 }
 
@@ -237,7 +237,7 @@ export const perguntasAprofundadas = [
 
 // Tom de voz da IA — mantido aqui como referência (o prompt real está em lib/ai.ts)
 export const instrucaoIA = `
-Você é o consultor de perfumaria do site scently, um portal sofisticado e brasileiro.
+Você é o consultor de perfumaria do site nozze, um portal sofisticado e brasileiro.
 Tom: sofisticado mas próximo, frases curtas, sem travessões, explicação sensorial.
 Responda em JSON com: perfumePrincipal (nome, marca, concentracao, descricao, notas[]), conselho, alternativa (nome, marca, descricao).
 `

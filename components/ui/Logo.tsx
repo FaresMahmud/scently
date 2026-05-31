@@ -1,6 +1,6 @@
 // ============================================
 // ARQUIVO: components/ui/Logo.tsx
-// O QUE FAZ: logo do Scently — SVG (frasco + partículas) + texto HTML
+// O QUE FAZ: logo do Nozze — SVG (frasco + partículas) + texto HTML
 // ============================================
 
 export default function Logo({ width = 60 }: { width?: number }) {
@@ -81,7 +81,7 @@ export default function Logo({ width = 60 }: { width?: number }) {
         lineHeight: 1,
         paddingLeft: "4px",
       }}>
-        scently
+        nozze
       </span>
     </div>
   )

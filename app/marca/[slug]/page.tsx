@@ -124,7 +124,7 @@ export function generateStaticParams() {
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
-const BASE_URL = "https://scently.com.br"
+const BASE_URL = "https://nozze.app"
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -135,8 +135,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const fragLocal = buscarPorMarcaLocal(nome)
   const total     = Math.max(locais.length, fragLocal.length)
   const url       = `${BASE_URL}/marca/${slug}`
-  const titulo    = `${nome} — Fragrâncias | Scently`
-  const descricao = `Explore ${total > 0 ? total + " " : ""}fragrâncias da ${nome} no Scently. Notas, avaliações e consultoria personalizada.`
+  const titulo    = `${nome} — Fragrâncias | Nozze`
+  const descricao = `Explore ${total > 0 ? total + " " : ""}fragrâncias da ${nome} no Nozze. Notas, avaliações e consultoria personalizada.`
 
   return {
     title: titulo,
@@ -147,7 +147,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title:       `${nome} — Fragrâncias`,
       description: descricao,
       url,
-      siteName:    "Scently",
+      siteName:    "Nozze",
       locale:      "pt_BR",
       type:        "website",
     },

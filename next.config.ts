@@ -1,5 +1,8 @@
 import type { NextConfig } from "next"
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withPWA = require("next-pwa")
+
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   images: {
@@ -30,4 +33,54 @@ const nextConfig: NextConfig = {
   ],
 }
 
-export default nextConfig
+export default withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === "development",
+  buildExcludes: [/app-build-manifest\.json$/, /middleware-manifest\.json$/, /api\//],
+  runtimeCaching: [
+    {
+      // API routes — never cache, always network
+      urlPattern: /\/api\//,
+      handler: "NetworkOnly",
+    },
+    {
+      // Next.js static chunks — long-lived, cache first
+      urlPattern: /\/_next\/static\/.*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "next-static",
+        expiration: {
+          maxEntries: 200,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+        },
+      },
+    },
+    {
+      // Icons and manifest — cache first
+      urlPattern: /\/(icons|manifest\.json).*/i,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "pwa-assets",
+        expiration: {
+          maxEntries: 20,
+          maxAgeSeconds: 30 * 24 * 60 * 60,
+        },
+      },
+    },
+    {
+      // All other requests (pages) — network first with offline fallback
+      urlPattern: /^https?.*/,
+      handler: "NetworkFirst",
+      options: {
+        cacheName: "pages",
+        networkTimeoutSeconds: 10,
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 24 * 60 * 60, // 1 day
+        },
+      },
+    },
+  ],
+})(nextConfig)

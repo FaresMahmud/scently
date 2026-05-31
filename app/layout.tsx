@@ -30,6 +30,22 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className="h-full">
+      <head>
+        {/* Viewport */}
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        {/* PWA */}
+        <meta name="application-name" content="nozze" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="nozze" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#C4714A" />
+        {/* Apple touch icons */}
+        <link rel="apple-touch-icon" href="/icons/icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
+        {/* Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body
         suppressHydrationWarning
         style={{

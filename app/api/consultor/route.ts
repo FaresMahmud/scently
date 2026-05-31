@@ -10,9 +10,9 @@ import { gerarRecomendacao } from "@/lib/ai"
 
 const ORIGENS_PERMITIDAS = [
   "http://localhost:3000",
-  "https://scently.com.br",
-  "https://www.scently.com.br",
-  "https://scently-five.vercel.app",
+  "https://nozze.app",
+  "https://www.nozze.app",
+  "https://nozze.vercel.app",
 ]
 
 // Rate limiting em memória: IP → { count, resetAt }
