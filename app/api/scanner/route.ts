@@ -26,21 +26,37 @@ interface CatalogMatch {
   familia?: string
 }
 
-const VISION_PROMPT = `This is a perfume bottle or box. Identify the perfume.
-Return JSON only — no markdown, no explanation, no text outside the JSON.
-Schema: {"found":boolean,"name":string,"brand":string,"confidence":"high"|"medium"|"low","notes":string[],"family":string,"occasions":string[],"description":string}
-- found: true if you can identify the perfume
-- name: perfume name only (no brand)
-- brand: brand/house name
-- confidence: high = certain, medium = likely, low = possible
-- notes: up to 6 olfactory notes in Portuguese (e.g. "Bergamota", "Âmbar", "Madeira")
-- family: olfactory family in Portuguese (e.g. "Floral Amadeirado")
-- occasions: up to 3 occasions in Portuguese (e.g. "Casual", "Romântico", "Noite")
-- description: 1–2 sentence sensorial description in Portuguese
-If you cannot identify: return {"found":false,"name":"","brand":"","confidence":"low","notes":[],"family":"","occasions":[],"description":""}`
+const VISION_PROMPT = `You are a perfume identification expert. Analyze this image and identify the perfume.
+Return ONLY a valid JSON object, no markdown, no explanation:
+{
+  "found": true/false,
+  "name": "exact perfume name as written on bottle",
+  "brand": "brand name only",
+  "confidence": "high/medium/low",
+  "notes": ["note1", "note2", "note3"],
+  "family": "olfactory family (floral/woody/oriental/fresh/etc)",
+  "occasions": ["occasion1", "occasion2"],
+  "description": "2-3 sentence sensory description"
+}
+If you cannot identify the perfume with at least medium confidence, set found: false.
+Focus on reading the text on the bottle/box label carefully.`
 
-function normalizar(s: string) {
-  return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim()
+function normalizar(s: string): string {
+  return s.toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9\s]/g, "")
+    .trim()
+}
+
+function similaridade(a: string, b: string): number {
+  const wa = new Set(a.split(/\s+/).filter(w => w.length > 2))
+  const wb = new Set(b.split(/\s+/).filter(w => w.length > 2))
+  if (wa.size === 0 || wb.size === 0) return 0
+  let matches = 0
+  for (const w of wa) {
+    if (wb.has(w) || [...wb].some(bw => bw.includes(w) || w.includes(bw))) matches++
+  }
+  return matches / Math.max(wa.size, wb.size)
 }
 
 function buscarMatchCatalogo(nome: string, marca: string): CatalogMatch | null {
@@ -53,21 +69,35 @@ function buscarMatchCatalogo(nome: string, marca: string): CatalogMatch | null {
     const pn = normalizar(p.nome)
     const pm = normalizar(p.marca)
     let score = 0
-    if (pn === n)                               score += 4
-    else if (pn.includes(n) || n.includes(pn)) score += 2
-    if (pm === m)                               score += 3
-    else if (pm.includes(m) || m.includes(pm)) score += 1
+
+    // Nome match
+    if (pn === n) score += 5
+    else if (pn.includes(n) || n.includes(pn)) score += 3
+    else {
+      const sim = similaridade(n, pn)
+      if (sim >= 0.6) score += Math.round(sim * 3)
+    }
+
+    // Marca match
+    if (pm === m) score += 4
+    else if (pm.includes(m) || m.includes(pm)) score += 2
+    else {
+      const sim = similaridade(m, pm)
+      if (sim >= 0.5) score += 1
+    }
+
+    // Threshold: precisa de score >= 3 com pelo menos algum match de nome
     if (score >= 3 && (!best || score > best.score)) best = { item: p, score }
   }
 
   if (!best) return null
   const p = best.item
   return {
-    id:          `${slugify(p.nome)}-${slugify(p.marca)}`,
-    nome:        p.nome,
-    marca:       p.marca,
-    concentracao:p.concentracao ?? undefined,
-    familia:     p.familia     ?? undefined,
+    id: `${slugify(p.nome)}-${slugify(p.marca)}`,
+    nome: p.nome,
+    marca: p.marca,
+    concentracao: p.concentracao ?? undefined,
+    familia: p.familia ?? undefined,
   }
 }
 
