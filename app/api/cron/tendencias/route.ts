@@ -84,12 +84,20 @@ async function raspaFragrantica(): Promise<PerfumeRaspado[]> {
 }
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization")
-  console.log("AUTH_HEADER:", authHeader)
-  console.log("EXPECTED:", `Bearer ${process.env.CRON_SECRET}`)
-  console.log("MATCH:", authHeader === `Bearer ${process.env.CRON_SECRET}`)
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ erro: "Não autorizado", received: authHeader, expected_length: process.env.CRON_SECRET?.length }, { status: 401 })
+  const secret = process.env.CRON_SECRET
+
+  // Vercel's edge can strip the Authorization header — accept both forms:
+  // 1. Authorization: Bearer <secret>  (Vercel cron default)
+  // 2. x-cron-secret: <secret>         (resilient fallback, never stripped)
+  const authHeader   = request.headers.get("authorization")
+  const customHeader = request.headers.get("x-cron-secret")
+
+  const authorized =
+    authHeader === `Bearer ${secret}` ||
+    customHeader === secret
+
+  if (!authorized) {
+    return NextResponse.json({ erro: "Não autorizado" }, { status: 401 })
   }
 
   const inicio = Date.now()
