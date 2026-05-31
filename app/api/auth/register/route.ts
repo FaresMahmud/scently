@@ -9,10 +9,11 @@ import {
   refreshCookieOptions,
 } from "@/lib/auth"
 import { registerRateLimit, getClientIp } from "@/lib/rateLimit"
+import { registerSchema, zodError } from "@/lib/schemas"
 
 async function validateTurnstile(token: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
-  if (!secret) return true // dev fallback — skip validation
+  if (!secret) return true
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -23,7 +24,6 @@ async function validateTurnstile(token: string): Promise<boolean> {
 }
 
 export async function POST(req: NextRequest) {
-  // Rate limit
   const ip = getClientIp(req)
   const { allowed, retryAfter } = registerRateLimit(ip)
   if (!allowed) {
@@ -33,27 +33,16 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  let body: { email?: string; password?: string; name?: string; turnstileToken?: string }
-  try {
-    body = await req.json()
-  } catch {
+  let raw: unknown
+  try { raw = await req.json() } catch {
     return NextResponse.json({ error: "Corpo inválido." }, { status: 400 })
   }
 
-  const { email, password, name, turnstileToken } = body
+  const parsed = registerSchema.safeParse(raw)
+  if (!parsed.success) return zodError(parsed)
 
-  // Validate inputs
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: "E-mail inválido." }, { status: 400 })
-  }
-  if (!password || password.length < 8) {
-    return NextResponse.json({ error: "Senha deve ter no mínimo 8 caracteres." }, { status: 400 })
-  }
-  if (!name || name.trim().length === 0) {
-    return NextResponse.json({ error: "Nome é obrigatório." }, { status: 400 })
-  }
+  const { email, password, name, turnstileToken } = parsed.data
 
-  // Turnstile
   if (turnstileToken) {
     const valid = await validateTurnstile(turnstileToken)
     if (!valid) {
@@ -63,7 +52,6 @@ export async function POST(req: NextRequest) {
 
   const normalizedEmail = email.toLowerCase().trim()
 
-  // Check duplicate
   const existing = await db.user.findUnique({ where: { email: normalizedEmail } })
   if (existing) {
     return NextResponse.json({ error: "E-mail já cadastrado." }, { status: 409 })
@@ -72,11 +60,7 @@ export async function POST(req: NextRequest) {
   const passwordHash = await hashPassword(password)
 
   const user = await db.user.create({
-    data: {
-      email: normalizedEmail,
-      passwordHash,
-      name: name.trim(),
-    },
+    data: { email: normalizedEmail, passwordHash, name: name.trim() },
   })
 
   const accessToken  = generateAccessToken(user.id, user.email)
@@ -90,9 +74,10 @@ export async function POST(req: NextRequest) {
     },
   })
 
-  const res = NextResponse.json({
-    user: { id: user.id, email: user.email, name: user.name },
-  }, { status: 201 })
+  const res = NextResponse.json(
+    { user: { id: user.id, email: user.email, name: user.name } },
+    { status: 201 }
+  )
 
   res.headers.append("Set-Cookie", serializeCookie("accessToken",  accessToken,  accessCookieOptions))
   res.headers.append("Set-Cookie", serializeCookie("refreshToken", refreshToken, refreshCookieOptions))

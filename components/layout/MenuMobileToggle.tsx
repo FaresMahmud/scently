@@ -13,8 +13,10 @@ import Link from "next/link"
 
 // Links do menu mobile — adicione aqui quando tiver mais páginas
 const links = [
-  { href: "/catalogo", texto: "Catálogo" },
-  { href: "/consultor", texto: "Consultor" },
+  { href: "/catalogo",   texto: "Catálogo" },
+  { href: "/tendencias", texto: "Tendências" },
+  { href: "/scanner",    texto: "Scanner" },
+  { href: "/consultor",  texto: "Consultor" },
 ]
 
 export default function MenuMobileToggle() {

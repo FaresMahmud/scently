@@ -235,6 +235,110 @@ export default function PaginaInicial() {
         </div>
       </section>
 
+      {/* ── Tendências teaser ───────────────────────────── */}
+      <section style={{ backgroundColor: "#1A1A18" }}>
+        <div className="container-site" style={{ paddingTop: "89px", paddingBottom: "89px" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "34px" }}>
+            <div style={{ maxWidth: "520px" }}>
+              <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C4714A", marginBottom: "21px" }}>
+                tendências
+              </p>
+              <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(26px, 5vw, 42px)", color: "#F5F2ED", lineHeight: 1.1, marginBottom: "21px" }}>
+                O que o mundo está usando agora.
+              </h2>
+              <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "rgba(245,242,237,0.55)", lineHeight: 1.6 }}>
+                Perfumes mais procurados, tendências da estação e marcas em destaque — atualizado toda semana.
+              </p>
+            </div>
+            <Link
+              href="/tendencias"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                minHeight: "44px",
+                padding: "0 34px",
+                border: "1px solid rgba(245,242,237,0.2)",
+                borderRadius: "var(--raio-borda)",
+                fontFamily: "var(--fonte-corpo)",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                letterSpacing: "0.07em",
+                color: "#F5F2ED",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Ver tendências →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Scanner teaser ──────────────────────────────── */}
+      <section style={{ borderBottom: "1px solid var(--cor-borda)", backgroundColor: "var(--cor-card)" }}>
+        <div className="container-site" style={{ paddingTop: "89px", paddingBottom: "89px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "55px", alignItems: "center" }}>
+            <div>
+              <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "21px" }}>
+                scanner de perfume
+              </p>
+              <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(26px, 5vw, 42px)", lineHeight: 1.1, marginBottom: "21px" }}>
+                Aponte para o frasco. Descubra o que está no ar.
+              </h2>
+              <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)", lineHeight: 1.6, marginBottom: "34px", maxWidth: "420px" }}>
+                Tire uma foto de qualquer frasco de perfume e nossa IA identifica a fragrância, as notas olfativas e muito mais.
+              </p>
+              <Link
+                href="/scanner"
+                style={{
+                  display: "inline-flex", alignItems: "center",
+                  minHeight: "44px", padding: "0 34px",
+                  backgroundColor: "#1A1A18", color: "#F5F2ED",
+                  fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", fontWeight: 500,
+                  letterSpacing: "0.07em", borderRadius: "var(--raio-borda)", textDecoration: "none",
+                }}
+              >
+                Abrir scanner →
+              </Link>
+            </div>
+            {/* Visual placeholder */}
+            <div style={{
+              aspectRatio: "16/9",
+              backgroundColor: "#1A1A18",
+              borderRadius: "var(--raio-borda-suave)",
+              border: "1px solid rgba(196,113,74,0.3)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}>
+              <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "13px" }}>
+                {/* Corner marks */}
+                <div style={{ position: "relative", width: "80px", height: "80px" }}>
+                  {[["0","0","auto","auto"],["0","auto","auto","0"],["auto","0","0","auto"],["auto","auto","0","0"]].map((pos,i) => (
+                    <div key={i} style={{
+                      position: "absolute",
+                      top: pos[0] !== "auto" ? pos[0] : undefined,
+                      right: pos[1] !== "auto" ? pos[1] : undefined,
+                      bottom: pos[2] !== "auto" ? pos[2] : undefined,
+                      left: pos[3] !== "auto" ? pos[3] : undefined,
+                      width: "16px", height: "16px",
+                      borderTop: i < 2 ? "1.5px solid #C4714A" : "none",
+                      borderBottom: i >= 2 ? "1.5px solid #C4714A" : "none",
+                      borderLeft: i % 2 !== 0 ? "1.5px solid #C4714A" : "none",
+                      borderRight: i % 2 === 0 ? "1.5px solid #C4714A" : "none",
+                    }} />
+                  ))}
+                  <div style={{ position: "absolute", inset: "50%", transform: "translate(-50%,-50%)", width: "16px", height: "16px", borderRadius: "50%", backgroundColor: "#C4714A", opacity: 0.6 }} />
+                </div>
+                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", letterSpacing: "0.15em", color: "rgba(245,242,237,0.35)", textTransform: "uppercase" }}>
+                  Identificando…
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA mobile fixo ─────────────────────────────── */}
       <div className="cta-mobile-fixo" aria-hidden="false">
         <Link href="/consultor" style={{

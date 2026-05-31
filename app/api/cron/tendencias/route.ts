@@ -1,29 +1,19 @@
 // ============================================
 // ARQUIVO: app/api/cron/tendencias/route.ts
 // O QUE FAZ: endpoint chamado pelo Cron Job do Vercel toda segunda-feira
-// DEPENDE DE: SCRAPINGBEE_API_KEY, CRON_SECRET
-// ATENÇÃO: em produção Vercel, o filesystem é read-only. Para persistir, use
-//          um banco de dados (Vercel KV, Postgres, Supabase, etc.)
+// DEPENDE DE: SCRAPINGBEE_API_KEY, CRON_SECRET, DATABASE_URL
 // ============================================
 
 import { NextResponse } from "next/server"
+import { db } from "@/lib/db"
 
 const MARCAS_CONTRATIPOS = ["in the box", "maison viegas", "ja essence", "azza parfum", "essencia e perfume"]
-const MARCAS_NACIONAIS = ["o boticário", "boticario", "natura", "eudora", "avon", "jequiti"]
-
-function slugify(texto: string): string {
-  return texto
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "")
-}
+const MARCAS_NACIONAIS   = ["o boticário", "boticario", "natura", "eudora", "avon", "jequiti"]
 
 function tipoDaMarca(marca: string): "importado" | "contratipo" | "nacional" {
   const m = marca.toLowerCase()
   if (MARCAS_CONTRATIPOS.some(c => m.includes(c))) return "contratipo"
-  if (MARCAS_NACIONAIS.some(c => m.includes(c))) return "nacional"
+  if (MARCAS_NACIONAIS.some(c => m.includes(c)))   return "nacional"
   return "importado"
 }
 
@@ -70,7 +60,7 @@ async function raspaSephora(): Promise<PerfumeRaspado[]> {
   for (const url of urls) {
     try {
       const html = await scraperBee(url, true)
-      const nomes = [...html.matchAll(/(?:data-product-name|data-name|itemprop="name")="([^"]{3,80})"/gi)].map(m => decodeHtml(m[1]))
+      const nomes  = [...html.matchAll(/(?:data-product-name|data-name|itemprop="name")="([^"]{3,80})"/gi)].map(m => decodeHtml(m[1]))
       const marcas = [...html.matchAll(/(?:data-brand|data-product-brand|itemprop="brand")="([^"]{2,60})"/gi)].map(m => decodeHtml(m[1]))
       for (let i = 0; i < Math.min(nomes.length, marcas.length, 20); i++) {
         if (nomes[i] && marcas[i]) lista.push({ nome: nomes[i], marca: marcas[i], fonte: "sephora" })
@@ -83,8 +73,8 @@ async function raspaSephora(): Promise<PerfumeRaspado[]> {
 async function raspaFragrantica(): Promise<PerfumeRaspado[]> {
   const lista: PerfumeRaspado[] = []
   try {
-    const html = await scraperBee("https://www.fragrantica.com.br/perfumes/mais-populares/", false)
-    const nomes = [...html.matchAll(/itemprop="name"[^>]*>([^<]{2,80})</gi)].map(m => decodeHtml(m[1]))
+    const html   = await scraperBee("https://www.fragrantica.com.br/perfumes/mais-populares/", false)
+    const nomes  = [...html.matchAll(/itemprop="name"[^>]*>([^<]{2,80})</gi)].map(m => decodeHtml(m[1]))
     const marcas = [...html.matchAll(/itemprop="brand"[^>]*>([^<]{2,60})</gi)].map(m => decodeHtml(m[1]))
     for (let i = 0; i < Math.min(nomes.length, marcas.length, 30); i++) {
       if (nomes[i] && marcas[i]) lista.push({ nome: nomes[i], marca: marcas[i], fonte: "fragrantica" })
@@ -106,12 +96,12 @@ export async function GET(request: Request) {
     raspaFragrantica(),
   ])
 
-  const sephora = resSephora.status === "fulfilled" ? resSephora.value : []
+  const sephora     = resSephora.status     === "fulfilled" ? resSephora.value     : []
   const fragrantica = resFragrantica.status === "fulfilled" ? resFragrantica.value : []
 
-  // Deduplica
+  // Deduplicate
   const vistos = new Set<string>()
-  const todos = [...sephora, ...fragrantica].filter(p => {
+  const todos  = [...sephora, ...fragrantica].filter(p => {
     const chave = `${p.marca.toLowerCase()}|${p.nome.toLowerCase()}`
     if (vistos.has(chave)) return false
     vistos.add(chave)
@@ -119,30 +109,50 @@ export async function GET(request: Request) {
   })
 
   const badges = ["🔥 Em alta", "⭐ Popular", "✨ Destaque", "💎 Top vendas"]
-  const tendencias = todos.slice(0, 20).map((p, i) => ({
-    id: `${slugify(p.marca)}-${slugify(p.nome)}`,
-    nome: p.nome,
-    marca: p.marca,
-    concentracao: "EDP",
-    familia: "Não classificado",
-    descricaoSensorial: `${p.nome} da ${p.marca}.`,
-    badge: badges[i % badges.length],
-    preco_estimado: p.preco ? `R$ ${Math.round(p.preco).toLocaleString("pt-BR")}` : "Consultar",
-    tipo: tipoDaMarca(p.marca),
-  }))
+  const lote   = todos.slice(0, 20)
 
-  // Em produção Vercel: persistir em KV/Postgres ao invés do filesystem
-  // Em servidor próprio: descomentar as linhas abaixo
-  // const { writeFileSync } = await import("fs")
-  // const { join } = await import("path")
-  // writeFileSync(join(process.cwd(), "data/tendencias.json"), JSON.stringify(tendencias, null, 2))
+  // Upsert each trend into the database
+  const agora = new Date()
+  const upserts = lote.map((p, i) =>
+    db.tendencia.upsert({
+      where:  { nome_marca: { nome: p.nome, marca: p.marca } },
+      create: {
+        nome:     p.nome,
+        marca:    p.marca,
+        tipo:     tipoDaMarca(p.marca),
+        preco:    p.preco ? `R$ ${Math.round(p.preco).toLocaleString("pt-BR")}` : null,
+        badge:    badges[i % badges.length],
+        posicao:  i,
+        fonte:    p.fonte,
+        scrapedAt: agora,
+      },
+      update: {
+        tipo:     tipoDaMarca(p.marca),
+        preco:    p.preco ? `R$ ${Math.round(p.preco).toLocaleString("pt-BR")}` : null,
+        badge:    badges[i % badges.length],
+        posicao:  i,
+        fonte:    p.fonte,
+        scrapedAt: agora,
+      },
+    })
+  )
+
+  await Promise.all(upserts)
+
+  // Trigger ISR revalidation
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+  try {
+    await fetch(`${baseUrl}/api/revalidate-tendencias`, {
+      method: "POST",
+      headers: { "x-cron-secret": process.env.CRON_SECRET ?? "" },
+    })
+  } catch { /* non-fatal */ }
 
   return NextResponse.json({
     ok: true,
-    atualizados: tendencias.length,
-    novos: todos.length - tendencias.length,
+    atualizados: lote.length,
     fontes: { sephora: sephora.length, fragrantica: fragrantica.length },
-    timestamp: new Date().toISOString(),
+    timestamp: agora.toISOString(),
     duracao_ms: Date.now() - inicio,
   })
 }

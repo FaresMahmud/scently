@@ -72,6 +72,40 @@ export default function Header() {
             catálogo
           </Link>
 
+          <Link
+            href="/tendencias"
+            style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "0.8rem",
+              fontWeight: 400,
+              letterSpacing: "0.08em",
+              color: "var(--cor-texto-suave)",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "44px",
+              padding: "0 8px",
+            }}
+          >
+            tendências
+          </Link>
+
+          <Link
+            href="/scanner"
+            style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "0.8rem",
+              fontWeight: 400,
+              letterSpacing: "0.08em",
+              color: "var(--cor-texto-suave)",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "44px",
+              padding: "0 8px",
+            }}
+          >
+            scanner
+          </Link>
+
           <LinkConsultor
             style={{
               fontFamily: "var(--fonte-corpo)",

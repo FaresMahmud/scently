@@ -45,6 +45,21 @@ export function registerRateLimit(ip: string) {
   return check(`register:${ip}`, 5, 60 * 60 * 1000)
 }
 
+/** 10 scans per IP per hour */
+export function scannerRateLimit(ip: string) {
+  return check(`scanner:${ip}`, 10, 60 * 60 * 1000)
+}
+
+/** 20 consultor requests per IP per hour */
+export function consultorRateLimit(ip: string) {
+  return check(`consultor:${ip}`, 20, 60 * 60 * 1000)
+}
+
+/** 60 perfil requests per authenticated userId per hour */
+export function perfilRateLimit(userId: string) {
+  return check(`perfil:${userId}`, 60, 60 * 60 * 1000)
+}
+
 export function getClientIp(req: Request): string {
   return (
     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??

@@ -7,6 +7,7 @@
 
 import type { Metadata } from "next"
 import Link from "next/link"
+import OndeComprar from "@/components/perfume/OndeComprar"
 import { buscarPerfumePorSlug, perfumesPopulares } from "@/lib/catalogoFragella"
 import { buscarPerfumePorId, buscarPorNome } from "@/lib/fragella"
 import type { PerfumeFragella, NotaFragella } from "@/lib/fragella"
@@ -419,28 +420,15 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               </>
             )}
 
-            {/* Onde comprar */}
-            <div style={{ marginTop: "34px" }}>
-              <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
-                Onde comprar
-              </p>
-              <div style={{ display: "flex", gap: "21px", flexWrap: "wrap" }}>
-                {[
-                  { nome: "Sephora",       url: `https://www.sephora.com.br/search?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
-                  { nome: "Beleza na Web", url: `https://www.belezanaweb.com.br/busca?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
-                  { nome: "Amazon",        url: `https://www.amazon.com.br/s?k=${encodeURIComponent(perfume.nome + " " + perfume.marca)}&tag=nozze-20` },
-                ].map(({ nome, url }) => (
-                  <a
-                    key={nome}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
-                  >
-                    Buscar na {nome} →
-                  </a>
-                ))}
-              </div>
+            {/* Onde encontrar — affiliate links, always after all perfume content */}
+            <div
+              style={{
+                marginTop: "34px",
+                paddingTop: "34px",
+                borderTop: "1px solid rgba(26,26,24,0.1)",
+              }}
+            >
+              <OndeComprar perfumeName={perfume.nome} brand={perfume.marca} />
             </div>
 
             <div className="divisor" />

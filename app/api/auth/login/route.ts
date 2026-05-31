@@ -9,6 +9,7 @@ import {
   refreshCookieOptions,
 } from "@/lib/auth"
 import { loginRateLimit, getClientIp } from "@/lib/rateLimit"
+import { loginSchema, zodError } from "@/lib/schemas"
 
 async function validateTurnstile(token: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
@@ -32,20 +33,16 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  let body: { email?: string; password?: string; turnstileToken?: string }
-  try {
-    body = await req.json()
-  } catch {
+  let raw: unknown
+  try { raw = await req.json() } catch {
     return NextResponse.json({ error: "Corpo inválido." }, { status: 400 })
   }
 
-  const { email, password, turnstileToken } = body
+  const parsed = loginSchema.safeParse(raw)
+  if (!parsed.success) return zodError(parsed)
 
-  if (!email || !password) {
-    return NextResponse.json({ error: "E-mail e senha são obrigatórios." }, { status: 400 })
-  }
+  const { email, password, turnstileToken } = parsed.data
 
-  // Turnstile
   if (turnstileToken) {
     const valid = await validateTurnstile(turnstileToken)
     if (!valid) {
@@ -60,13 +57,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Credenciais inválidas." }, { status: 401 })
   }
 
-  // Check account lock
   if (user.lockedUntil && user.lockedUntil > new Date()) {
     return NextResponse.json(
-      {
-        error: "Conta temporariamente bloqueada.",
-        lockedUntil: user.lockedUntil.toISOString(),
-      },
+      { error: "Conta temporariamente bloqueada.", lockedUntil: user.lockedUntil.toISOString() },
       { status: 423 }
     )
   }
@@ -95,7 +88,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Credenciais inválidas." }, { status: 401 })
   }
 
-  // Reset failed attempts on success
   await db.user.update({
     where: { id: user.id },
     data: { failedLoginAttempts: 0, lockedUntil: null },
@@ -112,9 +104,7 @@ export async function POST(req: NextRequest) {
     },
   })
 
-  const res = NextResponse.json({
-    user: { id: user.id, email: user.email, name: user.name },
-  })
+  const res = NextResponse.json({ user: { id: user.id, email: user.email, name: user.name } })
 
   res.headers.append("Set-Cookie", serializeCookie("accessToken",  accessToken,  accessCookieOptions))
   res.headers.append("Set-Cookie", serializeCookie("refreshToken", refreshToken, refreshCookieOptions))

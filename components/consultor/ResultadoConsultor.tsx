@@ -7,14 +7,15 @@
 
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Card from "@/components/ui/Card"
 import Tag from "@/components/ui/Tag"
 import type { RecomendacaoIA } from "@/lib/ai"
 import { textosConsultor } from "@/config/site"
 import { corDaNota } from "@/lib/coresNotas"
-import { traduzir } from "@/lib/utils"
+import { traduzir, slugify } from "@/lib/utils"
+import OndeComprar from "@/components/perfume/OndeComprar"
 
 function TagNota({ nota }: { nota: string }) {
   const [active, setActive] = useState(false)
@@ -46,6 +47,92 @@ function TagNota({ nota }: { nota: string }) {
 interface PropsResultado {
   recomendacao: RecomendacaoIA
   onRecomecar: () => void
+}
+
+function BotaoSalvar({ nome, marca }: { nome: string; marca: string }) {
+  const [estado, setEstado] = useState<"idle" | "saving" | "saved" | "error">("idle")
+
+  async function salvar() {
+    if (estado !== "idle") return
+    setEstado("saving")
+    try {
+      const res = await fetch("/api/perfil/acervo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          perfumeId:   `${slugify(nome)}-${slugify(marca)}`,
+          perfumeName: nome,
+          brand:       marca,
+          status:      "QUERO_EXPERIMENTAR",
+        }),
+      })
+      setEstado(res.ok ? "saved" : "error")
+    } catch {
+      setEstado("error")
+    }
+  }
+
+  if (estado === "saved") {
+    return (
+      <span style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "#508C64", display: "inline-flex", alignItems: "center", minHeight: "44px" }}>
+        Salvo no acervo ✓
+      </span>
+    )
+  }
+
+  return (
+    <button
+      onClick={salvar}
+      disabled={estado === "saving"}
+      style={{
+        background: "none",
+        border: "1px solid var(--cor-borda)",
+        borderRadius: "var(--raio-borda)",
+        cursor: estado === "saving" ? "wait" : "pointer",
+        fontFamily: "var(--fonte-corpo)",
+        fontSize: "0.82rem",
+        color: estado === "error" ? "#C0392B" : "var(--cor-texto-suave)",
+        padding: "0 13px",
+        minHeight: "44px",
+        display: "inline-flex",
+        alignItems: "center",
+        gap: "6px",
+        transition: "border-color 0.15s, color 0.15s",
+      }}
+    >
+      {estado === "saving" ? "Salvando…" : estado === "error" ? "Erro — tentar de novo" : "Salvar no acervo"}
+    </button>
+  )
+}
+
+function AcoesAcervo({ nome, marca }: { nome: string; marca: string }) {
+  const [autenticado, setAutenticado] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    fetch("/api/auth/me").then(r => setAutenticado(r.ok)).catch(() => setAutenticado(false))
+  }, [])
+
+  if (autenticado === null) return null
+
+  if (!autenticado) {
+    return (
+      <Link
+        href="/cadastro"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          minHeight: "44px",
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.82rem",
+          color: "var(--cor-destaque)",
+        }}
+      >
+        Salvar recomendações → Criar conta
+      </Link>
+    )
+  }
+
+  return <BotaoSalvar nome={nome} marca={marca} />
 }
 
 export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsResultado) {
@@ -98,7 +185,7 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
             color: "var(--cor-destaque)",
             fontSize: "0.875rem",
             fontWeight: 500,
-            marginBottom: "21px",
+            marginBottom: "13px",
             background: "none",
             border: "none",
             padding: 0,
@@ -107,6 +194,11 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
         >
           Ver no catálogo →
         </Link>
+
+        {/* Salvar no acervo / criar conta */}
+        <div style={{ marginBottom: "21px" }}>
+          <AcoesAcervo nome={perfumePrincipal.nome} marca={perfumePrincipal.marca} />
+        </div>
 
         {/* Notas olfativas */}
         {perfumePrincipal.notas?.length > 0 && (
@@ -117,39 +209,6 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
           </div>
         )}
       </Card>
-
-      {/* CTA de compra */}
-      <div style={{ marginBottom: "21px", padding: "21px", border: "1px solid var(--cor-borda)", borderRadius: "var(--raio-borda)" }}>
-        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
-          Encontrou seu perfume? Veja onde comprar:
-        </p>
-        <div style={{ display: "flex", gap: "21px", flexWrap: "wrap" }}>
-          <a
-            href={`https://www.sephora.com.br/search?q=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
-          >
-            Buscar na Sephora →
-          </a>
-          <a
-            href={`https://www.belezanaweb.com.br/busca?q=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
-          >
-            Beleza na Web →
-          </a>
-          <a
-            href={`https://www.amazon.com.br/s?k=${encodeURIComponent(perfumePrincipal.nome + " " + perfumePrincipal.marca)}&tag=nozze-20`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ fontSize: "0.82rem", color: "var(--cor-destaque)", textDecoration: "none", fontFamily: "var(--fonte-corpo)", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
-          >
-            Amazon →
-          </a>
-        </div>
-      </div>
 
       {/* Card do conselho de especialista */}
       <Card style={{ marginBottom: "21px" }}>
@@ -193,6 +252,17 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
           Ver no catálogo →
         </Link>
       </Card>
+
+      {/* Onde encontrar — affiliate links, after all recommendation content */}
+      <div
+        style={{
+          marginBottom: "34px",
+          paddingTop: "34px",
+          borderTop: "1px solid rgba(26,26,24,0.1)",
+        }}
+      >
+        <OndeComprar perfumeName={perfumePrincipal.nome} brand={perfumePrincipal.marca} />
+      </div>
 
       {/* Ações */}
       <div style={{ display: "flex", gap: "21px", flexWrap: "wrap" }}>

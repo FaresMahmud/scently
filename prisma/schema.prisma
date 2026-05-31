@@ -7,16 +7,31 @@ datasource db {
   provider = "postgresql"
 }
 
+enum PerfumeStatus {
+  TENHO
+  JA_SENTI_GOSTEI
+  QUERO_EXPERIMENTAR
+}
+
+enum Intensity {
+  LEVE
+  MODERADO
+  INTENSO
+  QUALQUER
+}
+
 model User {
-  id                   String         @id @default(uuid())
-  email                String         @unique
+  id                   String          @id @default(uuid())
+  email                String          @unique
   passwordHash         String
   name                 String?
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
-  failedLoginAttempts  Int            @default(0)
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  failedLoginAttempts  Int             @default(0)
   lockedUntil          DateTime?
   refreshTokens        RefreshToken[]
+  userPerfumes         UserPerfume[]
+  userPreference       UserPreference?
 
   @@map("users")
 }
@@ -34,4 +49,56 @@ model RefreshToken {
   @@index([token])
   @@index([userId])
   @@map("refresh_tokens")
+}
+
+model UserPerfume {
+  id          String        @id @default(uuid())
+  userId      String
+  perfumeId   String
+  perfumeName String
+  brand       String
+  status      PerfumeStatus
+  rating      Int?
+  notes       String?
+  addedAt     DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, perfumeId])
+  @@index([userId])
+  @@map("user_perfumes")
+}
+
+model UserPreference {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  favoriteNotes     String[]
+  avoidNotes        String[]
+  favoriteOccasions String[]
+  favoriteFamilies  String[]
+  intensity         Intensity @default(QUALQUER)
+  updatedAt         DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
+
+model Tendencia {
+  id            String   @id @default(uuid())
+  nome          String
+  marca         String
+  tipo          String   // "importado" | "contratipo" | "nacional"
+  preco         String?
+  badge         String?
+  posicao       Int?
+  fonte         String?
+  estacao       Boolean  @default(false)
+  marcaDestaque Boolean  @default(false)
+  scrapedAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([nome, marca])
+  @@index([scrapedAt])
+  @@map("tendencias")
 }

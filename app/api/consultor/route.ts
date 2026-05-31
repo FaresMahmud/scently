@@ -1,102 +1,57 @@
-// ============================================
-// ARQUIVO: app/api/consultor/route.ts
-// O QUE FAZ: endpoint POST que recebe as respostas do quiz e retorna a recomendação da IA
-// QUANDO MANDAR PRA IA: quando quiser mudar validação, rate limiting ou tratamento de erro
-// DEPENDE DE: lib/ai.ts, .env.local (GROQ_API_KEY — nunca exposta ao cliente)
-// ============================================
-
 import { NextRequest, NextResponse } from "next/server"
 import { gerarRecomendacao } from "@/lib/ai"
+import { consultorRateLimit, getClientIp } from "@/lib/rateLimit"
+import { consultorSchema } from "@/lib/schemas"
 
-const ORIGENS_PERMITIDAS = [
-  "http://localhost:3000",
-  "https://nozze.app",
-  "https://www.nozze.app",
-  "https://nozze.vercel.app",
-]
-
-// Rate limiting em memória: IP → { count, resetAt }
-const limites = new Map<string, { count: number; resetAt: number }>()
-const LIMITE_REQUESTS = 10
-const JANELA_MS = 60 * 60 * 1000 // 1 hora
-
-function verificarRateLimit(ip: string): boolean {
-  const agora = Date.now()
-  const entrada = limites.get(ip)
-
-  if (!entrada || agora > entrada.resetAt) {
-    limites.set(ip, { count: 1, resetAt: agora + JANELA_MS })
-    return true
-  }
-
-  if (entrada.count >= LIMITE_REQUESTS) return false
-
-  entrada.count++
-  return true
-}
+// Only the production domains — nozze.vercel.app removed
+const ORIGENS_PERMITIDAS =
+  process.env.NODE_ENV === "production"
+    ? ["https://nozze.app", "https://www.nozze.app"]
+    : ["https://nozze.app", "https://www.nozze.app", "http://localhost:3000"]
 
 export async function POST(request: NextRequest) {
-  // Verificação de origem (CORS)
+  // CORS — reject unknown origins (browser-initiated cross-origin requests)
   const origem = request.headers.get("origin") ?? ""
   if (origem && !ORIGENS_PERMITIDAS.includes(origem)) {
     return NextResponse.json({ erro: "Origem não permitida" }, { status: 403 })
   }
 
-  // Limite de payload
+  // Payload size guard (10 KB max)
   const contentLength = request.headers.get("content-length")
-  if (contentLength && parseInt(contentLength) > 10240) {
+  if (contentLength && parseInt(contentLength) > 10_240) {
     return NextResponse.json({ erro: "Payload muito grande" }, { status: 413 })
   }
 
-  // Rate limiting por IP
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-
-  if (!verificarRateLimit(ip)) {
+  // Rate limit: 20 requests per IP per hour
+  const ip = getClientIp(request)
+  const { allowed, retryAfter } = consultorRateLimit(ip)
+  if (!allowed) {
     return NextResponse.json(
       { erro: "Limite de consultas atingido. Tente novamente em 1 hora." },
-      { status: 429 }
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
     )
   }
 
+  let raw: unknown
+  try { raw = await request.json() } catch {
+    return NextResponse.json({ erro: "Requisição inválida" }, { status: 400 })
+  }
+
+  // Normalise: accept both { respostas: {...} } and flat { key: value }
+  const payload = (raw as Record<string, unknown>)?.respostas ?? raw
+  const parsed = consultorSchema.safeParse({ respostas: payload })
+  if (!parsed.success) {
+    return NextResponse.json({ erro: "Requisição inválida: respostas ausentes ou vazias." }, { status: 400 })
+  }
+
   try {
-    const body = await request.json()
-    const respostas: Record<string, unknown> = body?.respostas ?? body
-
-    // Valida que respostas é um objeto com pelo menos 1 chave
-    if (
-      !respostas ||
-      typeof respostas !== "object" ||
-      Array.isArray(respostas) ||
-      Object.keys(respostas).length === 0
-    ) {
-      return NextResponse.json(
-        { erro: "Requisição inválida: respostas ausentes ou vazias." },
-        { status: 400 }
-      )
-    }
-
-    console.log("[API /consultor] Respostas recebidas:", JSON.stringify(respostas))
-
-    const recomendacao = await gerarRecomendacao(respostas)
-
-    console.log("[API /consultor] Resultado da IA:", recomendacao ? "OK" : "null")
-
+    const recomendacao = await gerarRecomendacao(parsed.data.respostas as Record<string, unknown>)
     if (!recomendacao) {
-      return NextResponse.json(
-        { erro: "Não foi possível gerar a recomendação" },
-        { status: 500 }
-      )
+      return NextResponse.json({ erro: "Não foi possível gerar a recomendação" }, { status: 500 })
     }
-
     return NextResponse.json(recomendacao)
-  } catch (erro) {
-    console.error("[API /consultor] Erro no handler:", erro)
-    return NextResponse.json(
-      { erro: "Requisição inválida" },
-      { status: 400 }
-    )
+  } catch (err) {
+    console.error("[API /consultor] Erro:", err)
+    return NextResponse.json({ erro: "Requisição inválida" }, { status: 400 })
   }
 }
