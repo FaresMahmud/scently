@@ -127,6 +127,8 @@ export default function TagInfo({ children, cor }: Props) {
   const handlers = {
     onMouseEnter: () => setHover(true),
     onMouseLeave: () => setHover(false),
+    onTouchStart: () => setHover(true),
+    onTouchEnd:   () => setHover(false),
   }
 
   if (familia) {

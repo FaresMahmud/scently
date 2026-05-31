@@ -37,7 +37,7 @@ export default function BannerCookies() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        gap: "1rem",
+        gap: "13px",
         flexWrap: "wrap",
       }}
     >
@@ -56,6 +56,8 @@ export default function BannerCookies() {
           fontWeight: 500,
           letterSpacing: "0.06em",
           padding: "0.5rem 1.25rem",
+          minHeight: "44px",
+          minWidth: "44px",
           borderRadius: "var(--raio-borda)",
           border: "1px solid var(--cor-destaque)",
           backgroundColor: "transparent",

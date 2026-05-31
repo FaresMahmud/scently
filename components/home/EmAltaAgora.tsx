@@ -24,19 +24,19 @@ function labelTipo(tipo: PerfumeTendencia["tipo"]): string {
 export default function EmAltaAgora() {
   return (
     <section style={{ borderBottom: "1px solid var(--cor-borda)" }}>
-      <div className="container-site" style={{ paddingTop: "7rem", paddingBottom: "7rem" }}>
+      <div className="container-site" style={{ paddingTop: "89px", paddingBottom: "89px" }}>
 
         {/* Cabeçalho */}
         <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
           em alta esta semana
         </p>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "600px", fontSize: "clamp(2.2rem, 5vw, 3.8rem)" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "600px", fontSize: "clamp(42px, 5vw, 68px)" }}>
           O que o mundo está usando agora
         </h2>
         <div className="separador" />
 
         {/* Cards */}
-        <div className="em-alta-grid" style={{ marginTop: "3.5rem", alignItems: "stretch" }}>
+        <div className="em-alta-grid" style={{ marginTop: "55px", alignItems: "stretch" }}>
           {tendenciasRepository.findAll().map((p) => {
             const tipoStyle = corTipo(p.tipo)
             const href = `/catalogo?busca=${encodeURIComponent(p.nome + " " + p.marca)}`
@@ -47,7 +47,7 @@ export default function EmAltaAgora() {
                     backgroundColor: "var(--cor-card)",
                     border: "1px solid var(--cor-borda)",
                     borderRadius: "var(--raio-borda)",
-                    padding: "2rem",
+                    padding: "34px",
                     minHeight: "320px",
                     height: "100%",
                     display: "flex",
@@ -65,7 +65,7 @@ export default function EmAltaAgora() {
 
                   {/* Nome + marca */}
                   <div>
-                    <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)", lineHeight: 1.15, marginBottom: "0.25rem" }}>
+                    <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", lineHeight: 1.15, marginBottom: "0.25rem" }}>
                       {p.nome}
                     </h3>
                     <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", letterSpacing: "0.06em", textTransform: "uppercase" }}>

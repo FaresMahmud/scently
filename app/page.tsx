@@ -74,7 +74,7 @@ export default function PaginaInicial() {
 
               <div className="separador" />
 
-              <p style={{ maxWidth: "400px", marginBottom: "3rem", fontSize: "1.05rem", marginTop: "1.5rem" }}>
+              <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "1.05rem", marginTop: "21px" }}>
                 {textosHome.heroSubtitulo}
               </p>
 
@@ -86,7 +86,7 @@ export default function PaginaInicial() {
                     display: "inline-flex", alignItems: "center",
                     backgroundColor: "var(--cor-destaque)", color: "#fff",
                     fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", fontWeight: 500,
-                    letterSpacing: "0.07em", padding: "0.9rem 2.25rem", borderRadius: "var(--raio-borda)",
+                    letterSpacing: "0.07em", padding: "0 34px", minHeight: "44px", borderRadius: "var(--raio-borda)",
                   }}
                 >
                   {textosHome.heroBotao}
@@ -143,8 +143,8 @@ export default function PaginaInicial() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-              gap: "3rem",
-              marginTop: "3rem",
+              gap: "34px",
+              marginTop: "34px",
             }}
           >
             {passos.map((passo) => (
@@ -152,18 +152,18 @@ export default function PaginaInicial() {
                 <p
                   style={{
                     fontFamily: "var(--fonte-titulo)",
-                    fontSize: "3rem",
+                    fontSize: "42px",
                     fontWeight: 300,
                     color: "var(--cor-destaque)",
                     opacity: 0.35,
-                    marginBottom: "0.75rem",
+                    marginBottom: "13px",
                     lineHeight: 1,
                     userSelect: "none",
                   }}
                 >
                   {passo.numero}
                 </p>
-                <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.5rem" }}>
+                <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "8px" }}>
                   {passo.titulo}
                 </h3>
                 <p style={{ fontSize: "0.9rem" }}>{passo.descricao}</p>
@@ -183,7 +183,7 @@ export default function PaginaInicial() {
             Sem cadastro. Sem compromisso. Resultado em menos de 2 minutos.
           </p>
           {/* Prova social — reduz fricção */}
-          <p style={{ fontSize: "0.75rem", color: "var(--cor-texto-suave)", marginBottom: "2rem", letterSpacing: "0.05em" }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--cor-texto-suave)", marginBottom: "34px", letterSpacing: "0.05em" }}>
             Mais de 12.000 fragrâncias no catálogo · Sem cadastro · Resultado em 2 minutos
           </p>
           <Link
@@ -198,7 +198,8 @@ export default function PaginaInicial() {
               fontSize: "0.875rem",
               fontWeight: 500,
               letterSpacing: "0.07em",
-              padding: "0.9rem 2.25rem",
+              padding: "0 34px",
+              minHeight: "44px",
               borderRadius: "var(--raio-borda)",
             }}
           >
@@ -223,8 +224,8 @@ export default function PaginaInicial() {
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-              gap: "1.25rem",
-              marginTop: "2.5rem",
+              gap: "21px",
+              marginTop: "34px",
             }}
           >
             {perfumes.map((perfume) => (

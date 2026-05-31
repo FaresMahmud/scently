@@ -175,7 +175,7 @@ export default async function PaginaMarca({ params }: { params: Promise<{ slug: 
         <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, marginBottom: "1rem" }}>
           Marca não encontrada
         </h1>
-        <p style={{ marginBottom: "2rem" }}>Nenhuma fragrância encontrada para esta marca.</p>
+        <p style={{ marginBottom: "34px" }}>Nenhuma fragrância encontrada para esta marca.</p>
         <Link href="/catalogo" style={{ color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem" }}>
           ← Explorar catálogo
         </Link>

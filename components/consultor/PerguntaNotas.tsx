@@ -59,21 +59,21 @@ export default function PerguntaNotas({ notas, progresso, onResponder }: PropsPe
   return (
     <div style={{ maxWidth: "560px", margin: "0 auto" }}>
       {/* Progresso */}
-      <p style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "1.5rem" }}>
+      <p style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "21px" }}>
         {progresso}
       </p>
 
-      <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(1.5rem, 4vw, 2.25rem)", marginBottom: "0.75rem" }}>
+      <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(26px, 4vw, 42px)", marginBottom: "13px" }}>
         Tem nota que você ama ou odeia?
       </h2>
 
       {/* Instrução de como usar */}
-      <p style={{ fontSize: "0.82rem", color: "var(--cor-texto-suave)", marginBottom: "2rem" }}>
+      <p style={{ fontSize: "0.82rem", color: "var(--cor-texto-suave)", marginBottom: "34px" }}>
         Toque uma vez para marcar como favorita, duas vezes para marcar como evitar.
       </p>
 
       {/* Grade de notas */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.6rem", marginBottom: "2rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "8px", marginBottom: "34px" }}>
         {notas.map((nota) => {
           const estado = estados[nota.valor] ?? "neutro"
           return (

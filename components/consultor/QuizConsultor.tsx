@@ -123,8 +123,8 @@ export default function QuizConsultor() {
 
   if (estado === "carregando") {
     return (
-      <div style={{ textAlign: "center", padding: "6rem 0" }}>
-        <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "1.75rem", fontWeight: 300, color: "var(--cor-texto-suave)", marginBottom: "2rem" }}>
+      <div style={{ textAlign: "center", padding: "89px 0" }}>
+        <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "26px", fontWeight: 300, color: "var(--cor-texto-suave)", marginBottom: "34px" }}>
           {textosConsultor.mensagemCarregando}
         </p>
         {/* Animação de três pontos */}
@@ -148,11 +148,11 @@ export default function QuizConsultor() {
 
   if (estado === "erro") {
     return (
-      <div style={{ textAlign: "center", padding: "4rem 0", maxWidth: "400px", margin: "0 auto" }}>
-        <p style={{ marginBottom: "1.5rem" }}>{textosConsultor.mensagemErro}</p>
+      <div style={{ textAlign: "center", padding: "55px 0", maxWidth: "400px", margin: "0 auto" }}>
+        <p style={{ marginBottom: "21px" }}>{textosConsultor.mensagemErro}</p>
         <button
           onClick={recomecar}
-          style={{ color: "var(--cor-destaque)", background: "none", border: "none", cursor: "pointer", fontFamily: "var(--fonte-corpo)", fontSize: "0.9rem" }}
+          style={{ color: "var(--cor-destaque)", background: "none", border: "none", cursor: "pointer", fontFamily: "var(--fonte-corpo)", fontSize: "0.9rem", minHeight: "44px", minWidth: "44px", padding: "0 13px" }}
         >
           Tentar novamente
         </button>
@@ -170,7 +170,7 @@ export default function QuizConsultor() {
   const cabecalhoQuiz = (
     <div style={{ maxWidth: "560px", margin: "0 auto 0" }}>
       <BarraProgresso atual={passo} total={totalPerguntas} />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "34px" }}>
         <button
           onClick={voltar}
           style={{
@@ -181,7 +181,9 @@ export default function QuizConsultor() {
             fontFamily: "var(--fonte-corpo)",
             fontSize: "0.78rem",
             letterSpacing: "0.06em",
-            padding: 0,
+            padding: "0 8px",
+            minHeight: "44px",
+            minWidth: "44px",
             display: "flex",
             alignItems: "center",
             gap: "0.35rem",

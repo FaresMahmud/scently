@@ -19,7 +19,7 @@ interface PropsAcordes {
 }
 
 export default function AcordesPerfume({ acordes }: PropsAcordes) {
-  const [acordeHover, setAcordeHover] = useState<string | null>(null)
+  const [acordeAtivo, setAcordeAtivo] = useState<string | null>(null)
 
   if (!acordes?.length) return null
 
@@ -27,21 +27,23 @@ export default function AcordesPerfume({ acordes }: PropsAcordes) {
 
   return (
     <section>
-      <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.3rem", marginBottom: "1.5rem" }}>
+      <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "21px" }}>
         Acordes principais
       </h3>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
         {ordenados.map(acorde => {
           const cor    = corDaNota(acorde.nome)
-          const ativo  = acordeHover === acorde.nome
+          const ativo  = acordeAtivo === acorde.nome
           const corBarra = ativo ? cor : acorde.porcentagem > 70 ? "var(--cor-destaque)" : "var(--cor-dourado)"
 
           return (
             <div
               key={acorde.nome}
-              onMouseEnter={() => setAcordeHover(acorde.nome)}
-              onMouseLeave={() => setAcordeHover(null)}
+              onMouseEnter={() => setAcordeAtivo(acorde.nome)}
+              onMouseLeave={() => setAcordeAtivo(null)}
+              onTouchStart={() => setAcordeAtivo(acorde.nome)}
+              onTouchEnd={() => setAcordeAtivo(null)}
               style={{ cursor: "default" }}
             >
               {/* Nome traduzido + porcentagem */}

@@ -41,9 +41,9 @@ const estilosVariante: Record<Variante, React.CSSProperties> = {
 
 // Tamanhos de padding e fonte
 const estilosTamanho: Record<Tamanho, React.CSSProperties> = {
-  pequeno: { fontSize: "0.75rem", padding: "0.5rem 1.2rem" },
-  normal:  { fontSize: "0.875rem", padding: "0.875rem 2rem" },
-  grande:  { fontSize: "1rem", padding: "1.1rem 2.75rem" },
+  pequeno: { fontSize: "0.75rem", padding: "0.5rem 1.2rem", minHeight: "44px" },
+  normal:  { fontSize: "0.875rem", padding: "0.875rem 2rem", minHeight: "44px" },
+  grande:  { fontSize: "1rem", padding: "1.1rem 2.75rem", minHeight: "44px" },
 }
 
 const Botao = forwardRef<HTMLButtonElement, PropsBotao>(function Botao(

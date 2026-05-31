@@ -31,24 +31,27 @@ export interface CardUnificado extends DadosCardPerfume {
 }
 
 function Pill({ label, ativo, onClick }: { label: string; ativo: boolean; onClick: () => void }) {
-  const [hover, setHover] = useState(false)
+  const [hovered, setHovered] = useState(false)
   return (
     <button
       onClick={onClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setHovered(false)}
       style={{
         fontFamily: "var(--fonte-corpo)",
         fontSize: "0.75rem",
         letterSpacing: "0.08em",
-        padding: "0.4rem 1rem",
+        padding: "0 13px",
+        minHeight: "44px",
         borderRadius: "99px",
         cursor: "pointer",
         background: ativo ? "rgba(196, 113, 74, 0.08)" : "transparent",
         color: ativo ? "var(--cor-destaque)" : "var(--cor-texto-suave)",
         border: ativo
           ? "1px solid var(--cor-destaque)"
-          : hover
+          : hovered
           ? "1px solid var(--cor-texto-suave)"
           : "1px solid var(--cor-borda)",
         transition: "border-color 0.15s, background 0.15s, color 0.15s",
@@ -178,7 +181,7 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
   return (
     <>
       {/* Busca */}
-      <div style={{ position: "relative", marginBottom: "1.5rem" }}>
+      <div style={{ position: "relative", marginBottom: "21px" }}>
         <input
           type="text"
           placeholder="Buscar por nome, marca, nota ou família..."
@@ -192,14 +195,15 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
             backgroundColor: "var(--cor-card)",
             border: "1px solid var(--cor-borda)",
             borderRadius: "var(--raio-borda-suave)",
-            padding: "0.85rem 1.25rem",
+            padding: "0 21px",
+            height: "44px",
             boxSizing: "border-box",
           }}
         />
         {busca && (
           <button
             onClick={() => setBusca("")}
-            style={{ position: "absolute", right: "1rem", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "var(--cor-texto-suave)", fontSize: "1rem", lineHeight: 1 }}
+            style={{ position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "var(--cor-texto-suave)", fontSize: "1rem", lineHeight: 1, minHeight: "44px", minWidth: "44px", display: "flex", alignItems: "center", justifyContent: "center" }}
           >
             ×
           </button>
@@ -225,7 +229,7 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
             Família: {familiaAtiva.charAt(0).toUpperCase() + familiaAtiva.slice(1)}
             <button
               onClick={() => setFamiliaAtiva("")}
-              style={{ background: "none", border: "none", cursor: "pointer", color: "var(--cor-destaque)", fontSize: "1rem", lineHeight: 1, padding: 0, display: "flex", alignItems: "center" }}
+              style={{ background: "none", border: "none", cursor: "pointer", color: "var(--cor-destaque)", fontSize: "1rem", lineHeight: 1, padding: 0, minHeight: "44px", minWidth: "44px", display: "flex", alignItems: "center", justifyContent: "center" }}
             >
               ×
             </button>
@@ -234,14 +238,14 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
       )}
 
       {/* Pills — gênero */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
-        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "8px" }}>
+        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           {(["Masculino", "Feminino", "Unissex"] as Genero[]).map(g => (
             <Pill key={g} label={g} ativo={generos.includes(g)} onClick={() => setGeneros(toggle(generos, g))} />
           ))}
         </div>
-        <div style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 0.5rem", alignSelf: "stretch" }} />
-        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+        <div style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 8px", alignSelf: "stretch" }} />
+        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           {(["EDP", "EDT", "EDC", "Extrait", "Contratipo"] as Tipo[]).map(t => (
             <Pill key={t} label={t} ativo={tipos.includes(t)} onClick={() => setTipos(toggle(tipos, t))} />
           ))}
@@ -249,8 +253,8 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
       </div>
 
       {/* Pills — ordenação + contador */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", alignItems: "center", marginBottom: "2.5rem" }}>
-        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center", marginBottom: "34px" }}>
+        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
           {([
             { valor: "relevancia",    label: "Relevância" },
             { valor: "mais-vendidos", label: "Mais vendidos" },
@@ -268,7 +272,7 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
       {/* Grid */}
       {resultados.length > 0 ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.25rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "21px" }}>
             {visiveis.map(perfume => (
               <div key={perfume.id}>
                 <CardPerfume perfume={perfume} />
@@ -301,13 +305,13 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
         </>
       ) : (
         <div style={{ textAlign: "center", padding: "6rem 0" }}>
-          <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "1.5rem", fontWeight: 300, color: "var(--cor-texto-suave)", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "26px", fontWeight: 300, color: "var(--cor-texto-suave)", marginBottom: "21px" }}>
             Nenhuma fragrância encontrada.
           </p>
           {temFiltros && (
             <button
               onClick={limparFiltros}
-              style={{ background: "none", border: "1px solid var(--cor-borda)", borderRadius: "99px", padding: "0.5rem 1.5rem", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", letterSpacing: "0.08em", color: "var(--cor-destaque)", cursor: "pointer" }}
+              style={{ background: "none", border: "1px solid var(--cor-borda)", borderRadius: "99px", padding: "0 21px", minHeight: "44px", fontFamily: "var(--fonte-corpo)", fontSize: "0.8rem", letterSpacing: "0.08em", color: "var(--cor-destaque)", cursor: "pointer" }}
             >
               Limpar filtros
             </button>

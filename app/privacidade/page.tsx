@@ -13,16 +13,16 @@ export const metadata: Metadata = {
 
 export default function PaginaPrivacidade() {
   return (
-    <main style={{ maxWidth: "680px", margin: "0 auto", padding: "4rem 2rem" }}>
+    <main style={{ maxWidth: "680px", margin: "0 auto", padding: "55px 34px" }}>
       <p style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "1rem" }}>
         privacidade
       </p>
-      <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "2.5rem", lineHeight: 1.1 }}>
+      <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(42px, 5vw, 68px)", marginBottom: "34px", lineHeight: 1.1 }}>
         Política de Privacidade
       </h1>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           O que coletamos
         </h2>
         <p>
@@ -30,8 +30,8 @@ export default function PaginaPrivacidade() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           Como usamos seus dados
         </h2>
         <p>
@@ -39,8 +39,8 @@ export default function PaginaPrivacidade() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           Cookies
         </h2>
         <p>
@@ -48,8 +48,8 @@ export default function PaginaPrivacidade() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           Compartilhamento de dados
         </h2>
         <p>
@@ -57,8 +57,8 @@ export default function PaginaPrivacidade() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           Seus direitos (LGPD)
         </h2>
         <p>
@@ -67,7 +67,7 @@ export default function PaginaPrivacidade() {
       </section>
 
       <section>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           Contato
         </h2>
         <p>

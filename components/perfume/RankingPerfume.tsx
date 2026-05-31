@@ -118,7 +118,7 @@ function ItemRanking({ item, tipo, maxScore, nomePerfume, familia }: {
   const explicacao = gerarExplicacao(item.name, tipo, nivel.label, nomePerfume, familia)
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
       <span style={{ fontSize: "13px", color: "var(--cor-texto)", width: "90px", flexShrink: 0 }}>
         {traduzir(item.name)}
       </span>
@@ -135,9 +135,13 @@ function ItemRanking({ item, tipo, maxScore, nomePerfume, familia }: {
         <span
           onMouseEnter={() => setTooltip(true)}
           onMouseLeave={() => setTooltip(false)}
+          onTouchStart={() => setTooltip(v => !v)}
           style={{
             fontSize: "11px",
-            padding: "2px 8px",
+            padding: "8px 13px",
+            minHeight: "44px",
+            display: "inline-flex",
+            alignItems: "center",
             borderRadius: "999px",
             fontWeight: 500,
             cursor: "help",
@@ -183,9 +187,9 @@ export function RankingPerfume({ estacao, ocasiao, nomePerfume, familia }: {
   const maxOcasiao = Math.max(...ocasiao.map(i => i.score), 1)
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", padding: "24px 0" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "34px", padding: "21px 0" }}>
       <div>
-        <p style={{ fontSize: "11px", letterSpacing: "0.12em", color: "var(--cor-texto-suave)", marginBottom: "16px", fontWeight: 500 }}>
+        <p style={{ fontSize: "11px", letterSpacing: "0.12em", color: "var(--cor-texto-suave)", marginBottom: "13px", fontWeight: 500 }}>
           ESTAÇÃO IDEAL
         </p>
         {estacao.map(item => (
@@ -193,7 +197,7 @@ export function RankingPerfume({ estacao, ocasiao, nomePerfume, familia }: {
         ))}
       </div>
       <div>
-        <p style={{ fontSize: "11px", letterSpacing: "0.12em", color: "var(--cor-texto-suave)", marginBottom: "16px", fontWeight: 500 }}>
+        <p style={{ fontSize: "11px", letterSpacing: "0.12em", color: "var(--cor-texto-suave)", marginBottom: "13px", fontWeight: 500 }}>
           MELHOR OCASIÃO
         </p>
         {ocasiao.map(item => (

@@ -17,22 +17,26 @@ interface Props {
 }
 
 export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) {
-  const [hover, setHover] = useState(false)
+  const [active, setActive] = useState(false)
 
   return (
     <div style={{ position: "relative" }}>
       <div
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        onTouchStart={() => setActive(true)}
+        onTouchEnd={() => setActive(false)}
         style={{
           display: "inline-flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
           gap: "1px",
-          padding: "6px 16px",
+          padding: "8px 13px",
+          minHeight: "44px",
           borderRadius: "999px",
           border: "1px solid #D4C8B8",
-          background: hover ? "#F5F0EA" : "transparent",
+          background: active ? "#F5F0EA" : "transparent",
           cursor: "help",
           transition: "background 0.15s",
         }}
@@ -50,7 +54,7 @@ export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) 
           {valor}
         </span>
       </div>
-      {hover && (
+      {active && (
         <div style={{
           position: "absolute",
           bottom: "calc(100% + 8px)",

@@ -22,20 +22,20 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
         style={{
           fontFamily: "var(--fonte-titulo)",
           fontWeight: 300,
-          fontSize: "clamp(2rem, 5vw, 3rem)",
-          marginBottom: "0.75rem",
+          fontSize: "clamp(26px, 5vw, 42px)",
+          marginBottom: "13px",
           lineHeight: 1.15,
         }}
       >
         {textosConsultor.titulo}
       </h1>
 
-      <p style={{ marginBottom: "3rem", maxWidth: "420px" }}>
+      <p style={{ marginBottom: "34px", maxWidth: "420px" }}>
         {textosConsultor.subtituloInicio}
       </p>
 
       {/* Opções de modo */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
         {/* Modo rápido */}
         <button
           onClick={() => onSelecionar("rapido")}
@@ -47,14 +47,14 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
               cursor: "pointer",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "13px" }}>
               <div>
                 <p
                   style={{
                     fontFamily: "var(--fonte-titulo)",
-                    fontSize: "1.35rem",
+                    fontSize: "26px",
                     fontWeight: 300,
-                    marginBottom: "0.35rem",
+                    marginBottom: "8px",
                     color: "var(--cor-texto)",
                   }}
                 >
@@ -81,14 +81,14 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
               cursor: "pointer",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "13px" }}>
               <div>
                 <p
                   style={{
                     fontFamily: "var(--fonte-titulo)",
-                    fontSize: "1.35rem",
+                    fontSize: "26px",
                     fontWeight: 300,
-                    marginBottom: "0.35rem",
+                    marginBottom: "8px",
                     color: "var(--cor-texto)",
                   }}
                 >

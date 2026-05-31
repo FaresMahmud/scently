@@ -24,8 +24,8 @@ export default function Footer() {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "2.5rem",
-          padding: "3rem 1.25rem 2rem",
+          gap: "34px",
+          padding: "55px 21px 34px",
         }}
       >
         {/* Coluna 1 — marca */}
@@ -62,7 +62,7 @@ export default function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em" }}
+                style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
               >
                 {link.texto}
               </Link>
@@ -83,7 +83,7 @@ export default function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em" }}
+                style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
               >
                 {link.texto}
               </Link>
@@ -98,7 +98,7 @@ export default function Footer() {
           </p>
           <a
             href="mailto:contato@nozze.app"
-            style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-destaque)", letterSpacing: "0.04em" }}
+            style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-destaque)", letterSpacing: "0.04em", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
           >
             contato@nozze.app
           </a>
@@ -110,7 +110,7 @@ export default function Footer() {
         className="container-site"
         style={{
           borderTop: "1px solid var(--cor-borda)",
-          padding: "1.25rem",
+          padding: "21px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

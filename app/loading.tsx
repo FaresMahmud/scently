@@ -14,14 +14,14 @@ export default function Carregando() {
         justifyContent: "center",
         minHeight: "50vh",
         flexDirection: "column",
-        gap: "1.5rem",
+        gap: "21px",
       }}
     >
       {/* Nome do site pulsando */}
       <p
         style={{
           fontFamily: "var(--fonte-titulo)",
-          fontSize: "1.5rem",
+          fontSize: "26px",
           fontWeight: 300,
           letterSpacing: "0.15em",
           color: "var(--cor-texto-suave)",

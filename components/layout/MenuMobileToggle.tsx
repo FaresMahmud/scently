@@ -38,6 +38,8 @@ export default function MenuMobileToggle() {
           border: "none",
           cursor: "pointer",
           padding: "0.5rem",
+          minHeight: "44px",
+          minWidth: "44px",
           color: "var(--cor-texto)",
           flexDirection: "column",
           gap: "5px",
@@ -94,7 +96,7 @@ export default function MenuMobileToggle() {
           transition: "transform 0.25s ease",
           pointerEvents: aberto ? "auto" : "none",
           flexDirection: "column",
-          padding: "2rem 1.5rem",
+          padding: "34px 21px",
           gap: "0.25rem",
         }}
       >
@@ -105,7 +107,7 @@ export default function MenuMobileToggle() {
             onClick={() => setAberto(false)}
             style={{
               fontFamily: "var(--fonte-titulo)",
-              fontSize: "1.5rem",
+              fontSize: "26px",
               fontWeight: 300,
               color: "var(--cor-texto)",
               padding: "0.75rem 0",
@@ -122,7 +124,9 @@ export default function MenuMobileToggle() {
             href="/consultor"
             onClick={() => setAberto(false)}
             style={{
-              display: "block",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               textAlign: "center",
               backgroundColor: "var(--cor-destaque)",
               color: "#fff",
@@ -131,6 +135,7 @@ export default function MenuMobileToggle() {
               fontWeight: 500,
               letterSpacing: "0.07em",
               padding: "0.9rem",
+              minHeight: "44px",
               borderRadius: "var(--raio-borda)",
             }}
           >

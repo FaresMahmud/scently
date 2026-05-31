@@ -16,7 +16,7 @@ export default function BarraProgresso({ atual, total }: PropsBarraProgresso) {
   const porcentagem = Math.round((atual / total) * 100)
 
   return (
-    <div style={{ marginBottom: "2.5rem" }}>
+    <div style={{ marginBottom: "34px" }}>
       <div
         style={{
           width: "100%",

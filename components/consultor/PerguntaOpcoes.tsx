@@ -28,7 +28,7 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
   const [selecionado, setSelecionado] = useState<string | null>(null)
   // Seleção múltipla
   const [selecionados, setSelecionados] = useState<string[]>([])
-  const [hover, setHover] = useState<string | null>(null)
+  const [hovered, setHovered] = useState<string | null>(null)
 
   // ── Seleção única — auto-avança após 280ms ──
   function selecionar(valor: string) {
@@ -52,7 +52,7 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
   // Estilo compartilhado de cada opção
   function estiloOpcao(valor: string): React.CSSProperties {
     const ativo = multipla ? selecionados.includes(valor) : selecionado === valor
-    const emHover = hover === valor && !ativo
+    const emHover = hovered === valor && !ativo
 
     return {
       display: "flex",
@@ -60,6 +60,7 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
       gap: "0.75rem",
       width: "100%",
       padding: "1.1rem 1.5rem",
+      minHeight: "44px",
       backgroundColor: ativo ? "rgba(196,113,74,0.06)" : "var(--cor-card)",
       color: "var(--cor-texto)",
       fontWeight: ativo ? 400 : 300,
@@ -83,8 +84,8 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
         style={{
           fontFamily: "var(--fonte-titulo)",
           fontWeight: 300,
-          fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
-          marginBottom: multipla ? "0.6rem" : "2rem",
+          fontSize: "clamp(26px, 4vw, 42px)",
+          marginBottom: multipla ? "8px" : "34px",
           lineHeight: 1.2,
         }}
       >
@@ -93,18 +94,20 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
 
       {/* Instrução de múltipla seleção */}
       {multipla && (
-        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "1.75rem" }}>
+        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "21px" }}>
           Pode selecionar mais de uma.
         </p>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
         {opcoes.map((opcao) => (
           <button
             key={opcao.valor}
             onClick={() => multipla ? toggleMultipla(opcao.valor) : selecionar(opcao.valor)}
-            onMouseEnter={() => setHover(opcao.valor)}
-            onMouseLeave={() => setHover(null)}
+            onMouseEnter={() => setHovered(opcao.valor)}
+            onMouseLeave={() => setHovered(null)}
+            onTouchStart={() => setHovered(opcao.valor)}
+            onTouchEnd={() => setHovered(null)}
             style={estiloOpcao(opcao.valor)}
           >
             {opcao.icone && <span style={{ fontSize: "1.1rem" }}>{opcao.icone}</span>}
@@ -119,7 +122,7 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
           onClick={confirmarMultipla}
           disabled={selecionados.length === 0}
           style={{
-            marginTop: "1.5rem",
+            marginTop: "21px",
             display: "inline-flex",
             alignItems: "center",
             backgroundColor: "var(--cor-destaque)",
@@ -129,6 +132,7 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
             fontWeight: 500,
             letterSpacing: "0.07em",
             padding: "0.875rem 2rem",
+            minHeight: "44px",
             borderRadius: "var(--raio-borda)",
             border: "none",
             cursor: selecionados.length ? "pointer" : "not-allowed",

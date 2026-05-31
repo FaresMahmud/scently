@@ -63,6 +63,10 @@ export default function Header() {
               fontWeight: 400,
               letterSpacing: "0.08em",
               color: "var(--cor-texto-suave)",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "44px",
+              padding: "0 8px",
             }}
           >
             catálogo
@@ -75,6 +79,10 @@ export default function Header() {
               fontWeight: 400,
               letterSpacing: "0.08em",
               color: "var(--cor-texto-suave)",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "44px",
+              padding: "0 8px",
             }}
           >
             consultor
@@ -88,8 +96,11 @@ export default function Header() {
               letterSpacing: "0.08em",
               color: "var(--cor-destaque)",
               border: "1px solid var(--cor-destaque)",
-              padding: "0.45rem 1.1rem",
+              padding: "0 21px",
               borderRadius: "var(--raio-borda)",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "44px",
             }}
           >
             iniciar consulta

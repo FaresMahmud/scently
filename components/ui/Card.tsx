@@ -21,7 +21,7 @@ export default function Card({ destaque, semPadding, children, style, ...resto }
           ? "1px solid var(--cor-destaque)"
           : "1px solid var(--cor-borda)",
         borderRadius: "var(--raio-borda-suave)",
-        padding: semPadding ? 0 : "1.75rem",
+        padding: semPadding ? 0 : "34px",
         ...style,
       }}
       {...resto}

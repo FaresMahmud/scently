@@ -132,14 +132,14 @@ export default function PaginaCatalogo() {
 
   return (
     <main>
-      <div className="container-site" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
+      <div className="container-site" style={{ paddingTop: "55px", paddingBottom: "89px" }}>
 
         {/* Título */}
-        <div style={{ marginBottom: "3rem" }}>
+        <div style={{ marginBottom: "34px" }}>
           <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
             fragrâncias
           </p>
-          <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(2.5rem, 6vw, 4rem)", lineHeight: 1 }}>
+          <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(42px, 6vw, 68px)", lineHeight: 1 }}>
             catálogo
           </h1>
           <div className="separador" />

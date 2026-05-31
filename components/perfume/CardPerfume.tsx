@@ -85,9 +85,9 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
       </Link>
 
       {/* Informações do perfume */}
-      <div style={{ padding: "1.25rem" }}>
+      <div style={{ padding: "21px" }}>
         {/* Família olfativa, concentração e rating */}
-        <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.75rem", flexWrap: "wrap", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "13px", flexWrap: "wrap", alignItems: "center" }}>
           {perfume.familia && <Tag>{perfume.familia}</Tag>}
           {perfume.concentracao && <Tag cor="dourado">{perfume.concentracao}</Tag>}
           {perfume.rating && perfume.rating > 0 && (
@@ -98,12 +98,12 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
         </div>
 
         {/* Nome do perfume — clica e vai para o perfume */}
-        <Link href={href} style={{ display: "block", textDecoration: "none" }}>
+        <Link href={href} style={{ display: "flex", alignItems: "center", minHeight: "44px", textDecoration: "none" }}>
           <h3
             style={{
               fontFamily: "var(--fonte-titulo)",
               fontWeight: 300,
-              fontSize: "1.2rem",
+              fontSize: "26px",
               marginBottom: "0.25rem",
               color: "var(--cor-texto)",
             }}
@@ -116,6 +116,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
         <Link
           href={`/marca/${slugify(perfume.marca)}`}
           className="link-marca"
+          style={{ display: "inline-flex", alignItems: "center", minHeight: "44px" }}
         >
           {perfume.marca}
         </Link>

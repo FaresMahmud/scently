@@ -196,7 +196,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
         <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, marginBottom: "1rem" }}>
           Perfume não encontrado
         </h1>
-        <p style={{ marginBottom: "2rem" }}>O perfume que você procura não existe ou foi removido.</p>
+        <p style={{ marginBottom: "34px" }}>O perfume que você procura não existe ou foi removido.</p>
         <Link href="/catalogo" style={{ color: "var(--cor-destaque)" }}>← Explorar catálogo</Link>
       </main>
     )
@@ -282,17 +282,17 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="container-site" style={{ paddingTop: "3rem", paddingBottom: "5rem" }}>
+      <div className="container-site" style={{ paddingTop: "34px", paddingBottom: "89px" }}>
 
         {/* Breadcrumb */}
-        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "3rem" }}>
+        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "34px" }}>
           <Link href="/" style={{ color: "var(--cor-destaque)" }}>nozze</Link>
           {" / "}
           <Link href={`/marca/${slugify(perfume.marca)}`} style={{ color: "var(--cor-texto-suave)" }}>{perfume.marca}</Link>
         </p>
 
         {/* Layout duas colunas */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: "4rem", alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: "55px", alignItems: "start" }}>
 
           {/* Coluna esquerda — imagem */}
           <div style={{
@@ -325,7 +325,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
             {/* Métricas em destaque: Duração, Sillage, Avaliação */}
             {(perfume.longevidade || perfume.sillage || (perfume.rating && perfume.rating > 0)) && (
-              <div style={{ display: "flex", gap: "10px", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "8px", marginBottom: "21px", flexWrap: "wrap" }}>
                 {perfume.longevidade && (() => {
                   const c = corDaMetrica(perfume.longevidade!, "longevidade")
                   return (
@@ -369,13 +369,13 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             </Link>
 
             {/* Nome */}
-            <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, lineHeight: 1.08, marginBottom: "2rem" }}>
+            <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, lineHeight: 1.08, marginBottom: "34px" }}>
               {perfume.nome}
             </h1>
 
             {/* Descrição */}
             {descricaoTraduzida && (
-              <p style={{ lineHeight: 1.8, marginBottom: "2.5rem", fontSize: "0.95rem" }}>
+              <p style={{ lineHeight: 1.8, marginBottom: "34px", fontSize: "0.95rem" }}>
                 {descricaoTraduzida}
               </p>
             )}
@@ -384,8 +384,8 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
             {/* Pirâmide olfativa */}
             {temNotas && (
-              <div style={{ marginTop: "2rem", marginBottom: "2.5rem" }}>
-                <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.3rem", marginBottom: "1.5rem" }}>
+              <div style={{ marginTop: "34px", marginBottom: "34px" }}>
+                <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "21px" }}>
                   Pirâmide olfativa
                 </h3>
                 <NotasPerfume
@@ -400,7 +400,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             {acordes.length > 0 && (
               <>
                 <div className="divisor" />
-                <div style={{ marginTop: "2rem", marginBottom: "2.5rem" }}>
+                <div style={{ marginTop: "34px", marginBottom: "34px" }}>
                   <AcordesPerfume acordes={acordes} />
                 </div>
               </>
@@ -420,11 +420,11 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             )}
 
             {/* Onde comprar */}
-            <div style={{ marginTop: "2rem" }}>
-              <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--cor-texto-suave)", marginBottom: "1rem" }}>
+            <div style={{ marginTop: "34px" }}>
+              <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase" as const, color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
                 Onde comprar
               </p>
-              <div style={{ display: "flex", gap: "1.25rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "21px", flexWrap: "wrap" }}>
                 {[
                   { nome: "Sephora",       url: `https://www.sephora.com.br/search?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
                   { nome: "Beleza na Web", url: `https://www.belezanaweb.com.br/busca?q=${encodeURIComponent(perfume.nome + " " + perfume.marca)}` },
@@ -435,7 +435,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em", textDecoration: "none" }}
+                    style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", letterSpacing: "0.04em", textDecoration: "none", display: "inline-flex", alignItems: "center", minHeight: "44px" }}
                   >
                     Buscar na {nome} →
                   </a>
@@ -446,13 +446,13 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
             <div className="divisor" />
 
             {/* CTA consultor */}
-            <div style={{ marginTop: "2rem" }}>
-              <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+            <div style={{ marginTop: "34px" }}>
+              <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
                 Não tem certeza se é o certo para você?
               </p>
               <Link
                 href="/consultor"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", fontWeight: 500, letterSpacing: "0.04em" }}
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", fontWeight: 500, letterSpacing: "0.04em", minHeight: "44px" }}
               >
                 Consultar seu consultor →
               </Link>

@@ -24,7 +24,7 @@ export default function PaginaConsultor() {
         flexDirection: "column",
       }}
     >
-      <div className="container-site" style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+      <div className="container-site" style={{ paddingTop: "55px", paddingBottom: "55px" }}>
         <QuizConsultor />
       </div>
     </main>

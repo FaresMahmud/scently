@@ -20,22 +20,25 @@ function hexToRgb(hex: string) {
 }
 
 function ChipNota({ nota, selecionada, onToggle }: { nota: Nota, selecionada: boolean, onToggle: () => void }) {
-  const [hover, setHover] = useState(false)
+  const [hovered, setHovered] = useState(false)
   const cor = corDaNota(nota.name)
   const rgb = hexToRgb(cor)
 
+  const active = selecionada || hovered
   const style = selecionada
     ? { backgroundColor: cor, color: "#fff", border: `2px solid ${cor}` }
-    : hover
+    : hovered
     ? { backgroundColor: cor, color: "#fff", border: `1.5px solid ${cor}` }
     : { backgroundColor: `rgba(${rgb}, 0.12)`, color: cor, border: `1.5px solid rgba(${rgb}, 0.5)` }
 
   return (
     <span
       onClick={onToggle}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{ ...style, cursor: "pointer", padding: "4px 12px", borderRadius: "999px", fontSize: "13px", display: "inline-flex", alignItems: "center", gap: "4px", transition: "all 0.15s ease", userSelect: "none" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onTouchStart={() => setHovered(true)}
+      onTouchEnd={() => setHovered(false)}
+      style={{ ...style, cursor: "pointer", padding: "8px 13px", minHeight: "44px", borderRadius: "999px", fontSize: "13px", display: "inline-flex", alignItems: "center", gap: "4px", transition: "all 0.15s ease", userSelect: "none" }}
     >
       {selecionada && <span>✓</span>}
       {traduzir(nota.name)}
@@ -52,7 +55,7 @@ export function NotasPerfume({ topo, coracao, fundo }: { topo: Nota[], coracao: 
   })
 
   const secao = (label: string, sub: string, notas: Nota[]) => notas.length === 0 ? null : (
-    <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+    <div style={{ display: "flex", gap: "13px", alignItems: "flex-start" }}>
       <div style={{ minWidth: "110px" }}>
         <div style={{ fontSize: "11px", letterSpacing: "0.1em", color: "#C9943A", fontWeight: 500 }}>{label}</div>
         <div style={{ fontSize: "11px", color: "#999" }}>{sub}</div>
@@ -66,7 +69,7 @@ export function NotasPerfume({ topo, coracao, fundo }: { topo: Nota[], coracao: 
   )
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "21px" }}>
       {secao("TOPO", "primeira impressão", topo)}
       {secao("CORAÇÃO", "a essência", coracao)}
       {secao("FUNDO", "o que fica", fundo)}

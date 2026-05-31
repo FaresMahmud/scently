@@ -13,20 +13,20 @@ export const metadata: Metadata = {
 
 export default function PaginaTermos() {
   return (
-    <main style={{ maxWidth: "680px", margin: "0 auto", padding: "4rem 2rem" }}>
+    <main style={{ maxWidth: "680px", margin: "0 auto", padding: "55px 34px" }}>
       <p style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "1rem" }}>
         legal
       </p>
-      <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "2.5rem", lineHeight: 1.1 }}>
+      <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(42px, 5vw, 68px)", marginBottom: "34px", lineHeight: 1.1 }}>
         Termos de Uso
       </h1>
 
-      <p style={{ fontSize: "0.82rem", color: "var(--cor-texto-suave)", marginBottom: "2.5rem" }}>
+      <p style={{ fontSize: "0.82rem", color: "var(--cor-texto-suave)", marginBottom: "34px" }}>
         Última atualização: janeiro de 2025
       </p>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           1. Aceitação dos termos
         </h2>
         <p>
@@ -34,8 +34,8 @@ export default function PaginaTermos() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           2. Uso do serviço
         </h2>
         <p>
@@ -43,8 +43,8 @@ export default function PaginaTermos() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           3. Propriedade intelectual
         </h2>
         <p>
@@ -52,8 +52,8 @@ export default function PaginaTermos() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           4. Divulgação de links de afiliados
         </h2>
         <p>
@@ -61,8 +61,8 @@ export default function PaginaTermos() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           5. Limitação de responsabilidade
         </h2>
         <p>
@@ -70,8 +70,8 @@ export default function PaginaTermos() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           6. Links externos
         </h2>
         <p>
@@ -79,8 +79,8 @@ export default function PaginaTermos() {
         </p>
       </section>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+      <section style={{ marginBottom: "34px" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           7. Modificações
         </h2>
         <p>
@@ -89,7 +89,7 @@ export default function PaginaTermos() {
       </section>
 
       <section>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "1.4rem", marginBottom: "0.75rem" }}>
+        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "13px" }}>
           8. Contato
         </h2>
         <p>

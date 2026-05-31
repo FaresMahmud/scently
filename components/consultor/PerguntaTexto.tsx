@@ -43,7 +43,7 @@ export default function PerguntaTexto({
           letterSpacing: "0.12em",
           textTransform: "uppercase",
           color: "var(--cor-destaque)",
-          marginBottom: "1.5rem",
+          marginBottom: "21px",
         }}
       >
         {progresso}
@@ -54,8 +54,8 @@ export default function PerguntaTexto({
         style={{
           fontFamily: "var(--fonte-titulo)",
           fontWeight: 300,
-          fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
-          marginBottom: opcional ? "0.5rem" : "2rem",
+          fontSize: "clamp(26px, 4vw, 42px)",
+          marginBottom: opcional ? "8px" : "34px",
           lineHeight: 1.2,
         }}
       >
@@ -64,7 +64,7 @@ export default function PerguntaTexto({
 
       {/* Indicador de campo opcional */}
       {opcional && (
-        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "1.75rem" }}>
+        <p style={{ fontSize: "0.8rem", color: "var(--cor-texto-suave)", marginBottom: "21px" }}>
           Campo opcional. Pode pular se preferir.
         </p>
       )}
@@ -87,13 +87,13 @@ export default function PerguntaTexto({
           borderRadius: "var(--raio-borda-suave)",
           padding: "0.9rem 1.1rem",
           outline: "none",
-          marginBottom: "1.5rem",
+          marginBottom: "21px",
           transition: "border-color 0.2s",
         }}
       />
 
       {/* Botões de ação */}
-      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: "13px", flexWrap: "wrap" }}>
         <Botao onClick={() => onResponder(valor)} disabled={!opcional && !valor.trim()} style={{ opacity: !opcional && !valor.trim() ? 0.4 : 1 }}>
           Continuar
         </Botao>

@@ -17,8 +17,8 @@ export default function NaoEncontrado() {
         flexDirection: "column",
         justifyContent: "center",
         minHeight: "60vh",
-        paddingTop: "4rem",
-        paddingBottom: "4rem",
+        paddingTop: "55px",
+        paddingBottom: "55px",
       }}
     >
       {/* Número do erro — decorativo */}
@@ -41,21 +41,21 @@ export default function NaoEncontrado() {
         style={{
           fontFamily: "var(--fonte-titulo)",
           fontWeight: 300,
-          fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
-          marginBottom: "0.75rem",
+          fontSize: "clamp(26px, 4vw, 42px)",
+          marginBottom: "13px",
         }}
       >
         Página não encontrada
       </h1>
 
-      <p style={{ maxWidth: "380px", marginBottom: "2.5rem" }}>
+      <p style={{ maxWidth: "380px", marginBottom: "34px" }}>
         O endereço que você acessou não existe no {siteMeta.nome}.
       </p>
 
       <div className="separador" />
 
       {/* Links de retorno */}
-      <div style={{ display: "flex", gap: "1.5rem", marginTop: "1.5rem", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: "21px", marginTop: "21px", flexWrap: "wrap" }}>
         <Link
           href="/"
           style={{
@@ -67,7 +67,8 @@ export default function NaoEncontrado() {
             fontSize: "0.875rem",
             fontWeight: 500,
             letterSpacing: "0.07em",
-            padding: "0.85rem 2rem",
+            padding: "0 34px",
+            minHeight: "44px",
             borderRadius: "var(--raio-borda)",
           }}
         >
@@ -84,6 +85,7 @@ export default function NaoEncontrado() {
             fontSize: "0.875rem",
             fontWeight: 400,
             letterSpacing: "0.05em",
+            minHeight: "44px",
           }}
         >
           Iniciar consulta →
