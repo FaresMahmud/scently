@@ -139,7 +139,7 @@ export async function POST(req: NextRequest) {
     const genAI = new GoogleGenerativeAI(apiKey)
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" })
     const result = await model.generateContent([
-      { inlineData: { data: imageBase64, mimeType } },
+      { inlineData: { mimeType, data: imageBase64 } },
       VISION_PROMPT,
     ])
     const raw = result.response.text().trim()
