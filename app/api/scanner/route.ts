@@ -134,6 +134,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Serviço de identificação não configurado." }, { status: 503 })
   }
 
+  console.log("[Scanner] mimeType received:", mimeType)
+  console.log("[Scanner] base64 length:", imageBase64?.length)
+
   let geminiResult: GeminiResult
   try {
     const genAI = new GoogleGenerativeAI(apiKey)
@@ -150,11 +153,12 @@ export async function POST(req: NextRequest) {
       console.error("[Scanner] Gemini raw response:", raw)
       throw new Error("JSON inválido na resposta do Gemini")
     }
-  } catch {
-    return NextResponse.json(
-      { error: "Não foi possível identificar. Tente outro ângulo ou melhor iluminação." },
-      { status: 422 }
-    )
+  } catch (err: unknown) {
+    const e = err as { status?: number; message?: string; errorDetails?: unknown; response?: unknown }
+    console.error("[Scanner] Gemini error status:", e?.status)
+    console.error("[Scanner] Gemini error message:", e?.message)
+    console.error("[Scanner] Gemini error details:", JSON.stringify(e?.errorDetails ?? e?.response ?? "no details"))
+    return NextResponse.json({ erro: "Gemini falhou", detail: e?.message }, { status: 422 })
   }
 
   // Tenta catalog match sempre que há nome/marca — independente de found/confidence
