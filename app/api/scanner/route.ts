@@ -24,22 +24,23 @@ interface CatalogMatch {
   marca: string
   concentracao?: string
   familia?: string
+  notas?: string[]
 }
 
-const VISION_PROMPT = `You are a perfume identification expert. Analyze this image and identify the perfume.
-Return ONLY a valid JSON object, no markdown, no explanation:
+const VISION_PROMPT = `Você é um especialista em perfumaria. Analise esta imagem e identifique o perfume.
+Retorne APENAS um objeto JSON válido, sem markdown, sem explicação:
 {
   "found": true/false,
-  "name": "exact perfume name as written on bottle",
-  "brand": "brand name only",
+  "name": "nome exato do perfume como escrito no frasco",
+  "brand": "nome da marca apenas",
   "confidence": "high/medium/low",
-  "notes": ["note1", "note2", "note3"],
-  "family": "olfactory family (floral/woody/oriental/fresh/etc)",
-  "occasions": ["occasion1", "occasion2"],
-  "description": "2-3 sentence sensory description"
+  "notes": ["nota1", "nota2", "nota3"],
+  "family": "família olfativa (floral/amadeirado/oriental/fresco/etc)",
+  "occasions": ["ocasião1", "ocasião2"],
+  "description": "descrição sensorial de 2-3 frases em português"
 }
-If you cannot identify the perfume with at least medium confidence, set found: false.
-Focus on reading the text on the bottle/box label carefully.`
+Retorne found: false apenas se não conseguir identificar o perfume de forma alguma.
+Leia com atenção o texto no frasco ou na embalagem.`
 
 function normalizar(s: string): string {
   return s.toLowerCase()
@@ -92,12 +93,18 @@ function buscarMatchCatalogo(nome: string, marca: string): CatalogMatch | null {
 
   if (!best) return null
   const p = best.item
+  const notasCatalogo = [
+    ...(p.notasTopo    ?? []),
+    ...(p.notasCoracao ?? []),
+    ...(p.notasFundo   ?? []),
+  ].slice(0, 6)
   return {
     id: `${slugify(p.nome)}-${slugify(p.marca)}`,
     nome: p.nome,
     marca: p.marca,
     concentracao: p.concentracao ?? undefined,
     familia: p.familia ?? undefined,
+    notas: notasCatalogo.length > 0 ? notasCatalogo : undefined,
   }
 }
 
@@ -137,7 +144,12 @@ export async function POST(req: NextRequest) {
     ])
     const raw = result.response.text().trim()
     const json = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim()
-    geminiResult = JSON.parse(json) as GeminiResult
+    try {
+      geminiResult = JSON.parse(json) as GeminiResult
+    } catch {
+      console.error("[Scanner] Gemini raw response:", raw)
+      throw new Error("JSON inválido na resposta do Gemini")
+    }
   } catch {
     return NextResponse.json(
       { error: "Não foi possível identificar. Tente outro ângulo ou melhor iluminação." },
@@ -145,9 +157,15 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const catalogMatch = geminiResult.found
+  // Tenta catalog match sempre que há nome/marca — independente de found/confidence
+  const catalogMatch = (geminiResult.name && geminiResult.brand)
     ? buscarMatchCatalogo(geminiResult.name, geminiResult.brand)
     : null
+
+  // Substitui notas inventadas pelo Gemini pelas notas reais do catálogo
+  if (catalogMatch?.notas && catalogMatch.notas.length > 0) {
+    geminiResult.notes = catalogMatch.notas
+  }
 
   // Optionally save to acervo if user is authenticated
   const authUser = getAuthUser(req)
