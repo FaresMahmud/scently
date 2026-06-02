@@ -76,7 +76,7 @@ export default function MenuMobileToggle() {
           style={{
             position: "fixed",
             inset: 0,
-            backgroundColor: "rgba(26,26,24,0.4)",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
             zIndex: 9998,
           }}
         />
@@ -87,9 +87,9 @@ export default function MenuMobileToggle() {
         className="menu-mobile-drawer"
         style={{
           position: "fixed",
-          top: "64px",
+          top: 0,
           right: 0,
-          bottom: 0,
+          height: "100vh",
           width: "260px",
           backgroundColor: "var(--cor-base)",
           borderLeft: "1px solid var(--cor-borda)",
@@ -97,6 +97,7 @@ export default function MenuMobileToggle() {
           transform: aberto ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.25s ease",
           pointerEvents: aberto ? "auto" : "none",
+          display: "flex",
           flexDirection: "column",
           padding: "34px 21px",
           gap: "0.25rem",

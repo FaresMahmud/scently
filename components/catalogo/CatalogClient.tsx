@@ -104,15 +104,15 @@ export default function CatalogClient({ perfumes, totalFragella }: Props) {
   // Filtra + ordena todos os resultados
   const resultados = useMemo(() => {
     let lista = perfumes.filter(p => {
-      // Busca por texto (nome/marca)
+      // Busca por texto — divide em palavras, todas devem aparecer no texto combinado
+      // Ex: "Sauvage EDP Dior" → ["sauvage","edp","dior"] → match se cada palavra aparece em nome|marca|concentracao
       if (busca.trim()) {
-        const q = normalizar(busca)
-        const bate =
-          normalizar(p.nome ?? "").includes(q) ||
-          normalizar(p.marca ?? "").includes(q) ||
-          p.notas?.some(n => normalizar(n).includes(q)) ||
-          normalizar(p.inspiracaoInfo ?? "").includes(q)
-        if (!bate) return false
+        const palavras = normalizar(busca).split(/\s+/).filter(Boolean)
+        const texto = normalizar(
+          [p.nome, p.marca, p.concentracao, p.inspiracaoInfo, ...(p.notas ?? [])]
+            .filter(Boolean).join(" ")
+        )
+        if (!palavras.every(w => texto.includes(w))) return false
       }
       // Filtro de família — traduz PT→EN e busca nos acordes e campo família
       if (familiaAtiva) {
