@@ -1,8 +1,8 @@
 // ============================================
 // ARQUIVO: lib/ai.ts
-// O QUE FAZ: integração com Groq via fetch direto — monta prompt e retorna recomendação
+// O QUE FAZ: integração com DeepSeek via fetch direto — monta prompt e retorna recomendação
 // QUANDO MANDAR PRA IA: quando quiser mudar tom de voz, estrutura do JSON ou modelo usado
-// DEPENDE DE: .env.local (GROQ_API_KEY), data/regras-preco.json
+// DEPENDE DE: .env.local (DEEPSEEK_API_KEY), data/regras-preco.json
 // ============================================
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
@@ -139,17 +139,17 @@ export function formatarRespostas(r: RespostasQuiz): string {
   return partes.join("|")
 }
 
-async function chamarGroq(chave: string, prompt: string): Promise<string> {
-  const url = "https://api.groq.com/openai/v1/chat/completions"
+async function chamarDeepSeek(chave: string, prompt: string): Promise<string> {
+  const url = "https://api.deepseek.com/chat/completions"
 
   const body = {
-    model: "llama-3.3-70b-versatile",
+    model: "deepseek-chat",
     messages: [
       { role: "system", content: SYSTEM_PROMPT },
       { role: "user", content: prompt },
     ],
-    temperature: 0.9,
-    max_tokens: 1024,
+    temperature: 0.7,
+    max_tokens: 1000,
     response_format: { type: "json_object" },
   }
 
@@ -183,9 +183,9 @@ async function chamarGroq(chave: string, prompt: string): Promise<string> {
 export async function gerarRecomendacao(
   respostas: Record<string, unknown>
 ): Promise<RecomendacaoIA | null> {
-  const chave = process.env.GROQ_API_KEY
+  const chave = process.env.DEEPSEEK_API_KEY
   if (!chave || chave === "sua_chave_aqui") {
-    console.error("[IA] GROQ_API_KEY não configurada")
+    console.error("[IA] DEEPSEEK_API_KEY não configurada")
     return null
   }
 
@@ -259,8 +259,8 @@ REGRAS OBRIGATÓRIAS:
   console.log("[IA] Prompt enviado:", prompt)
 
   try {
-    console.log("[IA] Chamando Groq llama-3.3-70b-versatile")
-    const texto = await chamarGroq(chave, prompt)
+    console.log("[IA] Chamando DeepSeek deepseek-chat")
+    const texto = await chamarDeepSeek(chave, prompt)
     console.log("[IA] Resposta bruta:", texto.slice(0, 200))
 
     const jsonMatch = texto.match(/\{[\s\S]*\}/)
