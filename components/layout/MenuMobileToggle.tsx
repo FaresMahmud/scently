@@ -77,7 +77,7 @@ export default function MenuMobileToggle() {
             position: "fixed",
             inset: 0,
             backgroundColor: "rgba(26,26,24,0.4)",
-            zIndex: 40,
+            zIndex: 9998,
           }}
         />
       )}
@@ -93,7 +93,7 @@ export default function MenuMobileToggle() {
           width: "260px",
           backgroundColor: "var(--cor-base)",
           borderLeft: "1px solid var(--cor-borda)",
-          zIndex: 50,
+          zIndex: 9999,
           transform: aberto ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.25s ease",
           pointerEvents: aberto ? "auto" : "none",

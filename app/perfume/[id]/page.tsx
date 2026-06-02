@@ -299,6 +299,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
           <ImagemPerfume
             src={imagemSrc}
             alt={`${perfume.nome} — ${perfume.marca}`}
+            nome={perfume.nome}
             marca={perfume.marca}
           />
 
