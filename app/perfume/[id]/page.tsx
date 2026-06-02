@@ -295,24 +295,12 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
         {/* Layout duas colunas */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))", gap: "55px", alignItems: "start" }}>
 
-          {/* Coluna esquerda — imagem */}
-          <div style={{
-            backgroundColor: "var(--cor-borda)",
-            aspectRatio: "3/4",
-            borderRadius: "var(--raio-borda-suave)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-            position: "sticky",
-            top: "84px",
-          }}>
-            <ImagemPerfume
-              src={imagemSrc}
-              alt={`${perfume.nome} — ${perfume.marca}`}
-              marca={perfume.marca}
-            />
-          </div>
+          {/* Coluna esquerda — imagem (sticky em desktop, relative em mobile) */}
+          <ImagemPerfume
+            src={imagemSrc}
+            alt={`${perfume.nome} — ${perfume.marca}`}
+            marca={perfume.marca}
+          />
 
           {/* Coluna direita — informações */}
           <div>

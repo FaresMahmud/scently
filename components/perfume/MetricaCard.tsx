@@ -1,6 +1,6 @@
 // ============================================
 // ARQUIVO: components/perfume/MetricaCard.tsx
-// O QUE FAZ: card de métrica pill (duração, sillage, avaliação) com tooltip no hover
+// O QUE FAZ: card de métrica pill (duração, sillage, avaliação) com tooltip no hover/tap
 // QUANDO MANDAR PRA IA: quando quiser mudar visual ou textos das métricas
 // DEPENDE DE: nada
 // ============================================
@@ -17,15 +17,16 @@ interface Props {
 }
 
 export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) {
-  const [active, setActive] = useState(false)
+  const [hover,   setHover]   = useState(false)
+  const [touched, setTouched] = useState(false)
+  const visible = hover || touched
 
   return (
     <div style={{ position: "relative" }}>
       <div
-        onMouseEnter={() => setActive(true)}
-        onMouseLeave={() => setActive(false)}
-        onTouchStart={() => setActive(true)}
-        onTouchEnd={() => setActive(false)}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onTouchStart={(e) => { e.preventDefault(); setTouched(t => !t) }}
         style={{
           display: "inline-flex",
           flexDirection: "column",
@@ -36,7 +37,7 @@ export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) 
           minHeight: "44px",
           borderRadius: "999px",
           border: "1px solid #D4C8B8",
-          background: active ? "#F5F0EA" : "transparent",
+          background: visible ? "#F5F0EA" : "transparent",
           cursor: "help",
           transition: "background 0.15s",
         }}
@@ -54,13 +55,14 @@ export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) 
           {valor}
         </span>
       </div>
-      {active && (
+      {visible && (
         <div style={{
           position: "absolute",
           bottom: "calc(100% + 8px)",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "200px",
+          width: "min(200px, 80vw)",
+          maxWidth: "calc(100vw - 32px)",
           background: "var(--cor-base)",
           border: "1px solid var(--cor-borda)",
           borderRadius: "8px",

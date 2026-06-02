@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import type { GeminiResult } from "@/app/api/scanner/route"
 import OndeComprar from "@/components/perfume/OndeComprar"
+import { slugify } from "@/lib/utils"
 
 interface CatalogMatch {
   id: string
@@ -54,7 +55,7 @@ function BotaoSalvar({ nome, marca }: { nome: string; marca: string }) {
   async function salvar() {
     if (estado !== "idle") return
     setEstado("saving")
-    const perfumeId = `${nome.toLowerCase().replace(/\s+/g,"-")}-${marca.toLowerCase().replace(/\s+/g,"-")}`
+    const perfumeId = `${slugify(nome)}-${slugify(marca)}`
     try {
       const res = await fetch("/api/perfil/acervo", {
         method: "POST",

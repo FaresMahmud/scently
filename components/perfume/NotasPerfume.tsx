@@ -56,7 +56,7 @@ export function NotasPerfume({ topo, coracao, fundo }: { topo: Nota[], coracao: 
 
   const secao = (label: string, sub: string, notas: Nota[]) => notas.length === 0 ? null : (
     <div style={{ display: "flex", gap: "13px", alignItems: "flex-start" }}>
-      <div style={{ minWidth: "110px" }}>
+      <div style={{ minWidth: "90px" }}>
         <div style={{ fontSize: "11px", letterSpacing: "0.1em", color: "#C9943A", fontWeight: 500 }}>{label}</div>
         <div style={{ fontSize: "11px", color: "#999" }}>{sub}</div>
       </div>
