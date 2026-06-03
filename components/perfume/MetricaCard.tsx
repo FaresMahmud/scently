@@ -9,6 +9,27 @@
 
 import { useState, useRef } from "react"
 
+const LONGEVIDADE_PT: Record<string, string> = {
+  "weak":             "Fraca",
+  "moderate":         "Moderada",
+  "long lasting":     "Longa duração",
+  "very long lasting":"Muito longa",
+  "eternal":          "Eterna",
+}
+
+const SILLAGE_PT: Record<string, string> = {
+  "intimate": "Íntima",
+  "moderate": "Moderado",
+  "strong":   "Forte",
+  "enormous": "Enorme",
+  "soft":     "Suave",
+}
+
+function traduzirValor(valor: string): string {
+  const lower = valor.toLowerCase().trim()
+  return LONGEVIDADE_PT[lower] ?? SILLAGE_PT[lower] ?? valor
+}
+
 interface Props {
   label: string
   valor: string
@@ -64,7 +85,7 @@ export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) 
           {label}
         </span>
         <span style={{ fontSize: "12px", fontWeight: 500, color: corTexto }}>
-          {valor}
+          {traduzirValor(valor)}
         </span>
       </div>
       {visible && (

@@ -9,6 +9,35 @@
 import { useState, useEffect } from "react"
 import { traduzir } from "@/lib/utils"
 
+const ESTACOES_PT: Record<string, string> = {
+  "summer":  "Verão",
+  "spring":  "Primavera",
+  "fall":    "Outono",
+  "autumn":  "Outono",
+  "winter":  "Inverno",
+}
+
+const OCASIOES_PT: Record<string, string> = {
+  "casual":       "Casual",
+  "professional": "Profissional",
+  "night out":    "Noite",
+  "leisure":      "Lazer",
+  "sport":        "Esporte",
+  "evening":      "Noite",
+  "daily":        "Dia a dia",
+  "business":     "Negócios",
+  "romantic":     "Romântico",
+  "outdoor":      "Ao ar livre",
+}
+
+function traduzirEstacao(name: string): string {
+  return ESTACOES_PT[name.toLowerCase()] || traduzir(name)
+}
+
+function traduzirOcasiao(name: string): string {
+  return OCASIOES_PT[name.toLowerCase()] || traduzir(name)
+}
+
 interface RankingItem { name: string; score: number }
 
 function nivelDoScore(score: number, maxScore: number): { label: string; cor: string; bg: string; borda: string; porcentagem: number } {
@@ -26,7 +55,7 @@ function gerarExplicacao(
   familia: string
 ): string {
   const fam = familia?.toLowerCase() ?? ""
-  const nome = traduzir(itemNome)
+  const nome = tipo === "estacao" ? traduzirEstacao(itemNome) : traduzirOcasiao(itemNome)
 
   // Categorias de família
   const isQuente = /oriental|amadeirado|woody|amber|oud|especiado|spicy|gourmand|vanilla|baunilha/.test(fam)
@@ -120,7 +149,7 @@ function ItemRanking({ item, tipo, maxScore, nomePerfume, familia }: {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
       <span style={{ fontSize: "13px", color: "var(--cor-texto)", width: "90px", flexShrink: 0 }}>
-        {traduzir(item.name)}
+        {tipo === "estacao" ? traduzirEstacao(item.name) : traduzirOcasiao(item.name)}
       </span>
       <div style={{ flex: 1, height: "4px", background: "#EDE8E0", borderRadius: "2px", overflow: "hidden" }}>
         <div style={{
