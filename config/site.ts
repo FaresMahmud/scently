@@ -17,8 +17,8 @@ export const siteMeta = {
 // Textos da página inicial
 export const textosHome = {
   heroTitulo: "O perfume que você\nainda não conhece\nestá aqui.",
-  heroSubtitulo: "Responda algumas perguntas. Seu consultor encontra a fragrância que é sua.",
-  heroBotao: "Iniciar consulta",
+  heroSubtitulo: "O Nozze analisa seu estilo, ocasião e gosto — e te apresenta a fragrância que parece ter sido feita para você. Sem cadastro. Resultado em 2 minutos.",
+  heroBotao: "Encontrar meu perfume",
   heroBotaoSecundario: "Explorar perfumes",
   secaoConsultor: "Como funciona",
   secaoConsultorDescricao: "Seu consultor particular de perfumaria. Gratuito, sem cadastro, resultado em minutos.",

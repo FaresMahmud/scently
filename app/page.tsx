@@ -18,14 +18,14 @@ export const metadata: Metadata = {
   keywords: ["perfume", "fragrância", "consultor de perfume", "recomendação de perfume", "perfume masculino", "perfume feminino", "perfume unissex"],
   openGraph: {
     title: "Nozze — Encontre o perfume certo para você",
-    description: "Consultor de perfumaria com IA. Grátis, sem cadastro.",
+    description: "Consultor de perfumaria com IA. Sem cadastro. Resultado em 2 minutos.",
     type: "website",
     url: "https://nozze.app",
   },
   twitter: {
     card: "summary",
     title: "Nozze — Encontre o perfume certo para você",
-    description: "Consultor de perfumaria com IA. Grátis, sem cadastro.",
+    description: "Consultor de perfumaria com IA. Sem cadastro. Resultado em 2 minutos.",
   },
 }
 

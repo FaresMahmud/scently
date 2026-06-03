@@ -45,7 +45,7 @@ export default function Footer() {
             {siteMeta.nome}
           </Link>
           <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.78rem", color: "var(--cor-texto-suave)", lineHeight: 1.6, maxWidth: "220px" }}>
-            Consultoria de perfumaria guiada por IA. Grátis, sem cadastro.
+            Sem cadastro. Resultado em 2 minutos.
           </p>
         </div>
 
