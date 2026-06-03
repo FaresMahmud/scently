@@ -1,12 +1,7 @@
 import type { Metadata } from "next"
-import { getTendencias, getUltimaAtualizacao, estacaoAtual } from "@/lib/tendencias"
-import HeroTendencias from "@/components/tendencias/HeroTendencias"
-import SecaoTendencias from "@/components/tendencias/SecaoTendencias"
+import { getTendencias, getUltimaAtualizacao } from "@/lib/tendencias"
+import { getCopyTendencia } from "@/lib/copyTendencia"
 import CardTendencia from "@/components/tendencias/CardTendencia"
-import CardMarca from "@/components/tendencias/CardMarca"
-import CardEstacao from "@/components/tendencias/CardEstacao"
-import BannerAtualizacao from "@/components/tendencias/BannerAtualizacao"
-import type { PerfumeTendencia } from "@/lib/tendencias"
 
 export const revalidate = 21600 // 6 hours
 
@@ -21,12 +16,8 @@ export const metadata: Metadata = {
   },
 }
 
-// Editorial season context sentences
-const CONTEXTO_ESTACAO: Record<string, (p: PerfumeTendencia) => string> = {
-  Verão:     p => `No calor brasileiro, ${p.nome} projeta melhor quando aplicado em pontos de pulso. Uma borrifada é suficiente.`,
-  Outono:    p => `Com a queda das temperaturas, ${p.nome} ganha profundidade e se desenvolve de forma mais lenta e envolvente.`,
-  Inverno:   p => `O frio intensifica cada acorde de ${p.nome}. Em ambientes fechados, a presença é marcante e duradoura.`,
-  Primavera: p => `A primavera equilibra as notas de ${p.nome} — nem quente demais para sobrecarregar, nem frio demais para apagar.`,
+function limparBadge(badge: string): string {
+  return badge.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}↑↓]/gu, "").trim()
 }
 
 export default async function PaginaTendencias() {
@@ -34,81 +25,93 @@ export default async function PaginaTendencias() {
     getTendencias(),
     getUltimaAtualizacao(),
   ])
-  const ultimaAtualizacao = ultimaAtualizacaoDate.toISOString()
-  const estacao = estacaoAtual()
 
-  // Group by marca for the brand spotlight
-  const porMarca = tendencias.reduce<Record<string, PerfumeTendencia[]>>((acc, p) => {
-    if (!acc[p.marca]) acc[p.marca] = []
-    acc[p.marca].push(p)
-    return acc
-  }, {})
-  const marcasDestaque = Object.entries(porMarca)
-    .sort((a, b) => b[1].length - a[1].length)
-    .slice(0, 6)
+  // Generate copies in parallel — manual copies resolve instantly, API as fallback
+  const copies = await Promise.all(
+    tendencias.map(p => getCopyTendencia(p.nome, p.marca, p.familia).catch(() => ""))
+  )
 
-  // "Mais procurados" — top 6 (or all if fewer)
-  const maisProcurados = tendencias.slice(0, 6)
-
-  // "Tendências da estação" — show up to 3 in dark cards
-  const tendenciasEstacao = tendencias.slice(0, 3)
-  const contextoFn = CONTEXTO_ESTACAO[estacao.nome] ?? ((p: PerfumeTendencia) => p.descricaoSensorial)
+  const ultimaFormatada = new Intl.DateTimeFormat("pt-BR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "America/Sao_Paulo",
+  }).format(ultimaAtualizacaoDate)
 
   return (
     <main>
-      <BannerAtualizacao ultimaAtualizacao={ultimaAtualizacao} />
+      {/* ── Hero dark ──────────────────────────────────── */}
+      <section style={{ backgroundColor: "#1A1A18", borderBottom: "1px solid rgba(245,242,237,0.08)" }}>
+        <div className="container-site" style={{ paddingTop: "89px", paddingBottom: "89px" }}>
+          <p style={{
+            fontFamily: "DM Sans, sans-serif",
+            fontSize: "13px",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: "#C4714A",
+            marginBottom: "21px",
+          }}>
+            tendências
+          </p>
+          <h1 style={{
+            fontFamily: "Cormorant Garamond, serif",
+            fontWeight: 300,
+            fontSize: "clamp(42px, 7vw, 82px)",
+            color: "#F5F2ED",
+            lineHeight: 1.05,
+            marginBottom: "34px",
+            letterSpacing: "-0.02em",
+            maxWidth: "700px",
+          }}>
+            O que o mundo está usando agora.
+          </h1>
+          <p style={{
+            fontFamily: "DM Sans, sans-serif",
+            fontSize: "14px",
+            color: "rgba(245,242,237,0.35)",
+            letterSpacing: "0.04em",
+          }}>
+            Atualizado em {ultimaFormatada}
+          </p>
+        </div>
+      </section>
 
-      {/* ── Hero ─────────────────────────────────────────── */}
-      <HeroTendencias ultimaAtualizacao={ultimaAtualizacao} />
+      {/* ── Conteúdo editorial ─────────────────────────── */}
+      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 55px" }}>
 
-      {/* ── Mais procurados esta semana ───────────────────── */}
-      <SecaoTendencias
-        titulo="Mais procurados esta semana"
-        subtitulo="Os perfumes que o Brasil está buscando, sentindo e comprando agora."
-        scrollHorizontal
-      >
-        {maisProcurados.map((p, i) => (
-          <div
-            key={p.id}
-            style={{
-              scrollSnapAlign: "start",
-              flex: "0 0 280px",
-            }}
-          >
-            <CardTendencia perfume={p} destaque={i === 0} />
-          </div>
-        ))}
-      </SecaoTendencias>
+        {/* Seção — Esta semana */}
+        <div style={{ paddingTop: "55px", paddingBottom: "89px" }}>
+          <p style={{
+            fontFamily: "DM Sans, sans-serif",
+            fontSize: "13px",
+            fontWeight: 500,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "rgba(26,26,24,0.4)",
+            marginBottom: "0",
+          }}>
+            Esta semana
+          </p>
 
-      {/* ── Tendências da estação ─────────────────────────── */}
-      <SecaoTendencias
-        titulo={`Tendências do ${estacao.nome} ${estacao.emoji}`}
-        subtitulo={`Como usar perfume no ${estacao.nome} brasileiro — seleção de fragrâncias que funcionam agora.`}
-        fundoAlternativo
-      >
-        {tendenciasEstacao.map(p => (
-          <CardEstacao
-            key={p.id}
-            perfume={p}
-            estacao={estacao}
-            contexto={contextoFn(p)}
-          />
-        ))}
-      </SecaoTendencias>
-
-      {/* ── Marcas em destaque ───────────────────────────── */}
-      {marcasDestaque.length > 0 && (
-        <SecaoTendencias
-          titulo="Marcas em destaque"
-          subtitulo="Casas de perfumaria cujas fragrâncias dominam as buscas desta semana."
-        >
-          {marcasDestaque.map(([marca, perfumes]) => (
-            <CardMarca key={marca} marca={marca} perfumes={perfumes} />
+          {/* Cards — single column, borders as dividers */}
+          {tendencias.map((p, i) => (
+            <CardTendencia
+              key={p.id}
+              nome={p.nome}
+              marca={p.marca}
+              badge={limparBadge(p.badge)}
+              tipo={p.tipo}
+              preco={p.preco_estimado}
+              copy={copies[i] || p.descricaoSensorial}
+            />
           ))}
-        </SecaoTendencias>
-      )}
 
-      {/* ── CTA footer ───────────────────────────────────── */}
+          {/* Bottom border */}
+          <div style={{ borderTop: "1px solid rgba(26,26,24,0.12)", marginTop: "0" }} />
+        </div>
+      </div>
+
+      {/* ── CTA footer ─────────────────────────────────── */}
       <section style={{ backgroundColor: "#1A1A18", borderTop: "1px solid rgba(245,242,237,0.08)" }}>
         <div
           className="container-site"
@@ -122,27 +125,23 @@ export default async function PaginaTendencias() {
             gap: "21px",
           }}
         >
-          <p
-            style={{
-              fontFamily: "var(--fonte-titulo)",
-              fontWeight: 300,
-              fontSize: "clamp(26px, 4vw, 42px)",
-              color: "#F5F2ED",
-              maxWidth: "520px",
-              lineHeight: 1.2,
-            }}
-          >
+          <p style={{
+            fontFamily: "Cormorant Garamond, serif",
+            fontWeight: 300,
+            fontSize: "clamp(26px, 4vw, 42px)",
+            color: "#F5F2ED",
+            maxWidth: "520px",
+            lineHeight: 1.2,
+          }}>
             Não sabe qual perfume é o seu?
           </p>
-          <p
-            style={{
-              fontFamily: "var(--fonte-corpo)",
-              fontSize: "16px",
-              color: "rgba(245,242,237,0.55)",
-              maxWidth: "380px",
-              lineHeight: 1.6,
-            }}
-          >
+          <p style={{
+            fontFamily: "DM Sans, sans-serif",
+            fontSize: "16px",
+            color: "rgba(245,242,237,0.55)",
+            maxWidth: "380px",
+            lineHeight: 1.6,
+          }}>
             Responda algumas perguntas e descubra a fragrância certa para você.
           </p>
           <a
@@ -154,7 +153,7 @@ export default async function PaginaTendencias() {
               padding: "0 34px",
               backgroundColor: "#C4714A",
               color: "#F5F2ED",
-              fontFamily: "var(--fonte-corpo)",
+              fontFamily: "DM Sans, sans-serif",
               fontSize: "0.875rem",
               fontWeight: 500,
               letterSpacing: "0.07em",
