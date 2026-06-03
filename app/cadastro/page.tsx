@@ -167,7 +167,7 @@ export default function PaginaCadastro() {
               marginBottom: "34px",
             }}
           >
-            Grátis, sem compromisso.
+            Sem cadastro obrigatório. Resultado em 2 minutos.
           </p>
 
           {/* Global error */}
