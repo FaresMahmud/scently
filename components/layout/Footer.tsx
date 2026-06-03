@@ -56,7 +56,9 @@ export default function Footer() {
           </p>
           <nav style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
             {[
+              { href: "/tendencias", texto: "Tendências" },
               { href: "/catalogo",   texto: "Catálogo" },
+              { href: "/scanner",    texto: "Scanner" },
               { href: "/consultor",  texto: "Consultor" },
             ].map(link => (
               <Link
