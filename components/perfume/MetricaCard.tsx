@@ -1,13 +1,13 @@
 // ============================================
 // ARQUIVO: components/perfume/MetricaCard.tsx
-// O QUE FAZ: card de métrica pill (duração, sillage, avaliação) com tooltip no hover/tap
+// O QUE FAZ: card de métrica pill (duração, sillage, avaliação) com tooltip clamped ao viewport
 // QUANDO MANDAR PRA IA: quando quiser mudar visual ou textos das métricas
 // DEPENDE DE: nada
 // ============================================
 
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 interface Props {
   label: string
@@ -17,16 +17,28 @@ interface Props {
 }
 
 export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) {
-  const [hover,   setHover]   = useState(false)
-  const [touched, setTouched] = useState(false)
+  const [hover,      setHover]      = useState(false)
+  const [touched,    setTouched]    = useState(false)
+  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0, width: 200 })
+  const pillRef = useRef<HTMLDivElement>(null)
   const visible = hover || touched
+
+  function updateTooltipPos() {
+    if (!pillRef.current) return
+    const rect = pillRef.current.getBoundingClientRect()
+    const tooltipWidth = Math.min(200, window.innerWidth - 32)
+    let left = rect.left + rect.width / 2 - tooltipWidth / 2
+    left = Math.max(16, Math.min(left, window.innerWidth - tooltipWidth - 16))
+    setTooltipPos({ top: rect.top - 8, left, width: tooltipWidth })
+  }
 
   return (
     <div style={{ position: "relative" }}>
       <div
-        onMouseEnter={() => setHover(true)}
+        ref={pillRef}
+        onMouseEnter={() => { updateTooltipPos(); setHover(true) }}
         onMouseLeave={() => setHover(false)}
-        onTouchStart={(e) => { e.preventDefault(); setTouched(t => !t) }}
+        onTouchStart={(e) => { e.preventDefault(); updateTooltipPos(); setTouched(t => !t) }}
         style={{
           display: "inline-flex",
           flexDirection: "column",
@@ -57,12 +69,11 @@ export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) 
       </div>
       {visible && (
         <div style={{
-          position: "absolute",
-          bottom: "calc(100% + 8px)",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "min(200px, 80vw)",
-          maxWidth: "calc(100vw - 32px)",
+          position: "fixed",
+          top: tooltipPos.top,
+          left: tooltipPos.left,
+          width: tooltipPos.width,
+          transform: "translateY(calc(-100% - 8px))",
           background: "var(--cor-base)",
           border: "1px solid var(--cor-borda)",
           borderRadius: "8px",
@@ -71,9 +82,10 @@ export default function MetricaCard({ label, valor, corTexto, tooltip }: Props) 
           lineHeight: 1.6,
           color: "var(--cor-texto)",
           boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-          zIndex: 10,
+          zIndex: 1000,
           whiteSpace: "normal",
           textAlign: "center",
+          pointerEvents: "none",
         }}>
           {tooltip}
         </div>

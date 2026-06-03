@@ -6,7 +6,7 @@
 // ============================================
 
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { traduzir } from "@/lib/utils"
 
 interface RankingItem { name: string; score: number }
@@ -183,11 +183,18 @@ export function RankingPerfume({ estacao, ocasiao, nomePerfume, familia }: {
   nomePerfume: string
   familia: string
 }) {
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 480)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
   const maxEstacao = Math.max(...estacao.map(i => i.score), 1)
   const maxOcasiao = Math.max(...ocasiao.map(i => i.score), 1)
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "34px", padding: "21px 0" }}>
+    <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "34px", padding: "21px 0" }}>
       <div>
         <p style={{ fontSize: "11px", letterSpacing: "0.12em", color: "var(--cor-texto-suave)", marginBottom: "13px", fontWeight: 500 }}>
           ESTAÇÃO IDEAL
