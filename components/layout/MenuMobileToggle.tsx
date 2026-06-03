@@ -8,7 +8,6 @@ export default function MenuMobileToggle() {
   const pathname = usePathname()
 
   useEffect(() => { setAberto(false) }, [pathname])
-
   useEffect(() => {
     document.body.style.overflow = aberto ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
@@ -23,117 +22,79 @@ export default function MenuMobileToggle() {
 
   return (
     <>
-      {/* Hamburger button — stays top RIGHT */}
       <button
         onClick={() => setAberto(true)}
-        aria-label="Abrir menu"
+        aria-label="Menu"
         style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: "8px",
-          minWidth: "44px",
-          minHeight: "44px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "5px",
+          background: "none", border: "none", cursor: "pointer",
+          padding: "10px", minWidth: "44px", minHeight: "44px",
+          display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center", gap: "5px",
         }}
       >
-        <span style={{ display: "block", width: "22px", height: "2px", backgroundColor: "#1A1A18" }} />
-        <span style={{ display: "block", width: "22px", height: "2px", backgroundColor: "#1A1A18" }} />
-        <span style={{ display: "block", width: "22px", height: "2px", backgroundColor: "#1A1A18" }} />
+        <span style={{ width: "22px", height: "2px", background: "#1A1A18", display: "block" }} />
+        <span style={{ width: "22px", height: "2px", background: "#1A1A18", display: "block" }} />
+        <span style={{ width: "22px", height: "2px", background: "#1A1A18", display: "block" }} />
       </button>
 
-      {/* Portal-like overlay + drawer, only rendered when open */}
       {aberto && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 9999 }}>
-          {/* Dark overlay on the LEFT */}
+        <>
           <div
             onClick={() => setAberto(false)}
             style={{
-              position: "absolute",
-              inset: 0,
+              position: "fixed", inset: 0,
               backgroundColor: "rgba(0,0,0,0.5)",
+              zIndex: 9998,
             }}
           />
-
-          {/* Drawer panel slides from RIGHT */}
           <div style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "min(300px, 80vw)",
-            height: "100%",
+            position: "fixed", top: 0, right: 0,
+            width: "280px", height: "100dvh",
             backgroundColor: "#F5F2ED",
-            display: "flex",
-            flexDirection: "column",
+            zIndex: 9999,
+            display: "flex", flexDirection: "column",
             padding: "21px",
-            boxShadow: "-4px 0 24px rgba(0,0,0,0.15)",
-            overflowY: "auto",
+            boxShadow: "-8px 0 32px rgba(0,0,0,0.12)",
           }}>
-            {/* Close button top right */}
             <button
               onClick={() => setAberto(false)}
               style={{
-                alignSelf: "flex-end",
-                background: "none",
-                border: "none",
-                fontSize: "20px",
-                cursor: "pointer",
-                color: "#1A1A18",
-                minWidth: "44px",
-                minHeight: "44px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: "21px",
+                alignSelf: "flex-end", background: "none", border: "none",
+                cursor: "pointer", fontSize: "22px", color: "#1A1A18",
+                minWidth: "44px", minHeight: "44px",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                marginBottom: "34px",
               }}
             >✕</button>
 
-            {/* Nav links */}
             <nav style={{ display: "flex", flexDirection: "column", flex: 1 }}>
               {links.map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  onClick={() => setAberto(false)}
-                  style={{
-                    fontSize: "26px",
-                    fontFamily: "Cormorant Garamond, serif",
-                    fontWeight: 300,
-                    color: "#1A1A18",
-                    textDecoration: "none",
-                    padding: "16px 0",
-                    borderBottom: "1px solid rgba(26,26,24,0.1)",
-                    display: "block",
-                    minHeight: "44px",
-                  }}
-                >{label}</Link>
+                <Link key={href} href={href} onClick={() => setAberto(false)} style={{
+                  fontSize: "26px",
+                  fontFamily: "Cormorant Garamond, serif",
+                  fontWeight: 300,
+                  color: "#1A1A18",
+                  textDecoration: "none",
+                  padding: "16px 0",
+                  borderBottom: "1px solid rgba(26,26,24,0.1)",
+                  display: "block",
+                }}>{label}</Link>
               ))}
             </nav>
 
-            {/* CTA at bottom */}
-            <Link
-              href="/consultor"
-              onClick={() => setAberto(false)}
-              style={{
-                display: "block",
-                backgroundColor: "#C4714A",
-                color: "#F5F2ED",
-                textAlign: "center",
-                padding: "14px 21px",
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: "16px",
-                textDecoration: "none",
-                minHeight: "44px",
-                marginTop: "34px",
-                borderRadius: "2px",
-              }}
-            >Iniciar consulta</Link>
+            <Link href="/consultor" onClick={() => setAberto(false)} style={{
+              display: "block",
+              backgroundColor: "#C4714A",
+              color: "#F5F2ED",
+              textAlign: "center",
+              padding: "14px",
+              fontFamily: "DM Sans, sans-serif",
+              fontSize: "16px",
+              textDecoration: "none",
+              marginTop: "34px",
+            }}>Iniciar consulta</Link>
           </div>
-        </div>
+        </>
       )}
     </>
   )
