@@ -22,6 +22,7 @@ import MetricaCard from "@/components/perfume/MetricaCard"
 import TagInfo from "@/components/perfume/TagInfo"
 import { slugify, traduzir } from "@/lib/utils"
 import { limparNomePerfume } from "@/lib/limparNomePerfume"
+import { gerarRankingEstacao, gerarRankingOcasiao } from "@/lib/gerarRanking"
 import type { Acorde } from "@/lib/types"
 
 // Páginas além do top 500 são geradas on-demand (ISR)
@@ -203,6 +204,17 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
       </main>
     )
   }
+
+  // Rankings de estação e ocasião via IA (fallback para dados Fragella)
+  const notasAll = [
+    ...(perfume.notasTopo    || []),
+    ...(perfume.notasCoracao || []),
+    ...(perfume.notasFundo   || []),
+  ]
+  const [rankingEstacao, rankingOcasiao] = await Promise.all([
+    gerarRankingEstacao(perfume.nome, perfume.familia || "", notasAll),
+    gerarRankingOcasiao(perfume.nome, perfume.familia || "", notasAll),
+  ])
 
   // Acordes — prefere porcentagens reais, senão mock
   const mockData = fonte === "mock" ? buscarMockPorId(id) : null
@@ -402,8 +414,8 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
               <>
                 <hr style={{ border: "none", borderTop: "0.5px solid var(--cor-borda)", margin: "0" }} />
                 <RankingPerfume
-                  estacao={perfume.rankingEstacao ?? []}
-                  ocasiao={perfume.rankingOcasiao ?? []}
+                  estacao={rankingEstacao.length > 0 ? rankingEstacao : (perfume.rankingEstacao ?? [])}
+                  ocasiao={rankingOcasiao.length > 0 ? rankingOcasiao : (perfume.rankingOcasiao ?? [])}
                   nomePerfume={perfume.nome}
                   familia={perfume.familia ?? ""}
                 />
