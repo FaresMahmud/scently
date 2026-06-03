@@ -12,6 +12,7 @@ import Image from "next/image"
 import Link from "next/link"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
 export interface DadosCardPerfume {
   id: string
@@ -108,7 +109,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
               color: "var(--cor-texto)",
             }}
           >
-            {perfume.nome}
+            {limparNomePerfume(perfume.nome, perfume.marca)}
           </h3>
         </Link>
 

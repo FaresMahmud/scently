@@ -5,6 +5,7 @@ import Link from "next/link"
 import type { GeminiResult } from "@/app/api/scanner/route"
 import OndeComprar from "@/components/perfume/OndeComprar"
 import { slugify } from "@/lib/utils"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
 interface CatalogMatch {
   id: string
@@ -154,7 +155,7 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
           {perfume.brand}
         </p>
         <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(26px, 6vw, 42px)", lineHeight: 1.08, color: "var(--cor-texto)" }}>
-          {perfume.name}
+          {limparNomePerfume(perfume.name, perfume.brand)}
         </h2>
       </div>
 

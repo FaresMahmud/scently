@@ -21,6 +21,7 @@ import { RankingPerfume } from "@/components/perfume/RankingPerfume"
 import MetricaCard from "@/components/perfume/MetricaCard"
 import TagInfo from "@/components/perfume/TagInfo"
 import { slugify, traduzir } from "@/lib/utils"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 import type { Acorde } from "@/lib/types"
 
 // Páginas além do top 500 são geradas on-demand (ISR)
@@ -360,7 +361,7 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
 
             {/* Nome */}
             <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, lineHeight: 1.08, marginBottom: "34px" }}>
-              {perfume.nome}
+              {limparNomePerfume(perfume.nome, perfume.marca)}
             </h1>
 
             {/* Descrição */}

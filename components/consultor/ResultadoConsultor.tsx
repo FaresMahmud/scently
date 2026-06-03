@@ -13,6 +13,7 @@ import Card from "@/components/ui/Card"
 import Tag from "@/components/ui/Tag"
 import type { RecomendacaoIA } from "@/lib/ai"
 import { textosConsultor } from "@/config/site"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 import { corDaNota } from "@/lib/coresNotas"
 import { traduzir, slugify } from "@/lib/utils"
 import OndeComprar from "@/components/perfume/OndeComprar"
@@ -167,7 +168,7 @@ export default function ResultadoConsultor({ recomendacao, onRecomecar }: PropsR
             marginBottom: "21px",
           }}
         >
-          {perfumePrincipal.nome}
+          {limparNomePerfume(perfumePrincipal.nome, perfumePrincipal.marca)}
         </h2>
 
         {/* Descrição sensorial */}
