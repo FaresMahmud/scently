@@ -7,10 +7,11 @@ interface CardTendenciaProps {
   tipo?: string
   preco?: string
   copy?: string
+  perfumeId?: string
   onClick?: () => void
 }
 
-export default function CardTendencia({ nome, marca, badge, tipo, preco, copy }: CardTendenciaProps) {
+export default function CardTendencia({ nome, marca, badge, tipo, preco, copy, perfumeId }: CardTendenciaProps) {
   const nomeClean = limparNomePerfume(nome, marca)
 
   const badgeColor = badge?.toLowerCase().includes("alta")     ? "#C4714A"
@@ -92,7 +93,7 @@ export default function CardTendencia({ nome, marca, badge, tipo, preco, copy }:
           }}>{preco}</span>
         )}
         <a
-          href="/consultor"
+          href={perfumeId ? `/perfume/${perfumeId}` : "/consultor"}
           style={{
             marginLeft: "auto",
             fontSize: "13px",
@@ -102,7 +103,7 @@ export default function CardTendencia({ nome, marca, badge, tipo, preco, copy }:
             letterSpacing: "0.06em",
             textTransform: "uppercase" as const,
           }}
-        >Consultar →</a>
+        >{perfumeId ? "Ver perfume →" : "Consultar →"}</a>
       </div>
     </div>
   )
