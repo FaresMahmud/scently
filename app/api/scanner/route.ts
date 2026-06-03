@@ -25,6 +25,7 @@ interface CatalogMatch {
   concentracao?: string
   familia?: string
   notas?: string[]
+  imagem?: string
 }
 
 const VISION_PROMPT = `Você é um especialista em perfumaria. Analise esta imagem e identifique o perfume.
@@ -41,6 +42,49 @@ Retorne APENAS um objeto JSON válido, sem markdown, sem explicação:
 }
 Retorne found: false apenas se não conseguir identificar o perfume de forma alguma.
 Leia com atenção o texto no frasco ou na embalagem.`
+
+const NOTAS_PT: Record<string, string> = {
+  "bergamot": "Bergamota", "lemon": "Limão", "orange": "Laranja",
+  "grapefruit": "Pomelo", "mandarin": "Tangerina", "lime": "Limão Taiti",
+  "rose": "Rosa", "jasmine": "Jasmim", "violet": "Violeta",
+  "iris": "Íris", "lavender": "Lavanda", "peony": "Peônia",
+  "lily": "Lírio", "tuberose": "Tuberosa", "ylang-ylang": "Ylang-Ylang",
+  "geranium": "Gerânio", "orange blossom": "Flor de Laranjeira",
+  "sandalwood": "Sândalo", "cedar": "Cedro", "vetiver": "Vetiver",
+  "oud": "Oud", "patchouli": "Patchouli", "oakmoss": "Musgo de Carvalho",
+  "vanilla": "Baunilha", "amber": "Âmbar", "musk": "Almíscar",
+  "incense": "Incenso", "benzoin": "Benjoim", "tonka bean": "Fava Tonka",
+  "cardamom": "Cardamomo", "cinnamon": "Canela", "pepper": "Pimenta",
+  "cloves": "Cravo", "cumin": "Cominho", "saffron": "Açafrão",
+  "nutmeg": "Noz-Moscada",
+  "sea breeze": "Brisa Marinha", "aquatic": "Aquático",
+  "mint": "Menta", "eucalyptus": "Eucalipto",
+  "apple": "Maçã", "peach": "Pêssego", "pear": "Pêra",
+  "plum": "Ameixa", "raspberry": "Framboesa", "blackcurrant": "Groselha",
+  "grapes": "Uva", "dried fruits": "Frutas Secas", "rum": "Rum",
+  "leather": "Couro", "tobacco": "Tabaco", "coffee": "Café",
+  "chocolate": "Chocolate", "honey": "Mel", "caramel": "Caramelo",
+  "woody": "Amadeirado", "fresh": "Fresco", "powdery": "Polvilhado",
+  "smoky": "Defumado", "earthy": "Terroso",
+}
+
+const FAMILIAS_PT: Record<string, string> = {
+  "floral": "Floral", "oriental floral": "Floral Oriental",
+  "woody": "Amadeirado", "fresh woody": "Amadeirado Fresco",
+  "oriental woody": "Oriental Amadeirado", "oriental": "Oriental",
+  "fresh": "Fresco", "citrus": "Cítrico", "aquatic": "Aquático",
+  "aromatic": "Aromático", "fougere": "Fougère", "chypre": "Chipre",
+  "gourmand": "Gourmand", "powdery": "Polvilhado", "spicy": "Especiado",
+  "musky": "Almiscarado", "leather": "Couro", "tobacco": "Tabaco",
+}
+
+function traduzirNota(nota: string): string {
+  return NOTAS_PT[nota.toLowerCase().trim()] || nota
+}
+
+function traduzirFamilia(familia: string): string {
+  return FAMILIAS_PT[familia.toLowerCase().trim()] || familia
+}
 
 function normalizar(s: string): string {
   return s.toLowerCase()
@@ -105,6 +149,7 @@ function buscarMatchCatalogo(nome: string, marca: string): CatalogMatch | null {
     concentracao: p.concentracao ?? undefined,
     familia: p.familia ?? undefined,
     notas: notasCatalogo.length > 0 ? notasCatalogo : undefined,
+    imagem: p.imagemTransparente || p.imagem || undefined,
   }
 }
 
@@ -160,6 +205,10 @@ export async function POST(req: NextRequest) {
     console.error("[Scanner] Gemini error details:", JSON.stringify(e?.errorDetails ?? e?.response ?? "no details"))
     return NextResponse.json({ erro: "Gemini falhou", detail: e?.message }, { status: 422 })
   }
+
+  // Traduz notas e família para PT (Gemini responde em inglês mesmo com prompt PT)
+  geminiResult.notes = geminiResult.notes.map(traduzirNota)
+  geminiResult.family = traduzirFamilia(geminiResult.family)
 
   // Tenta catalog match sempre que há nome/marca — independente de found/confidence
   const catalogMatch = (geminiResult.name && geminiResult.brand)

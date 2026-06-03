@@ -12,6 +12,7 @@ interface CatalogMatch {
   marca: string
   concentracao?: string
   familia?: string
+  imagem?: string
 }
 
 interface Props {
@@ -21,9 +22,9 @@ interface Props {
 }
 
 const CONFIANCA: Record<GeminiResult["confidence"], { label: string; cor: string; bg: string }> = {
-  high:   { label: "Identificado com alta confiança",  cor: "#508C64",     bg: "rgba(80,140,100,0.1)" },
-  medium: { label: "Resultado provável",               cor: "#C9A84C",     bg: "rgba(201,168,76,0.1)" },
-  low:    { label: "Identificação incerta",            cor: "#C4714A",     bg: "rgba(196,113,74,0.1)" },
+  high:   { label: "Identificado com alta confiança",  cor: "#F5F2ED", bg: "#C4714A" },
+  medium: { label: "Resultado provável",               cor: "#F5F2ED", bg: "#C9A84C" },
+  low:    { label: "Identificação incerta",            cor: "#1A1A18", bg: "rgba(26,26,24,0.1)" },
 }
 
 function Chip({ text, cor }: { text: string; cor?: string }) {
@@ -121,6 +122,22 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
       {/* Drag handle */}
       <div style={{ width: "40px", height: "4px", borderRadius: "2px", backgroundColor: "var(--cor-borda)", margin: "0 auto" }} />
 
+      {/* Imagem do catálogo */}
+      {catalogMatch?.imagem && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={catalogMatch.imagem}
+          alt={catalogMatch.nome}
+          style={{
+            width: "100%",
+            maxHeight: "200px",
+            objectFit: "contain",
+            backgroundColor: "#F5F2ED",
+            marginBottom: "21px",
+          }}
+        />
+      )}
+
       {/* Confidence badge */}
       <span style={{
         display: "inline-flex", alignItems: "center", alignSelf: "flex-start",
@@ -173,7 +190,6 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
         <p style={{
           fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)",
           lineHeight: 1.7,
-          display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden",
         }}>
           {perfume.description}
         </p>
