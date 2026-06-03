@@ -28,6 +28,12 @@ export default function MenuMobileToggle() {
     setAberto(false)
   }, [pathname])
 
+  // Bloqueia scroll do body quando o menu está aberto
+  useEffect(() => {
+    document.body.style.overflow = aberto ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
+  }, [aberto])
+
   return (
     <>
       {/* Botão hambúrguer — só visível no mobile */}
@@ -43,11 +49,13 @@ export default function MenuMobileToggle() {
           minHeight: "44px",
           minWidth: "44px",
           color: "var(--cor-texto)",
+          display: "flex",
           flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
           gap: "5px",
         }}
       >
-        {/* Três barras do hambúrguer — transformam em X quando aberto */}
         {[0, 1, 2].map((i) => (
           <span
             key={i}
@@ -68,15 +76,14 @@ export default function MenuMobileToggle() {
         ))}
       </button>
 
-      {/* Overlay escuro quando menu está aberto — só existe no mobile */}
+      {/* Overlay — cobre toda a tela, fecha o menu ao clicar */}
       {aberto && (
         <div
-          className="menu-mobile-overlay"
           onClick={() => setAberto(false)}
           style={{
             position: "fixed",
             inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            backgroundColor: "rgba(0,0,0,0.5)",
             zIndex: 9998,
           }}
         />
@@ -84,42 +91,68 @@ export default function MenuMobileToggle() {
 
       {/* Gaveta do menu */}
       <nav
-        className="menu-mobile-drawer"
         style={{
           position: "fixed",
           top: 0,
           right: 0,
-          height: "100vh",
-          width: "260px",
-          backgroundColor: "var(--cor-base)",
-          borderLeft: "1px solid var(--cor-borda)",
+          width: "280px",
+          height: "100dvh",
+          backgroundColor: "#F5F2ED",
           zIndex: 9999,
+          overflowY: "auto",
           transform: aberto ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 0.25s ease",
+          transition: "transform 0.25s cubic-bezier(0.32,0.72,0,1)",
           pointerEvents: aberto ? "auto" : "none",
           display: "flex",
           flexDirection: "column",
-          padding: "34px 21px",
-          gap: "0.25rem",
+          padding: "89px 34px 55px",
+          gap: "34px",
         }}
       >
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={() => setAberto(false)}
-            style={{
-              fontFamily: "var(--fonte-titulo)",
-              fontSize: "26px",
-              fontWeight: 300,
-              color: "var(--cor-texto)",
-              padding: "0.75rem 0",
-              borderBottom: "1px solid var(--cor-borda)",
-            }}
-          >
-            {link.texto}
-          </Link>
-        ))}
+        {/* Botão fechar (X) */}
+        <button
+          onClick={() => setAberto(false)}
+          aria-label="Fechar menu"
+          style={{
+            position: "absolute",
+            top: "21px",
+            right: "21px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            minHeight: "44px",
+            minWidth: "44px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#1A1A18",
+            fontSize: "1.25rem",
+          }}
+        >
+          ✕
+        </button>
+
+        {/* Links de navegação */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setAberto(false)}
+              style={{
+                fontFamily: "Cormorant Garamond, serif",
+                fontSize: "42px",
+                fontWeight: 300,
+                color: "#1A1A18",
+                textDecoration: "none",
+                display: "block",
+                lineHeight: 1.1,
+              }}
+            >
+              {link.texto}
+            </Link>
+          ))}
+        </div>
 
         {/* CTA no fundo do menu mobile */}
         <div style={{ marginTop: "auto" }}>
@@ -140,6 +173,7 @@ export default function MenuMobileToggle() {
               padding: "0.9rem",
               minHeight: "44px",
               borderRadius: "var(--raio-borda)",
+              textDecoration: "none",
             }}
           >
             Iniciar consulta
