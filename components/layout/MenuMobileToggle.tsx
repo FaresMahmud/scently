@@ -1,34 +1,17 @@
-// ============================================
-// ARQUIVO: components/layout/MenuMobileToggle.tsx
-// O QUE FAZ: botão hambúrguer e menu deslizante para navegação no celular
-// QUANDO MANDAR PRA IA: quando quiser adicionar links ao menu mobile ou mudar o comportamento
-// DEPENDE DE: styles/globals.css
-// ============================================
-
 "use client"
 
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 
-// Links do menu mobile — adicione aqui quando tiver mais páginas
-const links = [
-  { href: "/catalogo",   texto: "Catálogo" },
-  { href: "/tendencias", texto: "Tendências" },
-  { href: "/scanner",    texto: "Scanner" },
-  { href: "/consultor",  texto: "Consultor" },
-]
-
 export default function MenuMobileToggle() {
   const [aberto, setAberto] = useState(false)
   const pathname = usePathname()
 
-  // Fecha o menu sempre que a rota mudar
-  useEffect(() => {
-    setAberto(false)
-  }, [pathname])
+  const fechar = () => setAberto(false)
 
-  // Bloqueia scroll do body quando o menu está aberto
+  useEffect(() => { fechar() }, [pathname])
+
   useEffect(() => {
     document.body.style.overflow = aberto ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
@@ -36,9 +19,9 @@ export default function MenuMobileToggle() {
 
   return (
     <>
-      {/* Botão hambúrguer — só visível no mobile */}
+      {/* Botão hambúrguer */}
       <button
-        onClick={() => setAberto(!aberto)}
+        onClick={() => setAberto(v => !v)}
         aria-label={aberto ? "Fechar menu" : "Abrir menu"}
         className="menu-mobile-btn"
         style={{
@@ -76,10 +59,10 @@ export default function MenuMobileToggle() {
         ))}
       </button>
 
-      {/* Overlay — cobre toda a tela, fecha o menu ao clicar */}
+      {/* Overlay */}
       {aberto && (
         <div
-          onClick={() => setAberto(false)}
+          onClick={fechar}
           style={{
             position: "fixed",
             inset: 0,
@@ -89,97 +72,90 @@ export default function MenuMobileToggle() {
         />
       )}
 
-      {/* Gaveta do menu */}
-      <nav
+      {/* Drawer — sempre no DOM, visibilidade via transform */}
+      <div
         style={{
           position: "fixed",
           top: 0,
           right: 0,
-          width: "280px",
+          width: "min(300px, 80vw)",
           height: "100dvh",
           backgroundColor: "#F5F2ED",
           zIndex: 9999,
-          overflowY: "auto",
+          display: "flex",
+          flexDirection: "column",
+          padding: "21px",
+          boxShadow: "-4px 0 24px rgba(0,0,0,0.1)",
           transform: aberto ? "translateX(0)" : "translateX(100%)",
           transition: "transform 0.25s cubic-bezier(0.32,0.72,0,1)",
           pointerEvents: aberto ? "auto" : "none",
-          display: "flex",
-          flexDirection: "column",
-          padding: "89px 34px 55px",
-          gap: "34px",
         }}
       >
-        {/* Botão fechar (X) */}
+        {/* Botão fechar */}
         <button
-          onClick={() => setAberto(false)}
+          onClick={fechar}
           aria-label="Fechar menu"
           style={{
-            position: "absolute",
-            top: "21px",
-            right: "21px",
+            alignSelf: "flex-end",
             background: "none",
             border: "none",
+            fontSize: "24px",
             cursor: "pointer",
-            minHeight: "44px",
+            color: "#1A1A18",
             minWidth: "44px",
+            minHeight: "44px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "#1A1A18",
-            fontSize: "1.25rem",
+            marginBottom: "34px",
           }}
-        >
-          ✕
-        </button>
+        >✕</button>
 
-        {/* Links de navegação */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          {links.map((link) => (
+        {/* Links */}
+        <nav style={{ display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
+          {[
+            { href: "/catalogo",   label: "Catálogo" },
+            { href: "/tendencias", label: "Tendências" },
+            { href: "/scanner",    label: "Scanner" },
+            { href: "/consultor",  label: "Consultor" },
+          ].map(({ href, label }) => (
             <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setAberto(false)}
+              key={href}
+              href={href}
+              onClick={fechar}
               style={{
+                fontSize: "26px",
                 fontFamily: "Cormorant Garamond, serif",
-                fontSize: "42px",
                 fontWeight: 300,
                 color: "#1A1A18",
                 textDecoration: "none",
+                padding: "13px 0",
+                borderBottom: "1px solid rgba(26,26,24,0.1)",
                 display: "block",
-                lineHeight: 1.1,
+                minHeight: "44px",
               }}
-            >
-              {link.texto}
-            </Link>
+            >{label}</Link>
           ))}
-        </div>
+        </nav>
 
-        {/* CTA no fundo do menu mobile */}
-        <div style={{ marginTop: "auto" }}>
-          <Link
-            href="/consultor"
-            onClick={() => setAberto(false)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              backgroundColor: "var(--cor-destaque)",
-              color: "#fff",
-              fontFamily: "var(--fonte-corpo)",
-              fontSize: "0.875rem",
-              fontWeight: 500,
-              letterSpacing: "0.07em",
-              padding: "0.9rem",
-              minHeight: "44px",
-              borderRadius: "var(--raio-borda)",
-              textDecoration: "none",
-            }}
-          >
-            Iniciar consulta
-          </Link>
-        </div>
-      </nav>
+        {/* CTA */}
+        <Link
+          href="/consultor"
+          onClick={fechar}
+          style={{
+            display: "block",
+            backgroundColor: "#C4714A",
+            color: "#F5F2ED",
+            textAlign: "center",
+            padding: "13px 21px",
+            fontFamily: "DM Sans, sans-serif",
+            fontSize: "16px",
+            textDecoration: "none",
+            minHeight: "44px",
+            marginTop: "34px",
+          }}
+        >Iniciar consulta</Link>
+      </div>
     </>
   )
 }
