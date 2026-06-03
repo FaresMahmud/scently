@@ -39,60 +39,91 @@ export default function MenuMobileToggle() {
 
       {aberto && (
         <>
+          {/* Overlay */}
           <div
             onClick={() => setAberto(false)}
             style={{
-              position: "fixed", inset: 0,
-              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "fixed",
+              inset: 0,
+              backgroundColor: "rgba(0,0,0,0.6)",
               zIndex: 9998,
             }}
           />
+
+          {/* Drawer */}
           <div style={{
-            position: "fixed", top: 0, right: 0,
-            width: "280px", height: "100dvh",
+            position: "fixed",
+            top: 0,
+            right: 0,
+            width: "75vw",
+            maxWidth: "320px",
+            height: "100dvh",
             backgroundColor: "#F5F2ED",
             zIndex: 9999,
-            display: "flex", flexDirection: "column",
-            padding: "21px",
-            boxShadow: "-8px 0 32px rgba(0,0,0,0.12)",
+            display: "flex",
+            flexDirection: "column",
+            padding: 0,
+            boxShadow: "-8px 0 40px rgba(0,0,0,0.2)",
           }}>
-            <button
-              onClick={() => setAberto(false)}
-              style={{
-                alignSelf: "flex-end", background: "none", border: "none",
-                cursor: "pointer", fontSize: "22px", color: "#1A1A18",
-                minWidth: "44px", minHeight: "44px",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                marginBottom: "34px",
-              }}
-            >✕</button>
 
-            <nav style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            {/* Header row — X button */}
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              padding: "0 21px",
+              height: "64px",
+              borderBottom: "1px solid rgba(26,26,24,0.08)",
+            }}>
+              <button
+                onClick={() => setAberto(false)}
+                style={{
+                  background: "none", border: "none",
+                  cursor: "pointer", fontSize: "22px", color: "#1A1A18",
+                  minWidth: "44px", minHeight: "44px",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}
+              >✕</button>
+            </div>
+
+            {/* Nav */}
+            <nav style={{
+              padding: "13px 34px",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}>
               {links.map(({ href, label }) => (
                 <Link key={href} href={href} onClick={() => setAberto(false)} style={{
-                  fontSize: "26px",
+                  fontSize: "34px",
                   fontFamily: "Cormorant Garamond, serif",
                   fontWeight: 300,
                   color: "#1A1A18",
                   textDecoration: "none",
-                  padding: "16px 0",
-                  borderBottom: "1px solid rgba(26,26,24,0.1)",
+                  padding: "21px 0",
+                  borderBottom: "1px solid rgba(26,26,24,0.08)",
                   display: "block",
+                  letterSpacing: "-0.01em",
                 }}>{label}</Link>
               ))}
             </nav>
 
-            <Link href="/consultor" onClick={() => setAberto(false)} style={{
-              display: "block",
-              backgroundColor: "#C4714A",
-              color: "#F5F2ED",
-              textAlign: "center",
-              padding: "14px",
-              fontFamily: "DM Sans, sans-serif",
-              fontSize: "16px",
-              textDecoration: "none",
-              marginTop: "34px",
-            }}>Iniciar consulta</Link>
+            {/* CTA */}
+            <div style={{ padding: "21px 34px 34px" }}>
+              <Link href="/consultor" onClick={() => setAberto(false)} style={{
+                display: "block",
+                backgroundColor: "#C4714A",
+                color: "#F5F2ED",
+                textAlign: "center",
+                padding: "16px",
+                fontFamily: "DM Sans, sans-serif",
+                fontSize: "14px",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase" as const,
+                textDecoration: "none",
+              }}>Iniciar consulta</Link>
+            </div>
+
           </div>
         </>
       )}
