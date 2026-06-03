@@ -15,19 +15,19 @@ export async function gerarRankingEstacao(
   familia: string,
   notas: string[]
 ): Promise<RankingItem[]> {
-  const prompt = `Você é um especialista em perfumaria. Avalie quando usar o perfume "${nome}" (família: ${familia}, notas: ${notas.slice(0, 8).join(", ")}).
+  const prompt = `Perfume: "${nome}"
+Família olfativa: "${familia}"
+Notas principais: ${notas.slice(0, 6).join(", ")}
 
-REGRAS OBRIGATÓRIAS:
-- Perfumes aquáticos, cítricos, frescos: verão alto (3.5-4.0), inverno baixo (0.5-1.0)
-- Perfumes amadeirados, orientais, especiados: inverno alto (3.5-4.0), verão baixo (0.5-1.0)
-- Perfumes florais leves: primavera alto, inverno baixo
-- Perfumes gourmand/baunilha: outono/inverno alto
-- Tommy, Acqua di Gio, Chrome, Light Blue = perfumes de verão/primavera
+Classifique a adequação por estação. Siga ESTRITAMENTE estas regras:
+- Aquático/Cítrico/Fresco/Marine → verão: 3.8-4.0, primavera: 2.5-3.2, outono: 1.2-1.8, inverno: 0.5-0.9
+- Floral leve → primavera: 3.8-4.0, verão: 2.8-3.2, outono: 1.5-2.0, inverno: 0.8-1.2
+- Amadeirado/Oriental/Especiado → inverno: 3.8-4.0, outono: 3.0-3.5, primavera: 1.2-1.8, verão: 0.5-0.9
+- Gourmand/Baunilha/Âmbar → inverno: 4.0, outono: 3.5, primavera: 1.0, verão: 0.5
+- Fougère/Aromático → primavera: 3.5, verão: 2.8, outono: 2.5, inverno: 1.5
 
-Retorne APENAS este JSON (sem markdown, sem explicação):
-[{"name":"summer","score":NUMERO},{"name":"spring","score":NUMERO},{"name":"fall","score":NUMERO},{"name":"winter","score":NUMERO}]
-
-Scores entre 0.5 e 4.0. Seja realista — um perfume de verão NÃO pode ter inverno alto.`
+Retorne SOMENTE este JSON, sem nenhum texto adicional:
+[{"name":"summer","score":NUMERO},{"name":"spring","score":NUMERO},{"name":"fall","score":NUMERO},{"name":"winter","score":NUMERO}]`
 
   try {
     const response = await fetch("https://api.deepseek.com/chat/completions", {
@@ -57,18 +57,19 @@ export async function gerarRankingOcasiao(
   familia: string,
   notas: string[]
 ): Promise<RankingItem[]> {
-  const prompt = `Você é um especialista em perfumaria. Avalie as ocasiões ideais para "${nome}" (família: ${familia}, notas: ${notas.slice(0, 8).join(", ")}).
+  const prompt = `Perfume: "${nome}"
+Família olfativa: "${familia}"
+Notas principais: ${notas.slice(0, 6).join(", ")}
 
-REGRAS OBRIGATÓRIAS:
-- Perfumes frescos/aquáticos/cítricos: casual e esporte alto, noite baixo
-- Perfumes pesados/orientais/oud: noite e romântico alto, esporte baixo
-- Perfumes amadeirados médios: profissional e casual alto
-- Perfumes florais: romântico e casual alto
+Classifique a adequação por ocasião. Siga ESTRITAMENTE estas regras:
+- Aquático/Cítrico/Fresco → casual: 4.0, esporte: 3.5, profissional: 2.5, noite: 1.0, romântico: 1.2
+- Amadeirado leve/Fougère → profissional: 4.0, casual: 3.5, noite: 2.5, romântico: 2.8, esporte: 1.5
+- Oriental/Especiado/Oud → noite: 4.0, romântico: 3.8, profissional: 1.5, casual: 1.8, esporte: 0.5
+- Floral → romântico: 4.0, casual: 3.2, profissional: 2.5, noite: 2.0, esporte: 1.0
+- Gourmand → noite: 3.5, romântico: 3.8, casual: 2.0, profissional: 1.0, esporte: 0.5
 
-Retorne APENAS este JSON (sem markdown, sem explicação):
-[{"name":"casual","score":NUMERO},{"name":"professional","score":NUMERO},{"name":"night out","score":NUMERO},{"name":"sport","score":NUMERO},{"name":"romantic","score":NUMERO}]
-
-Scores entre 0.5 e 4.0. Seja realista e coerente com o perfil olfativo.`
+Retorne SOMENTE este JSON, sem nenhum texto adicional:
+[{"name":"casual","score":NUMERO},{"name":"professional","score":NUMERO},{"name":"night out","score":NUMERO},{"name":"sport","score":NUMERO},{"name":"romantic","score":NUMERO}]`
 
   try {
     const response = await fetch("https://api.deepseek.com/chat/completions", {

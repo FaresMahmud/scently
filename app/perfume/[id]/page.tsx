@@ -223,8 +223,12 @@ export default async function PaginaPerfume({ params }: { params: Promise<{ id: 
       ? acordesFragellaParaAcorde(perfume.acordesPorcentagem)
       : (mockData?.acordes ?? [])
 
-  // Imagem
-  const imagemSrc = perfume.imagemTransparente || perfume.imagem || ""
+  // Imagem — cadeia de fallback: transparente → jpg → fallbacks[0] → placeholder
+  const imagemSrc =
+    perfume.imagemTransparente ||
+    perfume.imagem ||
+    (Array.isArray(perfume.imagemFallbacks) && perfume.imagemFallbacks[0]) ||
+    ""
 
   // Descrição traduzida (Fragella retorna em inglês)
   const descricaoTraduzida = perfume.descricao
