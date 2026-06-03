@@ -42,10 +42,10 @@ export default function MenuMobileToggle() {
   }
 
   const links = [
-    { href: "/catalogo", label: "Catálogo" },
     { href: "/tendencias", label: "Tendências" },
-    { href: "/scanner", label: "Scanner" },
-    { href: "/consultor", label: "Consultor" },
+    { href: "/catalogo",   label: "Catálogo" },
+    { href: "/scanner",    label: "Scanner" },
+    { href: "/consultor",  label: "Consultor" },
   ]
 
   const drawerWidth = "min(320px, 80vw)"

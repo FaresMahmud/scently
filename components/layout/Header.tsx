@@ -56,23 +56,6 @@ export default function Header() {
         {/* Navegação desktop — esconde no mobile via CSS */}
         <nav className="nav-desktop">
           <Link
-            href="/catalogo"
-            style={{
-              fontFamily: "var(--fonte-corpo)",
-              fontSize: "0.8rem",
-              fontWeight: 400,
-              letterSpacing: "0.08em",
-              color: "var(--cor-texto-suave)",
-              display: "inline-flex",
-              alignItems: "center",
-              minHeight: "44px",
-              padding: "0 8px",
-            }}
-          >
-            catálogo
-          </Link>
-
-          <Link
             href="/tendencias"
             style={{
               fontFamily: "var(--fonte-corpo)",
@@ -87,6 +70,23 @@ export default function Header() {
             }}
           >
             tendências
+          </Link>
+
+          <Link
+            href="/catalogo"
+            style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "0.8rem",
+              fontWeight: 400,
+              letterSpacing: "0.08em",
+              color: "var(--cor-texto-suave)",
+              display: "inline-flex",
+              alignItems: "center",
+              minHeight: "44px",
+              padding: "0 8px",
+            }}
+          >
+            catálogo
           </Link>
 
           <Link
