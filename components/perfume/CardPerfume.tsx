@@ -8,7 +8,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import Tag from "@/components/ui/Tag"
 import { slugify } from "@/lib/utils"
@@ -67,14 +66,14 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
           }}
         >
           {!showPlaceholder ? (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={currentSrc}
               alt={`${perfume.nome} — ${perfume.marca}`}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 240px"
-              style={{ objectFit: "cover" }}
               referrerPolicy="no-referrer"
+              crossOrigin="anonymous"
               onError={() => setSrcIndex(i => i + 1)}
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           ) : (
             <div style={{
