@@ -12,7 +12,7 @@ interface CatalogMatch {
   familia?: string
 }
 
-type Estado = "idle" | "solicitando" | "streaming" | "capturando" | "carregando" | "resultado" | "negado" | "erro"
+type Estado = "idle" | "solicitando" | "streaming" | "carregando" | "resultado" | "negado" | "erro"
 
 function Spinner({ cor = "currentColor" }: { cor?: string }) {
   return (
@@ -73,16 +73,18 @@ export default function ScannerCamera({ isDesktop }: Props) {
 
   // Auto-start camera on mobile
   useEffect(() => {
-    if (!isDesktop) iniciarCamera()
+    if (!isDesktop) {
+      const id = requestAnimationFrame(() => iniciarCamera())
+      return () => cancelAnimationFrame(id)
+    }
   }, [isDesktop, iniciarCamera])
 
-  async function enviarParaApi(imageBase64: string, mimeType: string) {
+  async function enviarFormData(fd: FormData) {
     setEstado("carregando")
     try {
       const res = await fetch("/api/scanner", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ imageBase64, mimeType }),
+        body: fd,
       })
       if (res.status === 429) {
         setErroMsg("Limite de scans atingido. Tente de novo em alguns minutos.")
@@ -121,21 +123,25 @@ export default function ScannerCamera({ isDesktop }: Props) {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
     ctx.drawImage(video, 0, 0)
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.85)
-    const base64  = dataUrl.split(",")[1]
-    enviarParaApi(base64, "image/jpeg")
+    // Prefer to send binary via FormData to avoid base64 bloat
+    canvas.toBlob(async (blob) => {
+      if (!blob) {
+        setErroMsg("Erro ao capturar imagem.")
+        setEstado("erro")
+        return
+      }
+      const fd = new FormData()
+      fd.append("file", blob, "scan.jpg")
+      await enviarFormData(fd)
+    }, "image/jpeg", 0.85)
   }
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-    const reader = new FileReader()
-    reader.onload = () => {
-      const dataUrl = reader.result as string
-      const base64  = dataUrl.split(",")[1]
-      enviarParaApi(base64, file.type || "image/jpeg")
-    }
-    reader.readAsDataURL(file)
+    const fd = new FormData()
+    fd.append("file", file)
+    enviarFormData(fd)
     e.target.value = "" // Reset input so same file can be re-selected
   }
 

@@ -9,6 +9,8 @@ import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
 import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
+import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
+import { z } from "zod"
 
 export interface RespostasQuiz {
   perfil?: string
@@ -50,45 +52,35 @@ export interface RecomendacaoIA {
   }
 }
 
-const SYSTEM_PROMPT = `Consultor de perfumaria brasileiro. Responda APENAS em JSON válido, sem markdown, sem texto fora do JSON.
-Tom: sofisticado, próximo, sem travessões, sensorial, frases curtas.
+const RecomendacaoIASchema = z.object({
+  perfumePrincipal: z.object({
+    nome: z.string().min(1),
+    marca: z.string().min(1),
+    concentracao: z.enum(["EDP", "EDT", "EDC"]),
+    descricao: z.string().min(1),
+    notas: z.array(z.string()).max(8),
+  }),
+  conselho: z.string().min(1),
+  alternativa: z.object({
+    nome: z.string().min(1),
+    marca: z.string().min(1),
+    descricao: z.string().min(1),
+  }),
+})
+
+const SYSTEM_PROMPT = `${CONSULTOR_TONE_GUIDE}
 Schema obrigatório:
 {"perfumePrincipal":{"nome":"","marca":"","concentracao":"","descricao":"","notas":[]},"conselho":"","alternativa":{"nome":"","marca":"","descricao":""}}
 
-REGRA OBRIGATÓRIA DE PREÇO — nunca recomendar fora da faixa informada:
-
-preco:economico (até R$300):
-- Contratipos nacionais: In The Box, JA Essence, Maison Viegas, Azza Parfum (R$80–200)
-- Nacionais: O Boticário, Natura, Eudora (R$80–250)
-- Importados básicos: Cool Water Davidoff, Chrome Azzaro, Obsession Calvin Klein (R$150–300)
-Se preco:economico → recomendar APENAS contratipos ou nacionais. NUNCA recomendar Dior, Chanel, Tom Ford, Creed, Le Labo, Parfums de Marly.
-
-preco:medio (R$300–700):
-- Sauvage Dior EDT, Bleu de Chanel EDT, La Vie Est Belle Lancôme, Good Girl Carolina Herrera
-- Versace Eros EDP, Black Opium YSL, Boss Bottled Hugo Boss, Acqua di Giò EDT
-Se preco:medio → importados acessíveis. NUNCA recomendar Creed, Tom Ford Private Blend, Parfums de Marly, nicho acima de R$700.
-
-preco:premium (R$700–1.500):
-- Sauvage Dior EDP/Parfum, Tom Ford Black Orchid, Chanel N°5 EDP
-- Acqua di Giò Profumo, Chance Chanel EDP, Armani Code Absolu, Stronger With You Intensely
-
-preco:luxo (acima de R$1.500):
-- Creed Aventus (~R$2.600), Baccarat Rouge 540 (~R$2.000–3.000)
-- Tom Ford Private Blend: Tobacco Vanille, Lost Cherry, Oud Wood (~R$1.500–2.500)
-- Parfums de Marly Pegasus, Delina (~R$1.800–2.500)
-- Xerjoff Erba Pura, Amouage Reflection, Initio (R$2.000+)
-
-REGRA DE VARIEDADE — evite sempre os mesmos perfumes:
-- NUNCA recomendar Sauvage, Bleu de Chanel, La Vie Est Belle ou Good Girl a menos que o perfil seja muito genérico e não haja outra opção melhor
-- Se ousadia:ousado ou ousadia:raro → recomendar obrigatoriamente algo fora do mainstream. Exemplos: Replica Jazz Club, Santal 33, Hacivat Nishane, Erba Pura Xerjoff, Percival Parfums de Marly, Baccarat Rouge 540
-- Se ousadia:equilibrado → perfumes conhecidos mas com personalidade: Acqua di Giò Profumo, Black Orchid, Stronger With You Intensely, Armani Code Absolu
-- Se ousadia:seguro → aí sim pode recomendar os clássicos populares
-- Se perfil:colecionador ou perfil:entusiasta → NUNCA recomendar os top 5 mais vendidos. Vá para nicho, indie ou algo menos óbvio
-- Se cheiro:café → considerar Replica Coffee Break, Jazz Club, Tobacco Vanille
-- Se cheiro:madeira → considerar Santal 33, Oud Wood, Bois d'Argent
-- Se cheiro:couro → considerar Tuscan Leather, Cuir de Russie, Cuoium
-- Combine TODAS as respostas para chegar a algo único, não só a vibe principal
-Recomende APENAS perfumes que existem de verdade e são comercialmente disponíveis. Nunca invente nomes de perfumes. Se não tiver certeza absoluta de que o perfume existe, escolha outro que você tenha certeza.`
+Regras de decisão:
+- Nunca invente perfumes.
+- Se a faixa for economico, use apenas contratipos ou marcas nacionais.
+- Se a faixa for medio, evite nicho caro e mantenha importados acessiveis.
+- Se a pessoa pedir ousadia alta, fuja dos best-sellers mais obvios.
+- Use os campos de clima, estacao, hora, personalidade, ambiente e identidade juntos, nao isoladamente.
+- Mantenha "conselho" curto, pratico e com motivo claro.
+- Escolha uma alternativa realmente coerente, da mesma familia e clima.
+- Se houver duvida, prefira a opcao mais conhecida e plausivel.`
 
 const MARCAS_PROIBIDAS_ECONOMICO: string[] = regrasPreco.economico
 const MARCAS_PROIBIDAS_MEDIO: string[] = regrasPreco.medio
@@ -148,8 +140,8 @@ async function chamarDeepSeek(chave: string, prompt: string): Promise<string> {
       { role: "system", content: SYSTEM_PROMPT },
       { role: "user", content: prompt },
     ],
-    temperature: 0.7,
-    max_tokens: 1000,
+    temperature: 0.35,
+    max_tokens: 700,
     response_format: { type: "json_object" },
   }
 
@@ -220,7 +212,6 @@ export async function gerarRecomendacao(
     : ""
 
   const prompt = `Perfil: ${formatarRespostas(respostas as RespostasQuiz)}.${climaExtra}${instrucaoContratipos}
-Sessão: ${Math.random().toString(36).slice(2, 8)}
 
 Responda APENAS com JSON válido seguindo exatamente este exemplo:
 {
@@ -239,22 +230,15 @@ Responda APENAS com JSON válido seguindo exatamente este exemplo:
   }
 }
 
-REGRAS OBRIGATÓRIAS:
-- "nome" = nome do perfume específico NUNCA o nome da marca
-- "marca" = fabricante
-- "concentracao" = APENAS "EDP", "EDT" ou "EDC"
-- "descricao" = frase sensorial curta sem travessões
-- "conselho" = dica ESPECÍFICA e ÚTIL sobre como usar ou quando usar esse perfume.
-  Exemplos de boas dicas:
-  - "Aplique no pescoço e punhos 30 minutos antes de sair. O calor do corpo ativa as notas de baunilha progressivamente."
-  - "Ideal para ambientes fechados com ar-condicionado. O sillage moderado não incomoda em escritórios."
-  - "Use 2 borrifadas máximo: uma no peito, uma no pulso. Mais que isso vira excessivo neste tipo oriental."
-  - "Perfeito para noites de outono e inverno. As notas amadeiradas ganham profundidade com o frio."
-  - "Evite usar na praia ou calor intenso. A fixação cai e o álcool resseca a pele."
-  Nunca dê conselhos genéricos como "use moderadamente" ou "aplique nos pontos de pulso". Sempre explique o PORQUÊ.
-- "alternativa" deve ter MESMA família olfativa e MESMA faixa de clima que o principal
-- Se clima quente, AMBOS principal e alternativa devem ser frescos ou aquáticos
-- Se clima frio, AMBOS principal e alternativa devem ser orientais ou amadeirados`
+Regras obrigatórias:
+- "nome" é o perfume especifico, nunca a marca.
+- "marca" é o fabricante.
+- "concentracao" deve ser apenas EDP, EDT ou EDC.
+- "descricao" deve ser curta, sensorial e sem travessões.
+- "conselho" precisa ser pratico e explicar o motivo.
+- "alternativa" deve manter familia e clima coerentes com o principal.
+- Se o clima for quente, prefira frescos ou aquaticos.
+- Se o clima for frio, prefira orientais ou amadeirados.`
 
   console.log("[IA] Prompt enviado:", prompt)
 
@@ -266,8 +250,12 @@ REGRAS OBRIGATÓRIAS:
     const jsonMatch = texto.match(/\{[\s\S]*\}/)
     if (!jsonMatch) throw new Error("Sem JSON na resposta")
 
-    const resultado = JSON.parse(jsonMatch[0]) as RecomendacaoIA
-    if (!resultado.perfumePrincipal?.nome) throw new Error("JSON incompleto")
+    const parsed = RecomendacaoIASchema.safeParse(JSON.parse(jsonMatch[0]))
+    if (!parsed.success) {
+      console.error("[IA] JSON inválido:", parsed.error.issues.map(i => i.message).join("; "))
+      throw new Error("JSON inválido")
+    }
+    const resultado = parsed.data
 
     const faixaPreco = String((respostas as RespostasQuiz).faixaPreco ?? "")
     if (faixaPreco && !validarFaixaPreco(resultado, faixaPreco)) {

@@ -5,6 +5,10 @@ interface Window {
 
 const store = new Map<string, Window>()
 
+export function resetRateLimitStore() {
+  store.clear()
+}
+
 function check(
   key: string,
   limit: number,

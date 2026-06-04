@@ -8,13 +8,11 @@
 // Polyfill Web APIs para ambiente Node (necessário para next/server no Jest)
 import { TextEncoder, TextDecoder } from "util"
 global.TextEncoder = TextEncoder as typeof global.TextEncoder
-// @ts-ignore
+// @ts-expect-error TextDecoder is assigned from util for Jest Node polyfill
 global.TextDecoder = TextDecoder
 
 // Mocka next/server com implementações mínimas compatíveis com Node
 jest.mock("next/server", () => {
-  const { Readable } = require("stream")
-
   class MockNextRequest {
     private _body: string
     public headers: Map<string, string>
@@ -62,8 +60,10 @@ jest.mock("@/lib/ai", () => ({
 
 import { POST } from "@/app/api/consultor/route"
 import { gerarRecomendacao } from "@/lib/ai"
+import { resetRateLimitStore } from "@/lib/rateLimit"
 
 const mockGerarRecomendacao = gerarRecomendacao as jest.MockedFunction<typeof gerarRecomendacao>
+type ConsultorRequest = Parameters<typeof POST>[0]
 
 const RECOMENDACAO_MOCK = {
   perfumePrincipal: {
@@ -81,7 +81,7 @@ const RECOMENDACAO_MOCK = {
   },
 }
 
-function makeRequest(body: unknown, ip = "1.2.3.4"): any {
+function makeRequest(body: unknown, ip = "1.2.3.4") {
   return {
     headers: {
       get: (name: string) => {
@@ -96,7 +96,7 @@ function makeRequest(body: unknown, ip = "1.2.3.4"): any {
   }
 }
 
-function makeRequestNoForwardedFor(body: unknown, realIp = "10.0.0.1"): any {
+function makeRequestNoForwardedFor(body: unknown, realIp = "10.0.0.1") {
   return {
     headers: {
       get: (name: string) => {
@@ -111,7 +111,7 @@ function makeRequestNoForwardedFor(body: unknown, realIp = "10.0.0.1"): any {
   }
 }
 
-function makeRequestBadJson(): any {
+function makeRequestBadJson() {
   return {
     headers: {
       get: (name: string) => (name === "x-forwarded-for" ? "9.9.9.1" : null),
@@ -124,6 +124,7 @@ function makeRequestBadJson(): any {
 
 describe("POST /api/consultor — validação de entrada", () => {
   beforeEach(() => {
+    resetRateLimitStore()
     mockGerarRecomendacao.mockResolvedValue(RECOMENDACAO_MOCK)
   })
 
@@ -133,7 +134,7 @@ describe("POST /api/consultor — validação de entrada", () => {
 
   it("retorna 400 quando body é um objeto vazio", async () => {
     const req = makeRequest({})
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(400)
     const json = await res.json()
     expect(json.erro).toBeTruthy()
@@ -141,19 +142,19 @@ describe("POST /api/consultor — validação de entrada", () => {
 
   it("retorna 400 quando respostas é um array", async () => {
     const req = makeRequest({ respostas: [] })
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(400)
   })
 
   it("retorna 400 quando body não pode ser parseado como JSON", async () => {
     const req = makeRequestBadJson()
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(400)
   })
 
   it("retorna 200 e a recomendação quando respostas é válida (wrapper 'respostas')", async () => {
     const req = makeRequest({ respostas: { vibe: "fresco", faixaPreco: "medio" } }, "2.2.2.2")
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(200)
     const json = await res.json()
     expect(json.perfumePrincipal).toBeDefined()
@@ -162,7 +163,7 @@ describe("POST /api/consultor — validação de entrada", () => {
 
   it("aceita respostas diretamente no body (sem wrapper 'respostas')", async () => {
     const req = makeRequest({ vibe: "fresco" }, "3.3.3.3")
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(200)
   })
 
@@ -178,13 +179,14 @@ describe("POST /api/consultor — validação de entrada", () => {
   it("chama gerarRecomendacao com as respostas corretas", async () => {
     const respostas = { vibe: "fresco", faixaPreco: "premium" }
     const req = makeRequest({ respostas }, "20.20.20.20")
-    await POST(req)
+    await POST(req as ConsultorRequest)
     expect(mockGerarRecomendacao).toHaveBeenCalledWith(respostas)
   })
 })
 
 describe("POST /api/consultor — rate limiting", () => {
   beforeEach(() => {
+    resetRateLimitStore()
     mockGerarRecomendacao.mockResolvedValue(RECOMENDACAO_MOCK)
   })
 
@@ -196,18 +198,18 @@ describe("POST /api/consultor — rate limiting", () => {
     const ip = "5.5.5.5"
     const body = { vibe: "fresco", genero: "masculino" }
 
-    // As 10 primeiras devem passar
-    for (let i = 0; i < 10; i++) {
+    // As 20 primeiras devem passar
+    for (let i = 0; i < 20; i++) {
       const req = makeRequest(body, ip)
-      const res = await POST(req)
+      const res = await POST(req as ConsultorRequest)
       expect(res.status).toBe(200)
     }
 
-    // A 11ª deve ser bloqueada
-    const req11 = makeRequest(body, ip)
-    const res11 = await POST(req11)
-    expect(res11.status).toBe(429)
-    const json = await res11.json()
+    // A 21ª deve ser bloqueada
+    const req21 = makeRequest(body, ip)
+    const res21 = await POST(req21)
+    expect(res21.status).toBe(429)
+    const json = await res21.json()
     expect(json.erro).toContain("Limite")
   })
 
@@ -216,15 +218,15 @@ describe("POST /api/consultor — rate limiting", () => {
 
     // Esgota o limite do IP A
     const ipA = "6.6.6.6"
-    for (let i = 0; i < 10; i++) {
-      await POST(makeRequest(body, ipA))
+    for (let i = 0; i < 20; i++) {
+      await POST(makeRequest(body, ipA) as ConsultorRequest)
     }
-    const resA = await POST(makeRequest(body, ipA))
+    const resA = await POST(makeRequest(body, ipA) as ConsultorRequest)
     expect(resA.status).toBe(429)
 
     // IP B ainda deve funcionar
     const ipB = "7.7.7.7"
-    const resB = await POST(makeRequest(body, ipB))
+    const resB = await POST(makeRequest(body, ipB) as ConsultorRequest)
     expect(resB.status).toBe(200)
   })
 
@@ -232,11 +234,11 @@ describe("POST /api/consultor — rate limiting", () => {
     const ip = "8.8.8.8"
     const body = { vibe: "fresco" }
 
-    for (let i = 0; i < 10; i++) {
-      await POST(makeRequest(body, ip))
+    for (let i = 0; i < 20; i++) {
+      await POST(makeRequest(body, ip) as ConsultorRequest)
     }
 
-    const res = await POST(makeRequest(body, ip))
+    const res = await POST(makeRequest(body, ip) as ConsultorRequest)
     const json = await res.json()
     expect(json.erro).toMatch(/hora|limite/i)
   })
@@ -244,6 +246,7 @@ describe("POST /api/consultor — rate limiting", () => {
 
 describe("POST /api/consultor — extração de IP", () => {
   beforeEach(() => {
+    resetRateLimitStore()
     mockGerarRecomendacao.mockResolvedValue(RECOMENDACAO_MOCK)
   })
 
@@ -253,13 +256,13 @@ describe("POST /api/consultor — extração de IP", () => {
 
   it("usa x-forwarded-for quando presente", async () => {
     const req = makeRequest({ vibe: "fresco" }, "10.0.0.1")
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(200)
   })
 
   it("usa x-real-ip como fallback quando x-forwarded-for não está presente", async () => {
     const req = makeRequestNoForwardedFor({ vibe: "fresco" }, "10.0.0.99")
-    const res = await POST(req)
+    const res = await POST(req as ConsultorRequest)
     expect(res.status).toBe(200)
   })
 })

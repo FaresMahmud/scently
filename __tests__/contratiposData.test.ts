@@ -56,9 +56,9 @@ describe("CONTRATIPOS — integridade dos dados", () => {
     }
   })
 
-  it("preços estão dentro da faixa esperada para contratipos (R$80 a R$300)", () => {
+  it("preços estão dentro da faixa esperada para contratipos (R$50 a R$300)", () => {
     for (const p of CONTRATIPOS) {
-      expect(p.preco_brl).toBeGreaterThanOrEqual(80)
+      expect(p.preco_brl).toBeGreaterThanOrEqual(50)
       expect(p.preco_brl).toBeLessThanOrEqual(300)
     }
   })

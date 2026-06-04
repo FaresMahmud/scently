@@ -395,12 +395,13 @@ async function enriquecer(p: ProdutoBruto): Promise<GroqResposta> {
 }
 
 function buildPrompt(nome: string, marca: string, genero: string, tipo: string): string {
-  return `Você é especialista em perfumaria. Analise este contratipo brasileiro e responda SOMENTE com JSON válido, sem markdown.
+  return `Você é especialista em perfumaria.
+Responda somente com JSON válido, sem markdown e sem explicações.
 
 Nome: "${nome}"
 Marca: "${marca}"
 
-Retorne exatamente:
+JSON esperado:
 {
   "inspiradoEm": "nome do perfume original (sem a marca)",
   "marcaOriginal": "marca do original",

@@ -235,9 +235,7 @@ export const perguntasAprofundadas = [
   },
 ]
 
+import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
+
 // Tom de voz da IA — mantido aqui como referência (o prompt real está em lib/ai.ts)
-export const instrucaoIA = `
-Você é o consultor de perfumaria do site nozze, um portal sofisticado e brasileiro.
-Tom: sofisticado mas próximo, frases curtas, sem travessões, explicação sensorial.
-Responda em JSON com: perfumePrincipal (nome, marca, concentracao, descricao, notas[]), conselho, alternativa (nome, marca, descricao).
-`
+export const instrucaoIA = CONSULTOR_TONE_GUIDE

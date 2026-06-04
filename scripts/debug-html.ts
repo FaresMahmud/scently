@@ -1,4 +1,4 @@
-const fs = require("fs") as typeof import("fs")
+import * as fs from "fs"
 
 async function main() {
   // ITB

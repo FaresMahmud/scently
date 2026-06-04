@@ -3,7 +3,11 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import type { GeminiResult } from "@/app/api/scanner/route"
-import OndeComprar from "@/components/perfume/OndeComprar"
+import dynamic from "next/dynamic"
+const OndeComprar = dynamic(() => import("@/components/perfume/OndeComprar"), {
+  ssr: false,
+  loading: () => <div style={{ fontSize: "0.9rem", color: "var(--cor-texto-suave)" }}>Carregando ofertas…</div>
+})
 import { slugify } from "@/lib/utils"
 import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
@@ -94,13 +98,21 @@ function BotaoSalvar({ nome, marca }: { nome: string; marca: string }) {
 export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }: Props) {
   const [autenticado, setAutenticado] = useState<boolean | null>(null)
   const [visivel, setVisivel] = useState(false)
+  const [mostrarComplementos, setMostrarComplementos] = useState(false)
 
   useEffect(() => {
-    fetch("/api/auth/me").then(r => setAutenticado(r.ok)).catch(() => setAutenticado(false))
     // Trigger slide-up after mount
-    const t = requestAnimationFrame(() => setVisivel(true))
+    const t = requestAnimationFrame(() => {
+      setVisivel(true)
+      setMostrarComplementos(true)
+    })
     return () => cancelAnimationFrame(t)
   }, [])
+
+  useEffect(() => {
+    if (!mostrarComplementos) return
+    fetch("/api/auth/me").then(r => setAutenticado(r.ok)).catch(() => setAutenticado(false))
+  }, [mostrarComplementos])
 
   const cc = CONFIANCA[perfume.confidence]
 
@@ -197,7 +209,7 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
       )}
 
       {/* Onde encontrar — only for high/medium confidence, after all details */}
-      {(perfume.confidence === "high" || perfume.confidence === "medium") && (
+      {mostrarComplementos && (perfume.confidence === "high" || perfume.confidence === "medium") && (
         <div style={{ paddingTop: "21px", borderTop: "1px solid rgba(26,26,24,0.1)" }}>
           <OndeComprar perfumeName={perfume.name} brand={perfume.brand} />
         </div>
@@ -208,7 +220,7 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
 
       {/* Actions */}
       <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
-        {catalogMatch && (
+        {mostrarComplementos && catalogMatch && (
           <Link
             href={`/perfume/${catalogMatch.id}`}
             style={{
@@ -223,7 +235,7 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
           </Link>
         )}
 
-        {autenticado === true && (
+        {mostrarComplementos && autenticado === true && (
           <BotaoSalvar nome={perfume.name} marca={perfume.brand} />
         )}
 

@@ -16,7 +16,11 @@ import { textosConsultor } from "@/config/site"
 import { limparNomePerfume } from "@/lib/limparNomePerfume"
 import { corDaNota } from "@/lib/coresNotas"
 import { traduzir, slugify } from "@/lib/utils"
-import OndeComprar from "@/components/perfume/OndeComprar"
+import dynamic from "next/dynamic"
+const OndeComprar = dynamic(() => import("@/components/perfume/OndeComprar"), {
+  ssr: false,
+  loading: () => <div style={{ fontSize: "0.9rem", color: "var(--cor-texto-suave)" }}>Carregando ofertas…</div>
+})
 
 function TagNota({ nota }: { nota: string }) {
   const [active, setActive] = useState(false)
