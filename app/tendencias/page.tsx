@@ -3,6 +3,7 @@ import { getTendencias, getUltimaAtualizacao } from "@/lib/tendencias"
 import { getCopyTendencia } from "@/lib/copyTendencia"
 import CardTendencia from "@/components/tendencias/CardTendencia"
 import { slugify } from "@/lib/utils"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
 export const revalidate = 21600 // 6 hours
 
@@ -104,7 +105,7 @@ export default async function PaginaTendencias() {
               tipo={p.tipo}
               preco={p.preco_estimado}
               copy={copies[i] || p.descricaoSensorial}
-              perfumeId={`${slugify(p.nome)}-${slugify(p.marca)}`}
+              perfumeId={`${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
             />
           ))}
 

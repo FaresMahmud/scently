@@ -22,10 +22,8 @@ export function limparNomePerfume(nome: string, marca: string): string {
     }
   }
 
-  // Remove gender suffix
-  limpo = limpo.replace(/\s+(masculino|feminino|unissex)$/i, "").trim()
-
-  // Remove concentration suffix (only if remainder still has content)
+  // Remove concentration suffix FIRST — scraped names have "Masculino Eau de Toilette"
+  // so we must strip concentration before gender
   const concentracoes = [
     "eau de parfum", "eau de toilette", "eau de cologne",
     "eau fraiche", "extrait de parfum", "parfum",
@@ -36,6 +34,9 @@ export function limparNomePerfume(nome: string, marca: string): string {
     const tentativa = limpo.replace(regex, "").trim()
     if (tentativa.length > 2) limpo = tentativa
   }
+
+  // Remove gender suffix (now at end after concentration stripped)
+  limpo = limpo.replace(/\s+(masculino|feminino|unissex|for men|for women|for him|for her)$/i, "").trim()
 
   return limpo.trim()
 }

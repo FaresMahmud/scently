@@ -8,6 +8,7 @@
 import { tendenciasRepository } from "@/lib/repositories/TendenciasRepository"
 import CardTendencia from "@/components/tendencias/CardTendencia"
 import { slugify } from "@/lib/utils"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
 function limparBadge(badge: string): string {
   return badge.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}↑↓]/gu, "").trim()
@@ -45,7 +46,7 @@ export default function EmAltaAgora() {
               tipo={p.tipo}
               preco={p.preco_estimado}
               copy={p.descricaoSensorial}
-              perfumeId={`${slugify(p.nome)}-${slugify(p.marca)}`}
+              perfumeId={`${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
             />
           ))}
         </div>
