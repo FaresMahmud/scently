@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
-import { GoogleGenerativeAI } from "@google/generative-ai"
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai"
 import { carregarCatalogo } from "@/lib/catalogoFragella"
 import { slugify } from "@/lib/utils"
 import { scannerRateLimit, getClientIp } from "@/lib/rateLimit"
 import { getAuthUser } from "@/lib/apiAuth"
 import { db } from "@/lib/db"
 import { scannerSchema, zodError } from "@/lib/schemas"
+import { z } from "zod"
+import { SCANNER_TONE_GUIDE } from "@/lib/aiPrompts"
 
 export interface GeminiResult {
   found: boolean
@@ -18,6 +20,28 @@ export interface GeminiResult {
   description: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const GeminiResultSchema: any = {
+  type: SchemaType.OBJECT,
+  properties: {
+    found: { type: SchemaType.BOOLEAN },
+    name: { type: SchemaType.STRING },
+    brand: { type: SchemaType.STRING },
+    confidence: { type: SchemaType.STRING, enum: ["high", "medium", "low"] },
+    notes: {
+      type: SchemaType.ARRAY,
+      items: { type: SchemaType.STRING },
+    },
+    family: { type: SchemaType.STRING },
+    occasions: {
+      type: SchemaType.ARRAY,
+      items: { type: SchemaType.STRING },
+    },
+    description: { type: SchemaType.STRING },
+  },
+  required: ["found", "name", "brand", "confidence", "notes", "family", "occasions", "description"],
+}
+
 interface CatalogMatch {
   id: string
   nome: string
@@ -28,20 +52,10 @@ interface CatalogMatch {
   imagem?: string
 }
 
-const VISION_PROMPT = `Você é um especialista em perfumaria. Analise esta imagem e identifique o perfume.
-Retorne APENAS um objeto JSON válido, sem markdown, sem explicação:
-{
-  "found": true/false,
-  "name": "nome exato do perfume como escrito no frasco",
-  "brand": "nome da marca apenas",
-  "confidence": "high/medium/low",
-  "notes": ["nota1", "nota2", "nota3"],
-  "family": "família olfativa (floral/amadeirado/oriental/fresco/etc)",
-  "occasions": ["ocasião1", "ocasião2"],
-  "description": "descrição sensorial de 2-3 frases em português"
-}
-Retorne found: false apenas se não conseguir identificar o perfume de forma alguma.
-Leia com atenção o texto no frasco ou na embalagem.`
+const VISION_PROMPT = `${SCANNER_TONE_GUIDE}
+Retorne apenas um JSON com estes campos: found, name, brand, confidence, notes, family, occasions, description.
+Use found=false so quando nao conseguir identificar com confianca.
+Prefira texto do frasco ou da embalagem antes de inferir pelo formato.`
 
 const NOTAS_PT: Record<string, string> = {
   "bergamot": "Bergamota", "lemon": "Limão", "orange": "Laranja",
@@ -164,15 +178,38 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  let raw: unknown
-  try { raw = await req.json() } catch {
-    return NextResponse.json({ error: "Corpo inválido." }, { status: 400 })
+  let imageBase64 = ""
+  let mimeType = "image/jpeg"
+
+  const contentType = req.headers.get("content-type") ?? ""
+  if (contentType.includes("multipart/form-data")) {
+    let formData: FormData
+    try {
+      formData = await req.formData()
+    } catch {
+      return NextResponse.json({ error: "Corpo inválido." }, { status: 400 })
+    }
+
+    const image = formData.get("file")
+    if (!(image instanceof File) || image.size === 0) {
+      return NextResponse.json({ error: "Imagem obrigatória." }, { status: 400 })
+    }
+
+    mimeType = image.type || "image/jpeg"
+    const buffer = Buffer.from(await image.arrayBuffer())
+    imageBase64 = buffer.toString("base64")
+  } else {
+    let raw: unknown
+    try { raw = await req.json() } catch {
+      return NextResponse.json({ error: "Corpo inválido." }, { status: 400 })
+    }
+
+    const parsed = scannerSchema.safeParse(raw)
+    if (!parsed.success) return zodError(parsed)
+
+    imageBase64 = parsed.data.imageBase64
+    mimeType = parsed.data.mimeType
   }
-
-  const parsed = scannerSchema.safeParse(raw)
-  if (!parsed.success) return zodError(parsed)
-
-  const { imageBase64, mimeType } = parsed.data
 
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
@@ -185,19 +222,45 @@ export async function POST(req: NextRequest) {
   let geminiResult: GeminiResult
   try {
     const genAI = new GoogleGenerativeAI(apiKey)
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        temperature: 0.1,
+        topP: 0.8,
+        maxOutputTokens: 320,
+        responseMimeType: "application/json",
+        responseSchema: GeminiResultSchema,
+      },
+    })
     const result = await model.generateContent([
       { inlineData: { mimeType, data: imageBase64 } },
       VISION_PROMPT,
     ])
-    const raw = result.response.text().trim()
-    const json = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim()
+    const json = result.response.text().trim()
     try {
       geminiResult = JSON.parse(json) as GeminiResult
     } catch {
-      console.error("[Scanner] Gemini raw response:", raw)
+      console.error("[Scanner] Gemini raw response:", json)
       throw new Error("JSON inválido na resposta do Gemini")
     }
+
+    const GeminiZod = z.object({
+      found: z.boolean(),
+      name: z.string(),
+      brand: z.string(),
+      confidence: z.enum(["high", "medium", "low"]),
+      notes: z.array(z.string()),
+      family: z.string(),
+      occasions: z.array(z.string()),
+      description: z.string(),
+    })
+
+    const parsed = GeminiZod.safeParse(geminiResult)
+    if (!parsed.success) {
+      console.warn("[Scanner] Gemini response validation failed:", parsed.error.format())
+      return NextResponse.json({ error: "Resposta inválida da IA" }, { status: 502 })
+    }
+    geminiResult = parsed.data as GeminiResult
   } catch (err: unknown) {
     const e = err as { status?: number; message?: string; errorDetails?: unknown; response?: unknown }
     console.error("[Scanner] Gemini error status:", e?.status)

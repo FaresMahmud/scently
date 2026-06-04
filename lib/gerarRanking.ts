@@ -1,6 +1,6 @@
 // ============================================
 // ARQUIVO: lib/gerarRanking.ts
-// O QUE FAZ: gera rankings de estação e ocasião via DeepSeek com base no perfil olfativo real
+// O QUE FAZ: gera rankings de estação e ocasião — override por nome, depois DeepSeek
 // QUANDO MANDAR PRA IA: quando quiser mudar o prompt ou os parâmetros do ranking
 // DEPENDE DE: .env.local (DEEPSEEK_API_KEY)
 // ============================================
@@ -10,12 +10,52 @@ interface RankingItem {
   score: number
 }
 
+// [summer, spring, fall, winter]
+const SCORES_FIXOS: Record<string, [number, number, number, number]> = {
+  summer: [3.9, 2.8, 1.4, 0.6],
+  winter: [0.6, 1.2, 3.0, 3.9],
+  spring: [2.8, 3.9, 1.8, 0.9],
+  fall:   [1.2, 1.8, 3.9, 3.2],
+}
+
+function detectarEstacaoNome(nome: string): string | null {
+  const n = nome.toLowerCase()
+  if (n.includes("summer") || n.includes("verão") || n.includes("verao") ||
+      n.includes("aqua")   || n.includes("blu")   || n.includes("blue")  ||
+      n.includes("eau fraiche") || n.includes("ocean") || n.includes("sea") ||
+      n.includes("marine"))
+    return "summer"
+  if (n.includes("winter")  || n.includes("inverno") || n.includes("noir")    ||
+      n.includes("intense") || n.includes("nuit")    || n.includes("night")   ||
+      n.includes("dark"))
+    return "winter"
+  if (n.includes("spring")   || n.includes("primavera") || n.includes("rose")    ||
+      n.includes("bloom")    || n.includes("blossom")   || n.includes("fleur"))
+    return "spring"
+  if (n.includes("autumn") || n.includes("fall")    || n.includes("outono") ||
+      n.includes("harvest") || n.includes("amber")  || n.includes("wood"))
+    return "fall"
+  return null
+}
+
 export async function gerarRankingEstacao(
   nome: string,
   familia: string,
   notas: string[]
 ): Promise<RankingItem[]> {
-  const prompt = `Perfume: "${nome}"
+  // Override por nome — sem chamada à API
+  const estacaoDetectada = detectarEstacaoNome(nome)
+  if (estacaoDetectada) {
+    const [s, sp, f, w] = SCORES_FIXOS[estacaoDetectada]
+    return [
+      { name: "summer", score: s  },
+      { name: "spring", score: sp },
+      { name: "fall",   score: f  },
+      { name: "winter", score: w  },
+    ]
+  }
+
+  const prompt = `IMPORTANTE: O nome do perfume é "${nome}" — use isso como contexto principal.
 Família olfativa: "${familia}"
 Notas principais: ${notas.slice(0, 6).join(", ")}
 
@@ -43,7 +83,7 @@ Retorne SOMENTE este JSON, sem nenhum texto adicional:
         temperature: 0.3,
       }),
     })
-    const data = await response.json()
+    const data  = await response.json()
     const text  = data.choices?.[0]?.message?.content?.trim() || "[]"
     const clean = text.replace(/```json|```/g, "").trim()
     return JSON.parse(clean) as RankingItem[]
@@ -57,7 +97,7 @@ export async function gerarRankingOcasiao(
   familia: string,
   notas: string[]
 ): Promise<RankingItem[]> {
-  const prompt = `Perfume: "${nome}"
+  const prompt = `IMPORTANTE: O nome do perfume é "${nome}" — use isso como contexto principal.
 Família olfativa: "${familia}"
 Notas principais: ${notas.slice(0, 6).join(", ")}
 
@@ -85,7 +125,7 @@ Retorne SOMENTE este JSON, sem nenhum texto adicional:
         temperature: 0.3,
       }),
     })
-    const data = await response.json()
+    const data  = await response.json()
     const text  = data.choices?.[0]?.message?.content?.trim() || "[]"
     const clean = text.replace(/```json|```/g, "").trim()
     return JSON.parse(clean) as RankingItem[]
