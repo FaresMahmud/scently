@@ -75,7 +75,10 @@ function fragellaParaCard(p: ReturnType<typeof carregarCatalogo>[number]): CardU
     marca:        p.marca,
     concentracao: p.concentracao || undefined,
     familia:      p.familia || undefined,
-    imagem:       p.imagemTransparente || p.imagem || undefined,
+    // Full fallback chain passed to card — card will try each on error
+    imagemTransparente: p.imagemTransparente || undefined,
+    imagem:             p.imagem || undefined,
+    imagemFallbacks:    p.imagemFallbacks?.length ? p.imagemFallbacks : undefined,
     rating:       p.rating ?? undefined,
     generoNorm:   normalizarGenero(p.genero),
     fonte:        "fragella",

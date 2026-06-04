@@ -39,6 +39,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.fimgs.net" },
       { protocol: "https", hostname: "img.fragrantica.com" },
       { protocol: "https", hostname: "**.fragrantica.com" },
+      { protocol: "https", hostname: "cdn.fragrancenet.com" },  // imagemFallbacks CDN
+      { protocol: "https", hostname: "**.fragrancenet.com" },
       { protocol: "https", hostname: "**.sephora.com.br" },
     ],
   },

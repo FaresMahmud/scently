@@ -21,7 +21,10 @@ export interface DadosCardPerfume {
   concentracao?: string
   familia?: string
   notas?: string[]
+  // Full image fallback chain — mirrors PerfumeFragella fields
   imagem?: string
+  imagemTransparente?: string
+  imagemFallbacks?: string[]
   rating?: number   // rating Bayesian da Fragella (0–10)
 }
 
@@ -30,8 +33,18 @@ interface PropsCardPerfume {
 }
 
 export default function CardPerfume({ perfume }: PropsCardPerfume) {
-  const [imgError, setImgError] = useState(false)
   const href = `/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`
+
+  // Build priority chain: transparent (.webp) → jpg → fallbacks → placeholder
+  const srcs = [
+    perfume.imagemTransparente,
+    perfume.imagem,
+    ...(perfume.imagemFallbacks ?? []),
+  ].filter((s): s is string => !!s)
+
+  const [srcIndex, setSrcIndex] = useState(0)
+  const currentSrc = srcs[srcIndex]
+  const showPlaceholder = !currentSrc
 
   return (
     <article
@@ -53,15 +66,15 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
             position: "relative",
           }}
         >
-          {perfume.imagem && !imgError ? (
+          {!showPlaceholder ? (
             <Image
-              src={perfume.imagem}
+              src={currentSrc}
               alt={`${perfume.nome} — ${perfume.marca}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 240px"
               style={{ objectFit: "cover" }}
               referrerPolicy="no-referrer"
-              onError={() => setImgError(true)}
+              onError={() => setSrcIndex(i => i + 1)}
             />
           ) : (
             <div style={{
