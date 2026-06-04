@@ -39,11 +39,19 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
     perfume.imagemTransparente,
     perfume.imagem,
     ...(perfume.imagemFallbacks ?? []),
-  ].filter((s): s is string => !!s)
+  ].filter(Boolean) as string[]
 
   const [srcIndex, setSrcIndex] = useState(0)
-  const currentSrc = srcs[srcIndex]
-  const showPlaceholder = !currentSrc
+  const [failed,   setFailed]   = useState(false)
+  const showPlaceholder = failed || srcs.length === 0
+
+  const handleError = () => {
+    if (srcIndex < srcs.length - 1) {
+      setSrcIndex(i => i + 1)
+    } else {
+      setFailed(true)
+    }
+  }
 
   return (
     <article
@@ -68,11 +76,10 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
           {!showPlaceholder ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={currentSrc}
+              src={srcs[srcIndex]}
               alt={`${perfume.nome} — ${perfume.marca}`}
               referrerPolicy="no-referrer"
-              crossOrigin="anonymous"
-              onError={() => setSrcIndex(i => i + 1)}
+              onError={handleError}
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           ) : (
