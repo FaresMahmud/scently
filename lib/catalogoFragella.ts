@@ -95,14 +95,28 @@ export function buscarPerfumePorSlug(slug: string): PerfumeFragella | null {
   })
   if (porNomeMarca) return porNomeMarca
 
-  // 3. Fuzzy match — divide o slug em palavras e busca perfume que contenha todas
+  // 3. Prefix match — o slug de input é prefixo do slug do catálogo
+  // Ex: "tommy-summer-tommy" é prefixo de "tommy-summer-tommy-hilfiger"
+  const porPrefixo = catalogo.find(p => {
+    const textoP = slugify(p.nome + " " + p.marca)
+    return textoP === slugLimpo || textoP.startsWith(slugLimpo + "-")
+  })
+  if (porPrefixo) return porPrefixo
+
+  // 4. Fuzzy match — divide em palavras e busca todos os candidatos,
+  //    preferindo o slug mais curto (menos palavras extras)
   const palavras = slugLimpo.split("-").filter(p => p.length > 2)
   if (palavras.length > 0) {
-    const porFuzzy = catalogo.find(p => {
+    const candidatos = catalogo.filter(p => {
       const textoP = slugify(p.nome + " " + p.marca)
       return palavras.every(palavra => textoP.includes(palavra))
     })
-    if (porFuzzy) return porFuzzy
+    if (candidatos.length > 0) {
+      candidatos.sort((a, b) =>
+        slugify(a.nome + " " + a.marca).length - slugify(b.nome + " " + b.marca).length
+      )
+      return candidatos[0]
+    }
   }
 
   return null
