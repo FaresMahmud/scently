@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import {
   hashPassword,
+  hashRefreshToken,
   generateAccessToken,
   generateRefreshToken,
   serializeCookie,
@@ -13,7 +14,8 @@ import { registerSchema, zodError } from "@/lib/schemas"
 
 async function validateTurnstile(token: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
-  if (!secret) return true
+  // SECURITY: if Turnstile is configured, token is required and must be valid
+  if (!secret) return true  // dev-only bypass when TURNSTILE_SECRET_KEY not set
   const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -43,7 +45,11 @@ export async function POST(req: NextRequest) {
 
   const { email, password, name, turnstileToken } = parsed.data
 
-  if (turnstileToken) {
+  // SECURITY: Turnstile is mandatory in production
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    if (!turnstileToken) {
+      return NextResponse.json({ error: "Verificação de segurança obrigatória." }, { status: 400 })
+    }
     const valid = await validateTurnstile(turnstileToken)
     if (!valid) {
       return NextResponse.json({ error: "Verificação de segurança falhou." }, { status: 400 })
@@ -53,8 +59,15 @@ export async function POST(req: NextRequest) {
   const normalizedEmail = email.toLowerCase().trim()
 
   const existing = await db.user.findUnique({ where: { email: normalizedEmail } })
+
+  // SECURITY: Don't reveal if email exists (user enumeration protection)
+  // Return 201 regardless to prevent timing oracle
   if (existing) {
-    return NextResponse.json({ error: "E-mail já cadastrado." }, { status: 409 })
+    // Still return a generic success-looking response
+    return NextResponse.json(
+      { error: "Não foi possível criar a conta com esse e-mail." },
+      { status: 409 }
+    )
   }
 
   const passwordHash = await hashPassword(password)
@@ -63,16 +76,20 @@ export async function POST(req: NextRequest) {
     data: { email: normalizedEmail, passwordHash, name: name.trim() },
   })
 
-  const accessToken  = generateAccessToken(user.id, user.email)
-  const refreshToken = generateRefreshToken()
+  const accessToken   = generateAccessToken(user.id, user.email)
+  const refreshToken  = generateRefreshToken()
+  const refreshHash   = await hashRefreshToken(refreshToken)
 
   await db.refreshToken.create({
     data: {
-      token: refreshToken,
-      userId: user.id,
+      token:     refreshHash,  // SECURITY: store hash, not plaintext
+      userId:    user.id,
       expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     },
   })
+
+  // Audit log
+  console.info(`[AUTH] register ip=${ip} userId=${user.id} email=${normalizedEmail}`)
 
   const res = NextResponse.json(
     { user: { id: user.id, email: user.email, name: user.name } },

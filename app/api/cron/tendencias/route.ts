@@ -18,15 +18,26 @@ function tipoDaMarca(marca: string): "importado" | "contratipo" | "nacional" {
 }
 
 function decodeHtml(s: string): string {
-  return s
+  // SECURITY: Strip all HTML tags first, then decode entities.
+  // Prevents stored XSS if scraping returns crafted markup.
+  const stripped = s.replace(/<[^>]+>/g, "")
+  return stripped
     .replace(/&amp;/g, "&").replace(/&nbsp;/g, " ")
     .replace(/&agrave;/g, "à").replace(/&aacute;/g, "á").replace(/&atilde;/g, "ã")
     .replace(/&eacute;/g, "é").replace(/&ecirc;/g, "ê")
     .replace(/&oacute;/g, "ó").replace(/&ocirc;/g, "ô").replace(/&otilde;/g, "õ")
     .replace(/&ccedil;/g, "ç")
-    .replace(/&#(\d+);/g, (_, n: string) => String.fromCharCode(parseInt(n)))
-    .replace(/<[^>]+>/g, "")
+    .replace(/&#(\d+);/g, (_, n: string) => {
+      const code = parseInt(n)
+      // SECURITY: Only allow printable ASCII and accented Latin chars
+      if (code < 32 || (code > 127 && code < 160)) return ""
+      return String.fromCharCode(code)
+    })
+    // SECURITY: Final pass — remove any remaining angle brackets that could encode tags
+    .replace(/[<>]/g, "")
     .trim()
+    // Limit length to prevent DB pollution
+    .slice(0, 100)
 }
 
 interface PerfumeRaspado {

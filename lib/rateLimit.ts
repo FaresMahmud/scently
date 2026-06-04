@@ -1,3 +1,10 @@
+// SECURITY WARNING: This rate limiter uses in-process memory.
+// On serverless platforms (Vercel), each function invocation may run in a
+// different process/instance, so state is NOT shared across instances.
+// This provides a best-effort defense against abuse but is NOT a distributed
+// rate limiter. For production hardening, replace with Redis (Upstash) or
+// Cloudflare Rate Limiting. The Turnstile CAPTCHA + DB-level account lockout
+// (implemented in auth routes) provide the primary brute-force protection.
 interface Window {
   count: number
   resetAt: number

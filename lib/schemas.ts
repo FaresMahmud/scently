@@ -13,15 +13,19 @@ export function zodError(result: { success: false; error: z.ZodError }): NextRes
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
 export const registerSchema = z.object({
-  email:          z.string().email("E-mail inválido."),
-  password:       z.string().min(8, "Senha deve ter no mínimo 8 caracteres."),
+  email:          z.string().email("E-mail inválido.").max(254, "E-mail muito longo."),
+  // SECURITY: max(72) prevents bcrypt silent truncation attack
+  // bcrypt only uses first 72 bytes — passwords differing only after byte 72 would match
+  password:       z.string()
+    .min(8, "Senha deve ter no mínimo 8 caracteres.")
+    .max(72, "Senha deve ter no máximo 72 caracteres."),
   name:           z.string().min(2, "Nome deve ter no mínimo 2 caracteres.").max(50, "Nome muito longo.").trim(),
   turnstileToken: z.string().optional(),
 })
 
 export const loginSchema = z.object({
-  email:          z.string().email("E-mail inválido."),
-  password:       z.string().min(1, "Senha é obrigatória."),
+  email:          z.string().email("E-mail inválido.").max(254),
+  password:       z.string().min(1, "Senha é obrigatória.").max(72, "Senha inválida."),
   turnstileToken: z.string().optional(),
 })
 

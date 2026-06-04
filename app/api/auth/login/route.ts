@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import {
   verifyPassword,
+  hashRefreshToken,
   generateAccessToken,
   generateRefreshToken,
   serializeCookie,
@@ -43,7 +44,11 @@ export async function POST(req: NextRequest) {
 
   const { email, password, turnstileToken } = parsed.data
 
-  if (turnstileToken) {
+  // SECURITY: Turnstile mandatory in production
+  if (process.env.TURNSTILE_SECRET_KEY) {
+    if (!turnstileToken) {
+      return NextResponse.json({ error: "Verificação de segurança obrigatória." }, { status: 400 })
+    }
     const valid = await validateTurnstile(turnstileToken)
     if (!valid) {
       return NextResponse.json({ error: "Verificação de segurança falhou." }, { status: 400 })
@@ -54,10 +59,14 @@ export async function POST(req: NextRequest) {
   const user = await db.user.findUnique({ where: { email: normalizedEmail } })
 
   if (!user) {
+    // SECURITY: constant-time-ish response for non-existent users
+    await new Promise(r => setTimeout(r, 200 + Math.random() * 100))
+    console.info(`[AUTH] login_failed_no_user ip=${ip} email=${normalizedEmail}`)
     return NextResponse.json({ error: "Credenciais inválidas." }, { status: 401 })
   }
 
   if (user.lockedUntil && user.lockedUntil > new Date()) {
+    console.info(`[AUTH] login_locked ip=${ip} userId=${user.id}`)
     return NextResponse.json(
       { error: "Conta temporariamente bloqueada.", lockedUntil: user.lockedUntil.toISOString() },
       { status: 423 }
@@ -76,6 +85,7 @@ export async function POST(req: NextRequest) {
         lockedUntil: shouldLock ? new Date(Date.now() + 15 * 60 * 1000) : null,
       },
     })
+    console.info(`[AUTH] login_failed ip=${ip} userId=${user.id} attempts=${newAttempts}`)
     if (shouldLock) {
       return NextResponse.json(
         {
@@ -95,19 +105,20 @@ export async function POST(req: NextRequest) {
 
   const accessToken  = generateAccessToken(user.id, user.email)
   const refreshToken = generateRefreshToken()
+  const refreshHash  = await hashRefreshToken(refreshToken)
 
   await db.refreshToken.create({
     data: {
-      token: refreshToken,
-      userId: user.id,
+      token:     refreshHash,  // SECURITY: store hash, not plaintext
+      userId:    user.id,
       expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     },
   })
 
-  const res = NextResponse.json({ user: { id: user.id, email: user.email, name: user.name } })
+  console.info(`[AUTH] login_success ip=${ip} userId=${user.id}`)
 
+  const res = NextResponse.json({ user: { id: user.id, email: user.email, name: user.name } })
   res.headers.append("Set-Cookie", serializeCookie("accessToken",  accessToken,  accessCookieOptions))
   res.headers.append("Set-Cookie", serializeCookie("refreshToken", refreshToken, refreshCookieOptions))
-
   return res
 }

@@ -4,28 +4,47 @@ import { withSentryConfig } from "@sentry/nextjs"
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const withPWA = require("next-pwa")
 
+// SECURITY: connect-src should ONLY include domains the browser directly fetches.
+// Server-side API calls (DeepSeek, Gemini, Groq, Neon, ScrapingBee) do NOT go
+// through the browser and must NOT appear here — they would leak infrastructure.
 const CSP = [
   "default-src 'self'",
+  // SECURITY: 'unsafe-eval' is required by Next.js 16 SSR hydration.
+  // 'unsafe-inline' is required for styled-jsx and inline styles.
+  // Nonce-based CSP would be the ideal solution but requires middleware rewrite.
   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
+  // SECURITY: img-src restricted to same-origin, data URIs, blobs, and HTTPS only
   "img-src 'self' data: blob: https:",
-  "connect-src 'self' https://api.groq.com https://generativelanguage.googleapis.com https://app.scrapingbee.com https://*.neon.tech",
+  // SECURITY: Only browser-initiated fetch targets allowed here.
+  // Server-side services (DeepSeek, Gemini, Neon, ScrapingBee) removed — they don't run in browser
+  "connect-src 'self' https://challenges.cloudflare.com",
   "frame-src https://challenges.cloudflare.com",
   "object-src 'none'",
   "base-uri 'self'",
+  "form-action 'self'",
+  "upgrade-insecure-requests",
 ].join("; ")
 
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
   images: {
+    // SECURITY: Restrict to known perfume image CDNs only.
+    // hostname:"**" was an open SSRF-like proxy — any attacker could probe
+    // internal hosts or abuse bandwidth by passing arbitrary URLs.
     remotePatterns: [
-      { protocol: "https", hostname: "**" },
+      { protocol: "https", hostname: "cdn.fragella.com" },
+      { protocol: "https", hostname: "fimgs.net" },
+      { protocol: "https", hostname: "**.fimgs.net" },
+      { protocol: "https", hostname: "img.fragrantica.com" },
+      { protocol: "https", hostname: "**.fragrantica.com" },
+      { protocol: "https", hostname: "**.sephora.com.br" },
     ],
   },
   headers: async () => [
     {
-      // Hotlink protection workaround — strip Referer on image requests
+      // Hotlink protection — strip Referer on image requests to CDNs
       source: "/_next/image(.*)",
       headers: [
         { key: "Referrer-Policy", value: "no-referrer" },
@@ -40,7 +59,10 @@ const nextConfig: NextConfig = {
         { key: "Referrer-Policy",                 value: "strict-origin-when-cross-origin" },
         { key: "Permissions-Policy",              value: "camera=(self), microphone=(), geolocation=()" },
         { key: "Strict-Transport-Security",       value: "max-age=63072000; includeSubDomains; preload" },
-        { key: "X-DNS-Prefetch-Control",          value: "on" },
+        // SECURITY: DNS prefetching disabled — prevents leaking navigation patterns
+        { key: "X-DNS-Prefetch-Control",          value: "off" },
+        { key: "Cross-Origin-Opener-Policy",      value: "same-origin" },
+        { key: "Cross-Origin-Resource-Policy",    value: "same-origin" },
       ],
     },
   ],
@@ -85,13 +107,10 @@ const pwaConfig = withPWA({
 export default withSentryConfig(pwaConfig, {
   org:     process.env.SENTRY_ORG     ?? "",
   project: process.env.SENTRY_PROJECT ?? "nozze",
-  // Upload source maps only when auth token is present
   authToken: process.env.SENTRY_AUTH_TOKEN,
   silent: true,
-  // Disable source map upload if no auth token (local / CI without Sentry)
   sourcemaps: {
     disable: !process.env.SENTRY_AUTH_TOKEN,
   },
-  // Disable Sentry telemetry
   telemetry: false,
 })
