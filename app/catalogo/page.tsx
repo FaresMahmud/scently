@@ -92,6 +92,28 @@ function chave(nome: string, marca: string): string {
   return `${nome.toLowerCase().trim()}|${marca.toLowerCase().trim()}`
 }
 
+/** Compares two perfume names for similarity, optionally stripping each brand from its name. */
+function nomesSimilares(a: string, b: string, marcaA?: string, marcaB?: string): boolean {
+  let sa = slugify(a)
+  let sb = slugify(b)
+
+  // Strip brand slug from name slug when brand appears in the name
+  // (e.g. "sauvage-dior" → "sauvage" when marca is "dior")
+  if (marcaA) { const sm = slugify(marcaA); sa = sa.replace(sm, "").replace(/^-+|-+$/g, "").trim() }
+  if (marcaB) { const sm = slugify(marcaB); sb = sb.replace(sm, "").replace(/^-+|-+$/g, "").trim() }
+
+  if (!sa || !sb) return false
+  if (sa === sb) return true
+  if (sa.includes(sb) || sb.includes(sa)) return true
+
+  // Word-overlap: ≥70% of meaningful words (length > 2) must match
+  const wa = sa.split("-").filter(w => w.length > 2)
+  const wb = sb.split("-").filter(w => w.length > 2)
+  if (wa.length === 0 || wb.length === 0) return false
+  const overlap = wa.filter(w => wb.includes(w)).length
+  return overlap / Math.max(wa.length, wb.length) >= 0.7
+}
+
 function mesclarPerfumes(): CardUnificado[] {
   const mapa = new Map<string, CardUnificado>()
 
@@ -131,14 +153,12 @@ function mesclarPerfumes(): CardUnificado[] {
     }
   }
 
-  // 4. Fuzzy image lookup — cards still without images try slug-based match
+  // 4. Fuzzy image lookup — cards still without images try name-similarity match
   for (const card of mapa.values()) {
     if (card.imagemTransparente || card.imagem) continue
-    const nomeSlug = slugify(card.nome)
-    const fuzzy = fragellaList.find(f => {
-      const fSlug = slugify(f.nome)
-      return fSlug.includes(nomeSlug) || nomeSlug.includes(fSlug)
-    })
+    const fuzzy = fragellaList.find(f =>
+      nomesSimilares(card.nome, f.nome, card.marca, f.marca)
+    )
     if (fuzzy) {
       if (fuzzy.imagemTransparente) card.imagemTransparente = fuzzy.imagemTransparente
       if (fuzzy.imagem)             card.imagem             = fuzzy.imagem
