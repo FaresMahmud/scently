@@ -108,7 +108,8 @@ function mesclarPerfumes(): CardUnificado[] {
   }
 
   // 3. Fragella — enriquece existentes (imagens + rating) e adiciona novos
-  for (const p of carregarCatalogo()) {
+  const fragellaList = carregarCatalogo()
+  for (const p of fragellaList) {
     const k = chave(p.nome, p.marca)
     const existente = mapa.get(k)
     if (existente) {
@@ -130,6 +131,20 @@ function mesclarPerfumes(): CardUnificado[] {
     }
   }
 
+  // 4. Fuzzy image lookup — cards still without images try slug-based match
+  for (const card of mapa.values()) {
+    if (card.imagemTransparente || card.imagem) continue
+    const nomeSlug = slugify(card.nome)
+    const fuzzy = fragellaList.find(f => {
+      const fSlug = slugify(f.nome)
+      return fSlug.includes(nomeSlug) || nomeSlug.includes(fSlug)
+    })
+    if (fuzzy) {
+      if (fuzzy.imagemTransparente) card.imagemTransparente = fuzzy.imagemTransparente
+      if (fuzzy.imagem)             card.imagem             = fuzzy.imagem
+      if (fuzzy.imagemFallbacks?.length) card.imagemFallbacks = fuzzy.imagemFallbacks
+    }
+  }
 
   return Array.from(mapa.values())
 }
