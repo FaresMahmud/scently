@@ -18,7 +18,8 @@
       "Âmbar"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-new-aventhis",
@@ -37,7 +38,8 @@
       "Patchouli"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-colossus",
@@ -56,7 +58,8 @@
       "Bergamota"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-lord-town",
@@ -77,7 +80,8 @@
       "Patchouli"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-nero-del-porto",
@@ -97,7 +101,8 @@
       "Âmbar"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-irish-green-man",
@@ -117,7 +122,8 @@
       "Âmbar"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-dark-water",
@@ -136,7 +142,8 @@
       "Âmbar Cinzento"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-sweetobacco",
@@ -155,7 +162,8 @@
       "Madeira de Tonka"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-cherry-lush",
@@ -174,7 +182,8 @@
       "Sândalo"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-sweet-from-heaven",
@@ -193,7 +202,8 @@
       "Tonka"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-unique-red",
@@ -212,7 +222,8 @@
       "Foin Coupé"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-real-lignum",
@@ -231,7 +242,8 @@
       "Sândalo"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-makathen",
@@ -251,7 +263,8 @@
       "Almíscar"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-the-barbarian",
@@ -271,7 +284,8 @@
       "Almíscar"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-black-flower",
@@ -291,7 +305,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-essenza-nobile",
@@ -311,7 +326,8 @@
       "Vetiver"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-addope",
@@ -330,7 +346,8 @@
       "Almíscar"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-bad-girl",
@@ -349,7 +366,8 @@
       "Café"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-black-couture",
@@ -368,7 +386,8 @@
       "Patchouli"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-lux-de-vie",
@@ -387,7 +406,8 @@
       "Almíscar"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "itb-supremo-absolu",
@@ -406,7 +426,8 @@
       "Almíscar"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-celtic-legacy",
@@ -437,7 +458,8 @@
       "Musk"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-fine-silk",
@@ -462,7 +484,8 @@
       "Cedro"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-fatal-innocence",
@@ -491,7 +514,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-litchi-fiorito",
@@ -516,7 +540,8 @@
       "Cedro"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-devoile",
@@ -540,7 +565,8 @@
       "Madeira de Âmbar"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-salt-crystal",
@@ -557,7 +583,8 @@
       "Cedro e Musgo de Carvalho"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-turim",
@@ -581,7 +608,8 @@
       "Verbena"
     ],
     "preco_brl": 209.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-taylor-made",
@@ -601,7 +629,8 @@
       "Baunilha de Bourbon e Âmbar Cinzento"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-me-and-i-absolu",
@@ -619,7 +648,8 @@
       "Patchouli"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-soft-splendor",
@@ -641,7 +671,8 @@
       "Cedro"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-mystic-newlands",
@@ -678,7 +709,8 @@
       "Bétula e Maltol"
     ],
     "preco_brl": 209.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-lumen-blue",
@@ -698,7 +730,8 @@
       "Cedro e Musk"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-blanche-exquise",
@@ -721,7 +754,8 @@
       "Sândalo"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-twice-love",
@@ -744,7 +778,8 @@
       "Cedro e Thanaka"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-veneration",
@@ -761,7 +796,8 @@
       "Patchouli"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-fruttato-oud",
@@ -784,7 +820,8 @@
       "Baunilha e Ládano"
     ],
     "preco_brl": 219.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-vanillush",
@@ -813,7 +850,8 @@
       "Patchouli"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-dolce-mallow",
@@ -838,7 +876,8 @@
       "Framboesa e Ambroxan"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-absolute-whoop",
@@ -855,7 +894,8 @@
       "Sândalo"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-looking-for-something",
@@ -876,7 +916,8 @@
       "Madeira de Guaiac e Cade"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-dominus-elixir",
@@ -902,7 +943,8 @@
       "Ládano"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-citrus-craving",
@@ -925,7 +967,8 @@
       "Musgo de Carvalho e Patchouli"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-precious-dame",
@@ -945,7 +988,8 @@
       "Patchouli e Âmbar"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-flow-vibes",
@@ -964,7 +1008,8 @@
       "Âmbar Cinzento"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-guerre-paix",
@@ -984,7 +1029,8 @@
       "Almíscar"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-chevalier",
@@ -1004,7 +1050,8 @@
       "Sândalo"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-ombre",
@@ -1024,7 +1071,8 @@
       "Almíscar"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-joie-de-vivre",
@@ -1043,7 +1091,8 @@
       "Sândalo"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-imperial",
@@ -1062,7 +1111,8 @@
       "Âmbar Cinza"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-imaginary-trip",
@@ -1082,7 +1132,8 @@
       "Vetiver"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-black-ghost",
@@ -1101,7 +1152,8 @@
       "Tabaco"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-seduction",
@@ -1120,7 +1172,8 @@
       "Almíscar"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-cheval",
@@ -1139,7 +1192,8 @@
       "Cedro"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-luxury-oud",
@@ -1158,7 +1212,8 @@
       "Sândalo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-le-chaos",
@@ -1177,7 +1232,8 @@
       "Patchouli"
     ],
     "preco_brl": 159.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-radiant",
@@ -1197,7 +1253,8 @@
       "Cedro"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-bad-girl",
@@ -1216,7 +1273,8 @@
       "Almíscar Branco"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "ja-very",
@@ -1235,7 +1293,8 @@
       "Cedro"
     ],
     "preco_brl": 139.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-ultramare",
@@ -1257,7 +1316,8 @@
       "Cedro"
     ],
     "preco_brl": 149,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-grand-tygar",
@@ -1279,7 +1339,8 @@
       "Madeiras Aveludadas"
     ],
     "preco_brl": 139,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-corsario",
@@ -1298,7 +1359,8 @@
       "Almíscar"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-dubai-gold",
@@ -1320,7 +1382,8 @@
       "Vetiver"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-vortex",
@@ -1350,7 +1413,8 @@
       "Âmbar-gris e Almíscar"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-summer-citrus",
@@ -1369,7 +1433,8 @@
       "Almíscar"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-amber-absolu",
@@ -1388,7 +1453,8 @@
       "Baunilha"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-jazz-master",
@@ -1407,7 +1473,8 @@
       "Cedro"
     ],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-heaven",
@@ -1426,7 +1493,8 @@
       "Âmbar"
     ],
     "preco_brl": 189,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "mv-iris-affair",
@@ -1445,7 +1513,8 @@
       "Baunilha"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-the-sexy-elixir",
@@ -1458,7 +1527,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 189,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-elite-pour-homme",
@@ -1474,7 +1544,8 @@
       "Ambreta"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-gin-tonic",
@@ -1487,7 +1558,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-midnight",
@@ -1500,7 +1572,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-black-sport-noire",
@@ -1521,7 +1594,8 @@
       "Almíscar"
     ],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-le-patron-intense",
@@ -1534,7 +1608,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-hedonist",
@@ -1547,7 +1622,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-le-paradise",
@@ -1560,7 +1636,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-spartan-elixir",
@@ -1573,7 +1650,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 169,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-glorious",
@@ -1592,7 +1670,8 @@
       "Agarwood"
     ],
     "preco_brl": 115,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-toxic-desire",
@@ -1609,7 +1688,8 @@
       "Almíscar e Patchouli"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-ocean-pour-homme",
@@ -1626,7 +1706,8 @@
       "Patchouli e Caramelo"
     ],
     "preco_brl": 149,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-montecristo",
@@ -1639,7 +1720,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-vetiver-absoluto",
@@ -1652,7 +1734,8 @@
     "familia": "Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-selvaggio",
@@ -1668,7 +1751,8 @@
       "Ládano e Ambroxam"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-legend",
@@ -1685,7 +1769,8 @@
       "Almíscar e Âmbar"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-legacy",
@@ -1698,7 +1783,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-honor",
@@ -1711,7 +1797,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-hallure-sport",
@@ -1728,7 +1815,8 @@
       "Vetiver e Almíscar branco"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-for-office",
@@ -1741,7 +1829,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-dark-shelby",
@@ -1754,7 +1843,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-corleone",
@@ -1770,7 +1860,8 @@
       "Baunilha e Fava Tonka"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-code-men",
@@ -1783,7 +1874,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-capone",
@@ -1796,7 +1888,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-celebration",
@@ -1809,7 +1902,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-bomber",
@@ -1822,7 +1916,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-bleu-de-viegas",
@@ -1840,7 +1935,8 @@
       "Olíbano"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-aventador",
@@ -1857,7 +1953,8 @@
       "Baunilha e Ambargris"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-acqua-di-vale",
@@ -1870,7 +1967,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-un-jardin",
@@ -1887,7 +1985,8 @@
       "Ládano e Canela"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-doulce-vitta",
@@ -1903,7 +2002,8 @@
       "Almíscar"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-v-i-p-men",
@@ -1916,7 +2016,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 89,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-spartan",
@@ -1933,7 +2034,8 @@
       "Patchouli e Ambargris"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-royal-for-glory",
@@ -1946,7 +2048,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-millionaire",
@@ -1963,7 +2066,8 @@
       "âmbar e patchouli da Indonésia"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-cristal-rouge",
@@ -1980,7 +2084,8 @@
       "Ambroxan e Musgo de Carvalho"
     ],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-lust-in-desire",
@@ -1996,7 +2101,8 @@
       "Extrato de Cedro Branco e Âmbar"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-belissima-rosee",
@@ -2015,7 +2121,8 @@
       "Musgo"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-devocion",
@@ -2030,7 +2137,8 @@
       "Baunilha"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-blush-girl",
@@ -2045,7 +2153,8 @@
       "Baunilha e Cumarina"
     ],
     "preco_brl": 115,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-narcotique-flower",
@@ -2058,7 +2167,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-liber-intense",
@@ -2071,7 +2181,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-acqua-mare",
@@ -2087,7 +2198,8 @@
       "Ládano francês e Açúcar mascavo"
     ],
     "preco_brl": 99,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-valentine",
@@ -2100,7 +2212,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-turmalina",
@@ -2116,7 +2229,8 @@
       "Almíscar e Âmbar"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-suprema",
@@ -2131,7 +2245,8 @@
       "Âmbar Branco"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-rosa-dos-ventos",
@@ -2149,7 +2264,8 @@
       "Folha de Violeta e Almíscar Branco"
     ],
     "preco_brl": 169,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-mademoiselle",
@@ -2166,7 +2282,8 @@
       "Patchouli e Baunilha"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-le-diamant",
@@ -2179,7 +2296,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-femme-intense",
@@ -2192,7 +2310,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-duquesa",
@@ -2205,7 +2324,8 @@
     "familia": "Floral Amadeirado",
     "notas": [],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-code-woman",
@@ -2220,7 +2340,8 @@
       "Madeira Preciosa e Mel"
     ],
     "preco_brl": 89,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-belissima",
@@ -2237,7 +2358,8 @@
       "Baunilha e Pralinê"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-anastasia",
@@ -2252,7 +2374,8 @@
       "Âmbar e Cedro"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-amiris",
@@ -2267,7 +2390,8 @@
       "Vetiver e Almíscar"
     ],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-absoluta",
@@ -2282,7 +2406,8 @@
       "Âmbar e Cedro da Virgínia"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-divine-bouquet",
@@ -2297,7 +2422,8 @@
       "Almíscar Branco"
     ],
     "preco_brl": 95,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-enigma",
@@ -2314,7 +2440,8 @@
       "Âmbar e Benjoim"
     ],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-roses-revenge",
@@ -2330,7 +2457,8 @@
       "Ambroxan e Baunilha"
     ],
     "preco_brl": 105,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "maison-adore",
@@ -2347,7 +2475,8 @@
       "Cedro e Amora"
     ],
     "preco_brl": 89,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-imperialle",
@@ -2366,7 +2495,8 @@
       "Âmbar Cinza"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-baccarat",
@@ -2385,7 +2515,8 @@
       "Foin Coupé"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-erba-pura",
@@ -2404,7 +2535,8 @@
       "Sândalo"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-pegasus",
@@ -2423,7 +2555,8 @@
       "Bergamota"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-grand-soir",
@@ -2442,7 +2575,8 @@
       "Incenso"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-afgano",
@@ -2461,7 +2595,8 @@
       "Almíscar"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-tobacco-oud",
@@ -2480,7 +2615,8 @@
       "Âmbar"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "azza-hacivat",
@@ -2500,7 +2636,8 @@
       "Almíscar"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-the-box-celtic-legacy-100ml",
@@ -2517,7 +2654,8 @@
       "Cedro"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fatal-innocence-100ml",
@@ -2534,7 +2672,8 @@
       "âmbar"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-litchi-fiorito-100ml",
@@ -2551,7 +2690,8 @@
       "Baunilha"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-devoile-100ml",
@@ -2568,7 +2708,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-salt-crystal-100ml",
@@ -2585,7 +2726,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-turim-100ml",
@@ -2602,7 +2744,8 @@
       "Vetiver"
     ],
     "preco_brl": 219.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-taylor-made-100ml",
@@ -2619,7 +2762,8 @@
       "canela"
     ],
     "preco_brl": 209.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-me-and-i-absolu-100ml",
@@ -2636,7 +2780,8 @@
       "Sândalo"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-soft-splendor-100ml",
@@ -2653,7 +2798,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-mystic-newlands-100ml",
@@ -2670,7 +2816,8 @@
       "Vetiver"
     ],
     "preco_brl": 219.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lumen-blue-100ml",
@@ -2687,7 +2834,8 @@
       "Vetiver"
     ],
     "preco_brl": 209.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-blanche-exquise-100ml",
@@ -2704,7 +2852,8 @@
       "Baunilha"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-twice-love-100ml",
@@ -2721,7 +2870,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-veneration-100ml",
@@ -2738,7 +2888,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fruttato-oud-100ml",
@@ -2757,7 +2908,8 @@
       "Baunilha"
     ],
     "preco_brl": 229.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-vanillush-100ml",
@@ -2774,7 +2926,8 @@
       "Caramelo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-dolce-mallow-100ml",
@@ -2791,7 +2944,8 @@
       "Nozes"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-absolute-whoop-100ml",
@@ -2808,7 +2962,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-looking-for-something-100ml",
@@ -2825,7 +2980,8 @@
       "Vetiver"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-dominus-elixir-100ml",
@@ -2842,7 +2998,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-citrus-craving-100ml",
@@ -2859,7 +3016,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-precious-dame-100ml",
@@ -2876,7 +3034,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-flow-vibes-100ml",
@@ -2893,7 +3052,8 @@
       "Cedro"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-prime-instinct-100ml",
@@ -2910,7 +3070,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-infinite-horizon-100ml",
@@ -2927,7 +3088,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-uomo-di-lusso-100ml",
@@ -2944,7 +3106,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-all-flowers-in-one-100ml",
@@ -2961,7 +3124,8 @@
       "Lavanda"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-celestial-stone-100ml",
@@ -2980,7 +3144,8 @@
       "vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lemon-luxs-100ml",
@@ -2997,7 +3162,8 @@
       "Lavanda"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-totally-scandalous-100ml",
@@ -3014,7 +3180,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sacred-love-100ml",
@@ -3031,7 +3198,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-man-s-illusion-100ml",
@@ -3048,7 +3216,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-celestial-fantasy-100ml",
@@ -3065,7 +3234,8 @@
       "Amêndoas"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fresh-and-senses-100ml",
@@ -3082,7 +3252,8 @@
       "vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-brise-d-adventure-100ml",
@@ -3099,7 +3270,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
   },
   {
     "id": "in-the-box-essenza-nobile-100ml",
@@ -3116,7 +3288,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-glamorous-rose-100ml",
@@ -3133,7 +3306,8 @@
       "Baunilha"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-brandie-1848-100ml",
@@ -3150,7 +3324,8 @@
       "Sândalo"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-enigma-blend-100ml",
@@ -3167,7 +3342,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-me-and-i-100ml",
@@ -3184,7 +3360,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-my-duality-100ml",
@@ -3201,7 +3378,8 @@
       "Vetiver"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fleur-imperiale-100ml",
@@ -3218,7 +3396,8 @@
       "Vetiver"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fire-snake-100ml",
@@ -3235,7 +3414,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-great-master-100ml",
@@ -3252,7 +3432,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-deep-dark-water-100ml",
@@ -3269,7 +3450,8 @@
       "vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-always-on-the-way-100ml",
@@ -3286,7 +3468,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-liberte-absolu-100ml",
@@ -3303,7 +3486,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-trophy-elixir-100ml",
@@ -3320,7 +3504,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-unique-red-100ml",
@@ -3337,7 +3522,8 @@
       "Madeira"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-supremo-absolu-100ml",
@@ -3354,7 +3540,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-envoy-100ml",
@@ -3371,7 +3558,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-glam-celebration-100ml",
@@ -3388,7 +3576,8 @@
       "baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-earthy-icy-100ml",
@@ -3405,7 +3594,8 @@
       "vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sugarmellow-100ml",
@@ -3423,7 +3613,8 @@
       "baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-grand-cheval-100ml",
@@ -3440,7 +3631,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-blue-memory-100ml",
@@ -3457,7 +3649,8 @@
       "Cedro"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-nuit-noir-100ml",
@@ -3474,7 +3667,8 @@
       "sândalo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-nouvelle-angelique-100ml",
@@ -3491,7 +3685,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-power-of-love-100ml",
@@ -3508,7 +3703,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-kind-sweetness-100ml",
@@ -3525,7 +3721,8 @@
       "jasmim"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-black-couture-100ml",
@@ -3542,7 +3739,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sweet-fruity-juice-100ml",
@@ -3559,7 +3757,8 @@
       "abacaxi"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-homine-elixir-100ml",
@@ -3576,7 +3775,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-desire-man-parfum-100ml",
@@ -3593,7 +3793,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-desire-man-100ml",
@@ -3610,7 +3811,8 @@
       "Canela"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-real-commander-100ml",
@@ -3627,7 +3829,8 @@
       "vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sweet-from-heaven-100ml",
@@ -3644,7 +3847,8 @@
       "Baunilha"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-helix-man-100ml",
@@ -3661,7 +3865,8 @@
       "Cedro"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-so-screamy-100ml",
@@ -3678,7 +3883,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-red-moon-100ml",
@@ -3695,7 +3901,8 @@
       "Sândalo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lemon-vanilla-wood-100ml",
@@ -3712,7 +3919,8 @@
       "Madeira"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-aromatik-100ml",
@@ -3729,7 +3937,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-oud-orientale-100ml",
@@ -3746,7 +3955,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-stant-aquae-100ml",
@@ -3763,7 +3973,8 @@
       "canela"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-regnum-opus-100ml",
@@ -3780,7 +3991,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-makathen-100ml",
@@ -3797,7 +4009,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-real-lignum-100ml",
@@ -3814,7 +4027,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-whoop-100ml",
@@ -3831,7 +4045,8 @@
       "Patchouli"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-codex-supreme-100ml",
@@ -3848,7 +4063,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-giocattolo-100ml",
@@ -3871,7 +4087,8 @@
       "Moscus"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-my-party-up-100ml",
@@ -3893,7 +4110,8 @@
       "âmbar"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-magic-blue-blend-100ml",
@@ -3910,7 +4128,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-thamus-100ml",
@@ -3927,7 +4146,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-codice-d-oro-100ml",
@@ -3944,7 +4164,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-miss-d-noir-100ml",
@@ -3961,7 +4182,8 @@
       "jasmim"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-profumo-di-salerno-100ml",
@@ -3978,7 +4200,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-aurum-parfum-100ml",
@@ -3995,7 +4218,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-barbarian-100ml",
@@ -4012,7 +4236,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-bluish-light-100ml",
@@ -4029,7 +4254,8 @@
       "Vetiver"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-tersus-parfum-100ml",
@@ -4046,7 +4272,8 @@
       "Vetiver"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-intensity-100ml",
@@ -4063,7 +4290,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-angelique-100ml",
@@ -4080,7 +4308,8 @@
       "Jasmin"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-versus-pour-homme-100ml",
@@ -4097,7 +4326,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-colonia-aventhis-100ml",
@@ -4114,7 +4344,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-la-deesse-100ml",
@@ -4131,7 +4362,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-pinkish-100ml",
@@ -4148,7 +4380,8 @@
       "Moscus"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lux-de-vie-100ml",
@@ -4165,7 +4398,8 @@
       "Baunilha"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-idolyzed-100ml",
@@ -4182,7 +4416,8 @@
       "Baunilha"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-codice-uno-100ml",
@@ -4199,7 +4434,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-passion-d-iris-100ml",
@@ -4216,7 +4452,8 @@
       "Sândalo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-la-belle-fleur-100ml",
@@ -4233,7 +4470,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-homine-optimum-100ml",
@@ -4250,7 +4488,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-pride-l-homme-100ml",
@@ -4267,7 +4506,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-elian-100ml",
@@ -4284,7 +4524,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-belle-femme-100ml",
@@ -4301,7 +4542,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-green-pool-100ml",
@@ -4318,7 +4560,8 @@
       "musgo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-terra-100ml",
@@ -4337,7 +4580,8 @@
       "vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-black-flower-100ml",
@@ -4354,7 +4598,8 @@
       "Sândalo"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-eau-de-sauvegy-1966-100ml",
@@ -4371,7 +4616,8 @@
       "Ambrox"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-jaddy-100ml",
@@ -4388,7 +4634,8 @@
       "Vetiver"
     ],
     "preco_brl": 174.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-scandalous-night-100ml",
@@ -4411,7 +4658,8 @@
       "Moscus"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-mademoiselle-100ml",
@@ -4428,7 +4676,8 @@
       "Patchouli"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lynternuit-100ml",
@@ -4445,7 +4694,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-bad-girl-100ml",
@@ -4462,7 +4712,8 @@
       "Patchouli"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-my-chance-100ml",
@@ -4479,7 +4730,8 @@
       "Patchouli"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-scandalous-100ml",
@@ -4498,7 +4750,8 @@
       "Moscus"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-kate-parfum-100ml",
@@ -4515,7 +4768,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-new-aventhis-100ml",
@@ -4532,7 +4786,8 @@
       "Vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fabulous-secret-100ml",
@@ -4549,7 +4804,8 @@
       "jasmim"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fleur-delicate-100ml",
@@ -4566,7 +4822,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-omnia-iv-colecao-match-of-senses-parfum-50ml",
@@ -4583,7 +4840,8 @@
       "Sândalo"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-maxximus-ix-colecao-match-of-senses-parfum-50ml",
@@ -4600,7 +4858,8 @@
       "Vetiver"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-altum-magnis-colecao-match-of-senses-parfum-50ml",
@@ -4617,7 +4876,8 @@
       "Vetiver"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-origine-un-colecao-match-of-senses-parfum-50ml",
@@ -4634,7 +4894,8 @@
       "Vetiver"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-euphoria-sensuale-colecao-match-of-senses-parfum-50ml",
@@ -4655,7 +4916,8 @@
       "Baunilha"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lumiere-enchantee-colecao-match-of-senses-parfum-50ml",
@@ -4672,7 +4934,8 @@
       "Baunilha"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sucre-juteux-colecao-match-of-senses-parfum-50ml",
@@ -4689,7 +4952,8 @@
       "Frutas Vermelhas"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fusion-enigmatique-colecao-match-of-senses-parfum-50ml",
@@ -4706,7 +4970,8 @@
       "Vetiver"
     ],
     "preco_brl": 149.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-malt-bottle-100ml",
@@ -4723,7 +4988,8 @@
       "vétiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-colossus-100ml",
@@ -4740,7 +5006,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-lord-town-100ml",
@@ -4757,7 +5024,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-irish-green-man-100ml",
@@ -4774,7 +5042,8 @@
       "couro"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-d-eau-extreme-100ml",
@@ -4791,7 +5060,8 @@
       "ambroxano"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-miss-flowers-100ml",
@@ -4808,7 +5078,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-si-vitta-100ml",
@@ -4825,7 +5096,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-ultramen-100ml",
@@ -4842,7 +5114,8 @@
       "Cedro"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-queen-100ml",
@@ -4859,7 +5132,8 @@
       "Baunilha"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sweetobacco-100ml",
@@ -4876,7 +5150,8 @@
       "âmbar"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-nero-del-porto-100ml",
@@ -4893,7 +5168,8 @@
       "Vetiver"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-crazy-poison-100ml",
@@ -4910,7 +5186,8 @@
       "Baunilha"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-sauvegy-100ml",
@@ -4927,7 +5204,8 @@
       "Ambrox"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-hall-ury-sport-100ml",
@@ -4944,7 +5222,8 @@
       "vetiver"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-the-blue-100ml",
@@ -4961,7 +5240,8 @@
       "Vetiver"
     ],
     "preco_brl": 189.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-fine-silk-100ml",
@@ -4978,7 +5258,8 @@
       "Baunilha"
     ],
     "preco_brl": 199.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-cotton-veil-100ml",
@@ -4995,7 +5276,8 @@
       "sândalo"
     ],
     "preco_brl": 179.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "in-the-box-dark-water-100ml",
@@ -5012,7 +5294,8 @@
       "ambrox"
     ],
     "preco_brl": 169.9,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-lust-in-desire-inspirado-em-lust-in-paradise-ex-nihilo",
@@ -5031,7 +5314,8 @@
       "Sândalo"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-ultramare-inspirado-em-megamare",
@@ -5048,7 +5332,8 @@
       "Vetiver"
     ],
     "preco_brl": 139,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-grand-tygar-inspirado-em-tygar",
@@ -5065,7 +5350,8 @@
       "Vetiver"
     ],
     "preco_brl": 139,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-corsario-inspirado-em-le-male-ano-2006",
@@ -5082,7 +5368,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-dubai-gold-inspirado-em-bahar-the-spirit-of-dubai",
@@ -5104,7 +5391,8 @@
       "Amber"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-vortex-inspirado-em-apex-pour-homme",
@@ -5123,7 +5411,8 @@
       "musk"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-summer-citrus-inspirado-em-perseus-parfums-de-marly",
@@ -5140,7 +5429,8 @@
       "laranja"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-belissima-rosee-inspirado-em-la-vie-est-belle-rose-extraordinaire",
@@ -5157,7 +5447,8 @@
       "baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-divine-bouquet-inspirado-em-blooming-bouquet-2023",
@@ -5174,7 +5465,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-amber-absolu-inspirado-em-boss-bottled-absolu",
@@ -5191,7 +5483,8 @@
       "baunilha"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-the-sexy-elixir-inspirado-em-boss-the-scent-elixir-for-him",
@@ -5210,7 +5503,8 @@
       "âmbar"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-gin-tonic-inspirado-em-gntonic-m-micallef",
@@ -5227,7 +5521,8 @@
       "junípero"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-heaven-inspirado-em-imagination-louis-vuitton",
@@ -5244,7 +5539,8 @@
       "Vetiver"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-midnight-inspirado-em-althair-parfums-de-marly",
@@ -5264,7 +5560,8 @@
       "Sândalo"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-black-sport-noire-inspirado-em-encre-noire-sport",
@@ -5281,7 +5578,8 @@
       "Vetiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-le-patron-intense-inspirado-em-boss-bottled-intense-edp",
@@ -5304,7 +5602,8 @@
       "baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-hedonist-inspirado-god-of-fire-stephane-humbert-lucas-777",
@@ -5321,7 +5620,8 @@
       "tabaco"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-le-paradise-inspirado-em-le-beau-paradise-garden",
@@ -5338,7 +5638,8 @@
       "Baunilha"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-devocion-inspirado-em-devotion-dolce-amp-gabbana",
@@ -5355,7 +5656,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-blush-girl-inspirado-em-good-girl-blush",
@@ -5372,7 +5674,8 @@
       "Baunilha"
     ],
     "preco_brl": 115,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-enigma-inspirado-em-prada-paradoxe",
@@ -5393,7 +5696,8 @@
       "Moscus"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-spartan-elixir-inspirado-em-invictus-victory-elixir",
@@ -5410,7 +5714,8 @@
       "Vetiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-glorious-inspirado-haltane-parfums-de-marly",
@@ -5430,7 +5735,8 @@
       "Amber"
     ],
     "preco_brl": 115,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-narcotique-flower-inspirado-em-fleur-narcotique",
@@ -5447,7 +5753,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-liber-intense-inspirado-em-libre-intense",
@@ -5464,7 +5771,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-toxic-desire-inspirado-em-desirtoxic-m-micallef",
@@ -5481,7 +5789,8 @@
       "Patchouli"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-ocean-pour-homme-inspirado-em-prada-luna-rossa-ocean",
@@ -5502,7 +5811,8 @@
       "âmbar"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-acqua-mare-inspirado-em-acqua-di-gioia-eau-de-parfum",
@@ -5519,7 +5829,8 @@
       "jasmim"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-montecristo-inspirado-em-acqua-di-parma",
@@ -5536,7 +5847,8 @@
       "lavanda"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-spartan-inspirado-em-invictus",
@@ -5553,7 +5865,8 @@
       "Madeira"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-selvaggio-inspirado-em-sauvage",
@@ -5570,7 +5883,8 @@
       "ambrox"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-royal-for-glory-inspirado-kalan-parfums-de-marly",
@@ -5590,7 +5904,8 @@
       "Sândalo"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-millionaire-inspirado-em-1-million",
@@ -5611,7 +5926,8 @@
       "ambar"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-legend-inspirado-em-issey-miyake",
@@ -5632,7 +5948,8 @@
       "âmbar"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-legacy-inspirado-em-elysium-pour-homme-parfum-cologne",
@@ -5649,7 +5966,8 @@
       "canela"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-jazz-master-inspirado-em-jazz-club-maison-martin-margiela",
@@ -5668,7 +5986,8 @@
       "âmbar"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-honor-contratipo-honour-man-de-amouage",
@@ -5690,7 +6009,8 @@
       "âmbar"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-for-office-inspirado-hugo-boss-bottled-infinite",
@@ -5711,7 +6031,8 @@
       "musk"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-dark-shelby-inspirado-em-interlude-black-iris-amouage",
@@ -5732,7 +6053,8 @@
       "Moscus"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-corleone-inspirado-em-tom-ford-oud-wood",
@@ -5754,7 +6076,8 @@
       "Amber"
     ],
     "preco_brl": 119,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-code-men-inspirado-em-armani-code",
@@ -5774,7 +6097,8 @@
       "Moscus"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-capone-inspirado-bvlgari-le-gemme-garanat",
@@ -5794,7 +6118,8 @@
       "Amber"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-celebration-inspirado-jubilation-xxv-amouage",
@@ -5817,7 +6142,8 @@
       "Moscus"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-bomber-inspirado-em-polo-blue",
@@ -5837,7 +6163,8 @@
       "musk"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-bleu-de-viegas-inspirado-em-bleu",
@@ -5854,7 +6181,8 @@
       "Cedro"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-aventador-inspirado-em-creed-aventus",
@@ -5870,8 +6198,9 @@
       "laranja",
       "pimenta"
     ],
-    "preco_brl": 109,
-    "categoria": "contratipo"
+    "preco_brl": 129,
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-acqua-di-vale-inspirado-em-acqua-di-gio",
@@ -5888,7 +6217,8 @@
       "cedro"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-un-jardin-inspirado-em-un-jardin-sur-le-nil",
@@ -5906,7 +6236,8 @@
       "sândalo"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-valentine-inspirado-em-delina-parfums-de-marly",
@@ -5923,7 +6254,8 @@
       "Vetiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-suprema-inspirado-em-alien-de-thierry-mugler",
@@ -5940,7 +6272,8 @@
       "Vetiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-mademoiselle-inspirado-em-coco-mademoiselle-edp",
@@ -5959,7 +6292,8 @@
       "musk"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-le-diamant-inspirado-em-le-parfum-elie-saab",
@@ -5976,7 +6310,8 @@
       "baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-femme-intense-inspirado-em-narciso-rodriguez-for-her",
@@ -5993,7 +6328,8 @@
       "Vetiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-duquesa-inspirado-em-english-pear-and-freesia-jo-malone-london",
@@ -6010,7 +6346,8 @@
       "Flores Brancas"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-doulce-vitta-inspirado-em-light-blue",
@@ -6027,7 +6364,8 @@
       "lavanda"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-cristal-rouge-inspirado-em-baccarat-rouge-540",
@@ -6046,7 +6384,8 @@
       "Moscus"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-code-woman-inspirado-em-armani-code",
@@ -6063,7 +6402,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-belissima-inspirado-em-la-vie-est-belle",
@@ -6080,7 +6420,8 @@
       "Patchouli"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-anastasia-inspirado-em-kilian-good-girl-gone-bad",
@@ -6097,7 +6438,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-amiris-inspirado-em-amyris-femme-maison-francis-kurkdjian",
@@ -6114,7 +6456,8 @@
       "Baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-absoluta-inspirado-em-chloe-eau-de-parfum",
@@ -6131,7 +6474,8 @@
       "cereja"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-elite-pour-homme-inspirado-em-bvlgari-pour-homme-eau-de-parfum-versao-2024",
@@ -6148,7 +6492,8 @@
       "Vetiver"
     ],
     "preco_brl": 129,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-vetiver-absoluto-inspirado-em-grey-vetiver-tom-ford",
@@ -6165,7 +6510,8 @@
       "Violeta"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-v-i-p-men-inspirado-em-212-vip-men",
@@ -6182,7 +6528,8 @@
       "vétiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-hallure-sport-inspirado-em-allure-home-sport",
@@ -6199,7 +6546,8 @@
       "couro"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-turmalina-inspirado-em-crystal-noir",
@@ -6216,7 +6564,8 @@
       "jasmim"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-roses-revenge-inspirado-em-lady-vengeance-de-juliette-has-a-gun",
@@ -6233,7 +6582,8 @@
       "patchouli"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-rosa-dos-ventos-inspirado-em-louis-vuitton-rose-des-vents",
@@ -6250,7 +6600,8 @@
       "baunilha"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "maison-viegas-adore-inspirado-em-j-adore",
@@ -6267,7 +6618,8 @@
       "Vetiver"
     ],
     "preco_brl": 109,
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-apertura-perfume-inspirado-ouverture-xerjoff-compartilh-vel",
@@ -6279,9 +6631,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 199.9,
+    "preco_brl": 0,
     "url": "https://www.jaessencedelavie.com.br/apertura-perfume-inspirado-ouverture-xerjoff-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-b-rbaro-perfume-inspirado-em-invasion-barbare-mdci-parfums-masculino",
@@ -6295,7 +6648,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/barbaro-perfume-inspirado-em-invasion-barbare-mdci-parfums-masculino/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-cometa-perfume-inspirado-em-com-te-compartilh-vel",
@@ -6309,7 +6663,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/cometa-perfume-inspirado-em-com-te-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-gany-perfume-inspirado-em-ganymede-marc-antoine-barrois-compartilh-vel",
@@ -6323,7 +6678,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/gany-perfume-inspirado-em-ganymede-marc-antoine-barrois-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-glorioso-perfume-inspirado-em-glorious-boadicea-the-victorious-compartilh-vel",
@@ -6337,7 +6693,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/glorioso-perfume-inspirado-em-glorious-boadicea-the-victorious-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-imaginary-trip-perfume-inspirado-bal-d-afrique-byredo-compartilh-vel",
@@ -6357,7 +6714,8 @@
     ],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/african-perfume-inspirado-bal-dafrique-byredo-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-knight-perfume-inspirado-em-altha-r-parfums-de-marly-masculino",
@@ -6369,9 +6727,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 199.9,
+    "preco_brl": 0,
     "url": "https://www.jaessencedelavie.com.br/knight-perfume-inspirado-em-altha-r-parfums-de-marly-masculino/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-limonada-perfume-inspirado-em-limonata-narcotica-compartilh-vel",
@@ -6385,7 +6744,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/limonada-perfume-inspirado-em-limonata-narcotica-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-nomadic-perfume-inspirado-em-ombre-nomade-louis-vuitton-compartilh-vel",
@@ -6399,7 +6759,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/nomadic-perfume-inspirado-em-ombre-nomade-louis-vuitton-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-oceano-perfume-inspirado-em-oceania-roja-dove-compartilh-vel",
@@ -6413,7 +6774,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/oceano-perfume-inspirado-em-oceania-roja-dove-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-pericolo-perfume-inspirado-em-danger-pour-homme-roja-dove-masculino",
@@ -6427,7 +6789,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/pericolo-perfume-inspirado-em-danger-pour-homme-roja-dove-masculino/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-powder-perfume-inspirado-em-vanilla-powder-matiere-premiere-compartilh-vel",
@@ -6441,7 +6804,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/powder-perfume-inspirado-em-vanilla-powder-matiere-premiere-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-r-plica-perfume-inspirado-by-the-fireplace-maison-martin-margiela-compartilh-vel",
@@ -6455,7 +6819,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/replica-perfume-inspirado-by-the-fireplace-maison-martin-margiela-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-sea-perfume-inspirado-sex-sea-lorenzo-pazzaglia-compartilh-vel",
@@ -6469,7 +6834,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/sea-perfume-inspirado-sex-sea-lorenzo-pazzaglia-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-sib-ria-perfume-inspirado-em-himalaya-creed-masculino",
@@ -6489,7 +6855,8 @@
     ],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/siberia-perfume-inspirado-em-himalaya-creed-masculino/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-summer-perfume-inspirado-em-summer-hammer-lorenzo-pazzaglia-compartilh-vel",
@@ -6503,7 +6870,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/summer-perfume-inspirado-em-summer-hammer-lorenzo-pazzaglia-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-times-perfume-inspirado-em-stellar-times-louis-vuitton-compartilh-vel",
@@ -6517,7 +6885,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/times-perfume-inspirado-em-stellar-times-louis-vuitton-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-valay-perfume-inspirado-em-valaya-exclusif-parfums-de-marly-feminino",
@@ -6531,7 +6900,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/valaya-perfume-inspirado-em-valaya-exclusif-parfums-de-marly-feminino/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-aphrodisiac-perfume-inspirado-em-absolute-aphrodisiac-initio-parfums-prives-compartilh-vel",
@@ -6545,7 +6915,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/aphrodisiac-perfume-inspirado-em-absolute-aphrodisiac-initio-parfums-prives-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-bull-23-perfume-inspirado-em-torino23-xerjoff-compartilh-vel",
@@ -6557,9 +6928,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 199.9,
+    "preco_brl": 0,
     "url": "https://www.jaessencedelavie.com.br/bull-23-perfume-inspirado-em-torino23-xerjoff-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-vibrant-perfume-inspirado-em-vibrato-sospiro-perfumes-compartilh-vel",
@@ -6573,7 +6945,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/vibrant-perfume-inspirado-em-vibrato-sospiro-perfumes-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "ja-essence-west-wind-perfume-inspirado-em-xj-1861-zefiro-xerjoff-compartilh-vel",
@@ -6587,7 +6960,8 @@
     "notas": [],
     "preco_brl": 199.9,
     "url": "https://www.jaessencedelavie.com.br/west-wind-perfume-inspirado-em-xj-1861-zefiro-xerjoff-compartilhavel/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-audacity-inspiracao-olfativa-imagination-lv",
@@ -6605,7 +6979,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/audacity-inspiracao-olfativa-imagination-lv/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-hannishe-inspiracao-olfativa-hacivat-nishane",
@@ -6619,7 +6994,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/hannishe-inspiracao-olfativa-hacivat-nishane/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-eczzo-inspiracao-olfativa-sauvage-elixir-dior",
@@ -6633,7 +7009,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/eczzo-inspiracao-olfativa-sauvage-elixir-dior/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-verticce-inspiracao-olfativa-bleu-edt",
@@ -6645,9 +7022,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 53.64,
+    "preco_brl": 59.6,
     "url": "https://www.azzaparfums.com.br/produtos/verticce-inspiracao-olfativa-bleu-edt/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-vibrattion-inspiracao-olfativa-vibrato-sospiro",
@@ -6661,7 +7039,8 @@
     "notas": [],
     "preco_brl": 69.76,
     "url": "https://www.azzaparfums.com.br/produtos/vibrattion-inspiracao-olfativa-vibrato-sospiro/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-seduction-elixir-inspiracao-olfativa-le-male-elixir",
@@ -6673,9 +7052,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 53.91,
+    "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/seduction-elixir-inspiracao-olfativa-le-male-elixir/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-yourself-inspiracao-olfativa-myslf-ysl",
@@ -6689,7 +7069,8 @@
     "notas": [],
     "preco_brl": 59.7,
     "url": "https://www.azzaparfums.com.br/produtos/yourself-inspiracao-olfativa-myslf-ysl/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-god-of-flames-inspiracao-olfativa-god-of-fire",
@@ -6703,7 +7084,8 @@
     "notas": [],
     "preco_brl": 69.19,
     "url": "https://www.azzaparfums.com.br/produtos/god-of-flames-inspiracao-olfativa-god-of-fire/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-sophistique-inspiracao-olfativa-oud-maracuja",
@@ -6717,7 +7099,8 @@
     "notas": [],
     "preco_brl": 68.3,
     "url": "https://www.azzaparfums.com.br/produtos/sophistique-inspiracao-olfativa-oud-maracuja/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-eau-fraiche-inspiracao-olfativa-terre-d-hermes-eau-givree",
@@ -6737,7 +7120,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/eau-fraiche-inspiracao-olfativa-terre-dhermes-eau-givree/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-extremme-water-inspiracao-olfativa-acqua-di-gio-parfum",
@@ -6757,7 +7141,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/extremme-water-inspiracao-olfativa-acqua-di-gio-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-sunset-swim-inspiracao-olfativa-afternoon-swim",
@@ -6771,7 +7156,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/sunset-swim-inspiracao-olfativa-afternoon-swim/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-laymont-inspiracao-olfativa-layton-parfums-de-marly",
@@ -6785,7 +7171,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/laymont-inspiracao-olfativa-layton-parfums-de-marly/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-gran-everest-inspiracao-olfativa-himalaya",
@@ -6799,7 +7186,8 @@
     "notas": [],
     "preco_brl": 69.98,
     "url": "https://www.azzaparfums.com.br/produtos/gran-everest-inspiracao-olfativa-himalaya-75egq/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-bullet-inspiracao-olfativa-the-most-wanted-parfum-azzaro",
@@ -6819,7 +7207,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/bullet-inspiracao-olfativa-the-most-wanted-parfum-azzaro/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-ocean-chill-inspiracao-olfativa-pacific-chill",
@@ -6833,7 +7222,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/ocean-chill-inspiracao-olfativa-pacific-chill/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-azza-code-inspiracao-olfativa-armani-code-parfum",
@@ -6851,9 +7241,10 @@
       "soft spicy",
       "floral"
     ],
-    "preco_brl": 53.01,
+    "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/azza-code-inspiracao-olfativa-armani-code-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-riviera-breeze-inspiracao-olfativa-french-riviera-mancera",
@@ -6873,7 +7264,8 @@
     ],
     "preco_brl": 69.72,
     "url": "https://www.azzaparfums.com.br/produtos/riviera-breeze-inspiracao-olfativa-french-riviera-mancera/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-absolu-premium-inspiracao-olfativa-aventus-absolu",
@@ -6887,7 +7279,8 @@
     "notas": [],
     "preco_brl": 69.9,
     "url": "https://www.azzaparfums.com.br/produtos/absolu-premium-inspiracao-olfativa-aventus-absolu/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-yourself-le-parfum-inspiracao-olfativa-myslf-le-parfum-ysl",
@@ -6901,7 +7294,8 @@
     "notas": [],
     "preco_brl": 59.7,
     "url": "https://www.azzaparfums.com.br/produtos/yourself-le-parfum-inspiracao-olfativa-myslf-le-parfum-ysl/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-new-venttus-inspiracao-olfativa-creed-aventus",
@@ -6921,7 +7315,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/new-venttus-inspiracao-olfativa-creed-aventus/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-imperialle-inspiracao-olfativa-millesime-imperial-creed",
@@ -6941,7 +7336,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/imperialle-inspiracao-olfativa-millesime-imperial-creed/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-ambasciatore",
@@ -6955,7 +7351,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/ambasciatore/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-oud-royalle-inspiracao-olfativa-royal-oud-creed",
@@ -6975,7 +7372,8 @@
     ],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/oud-royalle-inspiracao-olfativa-royal-oud-creed/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-piazzo-inspiracao-olfativa-sauvage-dior-edt",
@@ -6989,7 +7387,8 @@
     "notas": [],
     "preco_brl": 57.4,
     "url": "https://www.azzaparfums.com.br/produtos/piazzo-inspiracao-olfativa-sauvage-dior-edt/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-le-fatalle-inspiracao-olfativa-le-beau-le-parfum-jpg",
@@ -7003,7 +7402,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/le-fatalle-inspiracao-olfativa-le-beau-le-parfum-jpg/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-dellirium-inspiracao-olfativa-narcotic-delight",
@@ -7017,7 +7417,8 @@
     "notas": [],
     "preco_brl": 69.44,
     "url": "https://www.azzaparfums.com.br/produtos/dellirium-inspiracao-olfativa-narcotic-delight/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-reserve-man-inspiracao-olfativa-gentleman-reserve-privee-givenchy",
@@ -7035,9 +7436,10 @@
       "powdery",
       "aromatic"
     ],
-    "preco_brl": 52.56,
+    "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/reserve-man-inspiracao-olfativa-gentleman-reserve-privee-givenchy/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-calliente-absolute-inspiracao-olfativa-absolute-aphrodisiac-initio-parfums",
@@ -7051,7 +7453,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/calliente-absolute-inspiracao-olfativa-absolute-aphrodisiac-initio-parfums/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-precious-blend-inspiracao-olfativa-haltane",
@@ -7065,7 +7468,8 @@
     "notas": [],
     "preco_brl": 68.6,
     "url": "https://www.azzaparfums.com.br/produtos/precious-blend-inspiracao-olfativa-haltane/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-homme-exclusif-inspiracao-olfativa-dior-homme-parfum",
@@ -7085,7 +7489,8 @@
     ],
     "preco_brl": 59.7,
     "url": "https://www.azzaparfums.com.br/produtos/homme-exclusif-inspiracao-olfativa-dior-homme-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-summer-wave-inspiracao-olfativa-wave-musk-mancera",
@@ -7099,7 +7504,8 @@
     "notas": [],
     "preco_brl": 69.76,
     "url": "https://www.azzaparfums.com.br/produtos/summer-wave-inspiracao-olfativa-wave-musk-mancera/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-marinne-premium-inspiracao-olfativa-aquamarine-n-powder",
@@ -7113,7 +7519,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/marinne-premium-inspiracao-olfativa-aquamarine-n-powder/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-let-s-inspiracao-olfativa-l-eau-d-issey-pour-homme",
@@ -7133,7 +7540,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/lets-inspiracao-olfativa-leau-dissey-pour-homme/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-versattos-inspiracao-olfativa-versace-eros-parfum",
@@ -7153,7 +7561,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/versattos-inspiracao-olfativa-versace-eros-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-selline-inspiracao-olfativa-coco-mademoiselle",
@@ -7165,9 +7574,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 53.01,
+    "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/selline-inspiracao-olfativa-coco-mademoiselle/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-boise-premium-inspiracao-olfativa-intense-cedrat-boise",
@@ -7181,7 +7591,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/boise-premium-inspiracao-olfativa-intense-cedrat-boise/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-one-black-inspiracao-olfativa-212-vip-black",
@@ -7201,7 +7612,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/one-black-inspiracao-olfativa-212-vip-black/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-azza-blanche-inspiracao-olfativa-allure-homme-edition-blanche-edp",
@@ -7221,7 +7633,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/azza-blanche-inspiracao-olfativa-allure-homme-edition-blanche-edp1/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-hannishe-oud-inspiracao-olfativa-hacivat-oud-nishane",
@@ -7235,7 +7648,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/hannishe-oud-inspiracao-olfativa-hacivat-oud-nishane/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-lazzo-inspiracao-olfativa-tobacco-vanille-tom-ford",
@@ -7255,7 +7669,8 @@
     ],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/lazzo-inspiracao-olfativa-tobacco-vanille-tom-ford/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-infinite-seduction-inspiracao-olfativa-babycat",
@@ -7269,7 +7684,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/infinite-seduction-inspiracao-olfativa-babycat/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-cosmic-scent-inspiracao-olfativa-meteore",
@@ -7283,7 +7699,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/cosmic-scent-inspiracao-olfativa-meteore/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-miss-vallerie-inspiracao-olfativa-valaya-parfums-de-marly",
@@ -7297,7 +7714,8 @@
     "notas": [],
     "preco_brl": 69.2,
     "url": "https://www.azzaparfums.com.br/produtos/miss-vallerie-inspiracao-olfativa-valaya-parfums-de-marly/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-bourbonne-inspiracao-olfativa-althair-pdm",
@@ -7311,7 +7729,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/bourbonne-inspiracao-olfativa-althair-pdm/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-l-homme-up-inspiracao-olfativa-l-homme-intense-prada",
@@ -7331,7 +7750,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/lhomme-up-inspiracao-olfativa-lhomme-intense-prada/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-be-intense-inspiracao-olfativa-y-eau-de-parfum-intense-ysl",
@@ -7345,7 +7765,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/be-intense-inspiracao-olfativa-y-eau-de-parfum-intense-ysl/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-riccher-inspiracao-olfativa-1-million-elixir",
@@ -7359,7 +7780,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/riccher-inspiracao-olfativa-1-million-elixir/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-hannishe-x-inspiracao-olfativa-hacivat-x-nishane",
@@ -7373,7 +7795,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/hannishe-x-inspiracao-olfativa-hacivat-x-nishane/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-mr-boss-inspiracao-olfativa-hugo-boss-bottled-parfum",
@@ -7393,7 +7816,8 @@
     ],
     "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/mr-boss-inspiracao-olfativa-hugo-boss-bottled-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-loizze-inspiracao-olfativa-good-girl-carolina-herrera",
@@ -7413,7 +7837,8 @@
     ],
     "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/loizze-inspiracao-olfativa-good-girl-carolina-herrera/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-le-homme-sport-inspiracao-olfativa-d-homme-sport-2021",
@@ -7427,7 +7852,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/le-homme-sport-inspiracao-olfativa-d-homme-sport-2021-g4vwl/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-mr-boss-elixir-inspiracao-olfativa-hugo-boss-bottled-elixir",
@@ -7447,7 +7873,8 @@
     ],
     "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/mr-boss-elixir-inspiracao-olfativa-hugo-boss-bottled-elixir/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-triumph-21-inspiracao-olfativa-torino-21",
@@ -7461,7 +7888,8 @@
     "notas": [],
     "preco_brl": 69.9,
     "url": "https://www.azzaparfums.com.br/produtos/triumph-21-inspiracao-olfativa-torino-21-s1fwd/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-laide-selle-inspiracao-olfativa-la-vie-est-belle",
@@ -7479,9 +7907,10 @@
       "fruity",
       "patchouli"
     ],
-    "preco_brl": 53.01,
+    "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/laide-selle-inspiracao-olfativa-la-vie-est-belle/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-infusion-x-inspiracao-olfativa-wulong-cha-x",
@@ -7495,7 +7924,8 @@
     "notas": [],
     "preco_brl": 69.3,
     "url": "https://www.azzaparfums.com.br/produtos/infusion-x-inspiracao-olfativa-wulong-cha-x/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-iron-inspiracao-olfativa-nio-xerjoff",
@@ -7509,7 +7939,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/iron-inspiracao-olfativa-nio-xerjoff/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-unique-gold-inspiracao-olfativa-erba-gold",
@@ -7523,7 +7954,8 @@
     "notas": [],
     "preco_brl": 69,
     "url": "https://www.azzaparfums.com.br/produtos/unique-gold-inspiracao-olfativa-erba-gold/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-shout-absolu-inspiracao-olfativa-scandal-pour-homme-absolu",
@@ -7537,7 +7969,8 @@
     "notas": [],
     "preco_brl": 57.9,
     "url": "https://www.azzaparfums.com.br/produtos/shout-absolu-inspiracao-olfativa-scandal-pour-homme-absolu/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-blue-way-inspiracao-olfativa-polo-blue-parfum",
@@ -7557,7 +7990,8 @@
     ],
     "preco_brl": 58.8,
     "url": "https://www.azzaparfums.com.br/produtos/blue-way-inspiracao-olfativa-polo-blue-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-laymont-exclusif-inspiracao-olfativa-layton-exclusif-parfums-de-marly",
@@ -7571,7 +8005,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/laymont-exclusif-inspiracao-olfativa-layton-exclusif-parfums-de-marly/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-x-femme-inspiracao-olfativa-212-vip-rose",
@@ -7591,7 +8026,8 @@
     ],
     "preco_brl": 57.9,
     "url": "https://www.azzaparfums.com.br/produtos/x-femme-inspiracao-olfativa-212-vip-rose/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-immensity-of-seas-inspiracao-olfativa-l-immensite",
@@ -7605,7 +8041,8 @@
     "notas": [],
     "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/immensity-of-seas-inspiracao-olfativa-limmensite/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-dazza-inspiracao-olfativa-delina-parfums-de-marly",
@@ -7617,9 +8054,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 52.83,
+    "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/dazza-inspiracao-olfativa-delina-parfums-de-marly/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-fusion-of-senses-inspiracao-olfativa-invictus-parfum",
@@ -7639,7 +8077,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/fusion-of-senses-inspiracao-olfativa-invictus-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-crush-for-you-inspiracao-olfativa-crush-on-me-unique-e-luxury",
@@ -7653,7 +8092,8 @@
     "notas": [],
     "preco_brl": 68.6,
     "url": "https://www.azzaparfums.com.br/produtos/crush-for-you-inspiracao-olfativa-crush-on-me-uniquee-luxury/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-lemon-premium-inspiracao-olfativa-lemon-line-mancera",
@@ -7667,7 +8107,8 @@
     "notas": [],
     "preco_brl": 69.7,
     "url": "https://www.azzaparfums.com.br/produtos/lemon-premium-inspiracao-olfativa-lemon-line-mancera/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-luminous-cologne-inspiracao-olfativa-dior-homme-cologne-2022",
@@ -7687,7 +8128,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/luminous-cologne-inspiracao-olfativa-dior-homme-cologne-2022/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-dollo-inspiracao-olfativa-bvlgari-man-in-black",
@@ -7705,9 +8147,10 @@
       "rum",
       "amber"
     ],
-    "preco_brl": 53.01,
+    "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/dollo-inspiracao-olfativa-bvlgari-man-in-black/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-on-fire-inspiracao-olfativa-fahrenheit-le-parfum",
@@ -7727,7 +8170,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/on-fire-inspiracao-olfativa-fahrenheit-le-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-city-of-lights-inspiracao-olfativa-city-of-stars",
@@ -7741,7 +8185,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/city-of-lights-inspiracao-olfativa-city-of-stars/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-sunny-beach-inspiracao-olfativa-on-the-beach",
@@ -7755,7 +8200,8 @@
     "notas": [],
     "preco_brl": 59.9,
     "url": "https://www.azzaparfums.com.br/produtos/sunny-beach-inspiracao-olfativa-on-the-beach/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-azza-platinum-inspiracao-olfativa-invictus-platinum",
@@ -7775,7 +8221,8 @@
     ],
     "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/azza-platinum-inspiracao-olfativa-invictus-platinum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-red-explosion-inspiracao-olfativa-red-tobacco-mancera",
@@ -7789,7 +8236,8 @@
     "notas": [],
     "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/red-explosion-inspiracao-olfativa-red-tobacco-mancera/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-intense-paradis-inspiracao-olfativa-angels-share-paradis",
@@ -7809,7 +8257,8 @@
     ],
     "preco_brl": 69.3,
     "url": "https://www.azzaparfums.com.br/produtos/intense-paradis-inspiracao-olfativa-angels-share-paradis/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-hype-man-inspiracao-olfativa-h24-edp-hermes",
@@ -7823,7 +8272,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/hype-man-inspiracao-olfativa-h24-edp-hermes/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-royal-bomber-inspiracao-olfativa-royal-tobacco-amouage",
@@ -7837,7 +8287,8 @@
     "notas": [],
     "preco_brl": 63.2,
     "url": "https://www.azzaparfums.com.br/produtos/royal-bomber-inspiracao-olfativa-royal-tobacco-amouage/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-magnific-inspiracao-olfativa-1-million-paco-rabanne",
@@ -7857,7 +8308,8 @@
     ],
     "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/magnific-inspiracao-olfativa-1-million-paco-rabanne/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-invictory-inspiracao-olfativa-invictus-victory-paco-rabanne",
@@ -7877,7 +8329,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/invictory-inspiracao-olfativa-invictus-victory-paco-rabanne/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-l-belle-inspiracao-olfativa-dolce-gabbana-light-blue",
@@ -7897,7 +8350,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/lbelle-inspiracao-olfativa-dolce-gabbana-light-blue/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-ambasciatore-intense",
@@ -7911,7 +8365,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/ambasciatore-intense/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-invictory-elixir-inspiracao-olfativa-invictus-victory-elixir",
@@ -7929,9 +8384,10 @@
       "fresh spicy",
       "woody"
     ],
-    "preco_brl": 53.01,
+    "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/invictory-elixir-inspiracao-olfativa-invictus-victory-elixir1/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-jasmille-inspiracao-olfativa-j-adore-dior",
@@ -7945,7 +8401,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/jasmille-inspiracao-olfativa-jadore-dior/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-vip-man-inspiracao-olfativa-212-vip-men",
@@ -7963,9 +8420,10 @@
       "tropical",
       "fruity"
     ],
-    "preco_brl": 52.11,
+    "preco_brl": 57.9,
     "url": "https://www.azzaparfums.com.br/produtos/vip-man-inspiracao-olfativa-212-vip-men/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-lunnari-inspiracao-olfativa-prada-luna-rossa-sport",
@@ -7985,7 +8443,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/lunnari-inspiracao-olfativa-prada-luna-rossa-sport/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-doop-inspiracao-olfativa-scandal-jean-paul-gaultier",
@@ -8003,9 +8462,10 @@
       "fresh spicy",
       "lavender"
     ],
-    "preco_brl": 52.83,
+    "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/doop-inspiracao-olfativa-scandal-jean-paul-gaultier/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-attomic-inspiracao-olfativa-ultra-male-jean-paul-gaultier",
@@ -8025,7 +8485,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/attomic-inspiracao-olfativa-ultra-male-jean-paul-gaultier/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-le-homme-d-or-inspiracao-olfativa-d-homme-2020",
@@ -8039,7 +8500,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/le-homme-dor-inspiracao-olfativa-d-homme-2020-g1beu/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-scotch-luxury-inspiracao-olfativa-kutay",
@@ -8053,7 +8515,8 @@
     "notas": [],
     "preco_brl": 68.6,
     "url": "https://www.azzaparfums.com.br/produtos/scotch-luxury-inspiracao-olfativa-kutay/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-bettine-inspiracao-olfativa-jo-malone-english-pear-amp-freesia",
@@ -8067,7 +8530,8 @@
     "notas": [],
     "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/bettine-inspiracao-olfativa-jo-malone-english-pear-freesia/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-classic-platinum-inspiracao-olfativa-platinum-egoiste",
@@ -8087,7 +8551,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/classic-platinum-inspiracao-olfativa-platinum-egoiste/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-fortalezze-inspiracao-olfativa-dior-homme-intense",
@@ -8107,7 +8572,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/fortalezze-inspiracao-olfativa-dior-homme-intense/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-shout-inspiracao-olfativa-scandal-pour-homme",
@@ -8121,7 +8587,8 @@
     "notas": [],
     "preco_brl": 57.9,
     "url": "https://www.azzaparfums.com.br/produtos/shout-inspiracao-olfativa-scandal-pour-homme/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-deeply-black-inspiracao-olfativa-man-in-black-parfum",
@@ -8135,7 +8602,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/deeply-black-inspiracao-olfativa-man-in-black-parfum/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-by-the-way-inspiracao-olfativa-my-way-giorgio-armani",
@@ -8155,7 +8623,8 @@
     ],
     "preco_brl": 57.9,
     "url": "https://www.azzaparfums.com.br/produtos/by-the-way-inspiracao-olfativa-my-way-giorgio-armani/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-chromium-inspiracao-olfativa-polo-cologne-intense-ralph-lauren",
@@ -8175,7 +8644,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/chromium-inspiracao-olfativa-polo-cologne-intense-ralph-lauren/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-sweet-oasis-inspiracao-olfativa-narco-oasis",
@@ -8189,7 +8659,8 @@
     "notas": [],
     "preco_brl": 69.72,
     "url": "https://www.azzaparfums.com.br/produtos/sweet-oasis-inspiracao-olfativa-narco-oasis/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-one-black-elixir-inspiracao-olfativa-212-vip-black-elixir",
@@ -8209,7 +8680,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/one-black-elixir-inspiracao-olfativa-212-vip-black-elixir/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-extremme-water-elixir-inspiracao-olfativa-acqua-di-gio-elixir",
@@ -8229,7 +8701,8 @@
     ],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/extremme-water-elixir-inspiracao-olfativa-acqua-di-gio-elixir/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-versattos-energy-inspiracao-olfativa-eros-energy",
@@ -8243,7 +8716,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/versattos-energy-inspiracao-olfativa-eros-energy/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-seduction-absolu-inspiracao-olfativa-le-male-elixir-absolu",
@@ -8257,7 +8731,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/seduction-absolu-inspiracao-olfativa-le-male-elixir-absolu/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-guetto-inspiracao-olfativa-miss-dior-cherie",
@@ -8277,7 +8752,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/guetto-inspiracao-olfativa-miss-dior-cherie/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-fraicheur-imperialle-inspiracao-olfativa-castley",
@@ -8291,7 +8767,8 @@
     "notas": [],
     "preco_brl": 69.75,
     "url": "https://www.azzaparfums.com.br/produtos/fraicheur-imperialle-inspiracao-olfativa-castley-hlbw4/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-flames-of-desire-inspiracao-olfativa-fan-your-flames-x",
@@ -8305,7 +8782,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/flames-of-desire-inspiracao-olfativa-fan-your-flames-x/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-tiger-stone-extrait-inspiracao-olfativa-tygar-extrait",
@@ -8319,7 +8797,8 @@
     "notas": [],
     "preco_brl": 69.9,
     "url": "https://www.azzaparfums.com.br/produtos/tiger-stone-extrait-inspiracao-olfativa-tygar-extrait/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-intense-desire-inspiracao-olfativa-paradoxe-intense",
@@ -8333,7 +8812,8 @@
     "notas": [],
     "preco_brl": 127.9,
     "url": "https://www.azzaparfums.com.br/produtos/intense-desire-inspiracao-olfativa-paradoxe-intense/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-deep-bass-inspiracao-olfativa-basso",
@@ -8347,7 +8827,8 @@
     "notas": [],
     "preco_brl": 69.97,
     "url": "https://www.azzaparfums.com.br/produtos/deep-bass-inspiracao-olfativa-basso-zw1m7/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-lumme-inspiracao-olfativa-olympea-paco-rabanne",
@@ -8367,7 +8848,8 @@
     ],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/lumme-inspiracao-olfativa-olympea-paco-rabanne/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-toutte-inspiracao-olfativa-armani-code-profumo",
@@ -8385,9 +8867,10 @@
       "soft spicy",
       "floral"
     ],
-    "preco_brl": 53.01,
+    "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/toutte-inspiracao-olfativa-armani-code-profumo/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-shine-it-inspiracao-olfativa-la-vie-est-belle-l-eclat-edp",
@@ -8407,7 +8890,8 @@
     ],
     "preco_brl": 58.4,
     "url": "https://www.azzaparfums.com.br/produtos/shine-it-inspiracao-olfativa-la-vie-est-belle-leclat-edp/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-inebriante-cola-inspiracao-olfativa-tonka-cola",
@@ -8421,7 +8905,8 @@
     "notas": [],
     "preco_brl": 68.7,
     "url": "https://www.azzaparfums.com.br/produtos/inebriante-cola-inspiracao-olfativa-tonka-cola/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-yourself-absolut-inspiracao-olfativa-myslf-l-absolu",
@@ -8435,7 +8920,8 @@
     "notas": [],
     "preco_brl": 59.85,
     "url": "https://www.azzaparfums.com.br/produtos/yourself-absolut-inspiracao-olfativa-myslf-labsolu-tvktg/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-fammous-inspiracao-olfativa-fame-paco-rabanne",
@@ -8455,7 +8941,8 @@
     ],
     "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/fammous-inspiracao-olfativa-fame-paco-rabanne/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-extremme-essence-inspiracao-olfativa-bad-boy-extreme",
@@ -8469,7 +8956,8 @@
     "notas": [],
     "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/extremme-essence-inspiracao-olfativa-bad-boy-extreme/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-erotic-inspiracao-olfativa-212-sexy-feminino",
@@ -8489,7 +8977,8 @@
     ],
     "preco_brl": 58.7,
     "url": "https://www.azzaparfums.com.br/produtos/erotic-inspiracao-olfativa-212-sexy-feminino/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-malttus-inspiracao-olfativa-a-men-pure-malt-thierry-mugler",
@@ -8503,7 +8992,8 @@
     "notas": [],
     "preco_brl": 59.8,
     "url": "https://www.azzaparfums.com.br/produtos/malttus-inspiracao-olfativa-amen-pure-malt-thierry-mugler/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-azza-titanium",
@@ -8515,9 +9005,10 @@
     "marcaOriginal": "Desconhecida",
     "familia": "Indefinida",
     "notas": [],
-    "preco_brl": 61.74,
+    "preco_brl": 68.6,
     "url": "https://www.azzaparfums.com.br/produtos/azza-titanium/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-cherry-queen-inspiracao-olfativa-carmina",
@@ -8531,7 +9022,8 @@
     "notas": [],
     "preco_brl": 68.6,
     "url": "https://www.azzaparfums.com.br/produtos/cherry-queen-inspiracao-olfativa-carmina/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-prime-tobacco-inspiracao-olfativa-stronger-with-you-tobacco",
@@ -8545,7 +9037,8 @@
     "notas": [],
     "preco_brl": 58.9,
     "url": "https://www.azzaparfums.com.br/produtos/prime-tobacco-inspiracao-olfativa-stronger-with-you-tobacco/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": true
   },
   {
     "id": "azza-parfums-sun-sounds-inspiracao-olfativa-sun-song",
@@ -8559,6 +9052,69 @@
     "notas": [],
     "preco_brl": 59.85,
     "url": "https://www.azzaparfums.com.br/produtos/sun-sounds-inspiracao-olfativa-sun-song-993w7/",
-    "categoria": "contratipo"
+    "categoria": "contratipo",
+    "disponivel": false
+  },
+  {
+    "id": "in-the-box-opus-ignis-100ml",
+    "nome": "Opus Ignis - 100ml",
+    "marca": "In The Box",
+    "tipo": "EDP",
+    "genero": "Masculino",
+    "inspiradoEm": "Bleu de Chanel",
+    "marcaOriginal": "Chanel",
+    "familia": "Oriental",
+    "notas": [
+      "Bergamota",
+      "Lavanda",
+      "Cedro",
+      "Vetiver",
+      "Pachuli",
+      "Vetiver",
+      "Amber",
+      "Vânila"
+    ],
+    "preco_brl": 209.9,
+    "categoria": "contratipo",
+    "disponivel": true
+  },
+  {
+    "id": "in-the-box-brise-d-aventure-100ml",
+    "nome": "Brise D'Aventure - 100ml",
+    "marca": "In The Box",
+    "tipo": "EDP",
+    "genero": "Masculino",
+    "inspiradoEm": "Bleu de Chanel",
+    "marcaOriginal": "Chanel",
+    "familia": "Cítrico",
+    "notas": [
+      "Bergamota",
+      "Lavanda",
+      "Cedro"
+    ],
+    "preco_brl": 179.9,
+    "categoria": "contratipo",
+    "disponivel": true
+  },
+  {
+    "id": "azza-parfums-nobler-inspiracao-olfativa-pegasus-exclusif-parfums-de-marly",
+    "nome": "NOBLER - Inspiração Olfativa: Pegasus Exclusif Parfums de Marly",
+    "marca": "Azza Parfums",
+    "tipo": "EDP",
+    "genero": "Unissex",
+    "inspiradoEm": "Pegasus",
+    "marcaOriginal": "Parfums de Marly",
+    "familia": "Oriental",
+    "notas": [
+      "Bergamota",
+      "Lavanda",
+      "Canela",
+      "Vetiver",
+      "Moscus",
+      "Amber"
+    ],
+    "preco_brl": 59.9,
+    "categoria": "contratipo",
+    "disponivel": true
   }
 ]
