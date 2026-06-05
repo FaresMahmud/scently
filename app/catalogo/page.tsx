@@ -156,6 +156,23 @@ function mesclarPerfumes(): CardUnificado[] {
   // 4. Fuzzy image lookup — cards still without images try name-similarity match
   for (const card of mapa.values()) {
     if (card.imagemTransparente || card.imagem) continue
+
+    // Brand-only listing: titulo equals the brand name (e.g. "COACH | Coach")
+    // Use the most popular (first) perfume from that brand in Fragella
+    const nomeNorm  = card.nome.toLowerCase().trim()
+    const marcaNorm = (card.marca ?? "").toLowerCase().trim()
+    if (nomeNorm === marcaNorm || slugify(nomeNorm) === slugify(marcaNorm)) {
+      const brandMatch = fragellaList.find(f =>
+        slugify(f.marca) === slugify(card.marca ?? "")
+      )
+      if (brandMatch) {
+        if (brandMatch.imagemTransparente) card.imagemTransparente = brandMatch.imagemTransparente
+        if (brandMatch.imagem)             card.imagem             = brandMatch.imagem
+        if (brandMatch.imagemFallbacks?.length) card.imagemFallbacks = brandMatch.imagemFallbacks
+      }
+      continue // skip further fuzzy matching for this card
+    }
+
     const fuzzy = fragellaList.find(f =>
       nomesSimilares(card.nome, f.nome, card.marca, f.marca)
     )
