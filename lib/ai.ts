@@ -376,24 +376,22 @@ export interface RecomendacaoCard {
 }
 
 export interface RecomendacaoQuiz {
-  ideal:      RecomendacaoCard
-  alternativo: RecomendacaoCard
-  seguro:     RecomendacaoCard
-  ousado:     RecomendacaoCard
+  ideal:       RecomendacaoCard
+  alternativo?: RecomendacaoCard
+  ousado?:     RecomendacaoCard
 }
 
 const RecomendacaoCardSchema = z.object({
-  nome:      z.string().min(1),
-  marca:     z.string().min(1),
-  codigo:    z.string().min(1),
+  nome:       z.string().min(1),
+  marca:      z.string().min(1),
+  codigo:     z.string().min(1),
   explicacao: z.string().min(1),
 })
 
 const RecomendacaoQuizSchema = z.object({
   ideal:       RecomendacaoCardSchema,
-  alternativo: RecomendacaoCardSchema,
-  seguro:      RecomendacaoCardSchema,
-  ousado:      RecomendacaoCardSchema,
+  alternativo: RecomendacaoCardSchema.optional(),
+  ousado:      RecomendacaoCardSchema.optional(),
 })
 
 // Human-readable labels for each quiz question id
@@ -454,8 +452,16 @@ function buildCatalogSnippet(): string {
   return linhas.join("\n")
 }
 
+const JSON_SCHEMA_FREE    = `{"ideal":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."}}`
+const JSON_SCHEMA_PREMIUM = `{"ideal":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."},"alternativo":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."},"ousado":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."}}`
+
+const CRITERIA_FREE    = `* ideal: maior correspondência com o perfil completo do usuário`
+const CRITERIA_PREMIUM = `* ideal: maior correspondência com o perfil completo do usuário
+* alternativo: mesma assinatura olfativa, fornecedor ou abordagem diferente
+* ousado: empurra o perfil 2 passos além — para quem quer explorar`
+
 const SYSTEM_PROMPT_QUIZ_TEMPLATE = (mode: "free" | "premium") => `Você é a consultora de fragrâncias do nozze — elegante, precisa e humana.
-Você recebe as respostas de um quiz olfativo e deve gerar exatamente 4 recomendações de perfume do catálogo fornecido.
+Você recebe as respostas de um quiz olfativo e deve gerar recomendações de perfume do catálogo fornecido.
 REGRAS ABSOLUTAS:
 * Recomende APENAS perfumes que existam no catálogo fornecido
 * Nunca invente nomes, marcas ou códigos
@@ -469,14 +475,11 @@ PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "
 CATÁLOGO DISPONÍVEL (formato: id | nome | marca | família | concentração):
 {{CATALOG}}
 
-Analise as respostas e gere exatamente 4 recomendações no seguinte JSON:
-{"ideal":{"nome":"string","marca":"string","codigo":"string","explicacao":"string (máx 18 palavras, emocional, personalizada)"},"alternativo":{"nome":"string","marca":"string","codigo":"string","explicacao":"string"},"seguro":{"nome":"string","marca":"string","codigo":"string","explicacao":"string"},"ousado":{"nome":"string","marca":"string","codigo":"string","explicacao":"string"}}
+Gere as recomendações no seguinte JSON:
+${mode === "premium" ? JSON_SCHEMA_PREMIUM : JSON_SCHEMA_FREE}
 
 Critérios de seleção:
-* ideal: maior correspondência com o perfil completo do usuário
-* alternativo: mesma assinatura olfativa, fornecedor ou abordagem diferente
-* seguro: intensidade 3-5/10, alta aceitação social, sem surpresas
-* ousado: expande o perfil declarado, para quem quer explorar
+${mode === "premium" ? CRITERIA_PREMIUM : CRITERIA_FREE}
 
 Responda SOMENTE com o JSON. Sem texto antes ou depois. Sem markdown.`
 

@@ -1,20 +1,21 @@
 // ============================================
 // ARQUIVO: components/consultor/ResultadoQuiz.tsx
-// O QUE FAZ: exibe os 4 cartões de recomendação do novo quiz (ideal, alternativo, seguro, ousado)
+// O QUE FAZ: exibe os cartões de recomendação do quiz
+//   FREE:    1 card (ideal) — centrado, largura total
+//   PREMIUM: 3 cards — ideal no topo, alternativo + ousado lado a lado
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout do resultado do quiz
-// DEPENDE DE: lib/ai.ts (tipo RecomendacaoQuiz), components/ui/
+// DEPENDE DE: lib/ai.ts (RecomendacaoQuiz), components/ui/
 // ============================================
 
 "use client"
 
 import Link from "next/link"
-import { slugify } from "@/lib/utils"
 import type { RecomendacaoQuiz, RecomendacaoCard } from "@/lib/ai"
 
-// ── Labels e cores de cada slot ───────────────────────────────────────────────
+// ── Metadata por slot ─────────────────────────────────────────────────────────
 
 const SLOT_META: Record<
-  keyof RecomendacaoQuiz,
+  "ideal" | "alternativo" | "ousado",
   { label: string; descricao: string; cor: string; destaque?: boolean }
 > = {
   ideal: {
@@ -28,14 +29,9 @@ const SLOT_META: Record<
     descricao: "Mesma assinatura olfativa, caminho diferente",
     cor: "var(--cor-texto-suave)",
   },
-  seguro: {
-    label: "Escolha segura",
-    descricao: "Alta aceitação, sem surpresas",
-    cor: "var(--cor-texto-suave)",
-  },
   ousado: {
     label: "Para explorar",
-    descricao: "Expande o seu perfil — para quem quer descobrir",
+    descricao: "Empurra o perfil além — para quem quer descobrir",
     cor: "var(--cor-dourado)",
   },
 }
@@ -46,12 +42,12 @@ function CardRecomendacao({
   slot,
   card,
 }: {
-  slot: keyof RecomendacaoQuiz
+  slot: "ideal" | "alternativo" | "ousado"
   card: RecomendacaoCard | undefined
 }) {
   if (!card) return null
 
-  const meta = SLOT_META[slot]
+  const meta        = SLOT_META[slot]
   const linkCatalogo = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
   const linkPerfume  = `/perfume/${card.codigo}`
 
@@ -83,13 +79,7 @@ function CardRecomendacao({
         >
           {meta.label}
         </span>
-        <p
-          style={{
-            fontFamily: "var(--fonte-corpo)",
-            fontSize: "0.72rem",
-            color: "var(--cor-texto-suave)",
-          }}
-        >
+        <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", color: "var(--cor-texto-suave)" }}>
           {meta.descricao}
         </p>
       </div>
@@ -121,15 +111,8 @@ function CardRecomendacao({
         {card.nome}
       </h3>
 
-      {/* Explicação personalizada */}
-      <p
-        style={{
-          fontFamily: "var(--fonte-corpo)",
-          fontSize: "0.88rem",
-          color: "var(--cor-texto-suave)",
-          lineHeight: 1.65,
-        }}
-      >
+      {/* Explicação */}
+      <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.88rem", color: "var(--cor-texto-suave)", lineHeight: 1.65 }}>
         {card.explicacao}
       </p>
 
@@ -175,7 +158,7 @@ interface PropsResultadoQuiz {
 }
 
 export default function ResultadoQuiz({ recomendacao, onRecomecar }: PropsResultadoQuiz) {
-  const slots = (["ideal", "alternativo", "seguro", "ousado"] as const)
+  const isPremium = Boolean(recomendacao.alternativo || recomendacao.ousado)
 
   return (
     <div style={{ maxWidth: "620px", margin: "0 auto" }}>
@@ -189,7 +172,7 @@ export default function ResultadoQuiz({ recomendacao, onRecomecar }: PropsResult
           marginBottom: "8px",
         }}
       >
-        Suas recomendações
+        {isPremium ? "Suas recomendações" : "Sua recomendação"}
       </p>
       <p
         style={{
@@ -200,15 +183,37 @@ export default function ResultadoQuiz({ recomendacao, onRecomecar }: PropsResult
           lineHeight: 1.5,
         }}
       >
-        Quatro caminhos para o perfume certo — do mais próximo ao mais ousado.
+        {isPremium
+          ? "Três caminhos para o perfume certo — do mais próximo ao mais ousado."
+          : "O perfume mais alinhado com o seu perfil."}
       </p>
 
-      {/* Grade de cards */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "13px", marginBottom: "34px" }}>
-        {slots.map(slot => (
-          <CardRecomendacao key={slot} slot={slot} card={recomendacao[slot]} />
-        ))}
-      </div>
+      {/* FREE — card ideal centrado, largura total */}
+      {!isPremium && (
+        <div style={{ marginBottom: "34px" }}>
+          <CardRecomendacao slot="ideal" card={recomendacao.ideal} />
+        </div>
+      )}
+
+      {/* PREMIUM — ideal no topo + alternativo/ousado em grid 2 colunas */}
+      {isPremium && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "13px", marginBottom: "34px" }}>
+          {/* Ideal — linha inteira */}
+          <CardRecomendacao slot="ideal" card={recomendacao.ideal} />
+
+          {/* Alternativo + Ousado — lado a lado em telas médias */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: "13px",
+            }}
+          >
+            <CardRecomendacao slot="alternativo" card={recomendacao.alternativo} />
+            <CardRecomendacao slot="ousado"      card={recomendacao.ousado} />
+          </div>
+        </div>
+      )}
 
       {/* Separador */}
       <div style={{ borderTop: "1px solid var(--cor-borda)", marginBottom: "34px" }} />

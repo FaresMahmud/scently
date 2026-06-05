@@ -78,7 +78,7 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
                     marginBottom: "10px",
                   }}
                 >
-                  Gratuito · 7 perguntas
+                  Gratuito · 7 perguntas · 1 recomendação
                 </span>
                 <p
                   style={{
@@ -133,7 +133,7 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
                     marginBottom: "10px",
                   }}
                 >
-                  Nozze+ · 18 perguntas
+                  Nozze+ · 18 perguntas · 3 recomendações
                 </span>
                 <p
                   style={{
