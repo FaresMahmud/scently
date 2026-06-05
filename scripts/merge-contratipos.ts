@@ -141,6 +141,16 @@ function main() {
 
     const updated: ContratipoExistente = { ...e }
 
+    // Never reactivate zero-price entries — they can't be sold
+    if (!novo.preco_brl || novo.preco_brl <= 0) {
+      if (e.disponivel !== false) {
+        countIndisponiveis++
+        console.log(`  INDISPONIVEL (preco=0): "${e.nome}" (${e.marca})`)
+      }
+      resultado.push({ ...updated, disponivel: false })
+      continue
+    }
+
     if (e.disponivel === false) {
       updated.disponivel = true
       countReativados++
