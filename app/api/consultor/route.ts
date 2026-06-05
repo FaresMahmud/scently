@@ -38,9 +38,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ erro: "Requisição inválida" }, { status: 400 })
   }
 
-  // Normalise: accept both { respostas: {...} } and flat { key: value }
-  const payload = (raw as Record<string, unknown>)?.respostas ?? raw
-  const parsed = consultorSchema.safeParse({ respostas: payload })
+  // Parse the full raw body — preserves mode alongside respostas
+  const parsed = consultorSchema.safeParse(raw)
   if (!parsed.success) {
     return NextResponse.json({ erro: "Requisição inválida: respostas ausentes ou vazias." }, { status: 400 })
   }
