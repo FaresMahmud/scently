@@ -1023,15 +1023,100 @@ function makeDeepSeekEntry(
   }
 }
 
+// Nacional brands that couldn't be scraped — generate via DeepSeek
+const NACIONAL_BRANDS_DEEPSEEK = [
+  { nome: "O Boticário",  preco_brl: 120, count: 12, site: "https://www.boticario.com.br" },
+  { nome: "Natura",       preco_brl: 100, count: 12, site: "https://www.natura.com.br"    },
+  { nome: "Eudora",       preco_brl: 90,  count: 10, site: "https://www.eudora.com.br"    },
+  { nome: "Granado",      preco_brl: 80,  count: 8,  site: "https://www.granado.com.br"   },
+  { nome: "Phebo",        preco_brl: 95,  count: 8,  site: "https://www.phebo.com.br"     },
+]
+
+async function deepseekGenerateNacional(
+  brand: { nome: string; preco_brl: number; count: number; site: string }
+): Promise<(DeepSeekPerfume & { preco_sugerido?: number })[]> {
+  const prompt = `Você é especialista em perfumaria brasileira.
+Liste os ${brand.count} perfumes mais populares e vendidos da marca brasileira "${brand.nome}".
+Para cada perfume, inclua:
+- "nome": nome exato do perfume (sem a marca)
+- "tipo": "EDP", "EDT", "EDC" ou "Parfum"
+- "genero": "Masculino", "Feminino" ou "Unissex"
+- "familia": família olfativa em português (Amadeirado, Floral, Oriental, Cítrico, Aquático, Gourmand, Frutal, Almiscarado, Especiado, Verde, etc.)
+- "notas": array com 3-5 notas olfativas principais em português
+- "preco_sugerido": preço aproximado em reais (número inteiro)
+
+Responda SOMENTE com um array JSON válido. Sem texto extra. Sem markdown.`
+
+  const res = await fetch("https://api.deepseek.com/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${DEEPSEEK_KEY}` },
+    body: JSON.stringify({
+      model: "deepseek-chat",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.3,
+      max_tokens: 2000,
+      response_format: { type: "json_object" },
+    }),
+  })
+  if (!res.ok) throw new Error(`DeepSeek HTTP ${res.status}`)
+  const data = await res.json() as { choices: Array<{ message: { content: string } }> }
+  const txt  = data.choices[0]?.message?.content?.trim() ?? "[]"
+  try {
+    const parsed = JSON.parse(txt)
+    if (Array.isArray(parsed)) return parsed
+    for (const v of Object.values(parsed)) { if (Array.isArray(v)) return v as (DeepSeekPerfume & { preco_sugerido?: number })[] }
+  } catch { /* */ }
+  return []
+}
+
 async function runPhase3(): Promise<PerfumeExpandido[]> {
   console.log("\n" + "═".repeat(60))
-  console.log("FASE 3 — Importados Designer (DeepSeek)")
+  console.log("FASE 3 — Nacionais (DeepSeek) + Importados Designer (DeepSeek)")
   console.log("═".repeat(60))
 
   if (!DEEPSEEK_KEY) { console.error("✗ DEEPSEEK_API_KEY não configurada — pulando fase 3"); return [] }
 
   const resultado: PerfumeExpandido[] = []
 
+  // ── 3a: Nacionais via DeepSeek ────────────────────────────────────────────
+  console.log("\n── 3a: Nacionais via DeepSeek ──")
+  for (const brand of NACIONAL_BRANDS_DEEPSEEK) {
+    console.log(`\n[${brand.nome}] Gerando ${brand.count} perfumes nacionais…`)
+    try {
+      const perfumes = await deepseekGenerateNacional(brand)
+      for (const p of perfumes) {
+        const nome = String(p.nome ?? "").trim()
+        if (!nome) continue
+        const tipo   = (["EDP","EDT","EDC","Parfum"].includes(p.tipo) ? p.tipo : "EDP") as PerfumeExpandido["tipo"]
+        const genero = (["Masculino","Feminino","Unissex"].includes(p.genero) ? p.genero : "Unissex") as PerfumeExpandido["genero"]
+        const preco  = (p as unknown as { preco_sugerido?: number }).preco_sugerido ?? brand.preco_brl
+        resultado.push({
+          id:            `${slugify(brand.nome)}-${slugify(nome)}`,
+          nome,
+          marca:         brand.nome,
+          tipo,
+          genero,
+          inspiradoEm:   null,
+          marcaOriginal: null,
+          familia:       p.familia ?? "Indefinida",
+          notas:         Array.isArray(p.notas) ? p.notas : [],
+          preco_brl:     preco,
+          categoria:     "nacional",
+          disponivel:    true,
+          linkCompra:    brand.site,
+        })
+        console.log(`  + ${nome} (${tipo}, ${genero}) R$${preco}`)
+      }
+    } catch (e) {
+      console.error(`  ✗ ${brand.nome}: ${(e as Error).message}`)
+    }
+    await sleep(1000)
+  }
+
+  console.log(`\n  → ${resultado.length} nacionais gerados`)
+
+  // ── 3b: Designer Importados ───────────────────────────────────────────────
+  console.log("\n── 3b: Importados Designer ──")
   for (const brand of DESIGNER_BRANDS) {
     console.log(`\n[${brand.nome}] Gerando ${brand.count} perfumes…`)
     try {
@@ -1049,7 +1134,7 @@ async function runPhase3(): Promise<PerfumeExpandido[]> {
     await sleep(1000)
   }
 
-  console.log(`\nFase 3: ${resultado.length} perfumes designer gerados`)
+  console.log(`\nFase 3: ${resultado.length} perfumes gerados (nacionais + designer)`)
   return resultado
 }
 
