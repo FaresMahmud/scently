@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   description: "Explore milhares de fragrâncias — perfumes internacionais, nacionais e contratipos.",
 }
 
-// Revalida a cada hora (dados do catálogo raramente mudam)
-export const revalidate = 3600
+// Força SSR em cada request enquanto debugamos imagens — voltar para 3600 depois
+export const revalidate = 0
 
 // ── Mapeamento de gênero ──────────────────────────────────────────────────────
 
@@ -107,14 +107,20 @@ function mesclarPerfumes(): CardUnificado[] {
     if (!mapa.has(k)) mapa.set(k, contratipoParaCard(p))
   }
 
-  // 3. Fragella — enriquece existentes (imagem + rating) e adiciona novos
+  // 3. Fragella — enriquece existentes (imagens + rating) e adiciona novos
   for (const p of carregarCatalogo()) {
     const k = chave(p.nome, p.marca)
     const existente = mapa.get(k)
     if (existente) {
-      // Enriquece com imagem e rating se não existiam
-      if (!existente.imagem && (p.imagemTransparente || p.imagem)) {
-        existente.imagem = p.imagemTransparente || p.imagem
+      // Enriquece com cadeia completa de imagens se não existia
+      if (!existente.imagemTransparente && p.imagemTransparente) {
+        existente.imagemTransparente = p.imagemTransparente
+      }
+      if (!existente.imagem && p.imagem) {
+        existente.imagem = p.imagem
+      }
+      if (!existente.imagemFallbacks && p.imagemFallbacks?.length) {
+        existente.imagemFallbacks = p.imagemFallbacks
       }
       if (!existente.rating && p.rating) {
         existente.rating = p.rating
@@ -123,6 +129,7 @@ function mesclarPerfumes(): CardUnificado[] {
       mapa.set(k, fragellaParaCard(p))
     }
   }
+
 
   return Array.from(mapa.values())
 }
