@@ -419,7 +419,7 @@ const LABELS_QUIZ: Record<string, string> = {
   estilo:       "Estilo visual",
   imagem:       "Imagem sensorial",
   bebida:       "Perfume como bebida",
-  estacao:      "Estação preferida",
+  estacao:      "Época de uso",
   memoria:      "Memória olfativa",
   incomodo:     "O que incomoda em perfumes",
 }
@@ -489,7 +489,7 @@ const JSON_SCHEMA_PREMIUM = `{"ideal":{"nome":"...","marca":"...","codigo":"..."
 
 const CRITERIA_FREE    = `* ideal: maior correspondência com o perfil completo do usuário`
 const CRITERIA_PREMIUM = `* ideal: maior correspondência com o perfil completo do usuário
-* alternativo: mesma assinatura olfativa, fornecedor ou abordagem diferente
+* alternativo: mesma família olfativa e intensidade, mas inspirado em um perfume DIFERENTE do ideal — nunca o mesmo perfume de outra marca. Deve ser de um fornecedor diferente quando possível.
 * ousado: empurra o perfil 2 passos além — para quem quer explorar`
 
 const SYSTEM_PROMPT_QUIZ_TEMPLATE = (mode: "free" | "premium") => `Você é a consultora de fragrâncias do nozze — elegante, precisa e humana.
@@ -500,6 +500,7 @@ REGRAS ABSOLUTAS:
 * Nunca use termos técnicos de perfumaria na explicação ao usuário
 * Máximo 18 palavras por frase nas explicações
 * O usuário é o protagonista — o nozze é o guia
+* alternativo nunca pode ser o mesmo perfume inspirado de outra marca — deve ser uma fragrância diferente
 
 PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
 {{QUIZ_ANSWERS}}

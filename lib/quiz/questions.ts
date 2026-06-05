@@ -253,12 +253,12 @@ export const PREMIUM_QUIZ_QUESTIONS: PerguntaQuiz[] = [
   },
   {
     id: "estacao",
-    pergunta: "Qual estação do ano mais combina com como você quer se sentir?",
+    pergunta: "Para qual momento do ano você quer esse perfume?",
     opcoes: [
-      { id: "a", texto: "Primavera — flores, renovação, ar fresco" },
-      { id: "b", texto: "Verão — sol, leveza, liberdade" },
-      { id: "c", texto: "Outono — profundidade, folhas, transição" },
-      { id: "d", texto: "Inverno — aconchego, calor, intimidade" },
+      { id: "a", texto: "Ano todo — quero usar em qualquer estação" },
+      { id: "b", texto: "Nos meses quentes — verão, calor, sol" },
+      { id: "c", texto: "Nos meses frios — outono, inverno, aconchego" },
+      { id: "d", texto: "Tenho uma ocasião específica em mente" },
     ],
   },
   {
