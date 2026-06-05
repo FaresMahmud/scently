@@ -372,6 +372,8 @@ export interface RecomendacaoCard {
   marca: string
   codigo: string
   explicacao: string
+  quando?: string     // when / ideal moment to wear — max 12 words
+  aplicacao?: string  // how many sprays, where to apply — max 10 words
 }
 
 export interface RecomendacaoQuiz {
@@ -385,6 +387,8 @@ const RecomendacaoCardSchema = z.object({
   marca:      z.string().min(1),
   codigo:     z.string().min(1),
   explicacao: z.string().min(1),
+  quando:     z.string().optional(),
+  aplicacao:  z.string().optional(),
 })
 
 const RecomendacaoQuizSchema = z.object({
@@ -484,8 +488,9 @@ function buildCatalogSnippet(orcamento?: string): string {
     .join("\n")
 }
 
-const JSON_SCHEMA_FREE    = `{"ideal":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."}}`
-const JSON_SCHEMA_PREMIUM = `{"ideal":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."},"alternativo":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."},"ousado":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."}}`
+const CARD_SCHEMA_EXAMPLE = `{"nome":"...","marca":"...","codigo":"...","explicacao":"...","quando":"Noites de saída, jantares, encontros — situações onde você quer ser lembrado.","aplicacao":"2 borrifadas no pescoço. No calor, uma basta."}`
+const JSON_SCHEMA_FREE    = `{"ideal":${CARD_SCHEMA_EXAMPLE}}`
+const JSON_SCHEMA_PREMIUM = `{"ideal":${CARD_SCHEMA_EXAMPLE},"alternativo":${CARD_SCHEMA_EXAMPLE},"ousado":${CARD_SCHEMA_EXAMPLE}}`
 
 const CRITERIA_FREE    = `* ideal: maior correspondência com o perfil completo do usuário`
 const CRITERIA_PREMIUM = `* ideal: maior correspondência com o perfil completo do usuário
@@ -501,9 +506,17 @@ REGRAS ABSOLUTAS:
 * Máximo 18 palavras por frase nas explicações
 * O usuário é o protagonista — o nozze é o guia
 * alternativo nunca pode ser o mesmo perfume inspirado de outra marca — deve ser uma fragrância diferente
+* quando: máximo 12 palavras. Contextualiza o momento ideal de uso.
+* aplicacao: máximo 10 palavras. Instrução prática, direta.
 
 PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
 {{QUIZ_ANSWERS}}
+
+CONTEXTO PRIORITÁRIO:
+Se o contexto for "Encontros e sedução", priorize perfumes com projeção média-alta, caráter sensual, que deixam rastro. Evite perfumes discretos ou aquáticos leves.
+Se o contexto for "Uso diário", priorize perfumes versáteis, não invasivos, duráveis.
+Se o contexto for "Trabalho ou faculdade", priorize perfumes discretos, limpos, profissionais.
+Se o contexto for "Minha assinatura pessoal — para tudo", priorize perfumes únicos e marcantes alinhados ao arquétipo do usuário.
 
 CATÁLOGO DE CONTRATIPOS DISPONÍVEIS (formato: id | nome | marca | família | concentração | inspiração | preço):
 {{CATALOG}}

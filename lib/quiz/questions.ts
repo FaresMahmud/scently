@@ -22,12 +22,12 @@ export interface PerguntaQuiz {
 export const FREE_QUIZ_QUESTIONS: PerguntaQuiz[] = [
   {
     id: "contexto",
-    pergunta: "Para qual momento você quer esse perfume?",
+    pergunta: "Para que você está procurando esse perfume?",
     opcoes: [
-      { id: "a", texto: "Do dia a dia — quero usar toda manhã sem pensar" },
-      { id: "b", texto: "Para o trabalho ou faculdade" },
-      { id: "c", texto: "Para encontros, saídas e momentos especiais" },
-      { id: "d", texto: "Minha assinatura — para tudo" },
+      { id: "a", texto: "Uso diário — quero algo para todo dia" },
+      { id: "b", texto: "Trabalho ou faculdade" },
+      { id: "c", texto: "Encontros e sedução" },
+      { id: "d", texto: "Minha assinatura pessoal — para tudo" },
     ],
   },
   {

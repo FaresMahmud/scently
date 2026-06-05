@@ -11,6 +11,7 @@
 
 import Link from "next/link"
 import type { RecomendacaoQuiz, RecomendacaoCard } from "@/lib/ai"
+import { SUPPLIER_URLS } from "@/lib/suppliers"
 
 // ── Metadata por slot ─────────────────────────────────────────────────────────
 
@@ -47,9 +48,10 @@ function CardRecomendacao({
 }) {
   if (!card) return null
 
-  const meta        = SLOT_META[slot]
-  const linkCatalogo = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
-  const linkPerfume  = `/perfume/${card.codigo}`
+  const meta          = SLOT_META[slot]
+  const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
+  const linkPerfume   = `/perfume/${card.codigo}`
+  const linkFornecedor = SUPPLIER_URLS[card.marca] ?? null
 
   return (
     <div
@@ -116,6 +118,37 @@ function CardRecomendacao({
         {card.explicacao}
       </p>
 
+      {/* Quando usar */}
+      {card.quando && (
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginTop: "13px" }}>
+          {/* Calendar icon — thin stroke, terracota */}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, marginTop: "2px" }}>
+            <rect x="1" y="2.5" width="12" height="10.5" rx="1.5" stroke="#C4714A" strokeWidth="1.2"/>
+            <path d="M1 5.5h12" stroke="#C4714A" strokeWidth="1.2"/>
+            <path d="M4.5 1v3M9.5 1v3" stroke="#C4714A" strokeWidth="1.2" strokeLinecap="round"/>
+          </svg>
+          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", color: "rgba(26,26,24,0.7)", lineHeight: 1.5, margin: 0 }}>
+            {card.quando}
+          </p>
+        </div>
+      )}
+
+      {/* Aplicação */}
+      {card.aplicacao && (
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginTop: "13px" }}>
+          {/* Spray bottle icon — thin stroke, text at 50% opacity */}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, marginTop: "2px" }}>
+            <path d="M6 4.5V11a1.5 1.5 0 003 0V4.5" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
+            <rect x="5.5" y="2.5" width="4" height="2.5" rx="1" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2"/>
+            <path d="M9.5 3.5H11a1 1 0 011 1v0" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
+            <path d="M12 4.5h.5" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
+          </svg>
+          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", color: "rgba(26,26,24,0.7)", lineHeight: 1.5, margin: 0 }}>
+            {card.aplicacao}
+          </p>
+        </div>
+      )}
+
       {/* Ações */}
       <div style={{ display: "flex", gap: "13px", flexWrap: "wrap", alignItems: "center", marginTop: "auto" }}>
         <Link
@@ -145,6 +178,24 @@ function CardRecomendacao({
         >
           Buscar no catálogo
         </Link>
+        {linkFornecedor && (
+          <a
+            href={linkFornecedor}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "0.82rem",
+              color: "#C4714A",
+              fontWeight: 500,
+              minHeight: "44px",
+              display: "inline-flex",
+              alignItems: "center",
+            }}
+          >
+            Comprar na {card.marca} →
+          </a>
+        )}
       </div>
     </div>
   )
