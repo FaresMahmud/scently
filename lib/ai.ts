@@ -10,7 +10,6 @@ import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
 import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
-import { perfumesPopulares } from "@/lib/catalogoFragella"
 import { z } from "zod"
 
 export interface RespostasQuiz {
@@ -439,18 +438,50 @@ function formatarRespostasLegivel(respostas: Record<string, string>): string {
     .join("\n")
 }
 
+// Brazilian supplier whitelist — both Azza spellings included
+const MARCAS_CONTRATIPOS = new Set([
+  "In The Box",
+  "JA Essence",
+  "Maison Viegas",
+  "Azza Parfum",
+  "Azza Parfums",
+])
+
+// Budget answer text → max price in BRL (null = no ceiling)
+function limitePreco(orcamento: string | undefined): number | null {
+  if (!orcamento) return null
+  if (orcamento.includes("150") && orcamento.toLowerCase().startsWith("até")) return 150
+  if (orcamento.includes("150") && orcamento.includes("300"))                  return 300
+  if (orcamento.includes("300") && orcamento.includes("500"))                  return 500
+  return null // "Sem limite" or unrecognised → no ceiling
+}
+
 /**
- * Builds a compact catalog snippet for the prompt.
- * Uses top-N perfumes by rating/popularity from the Fragella catalog.
+ * Builds the catalog snippet injected into the quiz prompt.
+ * Contains ONLY contratypes from our Brazilian suppliers, optionally
+ * filtered by the user's orcamento answer.
+ * Format: id | nome | marca | família | concentração | inspirado em | preço
  */
-function buildCatalogSnippet(): string {
-  const amostra = perfumesPopulares(120)
-  const linhas = amostra.map(p =>
-    [p.id, p.nome, p.marca, p.familia ?? "", p.concentracao ?? ""]
-      .map(s => s.trim())
-      .join(" | ")
-  )
-  return linhas.join("\n")
+function buildCatalogSnippet(orcamento?: string): string {
+  const teto = limitePreco(orcamento)
+
+  const filtrados = contratipoRepository.findAll().filter(p => {
+    if (!MARCAS_CONTRATIPOS.has(p.marca)) return false
+    if (teto !== null && p.preco_brl > teto) return false
+    return true
+  })
+
+  if (filtrados.length === 0) {
+    // Safety fallback: return all contratypes if filter is too restrictive
+    return contratipoRepository.findAll()
+      .filter(p => MARCAS_CONTRATIPOS.has(p.marca))
+      .map(p => `${p.id} | ${p.nome} | ${p.marca} | ${p.familia} | ${p.tipo} | inspirado em ${p.inspiradoEm} | R$${p.preco_brl}`)
+      .join("\n")
+  }
+
+  return filtrados
+    .map(p => `${p.id} | ${p.nome} | ${p.marca} | ${p.familia} | ${p.tipo} | inspirado em ${p.inspiradoEm} | R$${p.preco_brl}`)
+    .join("\n")
 }
 
 const JSON_SCHEMA_FREE    = `{"ideal":{"nome":"...","marca":"...","codigo":"...","explicacao":"..."}}`
@@ -464,8 +495,8 @@ const CRITERIA_PREMIUM = `* ideal: maior correspondência com o perfil completo 
 const SYSTEM_PROMPT_QUIZ_TEMPLATE = (mode: "free" | "premium") => `Você é a consultora de fragrâncias do nozze — elegante, precisa e humana.
 Você recebe as respostas de um quiz olfativo e deve gerar recomendações de perfume do catálogo fornecido.
 REGRAS ABSOLUTAS:
-* Recomende APENAS perfumes que existam no catálogo fornecido
-* Nunca invente nomes, marcas ou códigos
+* Recomende APENAS perfumes desta lista. Não invente perfumes. Não recomende marcas originais.
+* O campo "codigo" deve ser exatamente o id da linha do catálogo (primeira coluna)
 * Nunca use termos técnicos de perfumaria na explicação ao usuário
 * Máximo 18 palavras por frase nas explicações
 * O usuário é o protagonista — o nozze é o guia
@@ -473,7 +504,7 @@ REGRAS ABSOLUTAS:
 PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
 {{QUIZ_ANSWERS}}
 
-CATÁLOGO DISPONÍVEL (formato: id | nome | marca | família | concentração):
+CATÁLOGO DE CONTRATIPOS DISPONÍVEIS (formato: id | nome | marca | família | concentração | inspiração | preço):
 {{CATALOG}}
 
 Gere as recomendações no seguinte JSON:
@@ -495,7 +526,9 @@ export async function gerarRecomendacaoQuiz(
   }
 
   const quizAnswers = formatarRespostasLegivel(respostas)
-  const catalog     = buildCatalogSnippet()
+  const catalog     = buildCatalogSnippet(respostas["orcamento"])
+
+  console.log(`[QuizIA] Catalog: ${catalog.split("\n").length} contratipos | orcamento: "${respostas["orcamento"] ?? "não informado"}"`)
 
   const systemPrompt = SYSTEM_PROMPT_QUIZ_TEMPLATE(mode)
     .replace("{{QUIZ_ANSWERS}}", quizAnswers)
