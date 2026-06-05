@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import { gerarRecomendacao } from "@/lib/ai"
+import { gerarRecomendacao, gerarRecomendacaoQuiz } from "@/lib/ai"
 import { consultorRateLimit, getClientIp } from "@/lib/rateLimit"
 import { consultorSchema } from "@/lib/schemas"
+import { resolverRespostas } from "@/lib/quiz/questions"
 
 // Only the production domains — nozze.vercel.app removed
 const ORIGENS_PERMITIDAS =
@@ -45,6 +46,21 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // New quiz engine (free / premium) — returns 4 recommendations
+    if (parsed.data.mode === "free" || parsed.data.mode === "premium") {
+      // Resolve option IDs (a/b/c/d) → full option text before sending to AI
+      const respostasTexto = resolverRespostas(
+        parsed.data.respostas as Record<string, string>,
+        parsed.data.mode
+      )
+      const recomendacao = await gerarRecomendacaoQuiz(respostasTexto, parsed.data.mode)
+      if (!recomendacao) {
+        return NextResponse.json({ erro: "Não foi possível gerar a recomendação" }, { status: 500 })
+      }
+      return NextResponse.json(recomendacao)
+    }
+
+    // Legacy engine — returns perfumePrincipal + alternativa
     const recomendacao = await gerarRecomendacao(parsed.data.respostas as Record<string, unknown>)
     if (!recomendacao) {
       return NextResponse.json({ erro: "Não foi possível gerar a recomendação" }, { status: 500 })

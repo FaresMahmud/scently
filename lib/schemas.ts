@@ -75,4 +75,6 @@ export const consultorSchema = z.object({
   respostas: z
     .record(z.string(), z.unknown())
     .refine(obj => Object.keys(obj).length > 0, { message: "Respostas não podem estar vazias." }),
+  // Optional quiz mode — when present routes to the new 4-rec quiz engine
+  mode: z.enum(["free", "premium"]).optional(),
 })

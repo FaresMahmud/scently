@@ -10,6 +10,7 @@ import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
 import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
+import { perfumesPopulares } from "@/lib/catalogoFragella"
 import { z } from "zod"
 
 export interface RespostasQuiz {
@@ -364,6 +365,187 @@ Regras obrigatórias:
   console.error("[IA] Groq falhou — usando fallback")
   return gerarFallback(respostas)
 }
+
+// ── Quiz novo: free (7q) / premium (18q) ─────────────────────────────────────
+
+export interface RecomendacaoCard {
+  nome: string
+  marca: string
+  codigo: string
+  explicacao: string
+}
+
+export interface RecomendacaoQuiz {
+  ideal:      RecomendacaoCard
+  alternativo: RecomendacaoCard
+  seguro:     RecomendacaoCard
+  ousado:     RecomendacaoCard
+}
+
+const RecomendacaoCardSchema = z.object({
+  nome:      z.string().min(1),
+  marca:     z.string().min(1),
+  codigo:    z.string().min(1),
+  explicacao: z.string().min(1),
+})
+
+const RecomendacaoQuizSchema = z.object({
+  ideal:       RecomendacaoCardSchema,
+  alternativo: RecomendacaoCardSchema,
+  seguro:      RecomendacaoCardSchema,
+  ousado:      RecomendacaoCardSchema,
+})
+
+// Human-readable labels for each quiz question id
+const LABELS_QUIZ: Record<string, string> = {
+  // free (7q)
+  contexto:     "Contexto de uso",
+  presenca:     "Presença desejada",
+  cena:         "Cena de vida",
+  cidade:       "Estilo de vida",
+  sensacao:     "Sensação a transmitir",
+  olfato:       "Preferência olfativa",
+  orcamento:    "Orçamento",
+  // premium additions (18q)
+  idade:        "Faixa de idade",
+  experiencia:  "Experiência com perfumes",
+  clima:        "Clima",
+  rotina:       "Rotina diária",
+  vida_social:  "Vida social",
+  fds:          "Fim de semana ideal",
+  frequencia:   "Frequência de uso",
+  personalidade:"Personalidade",
+  impressao:    "Impressão desejada",
+  identidade:   "Identidade",
+  luxo:         "Relação com luxo",
+  estilo:       "Estilo visual",
+  imagem:       "Imagem sensorial",
+  bebida:       "Perfume como bebida",
+  estacao:      "Estação preferida",
+  memoria:      "Memória olfativa",
+  incomodo:     "O que incomoda em perfumes",
+}
+
+/**
+ * Formats quiz answers (id → option text) into a readable multi-line string.
+ * Answers are expected to already carry the option's full text (not the letter id).
+ */
+function formatarRespostasLegivel(respostas: Record<string, string>): string {
+  return Object.entries(respostas)
+    .filter(([, v]) => Boolean(v))
+    .map(([k, v]) => {
+      const label = LABELS_QUIZ[k] ?? k
+      return `${label}: ${v}`
+    })
+    .join("\n")
+}
+
+/**
+ * Builds a compact catalog snippet for the prompt.
+ * Uses top-N perfumes by rating/popularity from the Fragella catalog.
+ */
+function buildCatalogSnippet(): string {
+  const amostra = perfumesPopulares(120)
+  const linhas = amostra.map(p =>
+    [p.id, p.nome, p.marca, p.familia ?? "", p.concentracao ?? ""]
+      .map(s => s.trim())
+      .join(" | ")
+  )
+  return linhas.join("\n")
+}
+
+const SYSTEM_PROMPT_QUIZ_TEMPLATE = (mode: "free" | "premium") => `Você é a consultora de fragrâncias do nozze — elegante, precisa e humana.
+Você recebe as respostas de um quiz olfativo e deve gerar exatamente 4 recomendações de perfume do catálogo fornecido.
+REGRAS ABSOLUTAS:
+* Recomende APENAS perfumes que existam no catálogo fornecido
+* Nunca invente nomes, marcas ou códigos
+* Nunca use termos técnicos de perfumaria na explicação ao usuário
+* Máximo 18 palavras por frase nas explicações
+* O usuário é o protagonista — o nozze é o guia
+
+PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
+{{QUIZ_ANSWERS}}
+
+CATÁLOGO DISPONÍVEL (formato: id | nome | marca | família | concentração):
+{{CATALOG}}
+
+Analise as respostas e gere exatamente 4 recomendações no seguinte JSON:
+{"ideal":{"nome":"string","marca":"string","codigo":"string","explicacao":"string (máx 18 palavras, emocional, personalizada)"},"alternativo":{"nome":"string","marca":"string","codigo":"string","explicacao":"string"},"seguro":{"nome":"string","marca":"string","codigo":"string","explicacao":"string"},"ousado":{"nome":"string","marca":"string","codigo":"string","explicacao":"string"}}
+
+Critérios de seleção:
+* ideal: maior correspondência com o perfil completo do usuário
+* alternativo: mesma assinatura olfativa, fornecedor ou abordagem diferente
+* seguro: intensidade 3-5/10, alta aceitação social, sem surpresas
+* ousado: expande o perfil declarado, para quem quer explorar
+
+Responda SOMENTE com o JSON. Sem texto antes ou depois. Sem markdown.`
+
+export async function gerarRecomendacaoQuiz(
+  respostas: Record<string, string>,
+  mode: "free" | "premium"
+): Promise<RecomendacaoQuiz | null> {
+  const chave = process.env.DEEPSEEK_API_KEY
+  if (!chave || chave === "sua_chave_aqui") {
+    console.error("[QuizIA] DEEPSEEK_API_KEY não configurada")
+    return null
+  }
+
+  const quizAnswers = formatarRespostasLegivel(respostas)
+  const catalog     = buildCatalogSnippet()
+
+  const systemPrompt = SYSTEM_PROMPT_QUIZ_TEMPLATE(mode)
+    .replace("{{QUIZ_ANSWERS}}", quizAnswers)
+    .replace("{{CATALOG}}", catalog)
+
+  const body = {
+    model: "deepseek-chat",
+    messages: [{ role: "system", content: systemPrompt }],
+    temperature: 0.4,
+    max_tokens: 900,
+    response_format: { type: "json_object" },
+  }
+
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 20_000)
+
+  let res: Response
+  try {
+    res = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${chave}`,
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    })
+  } finally {
+    clearTimeout(timeout)
+  }
+
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`DeepSeek ${res.status}: ${err}`)
+  }
+
+  const dados = await res.json()
+  const texto: string = dados?.choices?.[0]?.message?.content ?? ""
+  console.log("[QuizIA] Resposta bruta:", texto.slice(0, 300))
+
+  const jsonMatch = texto.match(/\{[\s\S]*\}/)
+  if (!jsonMatch) throw new Error("[QuizIA] Sem JSON na resposta")
+
+  const parsed = RecomendacaoQuizSchema.safeParse(JSON.parse(jsonMatch[0]))
+  if (!parsed.success) {
+    console.error("[QuizIA] JSON inválido:", parsed.error.issues.map(i => i.message).join("; "))
+    throw new Error("[QuizIA] JSON inválido")
+  }
+
+  console.log("[QuizIA] Sucesso —", mode, "—", parsed.data.ideal.nome)
+  return parsed.data
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
   const r = respostas as RespostasQuiz

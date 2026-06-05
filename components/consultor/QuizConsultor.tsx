@@ -1,103 +1,86 @@
 // ============================================
 // ARQUIVO: components/consultor/QuizConsultor.tsx
-// O QUE FAZ: controlador principal do quiz — gerencia todas as telas e estados da consulta
-// QUANDO MANDAR PRA IA: quando quiser mudar o fluxo completo do quiz ou adicionar perguntas
-// DEPENDE DE: components/consultor/, config/site.ts, lib/ai.ts
+// O QUE FAZ: controlador principal do quiz — gerencia todas as telas e estados
+// QUANDO MANDAR PRA IA: quando quiser mudar o fluxo do quiz ou adicionar perguntas
+// DEPENDE DE: components/consultor/, lib/quiz/questions.ts, lib/ai.ts
 // ============================================
 
 "use client"
 
 import { useState, useEffect } from "react"
-import SelecaoModo from "./SelecaoModo"
-import PerguntaOpcoes from "./PerguntaOpcoes"
-import PerguntaNotas from "./PerguntaNotas"
-import PerguntaTexto from "./PerguntaTexto"
-import BarraProgresso from "./BarraProgresso"
-import ResultadoConsultor from "./ResultadoConsultor"
-import { perguntasRapidas, perguntasAprofundadas, textosConsultor } from "@/config/site"
-import type { RecomendacaoIA, RespostasQuiz } from "@/lib/ai"
+import SelecaoModo      from "./SelecaoModo"
+import PerguntaOpcoes   from "./PerguntaOpcoes"
+import BarraProgresso   from "./BarraProgresso"
+import ResultadoQuiz    from "./ResultadoQuiz"
+import {
+  FREE_QUIZ_QUESTIONS,
+  PREMIUM_QUIZ_QUESTIONS,
+} from "@/lib/quiz/questions"
+import type { RecomendacaoQuiz } from "@/lib/ai"
 
 type EstadoQuiz = "selecao" | "pergunta" | "carregando" | "resultado" | "erro"
 
 export default function QuizConsultor() {
-  const [estado, setEstado] = useState<EstadoQuiz>("selecao")
-  const [modo, setModo] = useState<"rapido" | "aprofundado">("rapido")
-  const [passo, setPasso] = useState(0)
-  const [respostas, setRespostas] = useState<Partial<RespostasQuiz>>({})
-  const [recomendacao, setRecomendacao] = useState<RecomendacaoIA | null>(null)
+  const [estado, setEstado]           = useState<EstadoQuiz>("selecao")
+  const [modo,   setModo]             = useState<"free" | "premium">("free")
+  const [passo,  setPasso]            = useState(0)
+  const [respostas, setRespostas]     = useState<Record<string, string>>({})
+  const [recomendacao, setRecomendacao] = useState<RecomendacaoQuiz | null>(null)
+  const [erroMsg, setErroMsg]         = useState<string | null>(null)
 
-  const todasPerguntas =
-    modo === "rapido" ? perguntasRapidas : [...perguntasRapidas, ...perguntasAprofundadas]
+  const perguntas    = modo === "premium" ? PREMIUM_QUIZ_QUESTIONS : FREE_QUIZ_QUESTIONS
+  const perguntaAtual = perguntas[passo]
+  const totalPerguntas = perguntas.length
 
-  const perguntaAtual = todasPerguntas[passo]
-  const totalPerguntas = todasPerguntas.length
-  const progresso = `${passo + 1} de ${totalPerguntas}`
+  // ── Fluxo ──────────────────────────────────────────────────────────────────
 
-  function iniciarQuiz(modoEscolhido: "rapido" | "aprofundado") {
+  function iniciarQuiz(modoEscolhido: "free" | "premium") {
     setModo(modoEscolhido)
     setPasso(0)
     setRespostas({})
+    setRecomendacao(null)
+    setErroMsg(null)
     setEstado("pergunta")
   }
 
-  // Volta para a pergunta anterior
   function voltar() {
     if (passo === 0) {
       setEstado("selecao")
     } else {
-      setPasso(passo - 1)
+      setPasso(p => p - 1)
     }
   }
 
-  function responderOpcao(valor: string) {
-    // Normaliza genero: masculino+feminino juntos → unissex
-    let valorFinal = valor
-    if (perguntaAtual.id === "genero") {
-      const selecionados = valor.split(",")
-      if (selecionados.includes("masculino") && selecionados.includes("feminino")) {
-        valorFinal = "unissex"
-      } else {
-        valorFinal = selecionados[selecionados.length - 1]
-      }
-    }
-    const novas = { ...respostas, [perguntaAtual.id]: valorFinal }
+  /** Called when user picks an option — valor is the option id ("a"/"b"/"c"/"d") */
+  function responder(optionId: string) {
+    const novas = { ...respostas, [perguntaAtual.id]: optionId }
     setRespostas(novas)
-    avancar(novas)
-  }
 
-  function responderNotas(amadas: string[], odiadas: string[]) {
-    const novas = { ...respostas, notasAmadas: amadas, notasOdiadas: odiadas }
-    setRespostas(novas)
-    avancar(novas)
-  }
-
-  function responderTexto(valor: string) {
-    // Salva o perfume atual como âncora (pode ser vazio se usuário pulou)
-    const novas = { ...respostas, perfumeAtual: valor || undefined }
-    setRespostas(novas)
-    avancar(novas)
-  }
-
-  async function avancar(novas: Partial<RespostasQuiz>) {
     if (passo + 1 < totalPerguntas) {
-      setPasso(passo + 1)
+      setPasso(p => p + 1)
     } else {
-      await enviarParaIA(novas as RespostasQuiz)
+      enviarParaIA(novas)
     }
   }
 
-  async function enviarParaIA(respostasFinais: RespostasQuiz) {
+  async function enviarParaIA(respostasFinais: Record<string, string>) {
     setEstado("carregando")
+    setErroMsg(null)
     try {
-      const resposta = await fetch("/api/consultor", {
+      const res = await fetch("/api/consultor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ respostas: respostasFinais }),
+        body: JSON.stringify({ respostas: respostasFinais, mode: modo }),
       })
-      if (!resposta.ok) throw new Error()
-      setRecomendacao(await resposta.json())
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error((body as { erro?: string }).erro ?? `HTTP ${res.status}`)
+      }
+      const data = await res.json() as RecomendacaoQuiz
+      setRecomendacao(data)
       setEstado("resultado")
-    } catch {
+    } catch (err) {
+      setErroMsg(err instanceof Error ? err.message : "Erro inesperado.")
       setEstado("erro")
     }
   }
@@ -107,29 +90,38 @@ export default function QuizConsultor() {
     setPasso(0)
     setRespostas({})
     setRecomendacao(null)
+    setErroMsg(null)
   }
 
+  // Allow external reset (e.g. header logo click)
   useEffect(() => {
-    function handleReset() {
-      recomecar()
-    }
-    window.addEventListener("resetar-quiz", handleReset)
-    return () => window.removeEventListener("resetar-quiz", handleReset)
+    const handler = () => recomecar()
+    window.addEventListener("resetar-quiz", handler)
+    return () => window.removeEventListener("resetar-quiz", handler)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ── Telas especiais (sem barra de progresso) ──
+  // ── Telas ──────────────────────────────────────────────────────────────────
 
   if (estado === "selecao") return <SelecaoModo onSelecionar={iniciarQuiz} />
 
   if (estado === "carregando") {
     return (
       <div style={{ textAlign: "center", padding: "89px 0" }}>
-        <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "26px", fontWeight: 300, color: "var(--cor-texto-suave)", marginBottom: "34px" }}>
-          {textosConsultor.mensagemCarregando}
+        <p
+          style={{
+            fontFamily: "var(--fonte-titulo)",
+            fontSize: "26px",
+            fontWeight: 300,
+            color: "var(--cor-texto-suave)",
+            marginBottom: "34px",
+          }}
+        >
+          Analisando seu perfil...
         </p>
-        {/* Animação de três pontos */}
+        {/* Três pontos animados */}
         <div style={{ display: "flex", justifyContent: "center", gap: "6px" }}>
-          {[0, 1, 2].map((i) => (
+          {[0, 1, 2].map(i => (
             <div
               key={i}
               style={{
@@ -149,10 +141,21 @@ export default function QuizConsultor() {
   if (estado === "erro") {
     return (
       <div style={{ textAlign: "center", padding: "55px 0", maxWidth: "400px", margin: "0 auto" }}>
-        <p style={{ marginBottom: "21px" }}>{textosConsultor.mensagemErro}</p>
+        <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.9rem", marginBottom: "21px", color: "var(--cor-texto-suave)" }}>
+          {erroMsg ?? "Não consegui encontrar uma recomendação agora."}
+        </p>
         <button
           onClick={recomecar}
-          style={{ color: "var(--cor-destaque)", background: "none", border: "none", cursor: "pointer", fontFamily: "var(--fonte-corpo)", fontSize: "0.9rem", minHeight: "44px", minWidth: "44px", padding: "0 13px" }}
+          style={{
+            color: "var(--cor-destaque)",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            fontFamily: "var(--fonte-corpo)",
+            fontSize: "0.9rem",
+            minHeight: "44px",
+            padding: "0 13px",
+          }}
         >
           Tentar novamente
         </button>
@@ -161,93 +164,92 @@ export default function QuizConsultor() {
   }
 
   if (estado === "resultado" && recomendacao) {
-    return <ResultadoConsultor recomendacao={recomendacao} onRecomecar={recomecar} />
+    return <ResultadoQuiz recomendacao={recomendacao} onRecomecar={recomecar} />
   }
 
-  // ── Tela de pergunta ──
+  // ── Tela de pergunta ───────────────────────────────────────────────────────
 
-  // Botão de voltar + barra de progresso — aparecem em todas as perguntas
-  const cabecalhoQuiz = (
-    <div style={{ maxWidth: "560px", margin: "0 auto 0" }}>
-      <BarraProgresso atual={passo} total={totalPerguntas} />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "34px" }}>
-        <button
-          onClick={voltar}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "var(--cor-texto-suave)",
-            fontFamily: "var(--fonte-corpo)",
-            fontSize: "0.78rem",
-            letterSpacing: "0.06em",
-            padding: "0 8px",
-            minHeight: "44px",
-            minWidth: "44px",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.35rem",
-          }}
-        >
-          ← Voltar
-        </button>
-        {/* Contador de pergunta */}
-        <p
-          style={{
-            fontFamily: "var(--fonte-titulo)",
-            fontSize: "0.75rem",
-            letterSpacing: "0.2em",
-            color: "var(--cor-destaque)",
-          }}
-        >
-          {progresso.toUpperCase()}
-        </p>
-      </div>
-    </div>
-  )
+  const progresso = `${passo + 1} de ${totalPerguntas}`
 
-  // Pergunta de seleção visual de notas (pergunta 5 no modo aprofundado)
-  if ("tipo" in perguntaAtual && perguntaAtual.tipo === "selecao-visual" && "notasParaAmar" in perguntaAtual && perguntaAtual.notasParaAmar) {
-    return (
-      <>
-        {cabecalhoQuiz}
-        <PerguntaNotas notas={perguntaAtual.notasParaAmar} progresso={progresso} onResponder={responderNotas} />
-      </>
-    )
-  }
-
-  // Pergunta de texto livre (pergunta 7 no modo aprofundado — perfume atual)
-  if ("tipo" in perguntaAtual && perguntaAtual.tipo === "texto-livre") {
-    return (
-      <>
-        {cabecalhoQuiz}
-        <PerguntaTexto
-          id={perguntaAtual.id}
-          pergunta={perguntaAtual.pergunta}
-          placeholder={"placeholder" in perguntaAtual ? String(perguntaAtual.placeholder) : undefined}
-          opcional={"opcional" in perguntaAtual ? Boolean(perguntaAtual.opcional) : false}
-          progresso={progresso}
-          onResponder={responderTexto}
-        />
-      </>
-    )
-  }
-
-  // Perguntas que aceitam múltipla seleção
-  const perguntasMultiplas = ["genero", "ocasiao", "prioridade"]
-  const ehMultipla = perguntasMultiplas.includes(perguntaAtual.id)
-
-  // key={passo} força remontagem a cada pergunta, resetando o estado interno de seleção
   return (
     <>
-      {cabecalhoQuiz}
+      {/* Barra + cabeçalho */}
+      <div style={{ maxWidth: "560px", margin: "0 auto 0" }}>
+        <BarraProgresso atual={passo} total={totalPerguntas} />
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: "34px",
+          }}
+        >
+          <button
+            onClick={voltar}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: "var(--cor-texto-suave)",
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "0.78rem",
+              letterSpacing: "0.06em",
+              padding: "0 8px",
+              minHeight: "44px",
+              minWidth: "44px",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.35rem",
+            }}
+          >
+            ← Voltar
+          </button>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {/* Mode badge */}
+            <span
+              style={{
+                fontSize: "0.6rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                padding: "0.15rem 0.5rem",
+                borderRadius: "99px",
+                backgroundColor: modo === "premium"
+                  ? "rgba(180,148,72,0.12)"
+                  : "rgba(196,113,74,0.08)",
+                color: modo === "premium" ? "var(--cor-dourado)" : "var(--cor-destaque)",
+                border: modo === "premium"
+                  ? "1px solid rgba(180,148,72,0.3)"
+                  : "1px solid rgba(196,113,74,0.25)",
+              }}
+            >
+              {modo === "premium" ? "Nozze+" : "Gratuito"}
+            </span>
+
+            {/* Counter */}
+            <p
+              style={{
+                fontFamily: "var(--fonte-titulo)",
+                fontSize: "0.75rem",
+                letterSpacing: "0.2em",
+                color: "var(--cor-destaque)",
+              }}
+            >
+              {progresso.toUpperCase()}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Pergunta — key força remontagem a cada passo, resetando seleção interna */}
       <PerguntaOpcoes
         key={passo}
         pergunta={perguntaAtual.pergunta}
-        opcoes={perguntaAtual.opcoes ?? []}
+        opcoes={perguntaAtual.opcoes.map(o => ({ valor: o.id, texto: o.texto }))}
         progresso={progresso}
-        multipla={ehMultipla}
-        onResponder={responderOpcao}
+        multipla={false}
+        onResponder={responder}
       />
     </>
   )

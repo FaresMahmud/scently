@@ -1,20 +1,21 @@
 // ============================================
 // ARQUIVO: components/consultor/SelecaoModo.tsx
-// O QUE FAZ: tela inicial do consultor — usuário escolhe entre consulta rápida (4 perguntas) ou completa (8)
+// O QUE FAZ: tela inicial — usuário escolhe entre quiz free (7q) ou premium (18q, Nozze+)
 // QUANDO MANDAR PRA IA: quando quiser mudar a apresentação inicial do consultor
-// DEPENDE DE: config/site.ts, components/ui/Card.tsx, styles/globals.css
+// DEPENDE DE: styles/globals.css
 // ============================================
 
 "use client"
 
-import Card from "@/components/ui/Card"
-import { textosConsultor } from "@/config/site"
+import { useState } from "react"
 
 interface PropsSelecaoModo {
-  onSelecionar: (modo: "rapido" | "aprofundado") => void
+  onSelecionar: (modo: "free" | "premium") => void
 }
 
 export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
+  const [hovered, setHovered] = useState<"free" | "premium" | null>(null)
+
   return (
     <div style={{ maxWidth: "560px", margin: "0 auto" }}>
       {/* Título */}
@@ -27,80 +28,131 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
           lineHeight: 1.15,
         }}
       >
-        {textosConsultor.titulo}
+        seu consultor
       </h1>
 
-      <p style={{ marginBottom: "34px", maxWidth: "420px" }}>
-        {textosConsultor.subtituloInicio}
+      <p
+        style={{
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.9rem",
+          color: "var(--cor-texto-suave)",
+          marginBottom: "34px",
+          maxWidth: "420px",
+          lineHeight: 1.6,
+        }}
+      >
+        Vamos encontrar o perfume certo para você.
       </p>
 
-      {/* Opções de modo */}
       <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
-        {/* Modo rápido */}
+        {/* Quiz gratuito */}
         <button
-          onClick={() => onSelecionar("rapido")}
+          onClick={() => onSelecionar("free")}
+          onMouseEnter={() => setHovered("free")}
+          onMouseLeave={() => setHovered(null)}
           style={{ display: "block", textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: 0 }}
         >
-          <Card
+          <div
             style={{
-              transition: "border-color 0.2s",
-              cursor: "pointer",
+              padding: "21px",
+              backgroundColor: "var(--cor-card)",
+              border: hovered === "free" ? "1.5px solid var(--cor-destaque)" : "1px solid var(--cor-borda)",
+              borderRadius: "var(--raio-borda-suave)",
+              transition: "border-color 0.15s",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "13px" }}>
               <div>
+                {/* Badge */}
+                <span
+                  style={{
+                    display: "inline-block",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "99px",
+                    backgroundColor: "rgba(196,113,74,0.1)",
+                    color: "var(--cor-destaque)",
+                    border: "1px solid rgba(196,113,74,0.3)",
+                    marginBottom: "10px",
+                  }}
+                >
+                  Gratuito · 7 perguntas
+                </span>
                 <p
                   style={{
                     fontFamily: "var(--fonte-titulo)",
                     fontSize: "26px",
                     fontWeight: 300,
-                    marginBottom: "8px",
+                    marginBottom: "6px",
                     color: "var(--cor-texto)",
                   }}
                 >
-                  {textosConsultor.botaoModoRapido}
+                  Consulta rápida
                 </p>
-                <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)" }}>
-                  {textosConsultor.botaoModoRapidoDescricao}
+                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", lineHeight: 1.5 }}>
+                  Resultado em 1 minuto. 4 recomendações personalizadas.
                 </p>
               </div>
-              {/* Seta decorativa */}
-              <span style={{ color: "var(--cor-destaque)", fontSize: "1.2rem", marginTop: "0.2rem" }}>→</span>
+              <span style={{ color: "var(--cor-destaque)", fontSize: "1.1rem", marginTop: "0.3rem", flexShrink: 0 }}>→</span>
             </div>
-          </Card>
+          </div>
         </button>
 
-        {/* Modo aprofundado */}
+        {/* Quiz premium */}
         <button
-          onClick={() => onSelecionar("aprofundado")}
+          onClick={() => onSelecionar("premium")}
+          onMouseEnter={() => setHovered("premium")}
+          onMouseLeave={() => setHovered(null)}
           style={{ display: "block", textAlign: "left", background: "none", border: "none", cursor: "pointer", padding: 0 }}
         >
-          <Card
+          <div
             style={{
-              transition: "border-color 0.2s",
-              cursor: "pointer",
+              padding: "21px",
+              backgroundColor: "var(--cor-card)",
+              border: hovered === "premium" ? "1.5px solid var(--cor-dourado)" : "1px solid var(--cor-borda)",
+              borderRadius: "var(--raio-borda-suave)",
+              transition: "border-color 0.15s",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "13px" }}>
               <div>
+                {/* Badge */}
+                <span
+                  style={{
+                    display: "inline-block",
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    padding: "0.2rem 0.6rem",
+                    borderRadius: "99px",
+                    backgroundColor: "rgba(180,148,72,0.12)",
+                    color: "var(--cor-dourado)",
+                    border: "1px solid rgba(180,148,72,0.35)",
+                    marginBottom: "10px",
+                  }}
+                >
+                  Nozze+ · 18 perguntas
+                </span>
                 <p
                   style={{
                     fontFamily: "var(--fonte-titulo)",
                     fontSize: "26px",
                     fontWeight: 300,
-                    marginBottom: "8px",
+                    marginBottom: "6px",
                     color: "var(--cor-texto)",
                   }}
                 >
-                  {textosConsultor.botaoModoAprofundado}
+                  Consulta completa
                 </p>
-                <p style={{ fontSize: "0.85rem", color: "var(--cor-texto-suave)" }}>
-                  {textosConsultor.botaoModoAprofundadoDescricao}
+                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", lineHeight: 1.5 }}>
+                  Análise profunda em 6 etapas. Recomendação mais precisa.
                 </p>
               </div>
-              <span style={{ color: "var(--cor-dourado)", fontSize: "1.2rem", marginTop: "0.2rem" }}>→</span>
+              <span style={{ color: "var(--cor-dourado)", fontSize: "1.1rem", marginTop: "0.3rem", flexShrink: 0 }}>→</span>
             </div>
-          </Card>
+          </div>
         </button>
       </div>
     </div>
