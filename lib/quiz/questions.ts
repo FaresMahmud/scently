@@ -103,9 +103,20 @@ export const FREE_QUIZ_QUESTIONS: PerguntaQuiz[] = [
   },
 ]
 
-// ── Quiz premium (Nozze+) — 18 perguntas ────────────────────────────────────
+// ── Quiz premium (Nozze+) — 19 perguntas ────────────────────────────────────
 
 export const PREMIUM_QUIZ_QUESTIONS: PerguntaQuiz[] = [
+  // ETAPA 0 — INTENÇÃO
+  {
+    id: "contexto",
+    pergunta: "Para que você está procurando esse perfume?",
+    opcoes: [
+      { id: "a", texto: "Uso diário — quero algo para todo dia" },
+      { id: "b", texto: "Trabalho ou faculdade" },
+      { id: "c", texto: "Encontros e sedução" },
+      { id: "d", texto: "Minha assinatura pessoal — para tudo" },
+    ],
+  },
   // ETAPA 1 — PERFIL GERAL
   {
     id: "idade",
