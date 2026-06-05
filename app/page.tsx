@@ -74,6 +74,18 @@ export default function PaginaInicial() {
 
               <div className="separador" />
 
+              <h2 style={{
+                fontFamily: "var(--fonte-titulo)",
+                fontWeight: 300,
+                fontSize: "clamp(34px, 5vw, 68px)",
+                color: "#1A1A18",
+                lineHeight: 1.15,
+                maxWidth: "720px",
+                marginBottom: "21px",
+              }}>
+                Você tem um perfume. Mas ainda não encontrou o seu.
+              </h2>
+
               <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "1.05rem", marginTop: "21px" }}>
                 {textosHome.heroSubtitulo}
               </p>
@@ -203,7 +215,7 @@ export default function PaginaInicial() {
               borderRadius: "var(--raio-borda)",
             }}
           >
-            Iniciar consulta gratuita
+            Encontrar meu perfume
           </Link>
         </div>
       </section>

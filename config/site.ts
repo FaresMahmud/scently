@@ -21,7 +21,7 @@ export const textosHome = {
   heroBotao: "Encontrar meu perfume",
   heroBotaoSecundario: "Explorar perfumes",
   secaoConsultor: "Como funciona",
-  secaoConsultorDescricao: "Seu consultor particular de perfumaria. Gratuito, sem cadastro, resultado em minutos.",
+  secaoConsultorDescricao: "Seu consultor particular de perfumaria. Resultado em menos de 2 minutos.",
   secaoCatalogo: "Fragrâncias para descobrir",
   rodapeTexto: "Consultoria de perfumaria guiada por IA. Sem cadastro obrigatório.",
 }
