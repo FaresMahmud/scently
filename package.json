@@ -15,7 +15,8 @@
     "catalogo:popular": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts",
     "catalogo:continuar": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/popular-catalogo.ts --continuar",
     "contratipos:scrape": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/scrape-contratipos.ts",
-    "contratipos:merge": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/merge-contratipos.ts"
+    "contratipos:merge": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/merge-contratipos.ts",
+    "catalog:expand": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/expand-catalog.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
