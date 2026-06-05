@@ -111,7 +111,7 @@ function nomesSimilares(a: string, b: string, marcaA?: string, marcaB?: string):
   const wb = sb.split("-").filter(w => w.length > 2)
   if (wa.length === 0 || wb.length === 0) return false
   const overlap = wa.filter(w => wb.includes(w)).length
-  return overlap / Math.max(wa.length, wb.length) >= 0.7
+  return overlap / Math.max(wa.length, wb.length) >= 0.5
 }
 
 function mesclarPerfumes(): CardUnificado[] {
