@@ -468,24 +468,29 @@ function limitePreco(orcamento: string | undefined): number | null {
  */
 function buildCatalogSnippet(orcamento?: string): string {
   const teto = limitePreco(orcamento)
+  const todos = contratipoRepository.findAll()
 
-  const filtrados = contratipoRepository.findAll().filter(p => {
-    if (!MARCAS_CONTRATIPOS.has(p.marca)) return false
-    if (teto !== null && p.preco_brl > teto) return false
-    return true
-  })
+  // Exclude unavailable and zero-price entries first
+  const ativos = todos.filter(p =>
+    MARCAS_CONTRATIPOS.has(p.marca) &&
+    p.disponivel !== false &&
+    p.preco_brl > 0
+  )
+
+  // Then apply budget ceiling
+  const filtrados = teto !== null
+    ? ativos.filter(p => p.preco_brl <= teto)
+    : ativos
+
+  const formato = (p: (typeof ativos)[number]) =>
+    `${p.id} | ${p.nome} | ${p.marca} | ${p.familia} | ${p.tipo} | inspirado em ${p.inspiradoEm} | R$${p.preco_brl}`
 
   if (filtrados.length === 0) {
-    // Safety fallback: return all contratypes if filter is too restrictive
-    return contratipoRepository.findAll()
-      .filter(p => MARCAS_CONTRATIPOS.has(p.marca))
-      .map(p => `${p.id} | ${p.nome} | ${p.marca} | ${p.familia} | ${p.tipo} | inspirado em ${p.inspiradoEm} | R$${p.preco_brl}`)
-      .join("\n")
+    // Safety fallback: ignore budget ceiling but keep active-only filter
+    return ativos.map(formato).join("\n")
   }
 
-  return filtrados
-    .map(p => `${p.id} | ${p.nome} | ${p.marca} | ${p.familia} | ${p.tipo} | inspirado em ${p.inspiradoEm} | R$${p.preco_brl}`)
-    .join("\n")
+  return filtrados.map(formato).join("\n")
 }
 
 const CARD_SCHEMA_EXAMPLE = `{"nome":"...","marca":"...","codigo":"...","explicacao":"...","quando":"Noites de saída, jantares, encontros — situações onde você quer ser lembrado.","aplicacao":"2 borrifadas no pescoço. No calor, uma basta."}`

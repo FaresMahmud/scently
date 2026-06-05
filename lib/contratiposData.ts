@@ -20,6 +20,7 @@ export interface PerfumeContratipo {
   notas: string[]
   preco_brl: number
   categoria: "contratipo"
+  disponivel?: boolean
 }
 
 export const CONTRATIPOS: PerfumeContratipo[] = dadosJson as PerfumeContratipo[]
