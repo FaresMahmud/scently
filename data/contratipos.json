@@ -1085,25 +1085,6 @@
     "categoria": "contratipo"
   },
   {
-    "id": "ja-narcotique",
-    "nome": "Narcotique",
-    "marca": "JA Essence",
-    "tipo": "EDP",
-    "genero": "Unissex",
-    "inspiradoEm": "Black Afgano",
-    "marcaOriginal": "Nasomatto",
-    "familia": "Oriental Amadeirado",
-    "notas": [
-      "Cannabis",
-      "Oud",
-      "Incenso",
-      "Café",
-      "Resina"
-    ],
-    "preco_brl": 149.9,
-    "categoria": "contratipo"
-  },
-  {
     "id": "ja-black-ghost",
     "nome": "Black Ghost",
     "marca": "JA Essence",
