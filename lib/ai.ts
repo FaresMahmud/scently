@@ -530,12 +530,15 @@ export async function gerarRecomendacaoQuiz(
 
   const dados = await res.json()
   const texto: string = dados?.choices?.[0]?.message?.content ?? ""
-  console.log("[QuizIA] Resposta bruta:", texto.slice(0, 300))
+  console.log("[Quiz] DeepSeek raw response:", texto)
 
   const jsonMatch = texto.match(/\{[\s\S]*\}/)
   if (!jsonMatch) throw new Error("[QuizIA] Sem JSON na resposta")
 
-  const parsed = RecomendacaoQuizSchema.safeParse(JSON.parse(jsonMatch[0]))
+  const rawParsed = JSON.parse(jsonMatch[0])
+  console.log("[Quiz] DeepSeek parsed keys:", Object.keys(rawParsed))
+
+  const parsed = RecomendacaoQuizSchema.safeParse(rawParsed)
   if (!parsed.success) {
     console.error("[QuizIA] JSON inválido:", parsed.error.issues.map(i => i.message).join("; "))
     throw new Error("[QuizIA] JSON inválido")

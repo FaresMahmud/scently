@@ -47,8 +47,10 @@ function CardRecomendacao({
   card,
 }: {
   slot: keyof RecomendacaoQuiz
-  card: RecomendacaoCard
+  card: RecomendacaoCard | undefined
 }) {
+  if (!card) return null
+
   const meta = SLOT_META[slot]
   const linkCatalogo = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
   const linkPerfume  = `/perfume/${card.codigo}`
