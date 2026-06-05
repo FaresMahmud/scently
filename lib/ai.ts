@@ -481,81 +481,51 @@ function getExpandido(): PerfumeExpandido[] {
   return _expandido
 }
 
-// Budget answer text → max price in BRL (null = no ceiling)
-function limitePreco(orcamento: string | undefined): number | null {
-  if (!orcamento) return null
-  if (orcamento.includes("150") && orcamento.toLowerCase().startsWith("até")) return 150
-  if (orcamento.includes("150") && orcamento.includes("300"))                  return 300
-  if (orcamento.includes("300") && orcamento.includes("500"))                  return 500
-  return null // "Sem limite" or unrecognised → no ceiling
-}
-
-// Which categories to include based on budget ceiling
-function categoriasPermitidas(teto: number | null): Set<string> {
-  // Low budget (≤R$300): skip nicho and importado-designer (typically R$450+)
-  if (teto !== null && teto <= 300) {
-    return new Set(["contratipo", "nacional", "arabe"])
-  }
-  // Medium budget (≤R$500): skip nicho
-  if (teto !== null && teto <= 500) {
-    return new Set(["contratipo", "nacional", "arabe", "importado-designer"])
-  }
-  // No limit: all categories
-  return new Set(["contratipo", "nacional", "arabe", "importado-designer", "nicho"])
+// Budget answer text → max price in BRL
+const ORCAMENTO_TETO: Record<string, number> = {
+  "Até R$150":  150,
+  "R$150–300":  300,
+  "R$300–500":  500,
+  "Sem limite": Infinity,
 }
 
 /**
  * Builds the catalog snippet injected into the quiz prompt.
- * Merges contratipos.json + perfumes-expandido.json, filters by:
- *   - disponivel !== false
- *   - preco_brl > 0
- *   - categoria appropriate for user's budget
- *   - contratipo entries must be from whitelisted BR suppliers
+ * Merges contratipos.json + perfumes-expandido.json.
+ * Filters purely by individual product price — no category exclusions.
+ * A R$280 Montblanc is valid for a R$300 budget just as a R$150 arabic is.
  * Format: id | nome | marca | categoria | família | tipo | inspirado em | preço
  */
 function buildCatalogSnippet(orcamento?: string): string {
-  const teto       = limitePreco(orcamento)
-  const categorias = categoriasPermitidas(teto)
+  const teto = ORCAMENTO_TETO[orcamento ?? ""] ?? Infinity
 
-  // ── Source 1: contratipos.json (legacy) ──────────────────────────────────
-  const contratiposAtivos = contratipoRepository.findAll().filter(p =>
-    MARCAS_CONTRATIPOS.has(p.marca) &&
-    p.disponivel !== false &&
-    p.preco_brl > 0
-  )
-
-  // ── Source 2: perfumes-expandido.json ────────────────────────────────────
-  const expandidoAtivos = getExpandido().filter(p =>
-    p.disponivel !== false &&
-    p.preco_brl > 0 &&
-    categorias.has(p.categoria) &&
-    // For contratipo entries in expandido, also enforce supplier whitelist
-    (p.categoria !== "contratipo" || MARCAS_CONTRATIPOS.has(p.marca) ||
-      ["Thera Cosméticos", "Paris Elysees"].includes(p.marca))
-  )
-
-  // ── Merge, dedup by id ────────────────────────────────────────────────────
   const seen  = new Set<string>()
   const todos: Array<{ id: string; nome: string; marca: string; familia: string; tipo: string; inspiradoEm: string | null; preco_brl: number; categoria: string }> = []
 
-  for (const p of contratiposAtivos) {
+  // ── Source 1: contratipos.json (legacy) ──────────────────────────────────
+  for (const p of contratipoRepository.findAll()) {
+    if (!MARCAS_CONTRATIPOS.has(p.marca)) continue
+    if (p.disponivel === false || p.preco_brl <= 0) continue
     if (seen.has(p.id)) continue
     seen.add(p.id)
     todos.push({ id: p.id, nome: p.nome, marca: p.marca, familia: p.familia, tipo: p.tipo, inspiradoEm: p.inspiradoEm, preco_brl: p.preco_brl, categoria: "contratipo" })
   }
-  for (const p of expandidoAtivos) {
+
+  // ── Source 2: perfumes-expandido.json ────────────────────────────────────
+  for (const p of getExpandido()) {
+    if (p.disponivel === false || p.preco_brl <= 0) continue
     if (seen.has(p.id)) continue
     seen.add(p.id)
     todos.push({ id: p.id, nome: p.nome, marca: p.marca, familia: p.familia, tipo: p.tipo, inspiradoEm: p.inspiradoEm, preco_brl: p.preco_brl, categoria: p.categoria })
   }
 
-  // Apply budget ceiling after merge
-  const filtrados = teto !== null ? todos.filter(p => p.preco_brl <= teto) : todos
+  // ── Pure price filter ─────────────────────────────────────────────────────
+  const filtrados = todos.filter(p => p.preco_brl <= teto)
 
   const formato = (p: (typeof todos)[number]) =>
     `${p.id} | ${p.nome} | ${p.marca} | ${p.categoria} | ${p.familia} | ${p.tipo} | ${p.inspiradoEm ? `inspirado em ${p.inspiradoEm}` : "original"} | R$${p.preco_brl}`
 
-  // Safety fallback: ignore budget ceiling if it filters everything
+  // Safety fallback: ignore price ceiling if it filters everything
   if (filtrados.length === 0) return todos.map(formato).join("\n")
   return filtrados.map(formato).join("\n")
 }
