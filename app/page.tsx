@@ -68,7 +68,7 @@ export default function PaginaInicial() {
                 {siteMeta.nome}
               </p>
 
-              <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, marginBottom: "1.75rem", lineHeight: 1.08, maxWidth: "560px" }}>
+              <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(38px, 4vw, 55px)", lineHeight: 1.15, marginBottom: "1.75rem", maxWidth: "560px" }}>
                 {textosHome.heroTitulo}
               </h1>
 
@@ -77,16 +77,16 @@ export default function PaginaInicial() {
               <h2 style={{
                 fontFamily: "var(--fonte-titulo)",
                 fontWeight: 300,
-                fontSize: "clamp(34px, 5vw, 68px)",
+                fontSize: "clamp(28px, 3vw, 42px)",
                 color: "#1A1A18",
-                lineHeight: 1.15,
+                lineHeight: 1.2,
                 maxWidth: "720px",
                 marginBottom: "21px",
               }}>
                 Você tem um perfume. Mas ainda não encontrou o seu.
               </h2>
 
-              <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "1.05rem", marginTop: "21px" }}>
+              <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "clamp(18px, 1.8vw, 21px)", fontWeight: 400, lineHeight: 1.6, marginTop: "21px" }}>
                 {textosHome.heroSubtitulo}
               </p>
 
