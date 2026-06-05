@@ -508,15 +508,34 @@ REGRAS ABSOLUTAS:
 * alternativo nunca pode ser o mesmo perfume inspirado de outra marca — deve ser uma fragrância diferente
 * quando: máximo 12 palavras. Contextualiza o momento ideal de uso.
 * aplicacao: máximo 10 palavras. Instrução prática, direta.
+* O contexto tem peso 10/10 — nunca recomende algo que contradiga o contexto declarado
 
 PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
 {{QUIZ_ANSWERS}}
 
-CONTEXTO PRIORITÁRIO:
-Se o contexto for "Encontros e sedução", priorize perfumes com projeção média-alta, caráter sensual, que deixam rastro. Evite perfumes discretos ou aquáticos leves.
-Se o contexto for "Uso diário", priorize perfumes versáteis, não invasivos, duráveis.
-Se o contexto for "Trabalho ou faculdade", priorize perfumes discretos, limpos, profissionais.
-Se o contexto for "Minha assinatura pessoal — para tudo", priorize perfumes únicos e marcantes alinhados ao arquétipo do usuário.
+═══ CONTEXTO — REGRA DE MAIOR PESO ═══
+O contexto é o filtro mais importante. Aplique antes de qualquer outro critério.
+
+SE contexto = "Encontros e sedução":
+→ OBRIGATÓRIO: perfumes com caráter sensual, envolvente, que deixam rastro
+→ Famílias preferidas: oriental, amadeirado quente, gourmand escuro, floral intenso
+→ PROIBIDO: frescos, aquáticos, cítricos, verdes, perfumes "limpos"
+→ Intensidade mínima: média-alta
+→ O usuário quer ser desejado — escolha com isso em mente
+
+SE contexto = "Uso diário":
+→ Perfumes versáteis, não invasivos, duráveis, adequados para qualquer hora
+→ Famílias preferidas: fresco aromático, madeira suave, floral discreto
+→ PROIBIDO: perfumes muito pesados, doces em excesso, alta fixação em ambientes fechados
+
+SE contexto = "Trabalho ou faculdade":
+→ Perfumes discretos, limpos, profissionais — presença sutil
+→ PROIBIDO: perfumes com muita projeção, gourmands pesados, orientais intensos
+
+SE contexto = "Minha assinatura pessoal":
+→ Perfume único e marcante, alinhado ao arquétipo completo do usuário
+→ Pode ser ousado — essa pessoa sabe o que quer
+═══════════════════════════════════════
 
 CATÁLOGO DE CONTRATIPOS DISPONÍVEIS (formato: id | nome | marca | família | concentração | inspiração | preço):
 {{CATALOG}}
