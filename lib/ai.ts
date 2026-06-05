@@ -451,6 +451,36 @@ const MARCAS_CONTRATIPOS = new Set([
   "Azza Parfums",
 ])
 
+// ── Expanded catalog (perfumes-expandido.json) ────────────────────────────────
+
+interface PerfumeExpandido {
+  id:            string
+  nome:          string
+  marca:         string
+  tipo:          string
+  genero:        string
+  inspiradoEm:   string | null
+  marcaOriginal: string | null
+  familia:       string
+  notas:         string[]
+  preco_brl:     number
+  categoria:     "contratipo" | "arabe" | "nacional" | "importado-designer" | "nicho"
+  disponivel:    boolean
+  linkCompra:    string
+}
+
+let _expandido: PerfumeExpandido[] | null = null
+function getExpandido(): PerfumeExpandido[] {
+  if (_expandido) return _expandido
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    _expandido = require("@/data/perfumes-expandido.json") as PerfumeExpandido[]
+  } catch {
+    _expandido = []
+  }
+  return _expandido
+}
+
 // Budget answer text → max price in BRL (null = no ceiling)
 function limitePreco(orcamento: string | undefined): number | null {
   if (!orcamento) return null
@@ -460,36 +490,73 @@ function limitePreco(orcamento: string | undefined): number | null {
   return null // "Sem limite" or unrecognised → no ceiling
 }
 
+// Which categories to include based on budget ceiling
+function categoriasPermitidas(teto: number | null): Set<string> {
+  // Low budget (≤R$300): skip nicho and importado-designer (typically R$450+)
+  if (teto !== null && teto <= 300) {
+    return new Set(["contratipo", "nacional", "arabe"])
+  }
+  // Medium budget (≤R$500): skip nicho
+  if (teto !== null && teto <= 500) {
+    return new Set(["contratipo", "nacional", "arabe", "importado-designer"])
+  }
+  // No limit: all categories
+  return new Set(["contratipo", "nacional", "arabe", "importado-designer", "nicho"])
+}
+
 /**
  * Builds the catalog snippet injected into the quiz prompt.
- * Contains ONLY contratypes from our Brazilian suppliers, optionally
- * filtered by the user's orcamento answer.
- * Format: id | nome | marca | família | concentração | inspirado em | preço
+ * Merges contratipos.json + perfumes-expandido.json, filters by:
+ *   - disponivel !== false
+ *   - preco_brl > 0
+ *   - categoria appropriate for user's budget
+ *   - contratipo entries must be from whitelisted BR suppliers
+ * Format: id | nome | marca | categoria | família | tipo | inspirado em | preço
  */
 function buildCatalogSnippet(orcamento?: string): string {
-  const teto = limitePreco(orcamento)
-  const todos = contratipoRepository.findAll()
+  const teto       = limitePreco(orcamento)
+  const categorias = categoriasPermitidas(teto)
 
-  // Exclude unavailable and zero-price entries first
-  const ativos = todos.filter(p =>
+  // ── Source 1: contratipos.json (legacy) ──────────────────────────────────
+  const contratiposAtivos = contratipoRepository.findAll().filter(p =>
     MARCAS_CONTRATIPOS.has(p.marca) &&
     p.disponivel !== false &&
     p.preco_brl > 0
   )
 
-  // Then apply budget ceiling
-  const filtrados = teto !== null
-    ? ativos.filter(p => p.preco_brl <= teto)
-    : ativos
+  // ── Source 2: perfumes-expandido.json ────────────────────────────────────
+  const expandidoAtivos = getExpandido().filter(p =>
+    p.disponivel !== false &&
+    p.preco_brl > 0 &&
+    categorias.has(p.categoria) &&
+    // For contratipo entries in expandido, also enforce supplier whitelist
+    (p.categoria !== "contratipo" || MARCAS_CONTRATIPOS.has(p.marca) ||
+      ["Thera Cosméticos", "Paris Elysees"].includes(p.marca))
+  )
 
-  const formato = (p: (typeof ativos)[number]) =>
-    `${p.id} | ${p.nome} | ${p.marca} | ${p.familia} | ${p.tipo} | inspirado em ${p.inspiradoEm} | R$${p.preco_brl}`
+  // ── Merge, dedup by id ────────────────────────────────────────────────────
+  const seen  = new Set<string>()
+  const todos: Array<{ id: string; nome: string; marca: string; familia: string; tipo: string; inspiradoEm: string | null; preco_brl: number; categoria: string }> = []
 
-  if (filtrados.length === 0) {
-    // Safety fallback: ignore budget ceiling but keep active-only filter
-    return ativos.map(formato).join("\n")
+  for (const p of contratiposAtivos) {
+    if (seen.has(p.id)) continue
+    seen.add(p.id)
+    todos.push({ id: p.id, nome: p.nome, marca: p.marca, familia: p.familia, tipo: p.tipo, inspiradoEm: p.inspiradoEm, preco_brl: p.preco_brl, categoria: "contratipo" })
+  }
+  for (const p of expandidoAtivos) {
+    if (seen.has(p.id)) continue
+    seen.add(p.id)
+    todos.push({ id: p.id, nome: p.nome, marca: p.marca, familia: p.familia, tipo: p.tipo, inspiradoEm: p.inspiradoEm, preco_brl: p.preco_brl, categoria: p.categoria })
   }
 
+  // Apply budget ceiling after merge
+  const filtrados = teto !== null ? todos.filter(p => p.preco_brl <= teto) : todos
+
+  const formato = (p: (typeof todos)[number]) =>
+    `${p.id} | ${p.nome} | ${p.marca} | ${p.categoria} | ${p.familia} | ${p.tipo} | ${p.inspiradoEm ? `inspirado em ${p.inspiradoEm}` : "original"} | R$${p.preco_brl}`
+
+  // Safety fallback: ignore budget ceiling if it filters everything
+  if (filtrados.length === 0) return todos.map(formato).join("\n")
   return filtrados.map(formato).join("\n")
 }
 
