@@ -92,7 +92,7 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
                   Consulta rápida
                 </p>
                 <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", lineHeight: 1.5 }}>
-                  Resultado em 1 minuto. 4 recomendações personalizadas.
+                  Resultado em 1 minuto. 1 recomendação personalizada.
                 </p>
               </div>
               <span style={{ color: "var(--cor-destaque)", fontSize: "1.1rem", marginTop: "0.3rem", flexShrink: 0 }}>→</span>

@@ -14,6 +14,7 @@ export interface PerguntaQuiz {
   id: string
   pergunta: string
   opcoes: OpcaoQuiz[]
+  multiSelect?: boolean
 }
 
 // ── Quiz gratuito — 7 perguntas ───────────────────────────────────────────────
@@ -27,6 +28,17 @@ export const FREE_QUIZ_QUESTIONS: PerguntaQuiz[] = [
       { id: "b", texto: "Para o trabalho ou faculdade" },
       { id: "c", texto: "Para encontros, saídas e momentos especiais" },
       { id: "d", texto: "Minha assinatura — para tudo" },
+    ],
+  },
+  {
+    id: "genero",
+    pergunta: "Você busca um perfume...",
+    multiSelect: true,
+    opcoes: [
+      { id: "a", texto: "Masculino" },
+      { id: "b", texto: "Feminino" },
+      { id: "c", texto: "Unissex" },
+      { id: "d", texto: "Tanto faz" },
     ],
   },
   {

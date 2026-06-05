@@ -24,7 +24,7 @@ export default function QuizConsultor() {
   const [estado, setEstado]           = useState<EstadoQuiz>("selecao")
   const [modo,   setModo]             = useState<"free" | "premium">("free")
   const [passo,  setPasso]            = useState(0)
-  const [respostas, setRespostas]     = useState<Record<string, string>>({})
+  const [respostas, setRespostas]     = useState<Record<string, string | string[]>>({})
   const [recomendacao, setRecomendacao] = useState<RecomendacaoQuiz | null>(null)
   const [erroMsg, setErroMsg]         = useState<string | null>(null)
 
@@ -51,9 +51,15 @@ export default function QuizConsultor() {
     }
   }
 
-  /** Called when user picks an option — valor is the option id ("a"/"b"/"c"/"d") */
-  function responder(optionId: string) {
-    const novas = { ...respostas, [perguntaAtual.id]: optionId }
+  /**
+   * Single-select: store the chosen option id and auto-advance.
+   * MultiSelect questions use PerguntaOpcoes in multipla mode, which calls
+   * onResponder with a comma-joined string of selected ids — store as string[].
+   */
+  function responder(valor: string) {
+    const isMulti = perguntaAtual.multiSelect === true
+    const stored  = isMulti ? valor.split(",").filter(Boolean) : valor
+    const novas   = { ...respostas, [perguntaAtual.id]: stored }
     setRespostas(novas)
 
     if (passo + 1 < totalPerguntas) {
@@ -63,14 +69,18 @@ export default function QuizConsultor() {
     }
   }
 
-  async function enviarParaIA(respostasFinais: Record<string, string>) {
+  async function enviarParaIA(respostasFinais: Record<string, string | string[]>) {
     setEstado("carregando")
     setErroMsg(null)
     try {
+      // Serialise array values (multiSelect) to comma-joined strings for the API
+      const respostasSerializadas: Record<string, string> = Object.fromEntries(
+        Object.entries(respostasFinais).map(([k, v]) => [k, Array.isArray(v) ? v.join(",") : v])
+      )
       const res = await fetch("/api/consultor", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ respostas: respostasFinais, mode: modo }),
+        body: JSON.stringify({ respostas: respostasSerializadas, mode: modo }),
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({}))
@@ -248,7 +258,7 @@ export default function QuizConsultor() {
         pergunta={perguntaAtual.pergunta}
         opcoes={perguntaAtual.opcoes.map(o => ({ valor: o.id, texto: o.texto }))}
         progresso={progresso}
-        multipla={false}
+        multipla={perguntaAtual.multiSelect === true}
         onResponder={responder}
       />
     </>

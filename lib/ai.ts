@@ -398,6 +398,7 @@ const RecomendacaoQuizSchema = z.object({
 const LABELS_QUIZ: Record<string, string> = {
   // free (7q)
   contexto:     "Contexto de uso",
+  genero:       "Gênero buscado",
   presenca:     "Presença desejada",
   cena:         "Cena de vida",
   cidade:       "Estilo de vida",
