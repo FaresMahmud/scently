@@ -1,74 +1,74 @@
 // ============================================
 // ARQUIVO: app/marca/[slug]/page.tsx
-// O QUE FAZ: exibe todos os perfumes de uma marca, enriquecidos com dados reais da Fragella
+// O QUE FAZ: exibe todos os perfumes de uma marca — contratipos + expandido
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout da página de marca
-// DEPENDE DE: EbayPerfumeRepository, ContratipoRepository, mockData, fragella, catalogoFragella, lib/utils
+// DEPENDE DE: data/contratipos.json, data/perfumes-expandido.json, lib/utils
 // ============================================
 
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
-import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
-import { PERFUMES_MOCK } from "@/lib/mockData"
-import { buscarPorMarca } from "@/lib/fragella"
-import { buscarPorMarcaLocal, carregarCatalogo, marcasUnicas } from "@/lib/catalogoFragella"
-import type { PerfumeFragella } from "@/lib/fragella"
+import contratiposData from "@/data/contratipos.json"
+import expandidoData from "@/data/perfumes-expandido.json"
 import { slugify } from "@/lib/utils"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
 
-// ISR: revalida a cada 24h para pegar novos dados da Fragella
 export const revalidate = 86400
+
+// ── Tipos locais ──────────────────────────────────────────────────────────────
+
+interface ContratipoEntry {
+  id: string; nome: string; marca: string; tipo: string; genero: string
+  familia: string; notas: string[]; preco_brl: number
+  inspiradoEm: string; marcaOriginal: string; categoria: string
+}
+
+interface ExpandidoEntry {
+  id: string; nome: string; marca: string; tipo: string; genero: string
+  familia: string; notas: string[]; preco_brl: number
+  categoria: string; inspiradoEm?: string; marcaOriginal?: string
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Resolve o nome original da marca a partir do slug, consultando todas as fontes */
+/** Resolve o nome original da marca a partir do slug */
 function resolverNomeMarca(slug: string): string {
-  for (const p of ebayRepository.findAll())       if (slugify(p.marca) === slug) return p.marca
-  for (const p of contratipoRepository.findAll()) if (slugify(p.marca) === slug) return p.marca
-  for (const p of PERFUMES_MOCK)                  if (slugify(p.marca) === slug) return p.marca
-  for (const p of carregarCatalogo())             if (slugify(p.marca) === slug) return p.marca
+  for (const p of contratiposData as ContratipoEntry[]) {
+    if (slugify(p.marca) === slug) return p.marca
+  }
+  for (const p of expandidoData as ExpandidoEntry[]) {
+    if (slugify(p.marca) === slug) return p.marca
+  }
   return ""
 }
 
-/** Coleta perfumes de eBay + contratipos + mock para uma marca */
-function coletarPerfumesLocais(slug: string): DadosCardPerfume[] {
+/** Coleta todos os perfumes de uma marca nos dois catálogos */
+function coletarPerfumesDaMarca(slug: string): DadosCardPerfume[] {
   const lista: DadosCardPerfume[] = []
 
-  for (const p of ebayRepository.findAll()) {
+  for (const p of contratiposData as ContratipoEntry[]) {
     if (slugify(p.marca) === slug) {
       lista.push({
-        id: ebayRepository.toSlug(p.titulo, p.marca),
-        nome: p.titulo,
-        marca: p.marca,
+        id:           p.id,
+        nome:         limparNomePerfume(p.nome, p.marca),
+        marca:        p.marca,
         concentracao: p.tipo,
-        familia: p.genero,
+        familia:      p.familia,
+        notas:        p.notas,
       })
     }
   }
 
-  for (const p of contratipoRepository.findAll()) {
+  for (const p of expandidoData as ExpandidoEntry[]) {
     if (slugify(p.marca) === slug) {
       lista.push({
-        id: `${p.id}-ct`,
-        nome: p.nome,
-        marca: p.marca,
+        id:           p.id,
+        nome:         limparNomePerfume(p.nome, p.marca),
+        marca:        p.marca,
         concentracao: p.tipo,
-        familia: p.genero,
-        notas: p.notas,
-      })
-    }
-  }
-
-  for (const p of PERFUMES_MOCK) {
-    if (slugify(p.marca) === slug) {
-      lista.push({
-        id: p.id,
-        nome: p.nome,
-        marca: p.marca,
-        concentracao: p.concentracao ?? undefined,
-        familia: p.familia ?? undefined,
-        imagem: p.imagem ?? undefined,
+        familia:      p.familia,
+        notas:        p.notas,
       })
     }
   }
@@ -76,49 +76,12 @@ function coletarPerfumesLocais(slug: string): DadosCardPerfume[] {
   return lista
 }
 
-/** Enriquece locais com dados Fragella e adiciona perfumes exclusivos da API */
-function enriquecerComFragella(locais: DadosCardPerfume[], fragella: PerfumeFragella[]): DadosCardPerfume[] {
-  const fragellaMap = new Map(fragella.map(p => [p.nome.toLowerCase(), p]))
-  const nomesLocais = new Set(locais.map(p => p.nome.toLowerCase()))
-
-  const enriquecidos = locais.map(local => {
-    const f = fragellaMap.get(local.nome.toLowerCase())
-    if (!f) return local
-    return {
-      ...local,
-      imagem: f.imagemTransparente || f.imagem || local.imagem,
-      notas:  f.notasTopo.length ? f.notasTopo : local.notas,
-      familia: f.familia || local.familia,
-      rating: f.rating,
-    }
-  })
-
-  const extras: DadosCardPerfume[] = fragella
-    .filter(f => !nomesLocais.has(f.nome.toLowerCase()))
-    .map(f => ({
-      id:           f.id,
-      nome:         f.nome,
-      marca:        f.marca,
-      concentracao: f.concentracao,
-      familia:      f.familia,
-      imagem:       f.imagemTransparente || f.imagem,
-      notas:        f.notasTopo,
-      rating:       f.rating,
-    }))
-
-  return [...enriquecidos, ...extras]
-}
-
 // ── Static params ─────────────────────────────────────────────────────────────
 
 export function generateStaticParams() {
   const slugs = new Set<string>()
-
-  for (const p of ebayRepository.findAll())        slugs.add(slugify(p.marca))
-  for (const p of contratipoRepository.findAll())  slugs.add(slugify(p.marca))
-  for (const p of PERFUMES_MOCK)                   slugs.add(slugify(p.marca))
-  for (const marca of marcasUnicas())              slugs.add(slugify(marca))
-
+  for (const p of contratiposData as ContratipoEntry[]) slugs.add(slugify(p.marca))
+  for (const p of expandidoData as ExpandidoEntry[])   slugs.add(slugify(p.marca))
   return Array.from(slugs).map(slug => ({ slug }))
 }
 
@@ -126,34 +89,34 @@ export function generateStaticParams() {
 
 const BASE_URL = "https://nozze.app"
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
   const { slug } = await params
   const nome = resolverNomeMarca(slug)
   if (!nome) return { title: "Marca não encontrada" }
 
-  const locais    = coletarPerfumesLocais(slug)
-  const fragLocal = buscarPorMarcaLocal(nome)
-  const total     = Math.max(locais.length, fragLocal.length)
+  const perfumes  = coletarPerfumesDaMarca(slug)
   const url       = `${BASE_URL}/marca/${slug}`
   const titulo    = `${nome} — Fragrâncias | Nozze`
-  const descricao = `Explore ${total > 0 ? total + " " : ""}fragrâncias da ${nome} no Nozze. Notas, avaliações e consultoria personalizada.`
+  const descricao = `Explore ${perfumes.length > 0 ? perfumes.length + " " : ""}fragrâncias da ${nome} no Nozze.`
 
   return {
     title: titulo,
     description: descricao,
-    keywords: `${nome}, perfumes ${nome}, fragrâncias ${nome}, comprar ${nome}`,
+    keywords: `${nome}, perfumes ${nome}, fragrâncias ${nome}`,
     alternates: { canonical: url },
     openGraph: {
-      title:       `${nome} — Fragrâncias`,
+      title: `${nome} — Fragrâncias`,
       description: descricao,
       url,
-      siteName:    "Nozze",
-      locale:      "pt_BR",
-      type:        "website",
+      siteName: "Nozze",
+      locale: "pt_BR",
+      type: "website",
     },
     twitter: {
-      card:        "summary",
-      title:       `${nome} — Fragrâncias`,
+      card: "summary",
+      title: `${nome} — Fragrâncias`,
       description: descricao,
     },
   }
@@ -161,57 +124,52 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default async function PaginaMarca({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-
-  const nomeMarca = resolverNomeMarca(slug)
+export default async function PaginaMarca(
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug }   = await params
+  const nomeMarca  = resolverNomeMarca(slug)
 
   if (!nomeMarca) {
     return (
       <main className="container-site" style={{ paddingTop: "5rem", paddingBottom: "5rem", textAlign: "center" }}>
-        <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "1rem" }}>
+        <p style={{
+          fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase",
+          color: "var(--cor-texto-suave)", marginBottom: "1rem",
+        }}>
           404
         </p>
         <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, marginBottom: "1rem" }}>
           Marca não encontrada
         </h1>
         <p style={{ marginBottom: "34px" }}>Nenhuma fragrância encontrada para esta marca.</p>
-        <Link href="/catalogo" style={{ color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem" }}>
+        <Link href="/catalogo" style={{
+          color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem",
+        }}>
           ← Explorar catálogo
         </Link>
       </main>
     )
   }
 
-  const locais = coletarPerfumesLocais(slug)
-
-  // 1. Busca no catálogo local Fragella — zero requests de API
-  const fragLocal = buscarPorMarcaLocal(nomeMarca)
-
-  // 2. Enriquece locais com dados do catálogo local
-  let perfumes = enriquecerComFragella(locais, fragLocal)
-
-  // 3. Fallback para API apenas em runtime, quando não há dados locais suficientes
-  const isBuild     = process.env.NEXT_PHASE === "phase-production-build"
-  const semDadosLocais = fragLocal.length === 0 && locais.length < 3
-
-  if (!isBuild && process.env.FRAGELLA_API_KEY && semDadosLocais) {
-    const fragApi = await buscarPorMarca(nomeMarca, 50).catch(() => [])
-    if (fragApi.length > 0) {
-      perfumes = enriquecerComFragella(locais, fragApi)
-    }
-  }
+  const perfumes = coletarPerfumesDaMarca(slug)
 
   return (
     <main>
-      <div className="container-site" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
+      <div className="container-site" style={{ paddingTop: "55px", paddingBottom: "89px" }}>
 
         {/* Header da marca */}
-        <section style={{ marginBottom: "3rem" }}>
-          <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+        <section style={{ marginBottom: "34px" }}>
+          <p style={{
+            fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase",
+            color: "var(--cor-texto-suave)", marginBottom: "0.75rem",
+          }}>
             marca
           </p>
-          <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(2.5rem, 6vw, 4rem)", lineHeight: 1 }}>
+          <h1 style={{
+            fontFamily: "var(--fonte-titulo)", fontWeight: 300,
+            fontSize: "clamp(42px, 6vw, 68px)", lineHeight: 1,
+          }}>
             {nomeMarca}
           </h1>
           <div className="separador" />
@@ -222,13 +180,33 @@ export default async function PaginaMarca({ params }: { params: Promise<{ slug: 
         </section>
 
         {/* Grid de perfumes */}
-        <section>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "1.25rem" }}>
-            {perfumes.map(p => (
-              <CardPerfume key={p.id} perfume={p} />
-            ))}
+        {perfumes.length > 0 ? (
+          <section>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+              gap: "21px",
+            }}>
+              {perfumes.map(p => (
+                <CardPerfume key={p.id} perfume={p} />
+              ))}
+            </div>
+          </section>
+        ) : (
+          <div style={{ textAlign: "center", padding: "4rem 0" }}>
+            <p style={{
+              fontFamily: "var(--fonte-titulo)", fontSize: "26px", fontWeight: 300,
+              color: "var(--cor-texto-suave)", marginBottom: "21px",
+            }}>
+              Nenhuma fragrância encontrada para esta marca.
+            </p>
+            <Link href="/catalogo" style={{
+              color: "var(--cor-destaque)", fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem",
+            }}>
+              ← Explorar catálogo
+            </Link>
           </div>
-        </section>
+        )}
 
       </div>
     </main>
