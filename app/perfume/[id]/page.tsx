@@ -52,7 +52,20 @@ function resolverNotas(
   return (simples ?? []).map(name => ({ name }))
 }
 
-type FontePerfume = "local" | "api" | "mock" | "ebay" | "contratipo" | null
+type FontePerfume = "local" | "api" | "mock" | "ebay" | "contratipo" | "expandido" | null
+
+interface PerfumeExpandidoMin {
+  id: string; nome: string; marca: string; tipo: string; genero: string
+  familia: string; notas: string[]; preco_brl: number; linkCompra: string
+  categoria: string; inspiradoEm?: string; marcaOriginal?: string
+}
+let _expandidoCache: PerfumeExpandidoMin[] | null = null
+function getExpandidoCache(): PerfumeExpandidoMin[] {
+  if (_expandidoCache) return _expandidoCache
+  try { _expandidoCache = require("@/data/perfumes-expandido.json") as PerfumeExpandidoMin[] }
+  catch { _expandidoCache = [] }
+  return _expandidoCache
+}
 
 /** Constrói um PerfumeFragella mínimo a partir de dados locais (eBay / contratipo) */
 function perfumeMinimo(
@@ -126,6 +139,20 @@ async function resolverPerfume(id: string): Promise<{
     }
   }
 
+  // 7. Catálogo expandido (nacional, arabe, importado-designer)
+  for (const p of getExpandidoCache()) {
+    const s = `${slugify(p.nome)}-${slugify(p.marca)}`
+    if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {
+      const descricao = p.inspiradoEm
+        ? `${p.categoria === "contratipo" ? "Contratipo" : p.categoria} inspirado em ${p.inspiradoEm}${p.marcaOriginal ? ` da ${p.marcaOriginal}` : ""}`
+        : `${p.marca} — ${p.tipo}`
+      return {
+        perfume: perfumeMinimo(p.nome, p.marca, p.tipo, p.genero, p.familia, p.notas, descricao),
+        fonte: "expandido",
+      }
+    }
+  }
+
   return { perfume: null, fonte: null }
 }
 
@@ -139,6 +166,9 @@ export function generateStaticParams() {
 
   // Top 500 do catálogo Fragella por popularidade/rating
   for (const p of perfumesPopulares(500)) slugs.add(p.id)
+
+  // Primeiros 200 do catálogo expandido (resto via ISR on-demand)
+  for (const p of getExpandidoCache().slice(0, 200)) slugs.add(p.id)
 
   return Array.from(slugs).map(id => ({ id }))
 }

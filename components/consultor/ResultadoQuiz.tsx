@@ -66,7 +66,7 @@ function CardIdeal({ card }: { card: RecomendacaoCard }) {
   const meta          = SLOT_META.ideal
   const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
   const linkPerfume   = `/perfume/${card.codigo}`
-  const linkFornecedor = SUPPLIER_URLS[card.marca] ?? null
+  const linkFornecedor = card.linkCompra ?? SUPPLIER_URLS[card.marca] ?? null
 
   return (
     <div
@@ -200,7 +200,7 @@ function CardSecundario({
   const meta          = SLOT_META[slot]
   const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
   const linkPerfume   = `/perfume/${card.codigo}`
-  const linkFornecedor = SUPPLIER_URLS[card.marca] ?? null
+  const linkFornecedor = card.linkCompra ?? SUPPLIER_URLS[card.marca] ?? null
 
   return (
     <div style={{

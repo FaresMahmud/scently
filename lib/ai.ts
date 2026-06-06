@@ -374,6 +374,7 @@ export interface RecomendacaoCard {
   explicacao: string
   quando?: string     // when / ideal moment to wear — max 12 words
   aplicacao?: string  // how many sprays, where to apply — max 10 words
+  linkCompra?: string // direct buy URL from expanded catalog or supplier map
 }
 
 export interface RecomendacaoQuiz {
@@ -657,10 +658,36 @@ export async function gerarRecomendacaoQuiz(
   }
 
   console.log("[QuizIA] Sucesso —", mode, "—", parsed.data.ideal.nome)
-  return parsed.data
+  return enriquecerLinks(parsed.data)
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+
+/** Anexa linkCompra a cada card: tenta catálogo expandido, depois SUPPLIER_URLS */
+function enriquecerCard(card: RecomendacaoCard): RecomendacaoCard {
+  if (card.linkCompra) return card                          // já populado
+  // 1. Catálogo expandido — busca por id exato
+  const expandido = getExpandido().find(p => p.id === card.codigo)
+  if (expandido?.linkCompra) return { ...card, linkCompra: expandido.linkCompra }
+  // 2. Fallback por nome+marca no expandido
+  const porNome = getExpandido().find(
+    p => p.nome.toLowerCase() === card.nome.toLowerCase() &&
+         p.marca.toLowerCase() === card.marca.toLowerCase()
+  )
+  if (porNome?.linkCompra) return { ...card, linkCompra: porNome.linkCompra }
+  // 3. SUPPLIER_URLS como último recurso
+  const { SUPPLIER_URLS } = require("@/lib/suppliers") as { SUPPLIER_URLS: Record<string, string> }
+  if (SUPPLIER_URLS[card.marca]) return { ...card, linkCompra: SUPPLIER_URLS[card.marca] }
+  return card
+}
+
+function enriquecerLinks(rec: RecomendacaoQuiz): RecomendacaoQuiz {
+  return {
+    ideal:       enriquecerCard(rec.ideal),
+    alternativo: rec.alternativo ? enriquecerCard(rec.alternativo) : undefined,
+    ousado:      rec.ousado      ? enriquecerCard(rec.ousado)      : undefined,
+  }
+}
 
 function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
   const r = respostas as RespostasQuiz
