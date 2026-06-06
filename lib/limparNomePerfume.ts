@@ -76,8 +76,14 @@ export function limparNomePerfume(nome: string, marca: string): string {
   // 5. Remove sufixo de gênero
   limpo = limpo.replace(/\s+(masculino|feminino|unissex|for men|for women|for him|for her)$/i, "").trim()
 
-  // 6. Remove tamanho do frasco (ex: "50ml", "100 ml")
-  limpo = limpo.replace(/\s+\d+\s*ml$/i, "").trim()
+  // 6. Remove volume/tamanho em qualquer posição (ex: "100ml", "-100ml", "50 ml")
+  limpo = limpo.replace(/\s*-?\s*\d+\s*ml/gi, "").trim()
+
+  // 7. Remove dashes/hífens no final (artefatos após limpeza anterior)
+  limpo = limpo.replace(/[\s\-–]+$/, "").trim()
+
+  // 8. Remove dashes/hífens no início
+  limpo = limpo.replace(/^[\s\-–]+/, "").trim()
 
   return limpo
 }

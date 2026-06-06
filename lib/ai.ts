@@ -550,7 +550,13 @@ REGRAS ABSOLUTAS:
 * O usuário é o protagonista — o nozze é o guia
 * alternativo nunca pode ser o mesmo perfume inspirado de outra marca — deve ser uma fragrância diferente
 * quando: máximo 12 palavras. Contextualiza o momento ideal de uso.
-* aplicacao: máximo 10 palavras. Instrução prática, direta.
+* aplicacao: instrução prática de uso. Máximo 12 palavras.
+  Regras por contexto:
+  - Frescos/aquáticos/cítricos no calor: mínimo 2 borrifadas, mencionar pescoço e pulsos
+  - Orientais/amadeirados/gourmands: 1-2 borrifadas bastam, avisar sobre intensidade
+  - Perfumes de uso diário: orientar pontos de calor (pescoço, pulsos, atrás das orelhas)
+  - Encontros/noite: mencionar rastro — borrifar no ar e passar por baixo, ou pescoço+peito
+  Nunca sugira menos que 2 borrifadas para frescos. Nunca sugira mais que 3 para orientais intensos.
 * O contexto tem peso 10/10 — nunca recomende algo que contradiga o contexto declarado
 
 PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
