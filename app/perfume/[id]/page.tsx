@@ -6,14 +6,12 @@
 // ============================================
 
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import Link from "next/link"
 import OndeComprar from "@/components/perfume/OndeComprar"
-import { buscarPerfumePorSlug, perfumesPopulares } from "@/lib/catalogoFragella"
-import { buscarPerfumePorId } from "@/lib/fragella"
 import type { PerfumeFragella, NotaFragella } from "@/lib/fragella"
-import { buscarMockPorId, PERFUMES_MOCK } from "@/lib/mockData"
-import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
-import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
+import contratiposData from "@/data/contratipos.json"
+import expandidoData from "@/data/perfumes-expandido.json"
 import { NotasPerfume } from "@/components/perfume/NotasPerfume"
 import ImagemPerfume from "@/components/perfume/ImagemPerfume"
 import AcordesPerfume from "@/components/perfume/AcordesPerfume"
@@ -52,19 +50,18 @@ function resolverNotas(
   return (simples ?? []).map(name => ({ name }))
 }
 
-type FontePerfume = "local" | "api" | "mock" | "ebay" | "contratipo" | "expandido" | null
+type FontePerfume = "contratipo" | "expandido" | null
+
+interface ContratipoEntry {
+  id: string; nome: string; marca: string; tipo: string; genero: string
+  familia: string; notas: string[]; preco_brl: number
+  inspiradoEm: string; marcaOriginal: string
+}
 
 interface PerfumeExpandidoMin {
   id: string; nome: string; marca: string; tipo: string; genero: string
   familia: string; notas: string[]; preco_brl: number; linkCompra: string
   categoria: string; inspiradoEm?: string; marcaOriginal?: string
-}
-let _expandidoCache: PerfumeExpandidoMin[] | null = null
-function getExpandidoCache(): PerfumeExpandidoMin[] {
-  if (_expandidoCache) return _expandidoCache
-  try { _expandidoCache = require("@/data/perfumes-expandido.json") as PerfumeExpandidoMin[] }
-  catch { _expandidoCache = [] }
-  return _expandidoCache
 }
 
 /** Constrói um PerfumeFragella mínimo a partir de dados locais (eBay / contratipo) */
@@ -83,86 +80,47 @@ function perfumeMinimo(
 }
 
 /**
- * Resolver em cascata:
- * 1. Catálogo local Fragella (sem API call — O(n) em memória)
- * 2. Fragella API por ID
- * 3. Fragella API por nome extraído do slug
- * 4. Mock local
- * 5. eBay repository
- * 6. Contratipos repository
+ * Strict resolver — exact id match only, no fuzzy/partial matching.
+ * Step 1: exact id in contratipos.json
+ * Step 2: exact id in perfumes-expandido.json
+ * Step 3: null → caller calls notFound()
  */
 async function resolverPerfume(id: string): Promise<{
-  perfume: PerfumeFragella | null
+  perfume: PerfumeFragella
   fonte: FontePerfume
-}> {
-  const slugLimpo = id.replace(/-(ebay|contratipo|fragella)$/, "")
-
-  // 1. Catálogo local
-  const local = buscarPerfumePorSlug(id)
-  if (local?.nome && local?.marca) return { perfume: local, fonte: "local" }
-
-  // 2. Fragella API — por ID (exact match)
-  const porId = await buscarPerfumePorId(slugLimpo).catch(() => null)
-  if (porId?.nome && porId?.marca) return { perfume: porId, fonte: "api" }
-
-  // 3. Mock local
-  const mock = buscarMockPorId(id) ?? buscarMockPorId(slugLimpo)
-  if (mock) return { perfume: mock as unknown as PerfumeFragella, fonte: "mock" }
-
-  // 4. eBay — busca por slug do título+marca (exact slug)
-  for (const p of ebayRepository.findAll()) {
-    const s = `${slugify(p.titulo)}-${slugify(p.marca)}`
-    if (s === slugLimpo || s === id) {
-      return {
-        perfume: perfumeMinimo(p.titulo, p.marca, p.tipo, p.genero, p.genero, []),
-        fonte: "ebay",
-      }
+} | null> {
+  // Step 1: exact id match in contratipos
+  const ct = (contratiposData as ContratipoEntry[]).find(p => p.id === id)
+  if (ct) {
+    const descricao = `Contratipo inspirado em ${ct.inspiradoEm} da ${ct.marcaOriginal}`
+    return {
+      perfume: perfumeMinimo(ct.nome, ct.marca, ct.tipo, ct.genero, ct.familia, ct.notas, descricao),
+      fonte: "contratipo",
     }
   }
 
-  // 5. Contratipos — exact id ou exact slug nome+marca
-  for (const p of contratipoRepository.findAll()) {
-    const s = `${slugify(p.nome)}-${slugify(p.marca)}`
-    if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {
-      const descricao = `Contratipo inspirado em ${p.inspiradoEm} da ${p.marcaOriginal}`
-      return {
-        perfume: perfumeMinimo(p.nome, p.marca, p.tipo, p.genero, p.familia, p.notas, descricao),
-        fonte: "contratipo",
-      }
+  // Step 2: exact id match in perfumes-expandido
+  const ex = (expandidoData as PerfumeExpandidoMin[]).find(p => p.id === id)
+  if (ex) {
+    const descricao = ex.inspiradoEm
+      ? `${ex.categoria === "contratipo" ? "Contratipo" : ex.categoria} inspirado em ${ex.inspiradoEm}${ex.marcaOriginal ? ` da ${ex.marcaOriginal}` : ""}`
+      : `${ex.marca} — ${ex.tipo}`
+    return {
+      perfume: perfumeMinimo(ex.nome, ex.marca, ex.tipo, ex.genero, ex.familia, ex.notas, descricao),
+      fonte: "expandido",
     }
   }
 
-  // 6. Catálogo expandido — exact id ou exact slug nome+marca
-  for (const p of getExpandidoCache()) {
-    const s = `${slugify(p.nome)}-${slugify(p.marca)}`
-    if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {
-      const descricao = p.inspiradoEm
-        ? `${p.categoria === "contratipo" ? "Contratipo" : p.categoria} inspirado em ${p.inspiradoEm}${p.marcaOriginal ? ` da ${p.marcaOriginal}` : ""}`
-        : `${p.marca} — ${p.tipo}`
-      return {
-        perfume: perfumeMinimo(p.nome, p.marca, p.tipo, p.genero, p.familia, p.notas, descricao),
-        fonte: "expandido",
-      }
-    }
-  }
-
-  return { perfume: null, fonte: null }
+  // Step 3: not found — no fuzzy matching
+  return null
 }
 
 // ── Static params (top 500 por popularidade) ─────────────────────────────────
 
 export function generateStaticParams() {
   const slugs = new Set<string>()
-
-  // Mocks existentes
-  for (const p of PERFUMES_MOCK) slugs.add(p.id)
-
-  // Top 500 do catálogo Fragella por popularidade/rating
-  for (const p of perfumesPopulares(500)) slugs.add(p.id)
-
-  // Primeiros 200 do catálogo expandido (resto via ISR on-demand)
-  for (const p of getExpandidoCache().slice(0, 200)) slugs.add(p.id)
-
+  for (const p of contratiposData as ContratipoEntry[]) slugs.add(p.id)
+  for (const p of expandidoData as PerfumeExpandidoMin[]) slugs.add(p.id)
   return Array.from(slugs).map(id => ({ id }))
 }
 
@@ -172,8 +130,9 @@ const BASE_URL = "https://nozze.app"
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params
-  const { perfume } = await resolverPerfume(id)
-  if (!perfume) return { title: "Perfume não encontrado" }
+  const result = await resolverPerfume(id)
+  if (!result) return { title: "Perfume não encontrado" }
+  const { perfume } = result
 
   const titulo      = `${perfume.nome} — ${perfume.marca} | Nozze`
   const descricao   = perfume.descricao
@@ -214,19 +173,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function PaginaPerfume({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  const { perfume, fonte } = await resolverPerfume(id)
-
-  if (!perfume) {
-    return (
-      <main className="container-site" style={{ paddingTop: "5rem", paddingBottom: "5rem" }}>
-        <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, marginBottom: "1rem" }}>
-          Perfume não encontrado
-        </h1>
-        <p style={{ marginBottom: "34px" }}>O perfume que você procura não existe ou foi removido.</p>
-        <Link href="/catalogo" style={{ color: "var(--cor-destaque)" }}>← Explorar catálogo</Link>
-      </main>
-    )
-  }
+  const result = await resolverPerfume(id)
+  if (!result) notFound()
+  const { perfume, fonte } = result
 
   // Rankings de estação e ocasião via IA (fallback para dados Fragella)
   const notasAll = [

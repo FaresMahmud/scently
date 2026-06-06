@@ -7,6 +7,8 @@
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
+import contratiposJson from "@/data/contratipos.json"
+import expandidoJson from "@/data/perfumes-expandido.json"
 import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
@@ -669,20 +671,35 @@ export async function gerarRecomendacaoQuiz(
 
 // ─────────────────────────────────────────────────────────────────────────────
 
+// Pre-computed Set of all valid catalog IDs — built once, O(1) lookups thereafter
+let _catalogIds: Set<string> | null = null
+function getCatalogIds(): Set<string> {
+  if (_catalogIds) return _catalogIds
+  _catalogIds = new Set([
+    ...(contratiposJson as Array<{ id: string }>).map(p => p.id),
+    ...(expandidoJson as Array<{ id: string }>).map(p => p.id),
+  ])
+  return _catalogIds
+}
+
+/** Returns the codigo if it exists in the catalog, null otherwise. */
+function validarCodigo(codigo: string | null | undefined): string | null {
+  if (!codigo) return null
+  if (getCatalogIds().has(codigo)) return codigo
+  console.log("[QuizIA] codigo inválido — não encontrado no catálogo:", codigo)
+  return null
+}
+
 /**
  * Validates each card's codigo against the known catalog (contratipos + expandido).
  * If the id returned by DeepSeek doesn't exist in either source, sets codigo = null
  * so the "Ver perfume →" link is suppressed rather than pointing to a wrong page.
  */
 function validarCodigos(data: z.infer<typeof RecomendacaoQuizSchema>): RecomendacaoQuiz {
-  const validar = (card: z.infer<typeof RecomendacaoCardSchema>): RecomendacaoCard => {
-    const emContratipos = contratipoRepository.findAll().some(p => p.id === card.codigo)
-    if (emContratipos) return card as RecomendacaoCard
-    const emExpandido = getExpandido().some(p => p.id === card.codigo)
-    if (emExpandido) return card as RecomendacaoCard
-    console.log("[QuizIA] codigo not found in catalog:", card.codigo)
-    return { ...card, codigo: null }
-  }
+  const validar = (card: z.infer<typeof RecomendacaoCardSchema>): RecomendacaoCard => ({
+    ...card,
+    codigo: validarCodigo(card.codigo),
+  })
   return {
     ideal:       validar(data.ideal),
     alternativo: data.alternativo ? validar(data.alternativo) : undefined,
