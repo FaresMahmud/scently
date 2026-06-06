@@ -1,70 +1,57 @@
 // ============================================
 // ARQUIVO: components/ui/Logo.tsx
-// O QUE FAZ: logo do Nozze — SVG (frasco parcial + névoa) + texto HTML
+// O QUE FAZ: logo do Nozze — SVG unificado (ícone + texto "nozze" em um único elemento)
 // ============================================
 
-export default function Logo({ width = 32 }: { width?: number }) {
-  // Proporção viewBox 114:160 → height = width * (160/114)
-  const height = Math.round(width * (120 / 114))
+export default function Logo({ width = 200 }: { width?: number }) {
+  const height = Math.round(width * (60 / 260))
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: "0px" }}>
-      <svg
-        width={width}
-        height={height}
-        viewBox="0 0 114 120"
-        role="presentation"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ display: "block", overflow: "hidden" }}
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.3"
-        color="#3A2E28"
-      >
-        {/* CORPO — aberto em baixo, 34px de altura visível */}
-        <line x1="26" y1="120" x2="26" y2="88"/>
-        <line x1="26" y1="88"  x2="98" y2="88"/>
-        <line x1="98" y1="88"  x2="98" y2="120"/>
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 260 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: "block" }}
+    >
+      <g stroke="#3D3935" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.1">
+        <line x1="10" y1="56" x2="10" y2="42"/>
+        <line x1="10" y1="42" x2="36" y2="42"/>
+        <line x1="36" y1="42" x2="36" y2="56"/>
+        <rect x="17" y="26" width="10" height="16"/>
+        <rect x="13" y="14" width="18" height="12"/>
+        <line x1="31" y1="19" x2="39" y2="19"/>
+        <line x1="39" y1="16" x2="39" y2="22"/>
+      </g>
 
-        {/* PESCOÇO — height=36 (era 52) */}
-        <rect x="51.5" y="52" width="21" height="36"/>
+      <circle cx="44" cy="17" r="0.9" fill="#3D3935"/>
+      <circle cx="48" cy="13" r="0.75" fill="#3D3935"/>
+      <circle cx="52" cy="16" r="0.7" fill="#3D3935"/>
+      <circle cx="51" cy="10" r="0.65" fill="#3D3935"/>
+      <circle cx="56" cy="12" r="0.6" fill="#3D3935"/>
+      <circle cx="60" cy="9" r="0.55" fill="#3D3935"/>
+      <circle cx="55" cy="7" r="0.5" fill="#3D3935"/>
+      <circle cx="64" cy="14" r="0.5" fill="#3D3935"/>
+      <circle cx="65" cy="7" r="0.45" fill="#3D3935"/>
+      <circle cx="68" cy="11" r="0.4" fill="#3D3935"/>
+      <circle cx="70" cy="5" r="0.38" fill="#3D3935"/>
+      <circle cx="73" cy="9" r="0.35" fill="#3D3935"/>
+      <circle cx="75" cy="4" r="0.3" fill="#3D3935"/>
+      <circle cx="78" cy="8" r="0.28" fill="#3D3935"/>
+      <circle cx="80" cy="3" r="0.25" fill="#3D3935"/>
+      <circle cx="82" cy="7" r="0.22" fill="#3D3935"/>
+      <circle cx="84" cy="2" r="0.2" fill="#3D3935"/>
 
-        {/* ATUADOR — mantido height=28 */}
-        <rect x="45" y="20" width="34" height="28"/>
-
-        {/* BICO */}
-        <line x1="79" y1="30" x2="92" y2="30"/>
-        <line x1="92" y1="26" x2="92" y2="34"/>
-
-        {/* NÉVOA — partículas deslocadas -38px no eixo Y */}
-        <circle cx="99"  cy="27" r="1.1"  fill="currentColor" stroke="none"/>
-        <circle cx="102" cy="22" r="0.9"  fill="currentColor" stroke="none"/>
-        <circle cx="105" cy="29" r="0.8"  fill="currentColor" stroke="none"/>
-        <circle cx="100" cy="17" r="0.7"  fill="currentColor" stroke="none"/>
-        <circle cx="108" cy="20" r="0.9"  fill="currentColor" stroke="none"/>
-        <circle cx="111" cy="14" r="0.8"  fill="currentColor" stroke="none"/>
-        <circle cx="106" cy="11" r="0.7"  fill="currentColor" stroke="none"/>
-        <circle cx="103" cy="5"  r="0.6"  fill="currentColor" stroke="none"/>
-        <circle cx="109" cy="9"  r="0.7"  fill="currentColor" stroke="none"/>
-        <circle cx="112" cy="24" r="0.6"  fill="currentColor" stroke="none"/>
-        <circle cx="113" cy="5"  r="0.6"  fill="currentColor" stroke="none"/>
-        <circle cx="107" cy="0"  r="0.5"  fill="currentColor" stroke="none"/>
-      </svg>
-
-      {/* Texto HTML — fonte carrega garantidamente */}
-      <span style={{
-        fontFamily: "'Cormorant Garamond', Georgia, serif",
-        fontWeight: 300,
-        fontSize: "18px",
-        letterSpacing: "0.12em",
-        color: "#3A2E28",
-        lineHeight: 1,
-        paddingLeft: "8px",
-      }}>
-        nozze
-      </span>
-    </div>
+      <text
+        x="42"
+        y="46"
+        fontFamily="'Cormorant Garamond', Georgia, serif"
+        fontSize="28"
+        fontWeight="300"
+        letterSpacing="4"
+        fill="#3D3935"
+      >nozze</text>
+    </svg>
   )
 }

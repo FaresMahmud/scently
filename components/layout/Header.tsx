@@ -9,6 +9,7 @@
 
 import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
+import { useState, useEffect } from "react"
 import { siteMeta } from "@/config/site"
 import MenuMobileToggle from "./MenuMobileToggle"
 import Logo from "@/components/ui/Logo"
@@ -32,6 +33,15 @@ function LinkConsultor({ children, style }: { children: React.ReactNode; style?:
 }
 
 export default function Header() {
+  const [logoWidth, setLogoWidth] = useState(200)
+
+  useEffect(() => {
+    const update = () => setLogoWidth(window.innerWidth <= 640 ? 160 : 200)
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [])
+
   return (
     <header
       style={{
@@ -49,8 +59,8 @@ export default function Header() {
         style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "64px" }}
       >
         {/* Logo */}
-        <Link href="/" aria-label={siteMeta.nome} style={{ display: "flex", alignItems: "center", overflow: "visible" }}>
-          <Logo width={36} />
+        <Link href="/" aria-label={siteMeta.nome} style={{ display: "flex", alignItems: "center" }}>
+          <Logo width={logoWidth} />
         </Link>
 
         {/* Navegação desktop — esconde no mobile via CSS */}
