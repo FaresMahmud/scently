@@ -38,7 +38,7 @@ function coletarPerfumesLocais(slug: string): DadosCardPerfume[] {
   for (const p of ebayRepository.findAll()) {
     if (slugify(p.marca) === slug) {
       lista.push({
-        id: `${ebayRepository.toSlug(p.titulo, p.marca)}-ebay`,
+        id: ebayRepository.toSlug(p.titulo, p.marca),
         nome: p.titulo,
         marca: p.marca,
         concentracao: p.tipo,

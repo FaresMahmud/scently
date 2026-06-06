@@ -39,7 +39,7 @@ function normalizarGenero(g: string | undefined): GeneroNorm | undefined {
 
 function ebayParaCard(p: ReturnType<typeof ebayRepository.findAll>[number]): CardUnificado {
   return {
-    id:          `${ebayRepository.toSlug(p.titulo, p.marca)}-ebay`,
+    id:          ebayRepository.toSlug(p.titulo, p.marca),
     nome:        p.titulo,
     marca:       p.marca,
     concentracao:p.tipo,

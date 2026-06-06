@@ -100,9 +100,12 @@ async function resolverPerfume(id: string): Promise<{
   perfume: PerfumeFragella
   fonte: FontePerfume
 } | null> {
+  // Safety net: strip legacy suffixes that may come from old card generators
+  const cleanId = id.replace(/-(ebay|ct|fragella|contratipo)$/, "")
+  if (cleanId !== id) console.log("[Perfume] Stripped legacy suffix:", id, "→", cleanId)
+  id = cleanId
+
   console.log("[Perfume] Looking for id:", id)
-  console.log("[Perfume] Sample contratipos ids:", (contratiposData as ContratipoEntry[]).slice(0, 5).map(p => p.id))
-  console.log("[Perfume] Sample expandido ids:", (expandidoData as PerfumeExpandidoMin[]).slice(0, 5).map(p => p.id))
 
   // Step 1: exact id match in contratipos
   const ct = (contratiposData as ContratipoEntry[]).find(p => p.id === id)
