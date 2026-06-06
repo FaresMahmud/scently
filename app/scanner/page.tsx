@@ -33,7 +33,7 @@ export default function PaginaScanner() {
         <p
           style={{
             fontFamily: "var(--fonte-corpo)",
-            fontSize: "26px",
+            fontSize: "clamp(16px, 4vw, 26px)",
             fontWeight: 300,
             color: "rgba(245,242,237,0.5)",
           }}

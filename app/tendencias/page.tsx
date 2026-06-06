@@ -79,7 +79,7 @@ export default async function PaginaTendencias() {
       </section>
 
       {/* ── Conteúdo editorial ─────────────────────────── */}
-      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 55px" }}>
+      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 var(--espaco-interno)" }}>
 
         {/* Seção — Esta semana */}
         <div style={{ paddingTop: "55px", paddingBottom: "89px" }}>

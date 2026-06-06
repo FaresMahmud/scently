@@ -59,7 +59,7 @@ export default function PaginaInicial() {
       />
       {/* ── Hero ──────────────────────────────────────────── */}
       <section style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", borderBottom: "1px solid var(--cor-borda)" }}>
-        <div className="container-site" style={{ paddingTop: "5rem", paddingBottom: "5rem", width: "100%" }}>
+        <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)", width: "100%" }}>
           <div className="hero-grid">
 
             {/* Coluna esquerda — texto */}

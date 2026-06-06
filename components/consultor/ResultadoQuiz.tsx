@@ -361,7 +361,7 @@ export default function ResultadoQuiz({ recomendacao, onRecomecar }: PropsResult
 
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
             gap: "13px",
           }}>
             <CardSecundario slot="alternativo" card={recomendacao.alternativo} />
