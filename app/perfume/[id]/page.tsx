@@ -9,7 +9,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import OndeComprar from "@/components/perfume/OndeComprar"
 import { buscarPerfumePorSlug, perfumesPopulares } from "@/lib/catalogoFragella"
-import { buscarPerfumePorId, buscarPorNome } from "@/lib/fragella"
+import { buscarPerfumePorId } from "@/lib/fragella"
 import type { PerfumeFragella, NotaFragella } from "@/lib/fragella"
 import { buscarMockPorId, PERFUMES_MOCK } from "@/lib/mockData"
 import { ebayRepository } from "@/lib/repositories/EbayPerfumeRepository"
@@ -101,22 +101,15 @@ async function resolverPerfume(id: string): Promise<{
   const local = buscarPerfumePorSlug(id)
   if (local?.nome && local?.marca) return { perfume: local, fonte: "local" }
 
-  // 2. Fragella API — por ID
+  // 2. Fragella API — por ID (exact match)
   const porId = await buscarPerfumePorId(slugLimpo).catch(() => null)
   if (porId?.nome && porId?.marca) return { perfume: porId, fonte: "api" }
 
-  // 3. Fragella API — por nome extraído do slug
-  const nomeBusca = slugLimpo.replace(/-/g, " ").replace(/\s+\d+$/, "").trim()
-  if (nomeBusca.length >= 3) {
-    const resultados = await buscarPorNome(nomeBusca, 3).catch(() => [])
-    if (resultados.length > 0) return { perfume: resultados[0], fonte: "api" }
-  }
-
-  // 4. Mock local
+  // 3. Mock local
   const mock = buscarMockPorId(id) ?? buscarMockPorId(slugLimpo)
   if (mock) return { perfume: mock as unknown as PerfumeFragella, fonte: "mock" }
 
-  // 5. eBay — busca por slug do título+marca
+  // 4. eBay — busca por slug do título+marca (exact slug)
   for (const p of ebayRepository.findAll()) {
     const s = `${slugify(p.titulo)}-${slugify(p.marca)}`
     if (s === slugLimpo || s === id) {
@@ -127,7 +120,7 @@ async function resolverPerfume(id: string): Promise<{
     }
   }
 
-  // 6. Contratipos — busca por id ou slug nome+marca
+  // 5. Contratipos — exact id ou exact slug nome+marca
   for (const p of contratipoRepository.findAll()) {
     const s = `${slugify(p.nome)}-${slugify(p.marca)}`
     if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {
@@ -139,7 +132,7 @@ async function resolverPerfume(id: string): Promise<{
     }
   }
 
-  // 7. Catálogo expandido (nacional, arabe, importado-designer)
+  // 6. Catálogo expandido — exact id ou exact slug nome+marca
   for (const p of getExpandidoCache()) {
     const s = `${slugify(p.nome)}-${slugify(p.marca)}`
     if (p.id === id || p.id === slugLimpo || s === slugLimpo || s === id) {

@@ -65,7 +65,7 @@ const SLOT_META: Record<
 function CardIdeal({ card }: { card: RecomendacaoCard }) {
   const meta          = SLOT_META.ideal
   const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
-  const linkPerfume   = `/perfume/${card.codigo}`
+  const linkPerfume   = card.codigo ? `/perfume/${card.codigo}` : null
   const linkFornecedor = card.linkCompra ?? SUPPLIER_URLS[card.marca] ?? null
 
   return (
@@ -158,13 +158,15 @@ function CardIdeal({ card }: { card: RecomendacaoCard }) {
 
       {/* Ações */}
       <div style={{ display: "flex", gap: "21px", flexWrap: "wrap", alignItems: "center", marginTop: "21px" }}>
-        <Link href={linkPerfume} style={{
-          fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem",
-          color: "#C4714A", fontWeight: 500,
-          minHeight: "44px", display: "inline-flex", alignItems: "center",
-        }}>
-          Ver perfume →
-        </Link>
+        {linkPerfume && (
+          <Link href={linkPerfume} style={{
+            fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem",
+            color: "#C4714A", fontWeight: 500,
+            minHeight: "44px", display: "inline-flex", alignItems: "center",
+          }}>
+            Ver perfume →
+          </Link>
+        )}
         <Link href={linkCatalogo} style={{
           fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem",
           color: "var(--cor-texto-suave)",
@@ -199,7 +201,7 @@ function CardSecundario({
 
   const meta          = SLOT_META[slot]
   const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
-  const linkPerfume   = `/perfume/${card.codigo}`
+  const linkPerfume   = card.codigo ? `/perfume/${card.codigo}` : null
   const linkFornecedor = card.linkCompra ?? SUPPLIER_URLS[card.marca] ?? null
 
   return (
@@ -285,13 +287,15 @@ function CardSecundario({
 
       {/* Ações */}
       <div style={{ display: "flex", gap: "13px", flexWrap: "wrap", alignItems: "center", marginTop: "21px" }}>
-        <Link href={linkPerfume} style={{
-          fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem",
-          color: meta.cor, fontWeight: 500,
-          minHeight: "44px", display: "inline-flex", alignItems: "center",
-        }}>
-          Ver perfume →
-        </Link>
+        {linkPerfume && (
+          <Link href={linkPerfume} style={{
+            fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem",
+            color: meta.cor, fontWeight: 500,
+            minHeight: "44px", display: "inline-flex", alignItems: "center",
+          }}>
+            Ver perfume →
+          </Link>
+        )}
         <Link href={linkCatalogo} style={{
           fontFamily: "var(--fonte-corpo)", fontSize: "0.75rem",
           color: "var(--cor-texto-suave)",

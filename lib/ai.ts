@@ -370,10 +370,10 @@ Regras obrigatórias:
 export interface RecomendacaoCard {
   nome: string
   marca: string
-  codigo: string
+  codigo: string | null  // null when DeepSeek returns an id not found in the catalog
   explicacao: string
   quando?: string     // when / ideal moment to wear — max 12 words
-  aplicacao?: string  // how many sprays, where to apply — max 10 words
+  aplicacao?: string  // how many sprays, where to apply — max 12 words
   linkCompra?: string // direct buy URL from expanded catalog or supplier map
 }
 
@@ -664,10 +664,31 @@ export async function gerarRecomendacaoQuiz(
   }
 
   console.log("[QuizIA] Sucesso —", mode, "—", parsed.data.ideal.nome)
-  return enriquecerLinks(parsed.data)
+  return enriquecerLinks(validarCodigos(parsed.data))
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Validates each card's codigo against the known catalog (contratipos + expandido).
+ * If the id returned by DeepSeek doesn't exist in either source, sets codigo = null
+ * so the "Ver perfume →" link is suppressed rather than pointing to a wrong page.
+ */
+function validarCodigos(data: z.infer<typeof RecomendacaoQuizSchema>): RecomendacaoQuiz {
+  const validar = (card: z.infer<typeof RecomendacaoCardSchema>): RecomendacaoCard => {
+    const emContratipos = contratipoRepository.findAll().some(p => p.id === card.codigo)
+    if (emContratipos) return card as RecomendacaoCard
+    const emExpandido = getExpandido().some(p => p.id === card.codigo)
+    if (emExpandido) return card as RecomendacaoCard
+    console.log("[QuizIA] codigo not found in catalog:", card.codigo)
+    return { ...card, codigo: null }
+  }
+  return {
+    ideal:       validar(data.ideal),
+    alternativo: data.alternativo ? validar(data.alternativo) : undefined,
+    ousado:      data.ousado      ? validar(data.ousado)      : undefined,
+  }
+}
 
 /** Anexa linkCompra a cada card: tenta catálogo expandido, depois SUPPLIER_URLS */
 function enriquecerCard(card: RecomendacaoCard): RecomendacaoCard {
