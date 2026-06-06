@@ -50,7 +50,7 @@ export default function Header() {
       >
         {/* Logo */}
         <Link href="/" aria-label={siteMeta.nome} style={{ display: "flex", alignItems: "center", overflow: "visible" }}>
-          <Logo width={55} />
+          <Logo width={36} />
         </Link>
 
         {/* Navegação desktop — esconde no mobile via CSS */}

@@ -5,17 +5,17 @@
 
 export default function Logo({ width = 32 }: { width?: number }) {
   // Proporção viewBox 114:160 → height = width * (160/114)
-  const height = Math.round(width * (160 / 114))
+  const height = Math.round(width * (148 / 114))
 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "0px" }}>
       <svg
         width={width}
         height={height}
-        viewBox="0 0 114 160"
+        viewBox="0 0 114 148"
         role="presentation"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ display: "block", overflow: "visible" }}
+        style={{ display: "block", overflow: "hidden" }}
         fill="none"
         stroke="currentColor"
         strokeLinecap="round"
