@@ -5,9 +5,11 @@
 //   Phase 2: nacionais (Boticário, Natura, Eudora, Granado, Mahogany, Phebo)
 //   Phase 3: importados designer via DeepSeek (Dior, Chanel, Givenchy…)
 //   Phase 4: árabes via DeepSeek (Lattafa, Maison Alhambra…)
+//   Phase deepseek-ct: contratipos via DeepSeek (La Rive, Nuancielo)
 // COMO RODAR:
-//   npm run catalog:expand               (todas as fases)
-//   npm run catalog:expand -- --phase=1  (só fase 1)
+//   npm run catalog:expand                         (todas as fases numéricas)
+//   npm run catalog:expand -- --phase=1            (só fase 1)
+//   npm run catalog:expand:deepseek-ct             (contratipos DeepSeek)
 // SALVA EM:  data/perfumes-expandido.json
 // ============================================
 
@@ -33,10 +35,11 @@ const GEMINI_KEY  = process.env.GEMINI_API_KEY      ?? ""
 const DEEPSEEK_KEY= process.env.DEEPSEEK_API_KEY    ?? ""
 const SAIDA       = path.join(process.cwd(), "data", "perfumes-expandido.json")
 
-const PHASE_ARG  = process.argv.find(a => a.startsWith("--phase="))?.split("=")?.[1]
-const BRANDS_ARG = process.argv.find(a => a.startsWith("--brands="))?.split("=")?.[1]
-const RUN_PHASES = PHASE_ARG ? [parseInt(PHASE_ARG)] : [1, 2, 3, 4]
-const BRAND_FILTER = BRANDS_ARG ? BRANDS_ARG.toLowerCase().split(",").map(s => s.trim()) : null
+const PHASE_ARG      = process.argv.find(a => a.startsWith("--phase="))?.split("=")?.[1]
+const BRANDS_ARG     = process.argv.find(a => a.startsWith("--brands="))?.split("=")?.[1]
+const RUN_PHASES     = !PHASE_ARG ? [1, 2, 3, 4] : PHASE_ARG !== "deepseek-ct" ? [parseInt(PHASE_ARG)] : []
+const RUN_DEEPSEEK_CT = PHASE_ARG === "deepseek-ct"
+const BRAND_FILTER   = BRANDS_ARG ? BRANDS_ARG.toLowerCase().split(",").map(s => s.trim()) : null
 
 // ── Interfaces ────────────────────────────────────────────────────────────────
 
@@ -1173,6 +1176,134 @@ async function runPhase4(): Promise<PerfumeExpandido[]> {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// PHASE deepseek-ct — Contratipos via DeepSeek (La Rive, Nuancielo)
+// ══════════════════════════════════════════════════════════════════════════════
+
+interface ContratypeDeepSeekConfig {
+  marca:      string
+  site:       string
+  preco_medio: number
+  categoria:  "contratipo"
+}
+
+const CONTRATYPE_BRANDS_DEEPSEEK: ContratypeDeepSeekConfig[] = [
+  { marca: "La Rive",  site: "https://www.larive-parfums.com", preco_medio: 89,  categoria: "contratipo" },
+  { marca: "Nuancielo", site: "https://www.nuancielo.com.br",  preco_medio: 120, categoria: "contratipo" },
+]
+
+interface DeepSeekContratypePerfume {
+  nome:          string
+  inspiradoEm:   string
+  marcaOriginal: string
+  genero:        string
+  tipo:          string
+  familia:       string
+  notas:         string[]
+  preco_brl:     number
+}
+
+async function deepseekGenerateContratype(
+  brand: ContratypeDeepSeekConfig
+): Promise<DeepSeekContratypePerfume[]> {
+  const precoMin = Math.round(brand.preco_medio * 0.8)
+  const precoMax = Math.round(brand.preco_medio * 1.2)
+
+  const prompt = `Você é especialista em perfumaria brasileira e contratipos.
+Liste os 15 perfumes mais populares e vendidos da marca brasileira de contratipos "${brand.marca}" (site: ${brand.site}).
+Para cada perfume, inclua:
+- "nome": nome exato do produto como vendido no site (ex: "Extreme Club EDT 100ml")
+- "inspiradoEm": nome do perfume original que este contratipo referencia (ex: "Sauvage")
+- "marcaOriginal": marca do perfume original (ex: "Dior")
+- "genero": "Masculino", "Feminino" ou "Unissex"
+- "tipo": "EDP", "EDT", "EDC" ou "Parfum"
+- "familia": família olfativa em português (Amadeirado, Floral, Oriental, Cítrico, Aquático, Gourmand, Frutal, Almiscarado, Especiado, Verde, etc.)
+- "notas": array com 3-5 notas olfativas principais em português
+- "preco_brl": preço aproximado em reais entre ${precoMin} e ${precoMax} (número inteiro)
+
+Responda SOMENTE com um array JSON válido. Sem texto extra. Sem markdown.`
+
+  const res = await fetch("https://api.deepseek.com/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${DEEPSEEK_KEY}` },
+    body: JSON.stringify({
+      model: "deepseek-chat",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.3,
+      max_tokens: 3000,
+      response_format: { type: "json_object" },
+    }),
+  })
+  if (!res.ok) throw new Error(`DeepSeek HTTP ${res.status}`)
+  const data = await res.json() as { choices: { message: { content: string } }[] }
+  const txt  = data.choices[0]?.message?.content?.trim() ?? "[]"
+
+  try {
+    const parsed = JSON.parse(txt)
+    if (Array.isArray(parsed)) return parsed as DeepSeekContratypePerfume[]
+    for (const v of Object.values(parsed)) {
+      if (Array.isArray(v)) return v as DeepSeekContratypePerfume[]
+    }
+  } catch { /* */ }
+  console.warn(`  ⚠ Resposta não parseável para ${brand.marca}: ${txt.slice(0, 100)}`)
+  return []
+}
+
+async function runPhaseDeepSeekCT(): Promise<PerfumeExpandido[]> {
+  console.log("\n" + "═".repeat(60))
+  console.log("FASE deepseek-ct — Contratipos via DeepSeek (La Rive, Nuancielo)")
+  console.log("═".repeat(60))
+
+  if (!DEEPSEEK_KEY) {
+    console.error("✗ DEEPSEEK_API_KEY não configurada — pulando fase deepseek-ct")
+    return []
+  }
+
+  const resultado: PerfumeExpandido[] = []
+
+  for (const brand of CONTRATYPE_BRANDS_DEEPSEEK) {
+    if (BRAND_FILTER && !BRAND_FILTER.includes(brand.marca.toLowerCase())) continue
+
+    console.log(`\n[${brand.marca}] Gerando 15 contratipos via DeepSeek…`)
+    try {
+      const perfumes = await deepseekGenerateContratype(brand)
+      for (const p of perfumes) {
+        const nome = String(p.nome ?? "").trim()
+        if (!nome) continue
+
+        const tipo   = (["EDP","EDT","EDC","Parfum"].includes(p.tipo) ? p.tipo : "EDP") as PerfumeExpandido["tipo"]
+        const genero = (["Masculino","Feminino","Unissex"].includes(p.genero) ? p.genero : "Unissex") as PerfumeExpandido["genero"]
+        const preco  = typeof p.preco_brl === "number" && p.preco_brl > 0
+          ? p.preco_brl
+          : brand.preco_medio
+
+        resultado.push({
+          id:            `${slugify(brand.marca)}-${slugify(nome)}`,
+          nome,
+          marca:         brand.marca,
+          tipo,
+          genero,
+          inspiradoEm:   p.inspiradoEm || null,
+          marcaOriginal: p.marcaOriginal || null,
+          familia:       p.familia ?? "Indefinida",
+          notas:         Array.isArray(p.notas) ? p.notas : [],
+          preco_brl:     preco,
+          categoria:     "contratipo",
+          disponivel:    true,
+          linkCompra:    brand.site,
+        })
+        console.log(`  + ${nome} → inspirado em: ${p.inspiradoEm ?? "—"} (${p.marcaOriginal ?? "—"})`)
+      }
+    } catch (e) {
+      console.error(`  ✗ ${brand.marca}: ${(e as Error).message}`)
+    }
+    await sleep(1200)
+  }
+
+  console.log(`\nFase deepseek-ct: ${resultado.length} contratipos gerados`)
+  return resultado
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // MAIN
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -1208,6 +1339,12 @@ async function main() {
     const phase4 = await runPhase4()
     appendPhase(phase4)
     console.log("\n✓ Fase 4 concluída e salva.")
+  }
+
+  if (RUN_DEEPSEEK_CT) {
+    const phaseCT = await runPhaseDeepSeekCT()
+    appendPhase(phaseCT)
+    console.log("\n✓ Fase deepseek-ct concluída e salva.")
   }
 
   // Final summary
