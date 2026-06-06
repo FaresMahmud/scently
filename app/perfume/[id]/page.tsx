@@ -79,16 +79,31 @@ function perfumeMinimo(
   }
 }
 
+/** Normalize a slug for loose matching: lowercase, strip accents, collapse separators */
+function normalizeId(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[\s_]+/g, "-")
+}
+
 /**
- * Strict resolver — exact id match only, no fuzzy/partial matching.
+ * Resolver — strict exact id first, normalized includes fallback second.
  * Step 1: exact id in contratipos.json
  * Step 2: exact id in perfumes-expandido.json
- * Step 3: null → caller calls notFound()
+ * Step 3: normalized includes match (handles missing -100ml suffix, accent differences)
+ *         catalog_id.includes(url_param) OR url_param.includes(catalog_id)
+ *         only when length diff < 20 to avoid false positives
+ * Step 4: null → caller calls notFound()
  */
 async function resolverPerfume(id: string): Promise<{
   perfume: PerfumeFragella
   fonte: FontePerfume
 } | null> {
+  console.log("[Perfume] Looking for id:", id)
+  console.log("[Perfume] Sample contratipos ids:", (contratiposData as ContratipoEntry[]).slice(0, 5).map(p => p.id))
+  console.log("[Perfume] Sample expandido ids:", (expandidoData as PerfumeExpandidoMin[]).slice(0, 5).map(p => p.id))
+
   // Step 1: exact id match in contratipos
   const ct = (contratiposData as ContratipoEntry[]).find(p => p.id === id)
   if (ct) {
@@ -111,7 +126,43 @@ async function resolverPerfume(id: string): Promise<{
     }
   }
 
-  // Step 3: not found — no fuzzy matching
+  // Step 3: normalized includes fallback
+  // Handles: missing -100ml suffix, minor slug variations, accent differences
+  // Guard: length diff < 20 prevents wide false-positive matches
+  const normId = normalizeId(id)
+
+  const ctLoose = (contratiposData as ContratipoEntry[]).find(p => {
+    const normCat = normalizeId(p.id)
+    if (Math.abs(normCat.length - normId.length) >= 20) return false
+    return normCat.includes(normId) || normId.includes(normCat)
+  })
+  if (ctLoose) {
+    console.log("[Perfume] Normalized match (contratipos):", ctLoose.id, "for url:", id)
+    const descricao = `Contratipo inspirado em ${ctLoose.inspiradoEm} da ${ctLoose.marcaOriginal}`
+    return {
+      perfume: perfumeMinimo(ctLoose.nome, ctLoose.marca, ctLoose.tipo, ctLoose.genero, ctLoose.familia, ctLoose.notas, descricao),
+      fonte: "contratipo",
+    }
+  }
+
+  const exLoose = (expandidoData as PerfumeExpandidoMin[]).find(p => {
+    const normCat = normalizeId(p.id)
+    if (Math.abs(normCat.length - normId.length) >= 20) return false
+    return normCat.includes(normId) || normId.includes(normCat)
+  })
+  if (exLoose) {
+    console.log("[Perfume] Normalized match (expandido):", exLoose.id, "for url:", id)
+    const descricao = exLoose.inspiradoEm
+      ? `${exLoose.categoria === "contratipo" ? "Contratipo" : exLoose.categoria} inspirado em ${exLoose.inspiradoEm}${exLoose.marcaOriginal ? ` da ${exLoose.marcaOriginal}` : ""}`
+      : `${exLoose.marca} — ${exLoose.tipo}`
+    return {
+      perfume: perfumeMinimo(exLoose.nome, exLoose.marca, exLoose.tipo, exLoose.genero, exLoose.familia, exLoose.notas, descricao),
+      fonte: "expandido",
+    }
+  }
+
+  // Step 4: not found
+  console.log("[Perfume] Not found:", id)
   return null
 }
 
