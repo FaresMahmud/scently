@@ -32,7 +32,7 @@ interface PropsCardPerfume {
 }
 
 export default function CardPerfume({ perfume }: PropsCardPerfume) {
-  const href = `/perfume/${slugify(perfume.nome)}-${slugify(perfume.marca)}`
+  const href = `/perfume/${perfume.id}`
 
   // Build priority chain: transparent (.webp) → jpg → fallbacks → placeholder
   const srcs = [
