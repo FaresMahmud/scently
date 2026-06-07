@@ -1,8 +1,9 @@
 // ============================================
 // ARQUIVO: app/catalogo/page.tsx
-// O QUE FAZ: catálogo completo — contratipos.json + perfumes-expandido.json
+// O QUE FAZ: catálogo completo — contratipos + expandido + Fragella (11k importados)
 // QUANDO MANDAR PRA IA: quando quiser mudar layout, filtros ou fonte dos dados
-// DEPENDE DE: data/contratipos.json, data/perfumes-expandido.json, components/catalogo/CatalogClient
+// DEPENDE DE: data/contratipos.json, data/perfumes-expandido.json,
+//             lib/catalogoFragella (data/catalogo-fragella.json)
 // ============================================
 
 import type { Metadata } from "next"
@@ -11,10 +12,12 @@ import CatalogClient from "@/components/catalogo/CatalogClient"
 import type { CardUnificado } from "@/components/catalogo/CatalogClient"
 import contratiposData from "@/data/contratipos.json"
 import expandidoData from "@/data/perfumes-expandido.json"
+import { carregarCatalogo } from "@/lib/catalogoFragella"
+import type { PerfumeFragella } from "@/lib/fragella"
 
 export const metadata: Metadata = {
   title: "Catálogo — Nozze",
-  description: "Explore fragrâncias — contratipos, nacionais, árabes e importados.",
+  description: "Explore fragrâncias — contratipos, nacionais, árabes e 11 mil importados.",
 }
 
 export const revalidate = 86400
@@ -37,12 +40,13 @@ interface ExpandidoEntry {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
+/** Normaliza gênero independente de idioma (PT ou EN, Fragella usa EN) */
 function normalizarGenero(g: string | undefined): GeneroNorm | undefined {
   if (!g) return undefined
   const lower = g.toLowerCase()
-  if (lower === "masculino") return "Masculino"
-  if (lower === "feminino")  return "Feminino"
-  if (lower === "unissex")   return "Unissex"
+  if (lower === "masculino" || lower === "men"   || lower === "male")   return "Masculino"
+  if (lower === "feminino"  || lower === "women" || lower === "female") return "Feminino"
+  if (lower === "unissex"   || lower === "unisex")                      return "Unissex"
   return undefined
 }
 
@@ -81,12 +85,31 @@ function expandidoParaCard(p: ExpandidoEntry): CardUnificado {
   }
 }
 
+function fragellaParaCard(p: PerfumeFragella): CardUnificado {
+  return {
+    id:                 p.id,
+    nome:               p.nome,
+    marca:              p.marca,
+    concentracao:       p.concentracao || undefined,
+    familia:            p.familia || undefined,
+    imagemTransparente: p.imagemTransparente || undefined,
+    imagem:             p.imagem || undefined,
+    imagemFallbacks:    p.imagemFallbacks?.length ? p.imagemFallbacks : undefined,
+    rating:             p.rating ?? undefined,
+    categoria:          "importado-designer",
+    generoNorm:         normalizarGenero(p.genero),
+    fonte:              "fragella",
+    acordes:            p.acordesPrincipais?.length ? p.acordesPrincipais : undefined,
+  }
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function PaginaCatalogo() {
   const contratipos = (contratiposData as ContratipoEntry[]).map(contratipoParaCard)
   const expandido   = (expandidoData as ExpandidoEntry[]).map(expandidoParaCard)
-  const perfumes    = [...contratipos, ...expandido]
+  const fragella    = carregarCatalogo().map(fragellaParaCard)
+  const perfumes    = [...contratipos, ...expandido, ...fragella]
 
   return (
     <main>

@@ -18,7 +18,7 @@ const PAGE_SIZE = 48
 type Genero    = "Masculino" | "Feminino" | "Unissex"
 type Categoria = "contratipo" | "nacional" | "arabe" | "importado-designer"
 type Ordenacao = "relevancia" | "menor-preco" | "maior-preco" | "az"
-export type FontePerfume = "contratipo" | "expandido"
+export type FontePerfume = "contratipo" | "expandido" | "fragella"
 
 export interface CardUnificado extends DadosCardPerfume {
   preco_brl?:      number

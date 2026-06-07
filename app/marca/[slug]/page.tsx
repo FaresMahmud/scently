@@ -1,14 +1,16 @@
 // ============================================
 // ARQUIVO: app/marca/[slug]/page.tsx
-// O QUE FAZ: exibe todos os perfumes de uma marca — contratipos + expandido
+// O QUE FAZ: exibe todos os perfumes de uma marca
+//   Fontes: contratipos.json + perfumes-expandido.json + catalogo-fragella.json
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout da página de marca
-// DEPENDE DE: data/contratipos.json, data/perfumes-expandido.json, lib/utils
+// DEPENDE DE: data/*.json, lib/catalogoFragella, lib/utils
 // ============================================
 
 import type { Metadata } from "next"
 import Link from "next/link"
 import contratiposData from "@/data/contratipos.json"
 import expandidoData from "@/data/perfumes-expandido.json"
+import { carregarCatalogo } from "@/lib/catalogoFragella"
 import { slugify } from "@/lib/utils"
 import { limparNomePerfume } from "@/lib/limparNomePerfume"
 import CardPerfume from "@/components/perfume/CardPerfume"
@@ -32,7 +34,7 @@ interface ExpandidoEntry {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Resolve o nome original da marca a partir do slug */
+/** Resolve o nome original da marca a partir do slug — busca em todas as fontes */
 function resolverNomeMarca(slug: string): string {
   for (const p of contratiposData as ContratipoEntry[]) {
     if (slugify(p.marca) === slug) return p.marca
@@ -40,37 +42,59 @@ function resolverNomeMarca(slug: string): string {
   for (const p of expandidoData as ExpandidoEntry[]) {
     if (slugify(p.marca) === slug) return p.marca
   }
+  for (const p of carregarCatalogo()) {
+    if (slugify(p.marca) === slug) return p.marca
+  }
   return ""
 }
 
-/** Coleta todos os perfumes de uma marca nos dois catálogos */
+/** Coleta todos os perfumes de uma marca nas três fontes */
 function coletarPerfumesDaMarca(slug: string): DadosCardPerfume[] {
   const lista: DadosCardPerfume[] = []
+  const vistosId = new Set<string>()
 
   for (const p of contratiposData as ContratipoEntry[]) {
-    if (slugify(p.marca) === slug) {
-      lista.push({
-        id:           p.id,
-        nome:         limparNomePerfume(p.nome, p.marca),
-        marca:        p.marca,
-        concentracao: p.tipo,
-        familia:      p.familia,
-        notas:        p.notas,
-      })
-    }
+    if (slugify(p.marca) !== slug) continue
+    if (vistosId.has(p.id)) continue
+    vistosId.add(p.id)
+    lista.push({
+      id:           p.id,
+      nome:         limparNomePerfume(p.nome, p.marca),
+      marca:        p.marca,
+      concentracao: p.tipo,
+      familia:      p.familia,
+      notas:        p.notas,
+    })
   }
 
   for (const p of expandidoData as ExpandidoEntry[]) {
-    if (slugify(p.marca) === slug) {
-      lista.push({
-        id:           p.id,
-        nome:         limparNomePerfume(p.nome, p.marca),
-        marca:        p.marca,
-        concentracao: p.tipo,
-        familia:      p.familia,
-        notas:        p.notas,
-      })
-    }
+    if (slugify(p.marca) !== slug) continue
+    if (vistosId.has(p.id)) continue
+    vistosId.add(p.id)
+    lista.push({
+      id:           p.id,
+      nome:         limparNomePerfume(p.nome, p.marca),
+      marca:        p.marca,
+      concentracao: p.tipo,
+      familia:      p.familia,
+      notas:        p.notas,
+    })
+  }
+
+  for (const p of carregarCatalogo()) {
+    if (slugify(p.marca) !== slug) continue
+    if (vistosId.has(p.id)) continue
+    vistosId.add(p.id)
+    lista.push({
+      id:           p.id,
+      nome:         limparNomePerfume(p.nome, p.marca),
+      marca:        p.marca,
+      concentracao: p.concentracao || undefined,
+      familia:      p.familia || undefined,
+      imagem:       p.imagemTransparente || p.imagem || undefined,
+      notas:        p.notasTopo ?? [],
+      rating:       p.rating ?? undefined,
+    })
   }
 
   return lista
@@ -82,6 +106,7 @@ export function generateStaticParams() {
   const slugs = new Set<string>()
   for (const p of contratiposData as ContratipoEntry[]) slugs.add(slugify(p.marca))
   for (const p of expandidoData as ExpandidoEntry[])   slugs.add(slugify(p.marca))
+  for (const p of carregarCatalogo())                  slugs.add(slugify(p.marca))
   return Array.from(slugs).map(slug => ({ slug }))
 }
 
@@ -107,16 +132,16 @@ export async function generateMetadata(
     keywords: `${nome}, perfumes ${nome}, fragrâncias ${nome}`,
     alternates: { canonical: url },
     openGraph: {
-      title: `${nome} — Fragrâncias`,
+      title:       `${nome} — Fragrâncias`,
       description: descricao,
       url,
-      siteName: "Nozze",
-      locale: "pt_BR",
-      type: "website",
+      siteName:    "Nozze",
+      locale:      "pt_BR",
+      type:        "website",
     },
     twitter: {
-      card: "summary",
-      title: `${nome} — Fragrâncias`,
+      card:        "summary",
+      title:       `${nome} — Fragrâncias`,
       description: descricao,
     },
   }
@@ -127,8 +152,8 @@ export async function generateMetadata(
 export default async function PaginaMarca(
   { params }: { params: Promise<{ slug: string }> }
 ) {
-  const { slug }   = await params
-  const nomeMarca  = resolverNomeMarca(slug)
+  const { slug }  = await params
+  const nomeMarca = resolverNomeMarca(slug)
 
   if (!nomeMarca) {
     return (
@@ -179,7 +204,7 @@ export default async function PaginaMarca(
           </p>
         </section>
 
-        {/* Grid de perfumes */}
+        {/* Grid */}
         {perfumes.length > 0 ? (
           <section>
             <div style={{
