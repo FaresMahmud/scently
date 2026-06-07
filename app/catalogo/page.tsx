@@ -106,9 +106,16 @@ function fragellaParaCard(p: PerfumeFragella): CardUnificado {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function PaginaCatalogo() {
+  // Palavras-chave que indicam produtos não-perfume (desodorantes, body splash, etc.)
+  const NAO_PERFUME = /desodorante|body\s?splash|col[oô]nia corporal|hidratante|splash/i
+
+  function ehNaoPerfume(p: PerfumeFragella): boolean {
+    return NAO_PERFUME.test(p.concentracao ?? "") || NAO_PERFUME.test(p.nome)
+  }
+
   const contratipos = (contratiposData as ContratipoEntry[]).map(contratipoParaCard)
   const expandido   = (expandidoData as ExpandidoEntry[]).map(expandidoParaCard)
-  const fragella    = carregarCatalogo().map(fragellaParaCard)
+  const fragella    = carregarCatalogo().filter(p => !ehNaoPerfume(p)).map(fragellaParaCard)
   const perfumes    = [...contratipos, ...expandido, ...fragella]
 
   console.log("[Catalog] Sources:", {

@@ -92,12 +92,13 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
             }}>
               <span style={{
                 fontFamily: "var(--fonte-titulo)",
-                fontSize: "2rem",
+                fontSize: "3.5rem",
                 fontWeight: 300,
                 color: "var(--cor-texto-suave)",
-                letterSpacing: "0.1em",
+                letterSpacing: "0.05em",
+                opacity: 0.35,
               }}>
-                {perfume.marca.slice(0, 2).toUpperCase()}
+                {limparNomePerfume(perfume.nome, perfume.marca).charAt(0).toUpperCase()}
               </span>
             </div>
           )}
