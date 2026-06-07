@@ -111,6 +111,13 @@ export default function PaginaCatalogo() {
   const fragella    = carregarCatalogo().map(fragellaParaCard)
   const perfumes    = [...contratipos, ...expandido, ...fragella]
 
+  console.log("[Catalog] Sources:", {
+    contratipos: contratipos.length,
+    expandido:   expandido.length,
+    fragella:    fragella.length,
+    total:       perfumes.length,
+  })
+
   return (
     <main>
       <div className="container-site" style={{ paddingTop: "55px", paddingBottom: "89px" }}>

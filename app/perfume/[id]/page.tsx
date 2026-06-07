@@ -108,6 +108,87 @@ function normalizeId(s: string): string {
   return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[\s_]+/g, "-")
 }
 
+// ── Fragella local lookup ─────────────────────────────────────────────────────
+// Usado para enriquecer contratipos/expandido com imagem e notas do catálogo local.
+// Busca o perfume de referência (original ou próprio) no catalogo-fragella.json.
+
+let _fgCache: PerfumeFragella[] | null = null
+
+function fragellaCached(): PerfumeFragella[] {
+  if (!_fgCache) _fgCache = carregarCatalogo()
+  return _fgCache
+}
+
+/**
+ * Busca o perfume mais próximo no catálogo Fragella por nome + marca opcional.
+ * Strips parentheticals: "Aventus (fórmula 2010)" → "aventus"
+ * Returns the best match with at least some image data, or null.
+ */
+function buscarEmFragellaLocal(nomeBusca: string, marcaBusca?: string): PerfumeFragella | null {
+  const fgList = fragellaCached()
+  // Strip parentheticals and normalize
+  const q = normalizeId(nomeBusca.replace(/\s*\(.*?\)/g, "").trim())
+  const m = marcaBusca ? normalizeId(marcaBusca) : null
+
+  // Pass 1: exact or prefix name match + brand match (most precise)
+  if (m) {
+    const hit = fgList.find(p => {
+      const pn = normalizeId(p.nome)
+      const pm = normalizeId(p.marca)
+      const brandOk = pm === m || pm.includes(m) || m.includes(pm)
+      if (!brandOk) return false
+      return pn === q || pn.startsWith(q) || q.startsWith(pn)
+    })
+    if (hit) return hit
+  }
+
+  // Pass 2: name-only exact or prefix match
+  const hit2 = fgList.find(p => {
+    const pn = normalizeId(p.nome)
+    return pn === q || pn.startsWith(q + "-") || q.startsWith(pn + "-")
+  })
+  if (hit2) return hit2
+
+  // Pass 3: name substring (with brand filter if provided)
+  return fgList.find(p => {
+    const pn = normalizeId(p.nome)
+    if (!pn.includes(q) && !q.includes(pn)) return false
+    if (m) {
+      const pm = normalizeId(p.marca)
+      return pm.includes(m) || m.includes(pm)
+    }
+    return true
+  }) ?? null
+}
+
+/** Enriquece um PerfumeFragella mínimo com imagem e notas do catálogo local */
+function enriquecerComFragella(
+  perfume: PerfumeFragella,
+  nomeBusca: string,
+  marcaBusca?: string,
+  notasLocais: string[] = []
+): void {
+  const ref = buscarEmFragellaLocal(nomeBusca, marcaBusca)
+  if (!ref) return
+
+  // Imagem: sempre usa a referência (contratipo não tem imagem própria)
+  if (ref.imagemTransparente) perfume.imagemTransparente = ref.imagemTransparente
+  if (ref.imagem)             perfume.imagem             = ref.imagem
+  if (ref.imagemFallbacks?.length) perfume.imagemFallbacks = ref.imagemFallbacks
+
+  // Notas: só usa Fragella se as locais são muito esparsas (< 2 notas)
+  if (notasLocais.length < 2 && ref.notasCompletas) {
+    perfume.notasTopo    = ref.notasTopo    ?? []
+    perfume.notasCoracao = ref.notasCoracao ?? []
+    perfume.notasFundo   = ref.notasFundo   ?? []
+    perfume.notasCompletas = ref.notasCompletas
+  } else if (notasLocais.length < 2) {
+    perfume.notasTopo    = ref.notasTopo    ?? []
+    perfume.notasCoracao = ref.notasCoracao ?? []
+    perfume.notasFundo   = ref.notasFundo   ?? []
+  }
+}
+
 // ── Resolver ──────────────────────────────────────────────────────────────────
 
 async function resolverPerfume(id: string): Promise<ResolverResult | null> {
@@ -119,8 +200,11 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   // Step 1: exact match in contratipos.json
   const ct = (contratiposData as ContratipoEntry[]).find(p => p.id === id)
   if (ct) {
+    const perfume = perfumeMinimo(ct.nome, ct.marca, ct.tipo, ct.genero, ct.familia, ct.notas)
+    // Enrich: image from original perfume + notes if sparse
+    enriquecerComFragella(perfume, ct.inspiradoEm, ct.marcaOriginal, ct.notas)
     return {
-      perfume: perfumeMinimo(ct.nome, ct.marca, ct.tipo, ct.genero, ct.familia, ct.notas),
+      perfume,
       fonte: "contratipo",
       extra: {
         categoria:     ct.categoria ?? "contratipo",
@@ -134,8 +218,13 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   // Step 2: exact match in perfumes-expandido.json
   const ex = (expandidoData as ExpandidoEntry[]).find(p => p.id === id)
   if (ex) {
+    const perfume = perfumeMinimo(ex.nome, ex.marca, ex.tipo, ex.genero, ex.familia, ex.notas)
+    // Enrich: use original if has inspiradoEm, else search by own name+brand
+    const nomeBusca  = ex.inspiradoEm ?? ex.nome
+    const marcaBusca = ex.inspiradoEm ? ex.marcaOriginal : ex.marca
+    enriquecerComFragella(perfume, nomeBusca, marcaBusca, ex.notas)
     return {
-      perfume: perfumeMinimo(ex.nome, ex.marca, ex.tipo, ex.genero, ex.familia, ex.notas),
+      perfume,
       fonte: "expandido",
       extra: {
         categoria:     ex.categoria,
@@ -148,7 +237,7 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   }
 
   // Step 3: exact match in catalogo-fragella.json (11k perfumes)
-  const fgList = carregarCatalogo()
+  const fgList = fragellaCached()
   const fg = fgList.find(p => p.id === id)
   if (fg) {
     return {
@@ -159,7 +248,6 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   }
 
   // Step 4: normalized includes fallback (contratipos + expandido)
-  // Handles: missing -100ml suffix, accent differences
   const normId = normalizeId(id)
 
   const ctLoose = (contratiposData as ContratipoEntry[]).find(p => {
@@ -169,8 +257,10 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   })
   if (ctLoose) {
     console.log("[Perfume] Normalized match (ct):", ctLoose.id, "→", id)
+    const perfume = perfumeMinimo(ctLoose.nome, ctLoose.marca, ctLoose.tipo, ctLoose.genero, ctLoose.familia, ctLoose.notas)
+    enriquecerComFragella(perfume, ctLoose.inspiradoEm, ctLoose.marcaOriginal, ctLoose.notas)
     return {
-      perfume: perfumeMinimo(ctLoose.nome, ctLoose.marca, ctLoose.tipo, ctLoose.genero, ctLoose.familia, ctLoose.notas),
+      perfume,
       fonte: "contratipo",
       extra: {
         categoria:     ctLoose.categoria ?? "contratipo",
@@ -188,8 +278,12 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   })
   if (exLoose) {
     console.log("[Perfume] Normalized match (ex):", exLoose.id, "→", id)
+    const perfume = perfumeMinimo(exLoose.nome, exLoose.marca, exLoose.tipo, exLoose.genero, exLoose.familia, exLoose.notas)
+    const nomeBusca  = exLoose.inspiradoEm ?? exLoose.nome
+    const marcaBusca = exLoose.inspiradoEm ? exLoose.marcaOriginal : exLoose.marca
+    enriquecerComFragella(perfume, nomeBusca, marcaBusca, exLoose.notas)
     return {
-      perfume: perfumeMinimo(exLoose.nome, exLoose.marca, exLoose.tipo, exLoose.genero, exLoose.familia, exLoose.notas),
+      perfume,
       fonte: "expandido",
       extra: {
         categoria:     exLoose.categoria,

@@ -75,6 +75,60 @@ function toggle<T>(arr: T[], val: T): T[] {
   return arr.includes(val) ? arr.filter(v => v !== val) : [...arr, val]
 }
 
+/**
+ * Interleave: mistura categorias proporcionalmente na ordenação por relevância.
+ * Padrão por 10 itens: 3 contratipo + 2 nacional + 2 arabe + 3 importado.
+ * Quando um balde esgota, os demais preenchem o espaço restante.
+ */
+function interleaveCategories(lista: CardUnificado[]): CardUnificado[] {
+  const buckets: Record<string, CardUnificado[]> = {
+    "contratipo":         [],
+    "nacional":           [],
+    "arabe":              [],
+    "importado-designer": [],
+    "__other":            [],
+  }
+  for (const p of lista) {
+    const cat = p.categoria ?? "__other"
+    ;(buckets[cat] ?? buckets["__other"]).push(p)
+  }
+
+  // Per 10 items: 3 ct + 2 nac + 2 ara + 3 imp
+  const pattern = [
+    "contratipo", "importado-designer", "nacional",
+    "contratipo", "importado-designer", "arabe",
+    "contratipo", "importado-designer", "nacional",
+    "importado-designer",
+  ]
+
+  const ptrs: Record<string, number> = Object.fromEntries(Object.keys(buckets).map(k => [k, 0]))
+  const result: CardUnificado[] = []
+
+  while (result.length < lista.length) {
+    let added = false
+    for (const cat of pattern) {
+      const bucket = buckets[cat] ?? buckets["__other"]
+      const ptr    = ptrs[cat] ?? 0
+      if (ptr < bucket.length) {
+        result.push(bucket[ptr])
+        ptrs[cat] = ptr + 1
+        added = true
+        if (result.length >= lista.length) break
+      }
+    }
+    if (!added) break
+  }
+
+  // Flush any remaining from all buckets (preserves order within each bucket)
+  for (const [cat, bucket] of Object.entries(buckets)) {
+    while ((ptrs[cat] ?? 0) < bucket.length && result.length < lista.length) {
+      result.push(bucket[ptrs[cat]++])
+    }
+  }
+
+  return result
+}
+
 // Mapeamento categoria → label de exibição
 const CATEGORIA_LABELS: Record<Categoria, string> = {
   "contratipo":         "Contratipo",
@@ -135,6 +189,7 @@ export default function CatalogClient({ perfumes }: Props) {
     })
 
     switch (ordenacao) {
+      case "relevancia":  lista = interleaveCategories(lista); break
       case "menor-preco": lista = [...lista].sort((a, b) => (a.preco_brl ?? 0) - (b.preco_brl ?? 0)); break
       case "maior-preco": lista = [...lista].sort((a, b) => (b.preco_brl ?? 0) - (a.preco_brl ?? 0)); break
       case "az":          lista = [...lista].sort((a, b) => (a.nome ?? "").localeCompare(b.nome ?? "", "pt-BR")); break
