@@ -7,7 +7,6 @@
 // ============================================
 
 import type { Metadata } from "next"
-import { Suspense } from "react"
 import CatalogClient from "@/components/catalogo/CatalogClient"
 import type { CardUnificado } from "@/components/catalogo/CatalogClient"
 import contratiposData from "@/data/contratipos.json"
@@ -85,6 +84,9 @@ function expandidoParaCard(p: ExpandidoEntry): CardUnificado {
   }
 }
 
+// Payload otimizado para o catálogo — sem imagem jpg (só webp), sem fallbacks,
+// sem acordes, sem notas. Reduz ~3MB do RSC payload (7.6 → ~2MB).
+// acordes e imagem completos só existem na página de detalhe (/perfume/[id]).
 function fragellaParaCard(p: PerfumeFragella): CardUnificado {
   return {
     id:                 p.id,
@@ -92,37 +94,65 @@ function fragellaParaCard(p: PerfumeFragella): CardUnificado {
     marca:              p.marca,
     concentracao:       p.concentracao || undefined,
     familia:            p.familia || undefined,
+    // Só webp (CDN Fragella confirma 200 OK). Fallbacks fragrancenet retornam 403.
     imagemTransparente: p.imagemTransparente || undefined,
-    imagem:             p.imagem || undefined,
-    imagemFallbacks:    p.imagemFallbacks?.length ? p.imagemFallbacks : undefined,
+    // DROPPED: imagem (jpg duplicata), imagemFallbacks (403), acordes
     rating:             p.rating ?? undefined,
     categoria:          "importado-designer",
     generoNorm:         normalizarGenero(p.genero),
     fonte:              "fragella",
-    acordes:            p.acordesPrincipais?.length ? p.acordesPrincipais : undefined,
   }
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function PaginaCatalogo() {
-  // Palavras-chave que indicam produtos não-perfume (desodorantes, body splash, etc.)
-  const NAO_PERFUME = /desodorante|body\s?splash|col[oô]nia corporal|hidratante|splash/i
+// Palavras-chave que indicam produtos não-perfume (fora da função para reutilizar)
+const NAO_PERFUME = /desodorante|body\s?splash|col[oô]nia corporal|hidratante|splash/i
 
-  function ehNaoPerfume(p: PerfumeFragella): boolean {
-    return NAO_PERFUME.test(p.concentracao ?? "") || NAO_PERFUME.test(p.nome)
+export default function PaginaCatalogo() {
+  // ── FIX: filtrar não-perfumes em TODAS as fontes ──────────────────────────
+  const contratipos = (contratiposData as ContratipoEntry[]).map(contratipoParaCard)
+
+  const expandido = (expandidoData as ExpandidoEntry[])
+    .filter(p => !NAO_PERFUME.test(p.tipo ?? "") && !NAO_PERFUME.test(p.nome))
+    .map(expandidoParaCard)
+
+  // Todos os 11k perfumes com campos lean (~3.3MB RSC) — sem limite de corte.
+  // O limite de 5k por popularidade foi removido porque a ordenação da Fragella
+  // não reflete popularidade real (Dior/Chanel ficavam abaixo de marcas obscuras).
+  const fragella = carregarCatalogo()
+    .filter(p => !NAO_PERFUME.test(p.concentracao ?? "") && !NAO_PERFUME.test(p.nome))
+    .map(fragellaParaCard)
+
+  // ── FIX: deduplicar importado-designer do expandido quando Fragella tem o mesmo nome ──
+  // Usa só o nome normalizado (sem marca) porque expandido usa "Dior" e Fragella usa
+  // "Christian Dior" — chave nome+marca não bate. Só remove se categoria for importado.
+  function normNome(s: string): string {
+    return s.toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
   }
 
-  const contratipos = (contratiposData as ContratipoEntry[]).map(contratipoParaCard)
-  const expandido   = (expandidoData as ExpandidoEntry[]).map(expandidoParaCard)
-  const fragella    = carregarCatalogo().filter(p => !ehNaoPerfume(p)).map(fragellaParaCard)
-  const perfumes    = [...contratipos, ...expandido, ...fragella]
+  const fragellaNames = new Set(fragella.map(p => normNome(p.nome)))
+
+  const expandidoDedup = expandido.filter(p => {
+    // Remove todos os importado-designer do expandido — Fragella cobre essa categoria
+    // com 11k entradas com imagem. Os 93 importados do expandido não têm imagem e
+    // ficam no início do bucket, empurrando as entradas Fragella para fora dos 48 visíveis.
+    if (p.categoria === "importado-designer") return false
+    return true
+  })
+
+  const perfumes = [...contratipos, ...expandidoDedup, ...fragella]
 
   console.log("[Catalog] Sources:", {
-    contratipos: contratipos.length,
-    expandido:   expandido.length,
-    fragella:    fragella.length,
-    total:       perfumes.length,
+    contratipos:     contratipos.length,
+    expandido:       expandido.length,
+    expandidoDedup:  expandidoDedup.length,
+    fragella:        fragella.length,
+    total:           perfumes.length,
   })
 
   return (
@@ -149,16 +179,7 @@ export default function PaginaCatalogo() {
           </p>
         </div>
 
-        <Suspense fallback={
-          <p style={{
-            fontFamily: "var(--fonte-corpo)", fontSize: "0.85rem",
-            color: "var(--cor-texto-suave)", padding: "4rem 0",
-          }}>
-            Carregando catálogo…
-          </p>
-        }>
-          <CatalogClient perfumes={perfumes} />
-        </Suspense>
+        <CatalogClient perfumes={perfumes} />
 
       </div>
     </main>

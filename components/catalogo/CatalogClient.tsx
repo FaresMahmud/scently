@@ -8,7 +8,6 @@
 "use client"
 
 import { useState, useMemo, useEffect, useRef } from "react"
-import { useSearchParams } from "next/navigation"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
 import { familiaParaIngles } from "@/lib/utils"
@@ -146,10 +145,11 @@ interface Props {
 // ── Componente ────────────────────────────────────────────────────────────────
 
 export default function CatalogClient({ perfumes }: Props) {
-  const searchParams = useSearchParams()
-
-  const [busca,        setBusca]        = useState(searchParams.get("busca") ?? "")
-  const [familiaAtiva, setFamiliaAtiva] = useState(searchParams.get("familia") ?? "")
+  // useSearchParams removido — causava DehydratedFragment (Suspense + Next.js 15 Turbopack
+  // não agendava hydration). Filtros agora iniciam vazios; URL-sharing de filtros
+  // pode ser re-adicionado com router.push quando necessário.
+  const [busca,        setBusca]        = useState("")
+  const [familiaAtiva, setFamiliaAtiva] = useState("")
   const [generos,      setGeneros]      = useState<Genero[]>([])
   const [categorias,   setCategorias]   = useState<Categoria[]>([])
   const [ordenacao,    setOrdenacao]    = useState<Ordenacao>("relevancia")
