@@ -476,12 +476,9 @@ a:hover article {
   }
 }
 
-/* Esta semana — card grid */
+/* Esta semana — responsive column count (display/gap/margin are inline) */
 .tendencias-semana-grid {
-  display: grid;
   grid-template-columns: 1fr;
-  gap: 55px;
-  margin-top: 34px;
 }
 
 @media (min-width: 768px) {

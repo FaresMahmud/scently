@@ -229,7 +229,7 @@ export default async function PaginaTendencias() {
           </p>
 
           {/* Cards — 2-column grid desktop, 1-column mobile */}
-          <div className="tendencias-semana-grid">
+          <div className="tendencias-semana-grid" style={{ display: "grid", gap: "55px", marginTop: "34px" }}>
             {tendencias.map((p, i) => (
               <CardTendencia
                 key={p.id}
