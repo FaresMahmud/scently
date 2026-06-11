@@ -94,6 +94,7 @@ export default function PaginaInicial() {
               <div className="hero-botoes">
                 <Link
                   href="/consultor"
+                  className="btn-primario"
                   style={{
                     display: "inline-flex", alignItems: "center",
                     backgroundColor: "var(--cor-destaque)", color: "#fff",
@@ -200,7 +201,7 @@ export default function PaginaInicial() {
           </p>
           <Link
             href="/consultor"
-            className="btn-cta"
+            className="btn-cta btn-primario"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -279,8 +280,9 @@ export default function PaginaInicial() {
                 textDecoration: "none",
                 whiteSpace: "nowrap",
               }}
+              className="link-seta"
             >
-              Ver tendências →
+              Ver tendências<span className="link-seta-arrow" aria-hidden> →</span>
             </Link>
           </div>
         </div>
@@ -302,6 +304,7 @@ export default function PaginaInicial() {
               </p>
               <Link
                 href="/scanner"
+                className="link-seta"
                 style={{
                   display: "inline-flex", alignItems: "center",
                   minHeight: "44px", padding: "0 34px",
@@ -310,7 +313,7 @@ export default function PaginaInicial() {
                   letterSpacing: "0.07em", borderRadius: "var(--raio-borda)", textDecoration: "none",
                 }}
               >
-                Abrir scanner →
+                Abrir scanner<span className="link-seta-arrow" aria-hidden> →</span>
               </Link>
             </div>
             {/* Visual placeholder */}
