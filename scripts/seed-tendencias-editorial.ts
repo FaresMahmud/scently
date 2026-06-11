@@ -1,0 +1,239 @@
+// ============================================
+// SCRIPT: scripts/seed-tendencias-editorial.ts
+// O QUE FAZ: popula tendencias_editorial + sugestões com conteúdo curado,
+//            resolvendo perfumeId contra o catálogo Fragella local
+//            (mesma lógica de buscarPerfumePorSlug em lib/catalogoFragella.ts,
+//             replicada aqui porque o módulo é server-only)
+// COMO RODAR: npm run tendencias:editorial:seed
+// DEPENDE DE: DATABASE_URL no .env.local, data/catalogo-fragella.json
+// ============================================
+
+/* eslint-disable @typescript-eslint/no-require-imports */
+const fs = require("fs") as typeof import("fs")
+const path = require("path") as typeof import("path")
+
+// ── Carrega .env.local ───────────────────────────────────────────────────────
+const envPath = path.join(process.cwd(), ".env.local")
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, "utf-8")
+  for (const line of envContent.split("\n")) {
+    const match = line.match(/^([^#\s][^=]*)=(.*)$/)
+    if (match) process.env[match[1].trim()] = match[2].trim().replace(/^["']|["']$/g, "")
+  }
+}
+
+import { db } from "@/lib/db"
+import { slugify } from "@/lib/utils"
+
+// ── Catálogo Fragella local ──────────────────────────────────────────────────
+
+interface PerfumeCatalogo { id: string; nome: string; marca: string }
+
+function carregarCatalogo(): PerfumeCatalogo[] {
+  const caminho = path.join(process.cwd(), "data", "catalogo-fragella.json")
+  const data = JSON.parse(fs.readFileSync(caminho, "utf-8"))
+  return Array.isArray(data.perfumes) ? data.perfumes : []
+}
+
+// Correções manuais — casos onde o match automático erra ou acerta o flanker errado.
+// null = original não existe no catálogo; mostrar como texto, sem link.
+const OVERRIDES: Record<string, string | null> = {
+  // prefix-match pegava o flanker "Le Parfum"; a versão base existe
+  "la nuit de l'homme|yves saint laurent": "la-nuit-de-l-homme-yves-saint-laurent-yves-saint-laurent",
+  // só existem flankers (Discover Vulcano etc.) — link errado é pior que nenhum
+  "light blue pour homme|dolce & gabbana": null,
+  // catálogo tem Elixir/Night/Absolu etc., mas não o Parfum
+  "boss bottled parfum|hugo boss": null,
+}
+
+/** Mesma cascata de buscarPerfumePorSlug: id → nome+marca → prefixo → palavras */
+function resolverPerfumeId(catalogo: PerfumeCatalogo[], nome: string, marca: string): string | null {
+  const chave = `${nome.toLowerCase()}|${marca.toLowerCase()}`
+  if (chave in OVERRIDES) return OVERRIDES[chave]
+
+  const slug = slugify(`${nome} ${marca}`)
+
+  const porId = catalogo.find(p => p.id === slug)
+  if (porId) return porId.id
+
+  const porNomeMarca = catalogo.find(p => {
+    const s1 = `${slugify(p.nome)}-${slugify(p.marca)}`
+    const s2 = `${slugify(p.marca)}-${slugify(p.nome)}`
+    return s1 === slug || s2 === slug
+  })
+  if (porNomeMarca) return porNomeMarca.id
+
+  const porPrefixo = catalogo.find(p => {
+    const textoP = slugify(`${p.nome} ${p.marca}`)
+    return textoP === slug || textoP.startsWith(slug + "-")
+  })
+  if (porPrefixo) return porPrefixo.id
+
+  const palavras = slug.split("-").filter(p => p.length > 2)
+  if (palavras.length > 0) {
+    const candidatos = catalogo.filter(p => {
+      const textoP = slugify(`${p.nome} ${p.marca}`)
+      return palavras.every(palavra => textoP.includes(palavra))
+    })
+    if (candidatos.length > 0) {
+      candidatos.sort((a, b) =>
+        slugify(`${a.nome} ${a.marca}`).length - slugify(`${b.nome} ${b.marca}`).length
+      )
+      return candidatos[0].id
+    }
+  }
+
+  return null
+}
+
+// ── Conteúdo curado ──────────────────────────────────────────────────────────
+
+interface Sugestao { genero: "masculino" | "feminino" | "unissex"; nome: string; marca: string }
+interface Entrada  { titulo: string; descricao: string; sugestoes: Sugestao[] }
+
+const CONTEUDO: Record<string, Entrada[]> = {
+  inverno: [
+    {
+      titulo: "Amadeirados que aquecem",
+      descricao: "Cedro, sândalo e couro ganham espaço nos dias frios, trazendo profundidade e fixação maior na pele.",
+      sugestoes: [
+        { genero: "masculino", nome: "Dior Homme Intense", marca: "Dior" },
+        { genero: "feminino",  nome: "Coco Mademoiselle",  marca: "Chanel" },
+      ],
+    },
+    {
+      titulo: "Soft power: oud discreto",
+      descricao: "Em vez de projeção avassaladora, fragrâncias com oud e almíscar ficam mais próximas da pele. Luxo silencioso.",
+      sugestoes: [
+        { genero: "unissex",  nome: "Oud Wood",     marca: "Tom Ford" },
+        { genero: "feminino", nome: "Black Orchid", marca: "Tom Ford" },
+      ],
+    },
+    {
+      titulo: "Especiarias quentes",
+      descricao: "Cardamomo, gengibre e canela em composições que lembram bebidas quentes de inverno.",
+      sugestoes: [
+        { genero: "masculino", nome: "La Nuit de L'Homme", marca: "Yves Saint Laurent" },
+        { genero: "feminino",  nome: "Libre",              marca: "Yves Saint Laurent" },
+      ],
+    },
+    {
+      titulo: "Doces sofisticados",
+      descricao: "Caramelo salgado e fava tonka criam fragrâncias gourmand que aquecem sem pesar.",
+      sugestoes: [
+        { genero: "masculino", nome: "Boss Bottled Parfum", marca: "Hugo Boss" },
+        { genero: "feminino",  nome: "Good Girl",           marca: "Carolina Herrera" },
+      ],
+    },
+  ],
+  primavera: [
+    {
+      titulo: "Florais que respiram",
+      descricao: "Jasmim e flores brancas em versões mais leves devem dominar os lançamentos da próxima estação.",
+      sugestoes: [
+        { genero: "feminino",  nome: "J'adore",               marca: "Dior" },
+        { genero: "masculino", nome: "Light Blue Pour Homme", marca: "Dolce & Gabbana" },
+      ],
+    },
+    {
+      titulo: "Frescor quente",
+      descricao: "Composições que misturam notas cítricas com madeiras quentes. O contraste vira assinatura.",
+      sugestoes: [
+        { genero: "masculino", nome: "Bleu de Chanel",    marca: "Chanel" },
+        { genero: "feminino",  nome: "Chance Eau Tendre", marca: "Chanel" },
+      ],
+    },
+    {
+      titulo: "Acordes inesperados",
+      descricao: "Notas incomuns como pitaya e algas marinhas começam a aparecer em lançamentos de nicho.",
+      sugestoes: [
+        { genero: "unissex", nome: "212 VIP", marca: "Carolina Herrera" },
+      ],
+    },
+    {
+      titulo: "Doçura sutil",
+      descricao: "Amêndoa e pistache substituem a baunilha tradicional, trazendo conforto sem exagero.",
+      sugestoes: [
+        { genero: "feminino", nome: "Si", marca: "Giorgio Armani" },
+      ],
+    },
+  ],
+  global: [
+    {
+      titulo: "Scent stacking ganha força",
+      descricao: "Em vez de um perfume assinatura, as pessoas combinam fragrâncias para criar algo único. Vale experimentar com seus próprios perfumes.",
+      sugestoes: [],
+    },
+    {
+      titulo: "Nicho em ascensão",
+      descricao: "O mercado de perfumes de luxo de nicho deve dobrar até 2032. Marcas pequenas e processos artesanais ganham espaço.",
+      sugestoes: [
+        { genero: "unissex", nome: "Aventus", marca: "Creed" },
+      ],
+    },
+    {
+      titulo: "Formatos menores",
+      descricao: "Travel sizes de 10ml e 30ml viram porta de entrada para experimentação antes do frasco grande.",
+      sugestoes: [],
+    },
+    {
+      titulo: "Brasil na conversa global",
+      descricao: "O país já é o terceiro maior consumidor e lançador de perfumes do mundo. Tendências daqui também influenciam o mercado internacional.",
+      sugestoes: [],
+    },
+  ],
+}
+
+// ── Seed ─────────────────────────────────────────────────────────────────────
+
+async function main() {
+  const catalogo = carregarCatalogo()
+  console.log(`Catálogo carregado: ${catalogo.length} perfumes\n`)
+
+  const resumo: Array<{ titulo: string; sugestao: string; perfumeId: string }> = []
+
+  for (const [categoria, entradas] of Object.entries(CONTEUDO)) {
+    for (let i = 0; i < entradas.length; i++) {
+      const entrada = entradas[i]
+      const ordem = i + 1
+
+      const editorial = await db.tendenciaEditorial.upsert({
+        where:  { categoria_ordem: { categoria, ordem } },
+        update: { titulo: entrada.titulo, descricao: entrada.descricao },
+        create: { categoria, ordem, titulo: entrada.titulo, descricao: entrada.descricao },
+      })
+
+      // Recria sugestões do zero — seed é idempotente
+      await db.tendenciaEditorialSugestao.deleteMany({ where: { editorialId: editorial.id } })
+
+      for (const s of entrada.sugestoes) {
+        const perfumeId = resolverPerfumeId(catalogo, s.nome, s.marca)
+        await db.tendenciaEditorialSugestao.create({
+          data: {
+            editorialId: editorial.id,
+            genero: s.genero,
+            nome:   s.nome,
+            marca:  s.marca,
+            perfumeId,
+          },
+        })
+        resumo.push({
+          titulo: `[${categoria}] ${entrada.titulo}`,
+          sugestao: `${s.nome} (${s.marca})`,
+          perfumeId: perfumeId ?? "não encontrado",
+        })
+      }
+    }
+  }
+
+  console.log("Resolução das sugestões:\n")
+  console.table(resumo)
+
+  const total = await db.tendenciaEditorial.count()
+  const totalSug = await db.tendenciaEditorialSugestao.count()
+  console.log(`\nTotal: ${total} entradas editoriais, ${totalSug} sugestões`)
+}
+
+main()
+  .catch(e => { console.error(e); process.exit(1) })
+  .finally(() => db.$disconnect())

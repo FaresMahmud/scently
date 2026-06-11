@@ -83,6 +83,35 @@ model UserPreference {
   @@map("user_preferences")
 }
 
+model TendenciaEditorial {
+  id           String   @id @default(uuid())
+  categoria    String   // "inverno" | "primavera" | "global"
+  titulo       String
+  descricao    String
+  ordem        Int
+  criadoEm     DateTime @default(now()) @map("criado_em")
+  atualizadoEm DateTime @updatedAt @map("atualizado_em")
+
+  sugestoes TendenciaEditorialSugestao[]
+
+  @@unique([categoria, ordem])
+  @@index([categoria])
+  @@map("tendencias_editorial")
+}
+
+model TendenciaEditorialSugestao {
+  id          String  @id @default(uuid())
+  editorialId String  @map("editorial_id")
+  genero      String  // "masculino" | "feminino" | "unissex"
+  nome        String
+  marca       String
+  perfumeId   String? @map("perfume_id")
+
+  editorial TendenciaEditorial @relation(fields: [editorialId], references: [id], onDelete: Cascade)
+
+  @@map("tendencias_editorial_sugestoes")
+}
+
 model Tendencia {
   id            String   @id @default(uuid())
   nome          String
@@ -92,6 +121,8 @@ model Tendencia {
   badge         String?
   posicao       Int?
   fonte         String?
+  // Coluna existente no banco (de versão anterior do código) — mantida para não perder dados
+  perfumeId     String?  @map("perfume_id")
   estacao       Boolean  @default(false)
   marcaDestaque Boolean  @default(false)
   scrapedAt     DateTime @default(now())
