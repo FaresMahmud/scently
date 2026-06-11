@@ -40,6 +40,8 @@ function carregarCatalogo(): PerfumeCatalogo[] {
 const OVERRIDES: Record<string, string | null> = {
   // prefix-match pegava o flanker "Le Parfum"; a versão base existe
   "la nuit de l'homme|yves saint laurent": "la-nuit-de-l-homme-yves-saint-laurent-yves-saint-laurent",
+  // apostrofe em L'Homme — slug canônico inclui marca duplicada
+  "l'homme yves saint laurent|yves saint laurent": "l-homme-yves-saint-laurent-yves-saint-laurent",
   // só existem flankers (Discover Vulcano etc.) — link errado é pior que nenhum
   "light blue pour homme|dolce & gabbana": null,
   // catálogo tem Elixir/Night/Absolu etc., mas não o Parfum
@@ -131,8 +133,8 @@ const CONTEUDO: Record<string, Entrada[]> = {
       titulo: "Florais que respiram",
       descricao: "Jasmim e flores brancas em versões mais leves devem dominar os lançamentos da próxima estação.",
       sugestoes: [
-        { genero: "feminino",  nome: "J'adore",               marca: "Dior" },
-        { genero: "masculino", nome: "Light Blue Pour Homme", marca: "Dolce & Gabbana" },
+        { genero: "feminino",  nome: "J'adore",                    marca: "Dior" },
+        { genero: "masculino", nome: "L'Homme Yves Saint Laurent", marca: "Yves Saint Laurent" },
       ],
     },
     {

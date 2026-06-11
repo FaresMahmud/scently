@@ -316,7 +316,7 @@ export default async function PaginaTendencias() {
               marginTop: "13px",
             }}
           >
-            Iniciar consulta gratuita
+            Encontrar meu perfume
           </a>
         </div>
       </section>
