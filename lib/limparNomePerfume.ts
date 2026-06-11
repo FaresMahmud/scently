@@ -17,6 +17,12 @@ const MARCAS_CONHECIDAS = [
   "Fragrance World", "Paris Corner", "Zimaya", "Orientica",
 ]
 
+// Aliases de marca — quando o nome do produto usa prefixo abreviado da marca
+// Ex: "Jean Paul Scandal" para marca "JEAN PAUL GAULTIER"
+const BRAND_PREFIXES: Record<string, string[]> = {
+  "jean paul gaultier": ["jean paul"],
+}
+
 // Prefixos ambíguos — palavras genéricas que precedem o nome real e nada acrescentam
 const PREFIXOS_AMBIGUOS = [
   "perfume masculino",
@@ -34,7 +40,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
   for (const prefixo of PREFIXOS_AMBIGUOS) {
     const regex = new RegExp(`^${prefixo}\\s+`, "i")
     const tentativa = limpo.replace(regex, "").trim()
-    if (tentativa.length > 2) { limpo = tentativa; break }
+    if (tentativa !== limpo && tentativa.length > 2) { limpo = tentativa; break }
   }
 
   // 2. Remove marca passada como argumento (normalization + substring)
@@ -43,6 +49,16 @@ export function limparNomePerfume(nome: string, marca: string): string {
     const nomeNorm  = limpo.toLowerCase().trim()
     if (nomeNorm.startsWith(marcaNorm)) {
       limpo = limpo.substring(marca.length).trim()
+    } else {
+      // Tenta prefixo abreviado da marca (ex: "Jean Paul" para "JEAN PAUL GAULTIER")
+      const prefixes = BRAND_PREFIXES[marcaNorm]
+      if (prefixes) {
+        for (const prefix of prefixes) {
+          const regex = new RegExp(`^${prefix}\\s+`, "i")
+          const tentativa = limpo.replace(regex, "").trim()
+          if (tentativa.length > 2) { limpo = tentativa; break }
+        }
+      }
     }
   }
 
@@ -50,7 +66,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
   for (const m of MARCAS_CONHECIDAS) {
     if (limpo.toLowerCase().startsWith(m.toLowerCase() + " ")) {
       const tentativa = limpo.substring(m.length).trim()
-      if (tentativa.length > 2) { limpo = tentativa; break }
+      if (tentativa.length > 2) { limpo = tentativa; break }  // startsWith garantiu que mudou
     }
   }
 
@@ -61,6 +77,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
     "eau de toilette",
     "eau de cologne",
     "eau fraiche",
+    "elixir parfum",
     "parfum",
     "extrait",
     "edp",
@@ -70,7 +87,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
   for (const conc of concentracoes) {
     const regex    = new RegExp(`\\s+${conc}$`, "i")
     const tentativa = limpo.replace(regex, "").trim()
-    if (tentativa.length > 2) { limpo = tentativa; break }
+    if (tentativa !== limpo && tentativa.length > 2) { limpo = tentativa; break }
   }
 
   // 5. Remove sufixo de gênero

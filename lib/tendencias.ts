@@ -1,6 +1,7 @@
 import "server-only"
 import { db } from "@/lib/db"
 import dadosJson from "@/data/tendencias.json"
+import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
 export interface PerfumeTendencia {
   id: string
@@ -30,13 +31,14 @@ function dbRowToTendencia(row: {
   perfumeId: string | null
   scrapedAt: Date
 }): PerfumeTendencia {
+  const nomeClean = limparNomePerfume(row.nome, row.marca)
   return {
     id:                row.id,
-    nome:              row.nome,
+    nome:              nomeClean,
     marca:             row.marca,
     concentracao:      "EDP",
     familia:           "Tendência",
-    descricaoSensorial:`${row.nome} da ${row.marca}.`,
+    descricaoSensorial:`${nomeClean} da ${row.marca}.`,
     badge:             row.badge ?? "↑ em alta",
     preco_estimado:    row.preco ?? "Consultar",
     tipo:              row.tipo as PerfumeTendencia["tipo"],
