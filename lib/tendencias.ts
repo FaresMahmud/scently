@@ -45,7 +45,7 @@ export async function getTendencias(): Promise<PerfumeTendencia[]> {
   try {
     const rows = await db.tendencia.findMany({
       orderBy: [{ posicao: "asc" }, { scrapedAt: "desc" }],
-      take: 20,
+      take: 5,
     })
     if (rows.length === 0) return TENDENCIAS_SEMANA
     return rows.map(dbRowToTendencia)

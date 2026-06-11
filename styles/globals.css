@@ -477,25 +477,54 @@ a:hover article {
 }
 
 /* ----------------------------------------
-   Tendências editoriais — grid 3 colunas
+   Tendências editoriais — bandas escuras + grid
    ---------------------------------------- */
+.editorial-banda {
+  background-color: #1A1A18;
+  border-top: 1px solid rgba(245,242,237,0.08);
+  padding: 89px 0;
+}
+
 .editorial-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 21px;
 }
 
-.editorial-card {
-  border: 1px solid var(--cor-borda);
-  padding: 21px;
+.editorial-banda-card {
+  background-color: rgba(255,255,255,0.04);
+  padding: 34px;
   display: flex;
   flex-direction: column;
   gap: 13px;
+  transition:
+    background-color 0.22s ease,
+    transform 0.22s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.22s ease;
+}
+
+.editorial-banda-card:hover {
+  background-color: rgba(255,255,255,0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+.editorial-banda-sugestao-nome {
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.editorial-banda-link:hover .editorial-banda-sugestao-nome {
+  transform: scale(1.03);
+  color: #D4825A !important;
 }
 
 @media (max-width: 768px) {
   .editorial-grid {
     grid-template-columns: 1fr;
+  }
+  .editorial-banda {
+    padding: 55px 0;
   }
 }
 

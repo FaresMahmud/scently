@@ -23,7 +23,7 @@ function limparBadge(badge: string): string {
   return badge.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}↑↓]/gu, "").trim()
 }
 
-// ── Seção editorial — título + descrição + sugestões por gênero ──────────────
+// ── Seção editorial — banda escura full-width ────────────────────────────────
 
 function SecaoEditorial({ eyebrow, titulo, entradas }: {
   eyebrow: string
@@ -33,108 +33,108 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
   if (entradas.length === 0) return null
 
   return (
-    <section style={{ paddingBottom: "89px" }}>
-      <p style={{
-        fontFamily: "var(--fonte-corpo)",
-        fontSize: "13px",
-        fontWeight: 500,
-        letterSpacing: "0.1em",
-        textTransform: "uppercase",
-        color: "var(--cor-texto-suave)",
-        marginBottom: "13px",
-      }}>
-        {eyebrow}
-      </p>
-      <h2 style={{
-        fontFamily: "var(--fonte-titulo)",
-        fontWeight: 300,
-        fontSize: "clamp(34px, 5vw, 42px)",
-        lineHeight: 1.1,
-        color: "var(--cor-texto)",
-        marginBottom: "34px",
-      }}>
-        {titulo}
-      </h2>
+    <section className="editorial-banda">
+      <div className="container-site">
+        <p style={{
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "13px",
+          fontWeight: 500,
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
+          color: "var(--cor-destaque)",
+          marginBottom: "13px",
+        }}>
+          {eyebrow}
+        </p>
+        <h2 style={{
+          fontFamily: "var(--fonte-titulo)",
+          fontWeight: 300,
+          fontSize: "clamp(34px, 5vw, 42px)",
+          lineHeight: 1.1,
+          color: "#F5F2ED",
+          marginBottom: "55px",
+        }}>
+          {titulo}
+        </h2>
 
-      <div className="editorial-grid">
-        {entradas.map(entrada => (
-          <div key={entrada.titulo} className="editorial-card">
-            <h3 style={{
-              fontFamily: "var(--fonte-titulo)",
-              fontWeight: 300,
-              fontSize: "26px",
-              lineHeight: 1.15,
-              color: "var(--cor-texto)",
-              margin: 0,
-            }}>
-              {entrada.titulo}
-            </h3>
-            <p style={{
-              fontFamily: "var(--fonte-corpo)",
-              fontSize: "14px",
-              color: "var(--cor-texto-suave)",
-              lineHeight: 1.6,
-              margin: 0,
-              flexGrow: 1,
-            }}>
-              {entrada.descricao}
-            </p>
+        <div className="editorial-grid">
+          {entradas.map(entrada => (
+            <div key={entrada.titulo} className="editorial-banda-card">
+              <h3 style={{
+                fontFamily: "var(--fonte-titulo)",
+                fontWeight: 300,
+                fontSize: "26px",
+                lineHeight: 1.15,
+                color: "#F5F2ED",
+                margin: 0,
+              }}>
+                {entrada.titulo}
+              </h3>
+              <p style={{
+                fontFamily: "var(--fonte-corpo)",
+                fontSize: "14px",
+                color: "rgba(245,242,237,0.65)",
+                lineHeight: 1.6,
+                margin: 0,
+                flexGrow: 1,
+              }}>
+                {entrada.descricao}
+              </p>
 
-            {entrada.sugestoes.length > 0 && (
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                {entrada.sugestoes.map(s => {
-                  const label = (
-                    <span style={{
-                      fontSize: "11px",
-                      fontWeight: 500,
-                      letterSpacing: "0.12em",
-                      textTransform: "uppercase" as const,
-                      color: "var(--cor-texto-suave)",
-                    }}>
-                      {s.genero}
-                    </span>
-                  )
-                  return s.perfumeId ? (
-                    <a
-                      key={`${s.genero}-${s.nome}`}
-                      href={`/perfume/${s.perfumeId}`}
-                      className="link-seta"
-                      style={{
-                        fontFamily: "var(--fonte-corpo)",
-                        fontSize: "13px",
-                        textDecoration: "none",
-                        display: "inline-flex",
-                        alignItems: "baseline",
-                        gap: "8px",
-                      }}
-                    >
-                      {label}
-                      <span className="link-seta-arrow" aria-hidden>→</span>
-                      <span style={{ color: "var(--cor-destaque)", fontWeight: 500 }}>{s.nome}</span>
-                    </a>
-                  ) : (
-                    <span
-                      key={`${s.genero}-${s.nome}`}
-                      style={{
-                        fontFamily: "var(--fonte-corpo)",
-                        fontSize: "13px",
-                        display: "inline-flex",
-                        alignItems: "baseline",
-                        gap: "8px",
-                      }}
-                    >
-                      {label}
-                      <span style={{ color: "var(--cor-texto-suave)" }}>{s.nome}</span>
-                    </span>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        ))}
+              {entrada.sugestoes.length > 0 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {entrada.sugestoes.map(s => {
+                    const label = (
+                      <span style={{
+                        fontSize: "11px",
+                        fontWeight: 500,
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase" as const,
+                        color: "rgba(245,242,237,0.4)",
+                      }}>
+                        {s.genero}
+                      </span>
+                    )
+                    return s.perfumeId ? (
+                      <a
+                        key={`${s.genero}-${s.nome}`}
+                        href={`/perfume/${s.perfumeId}`}
+                        className="link-seta editorial-banda-link"
+                        style={{
+                          fontFamily: "var(--fonte-corpo)",
+                          fontSize: "13px",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "baseline",
+                          gap: "8px",
+                        }}
+                      >
+                        {label}
+                        <span className="link-seta-arrow" aria-hidden>→</span>
+                        <span className="editorial-banda-sugestao-nome" style={{ color: "var(--cor-destaque)", fontWeight: 500 }}>{s.nome}</span>
+                      </a>
+                    ) : (
+                      <span
+                        key={`${s.genero}-${s.nome}`}
+                        style={{
+                          fontFamily: "var(--fonte-corpo)",
+                          fontSize: "13px",
+                          display: "inline-flex",
+                          alignItems: "baseline",
+                          gap: "8px",
+                        }}
+                      >
+                        {label}
+                        <span style={{ color: "rgba(245,242,237,0.4)" }}>{s.nome}</span>
+                      </span>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-
-      <div style={{ borderTop: "1px solid var(--cor-borda)", marginTop: "34px" }} />
     </section>
   )
 }
@@ -196,10 +196,8 @@ export default async function PaginaTendencias() {
         </div>
       </section>
 
-      {/* ── Conteúdo editorial ─────────────────────────── */}
+      {/* ── Esta semana ────────────────────────────────── */}
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 var(--espaco-interno)" }}>
-
-        {/* Seção — Esta semana */}
         <div style={{ paddingTop: "55px", paddingBottom: "89px" }}>
           <p style={{
             fontFamily: "DM Sans, sans-serif",
@@ -231,24 +229,24 @@ export default async function PaginaTendencias() {
           {/* Bottom border */}
           <div style={{ borderTop: "1px solid rgba(26,26,24,0.12)", marginTop: "0" }} />
         </div>
-
-        {/* ── Seções editoriais ───────────────────────────── */}
-        <SecaoEditorial
-          eyebrow="esta estação"
-          titulo="Tendências de inverno"
-          entradas={editoriais.inverno}
-        />
-        <SecaoEditorial
-          eyebrow="próxima estação"
-          titulo="De olho na primavera"
-          entradas={editoriais.primavera}
-        />
-        <SecaoEditorial
-          eyebrow="o mundo"
-          titulo="O mundo da perfumaria"
-          entradas={editoriais.global}
-        />
       </div>
+
+      {/* ── Seções editoriais — bandas escuras full-width ── */}
+      <SecaoEditorial
+        eyebrow="esta estação"
+        titulo="Tendências de inverno"
+        entradas={editoriais.inverno}
+      />
+      <SecaoEditorial
+        eyebrow="próxima estação"
+        titulo="De olho na primavera"
+        entradas={editoriais.primavera}
+      />
+      <SecaoEditorial
+        eyebrow="o mundo"
+        titulo="O mundo da perfumaria"
+        entradas={editoriais.global}
+      />
 
       {/* ── CTA footer ─────────────────────────────────── */}
       <section style={{ backgroundColor: "#1A1A18", borderTop: "1px solid rgba(245,242,237,0.08)" }}>
