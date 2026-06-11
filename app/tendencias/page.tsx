@@ -109,7 +109,7 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
                         textTransform: "uppercase" as const,
                         color: "rgba(245,242,237,0.4)",
                       }}>
-                        {s.genero}
+                        {s.papel ?? s.genero}
                       </span>
                     )
                     return s.perfumeId ? (
@@ -239,7 +239,7 @@ export default async function PaginaTendencias() {
               tipo={p.tipo}
               preco={p.preco_estimado}
               copy={copies[i] || p.descricaoSensorial}
-              perfumeId={`${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
+              perfumeId={p.perfumeId ?? `${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
             />
           ))}
 

@@ -12,6 +12,7 @@ import { db } from "@/lib/db"
 
 export interface SugestaoEditorial {
   genero: string          // "masculino" | "feminino" | "unissex"
+  papel: string | null    // "base" | "topo" — substitui genero na exibição quando presente
   nome: string
   marca: string
   perfumeId: string | null
@@ -48,6 +49,7 @@ export async function getTendenciasEditoriais(): Promise<TendenciasEditoriais> {
         descricao: row.descricao,
         sugestoes: row.sugestoes.map(s => ({
           genero: s.genero,
+          papel: s.papel,
           nome: s.nome,
           marca: s.marca,
           perfumeId: s.perfumeId,

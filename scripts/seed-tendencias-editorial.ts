@@ -44,6 +44,14 @@ const OVERRIDES: Record<string, string | null> = {
   "light blue pour homme|dolce & gabbana": null,
   // catálogo tem Elixir/Night/Absolu etc., mas não o Parfum
   "boss bottled parfum|hugo boss": null,
+  // base feminina — ID canônico com prefixo "D & G"
+  "light blue|dolce & gabbana": "d-g-light-blue-dolce-gabbana",
+  // base unissex — ID canônico simples
+  "l'eau d'issey|issey miyake": "l-eau-d-issey-issey-miyake",
+  // Chanel Bleu — slug curto é o canônico
+  "bleu de chanel|chanel": "bleu-de-chanel-chanel",
+  // Acqua di Giò base masculino
+  "acqua di giò|giorgio armani": "acqua-di-gio-giorgio-armani",
 }
 
 /** Mesma cascata de buscarPerfumePorSlug: id → nome+marca → prefixo → palavras */
@@ -88,7 +96,7 @@ function resolverPerfumeId(catalogo: PerfumeCatalogo[], nome: string, marca: str
 
 // ── Conteúdo curado ──────────────────────────────────────────────────────────
 
-interface Sugestao { genero: "masculino" | "feminino" | "unissex"; nome: string; marca: string }
+interface Sugestao { genero: "masculino" | "feminino" | "unissex"; papel?: "base" | "topo"; nome: string; marca: string }
 interface Entrada  { titulo: string; descricao: string; sugestoes: Sugestao[] }
 
 const CONTEUDO: Record<string, Entrada[]> = {
@@ -137,23 +145,27 @@ const CONTEUDO: Record<string, Entrada[]> = {
     },
     {
       titulo: "Acordes inesperados",
-      descricao: "Notas incomuns como pitaya e algas marinhas começam a aparecer em lançamentos de nicho.",
+      descricao: "Notas marinhas e frutadas incomuns, como melão e maresia, fogem do floral tradicional e ganham espaço.",
       sugestoes: [
-        { genero: "unissex", nome: "212 VIP", marca: "Carolina Herrera" },
+        { genero: "feminino", nome: "Light Blue",     marca: "Dolce & Gabbana" },
+        { genero: "unissex",  nome: "L'Eau d'Issey",  marca: "Issey Miyake"    },
       ],
     },
   ],
   global: [
     {
       titulo: "Scent stacking ganha força",
-      descricao: "Em vez de um perfume assinatura, as pessoas combinam fragrâncias para criar algo único. Vale experimentar com seus próprios perfumes.",
-      sugestoes: [],
+      descricao: "Em vez de um perfume só, combine camadas. Um amadeirado por baixo, um cítrico por cima — a combinação fica única.",
+      sugestoes: [
+        { genero: "masculino", papel: "base", nome: "Bleu de Chanel",  marca: "Chanel" },
+        { genero: "masculino", papel: "topo", nome: "Acqua di Giò",    marca: "Giorgio Armani" },
+      ],
     },
     {
       titulo: "Nicho em ascensão",
-      descricao: "O mercado de perfumes de luxo de nicho deve dobrar até 2032. Marcas pequenas e processos artesanais ganham espaço.",
+      descricao: "Casas jovens como a Xerjoff usam ingredientes raros e frascos quase artísticos. Menos sobre seguir tendência, mais sobre causar impressão.",
       sugestoes: [
-        { genero: "unissex", nome: "Aventus", marca: "Creed" },
+        { genero: "unissex", nome: "Erba Gold", marca: "Xerjoff" },
       ],
     },
     {
@@ -192,6 +204,7 @@ async function main() {
           data: {
             editorialId: editorial.id,
             genero: s.genero,
+            papel:  s.papel ?? null,
             nome:   s.nome,
             marca:  s.marca,
             perfumeId,

@@ -103,6 +103,7 @@ model TendenciaEditorialSugestao {
   id          String  @id @default(uuid())
   editorialId String  @map("editorial_id")
   genero      String  // "masculino" | "feminino" | "unissex"
+  papel       String? // "base" | "topo" — exibido em vez do genero quando presente
   nome        String
   marca       String
   perfumeId   String? @map("perfume_id")

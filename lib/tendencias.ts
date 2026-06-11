@@ -12,10 +12,11 @@ export interface PerfumeTendencia {
   badge: string
   preco_estimado: string
   tipo: "importado" | "contratipo" | "nacional"
+  perfumeId: string | null
 }
 
 // Static seed — used as fallback when the DB table is empty
-export const TENDENCIAS_SEMANA: PerfumeTendencia[] = dadosJson as PerfumeTendencia[]
+export const TENDENCIAS_SEMANA: PerfumeTendencia[] = (dadosJson as Omit<PerfumeTendencia, "perfumeId">[]).map(p => ({ ...p, perfumeId: null }))
 
 function dbRowToTendencia(row: {
   id: string
@@ -26,6 +27,7 @@ function dbRowToTendencia(row: {
   badge: string | null
   posicao: number | null
   fonte: string | null
+  perfumeId: string | null
   scrapedAt: Date
 }): PerfumeTendencia {
   return {
@@ -38,6 +40,7 @@ function dbRowToTendencia(row: {
     badge:             row.badge ?? "↑ em alta",
     preco_estimado:    row.preco ?? "Consultar",
     tipo:              row.tipo as PerfumeTendencia["tipo"],
+    perfumeId:         row.perfumeId,
   }
 }
 

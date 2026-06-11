@@ -479,6 +479,11 @@ a:hover article {
 /* ----------------------------------------
    Tendências editoriais — bandas escuras + grid
    ---------------------------------------- */
+/* bands 2 and 3: slightly more visible hairline than band 1 (which borders a light section) */
+.editorial-banda + .editorial-banda {
+  border-top: 1px solid rgba(255,255,255,0.15) !important;
+}
+
 /* grid columns — base 3-col, override to 1-col on mobile */
 .editorial-grid {
   display: grid;
