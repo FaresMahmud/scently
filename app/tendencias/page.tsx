@@ -228,23 +228,23 @@ export default async function PaginaTendencias() {
             Esta semana
           </p>
 
-          {/* Cards — single column, borders as dividers */}
-          {tendencias.map((p, i) => (
-            <CardTendencia
-              key={p.id}
-              rank={i + 1}
-              nome={p.nome}
-              marca={p.marca}
-              badge={limparBadge(p.badge)}
-              tipo={p.tipo}
-              preco={p.preco_estimado}
-              copy={copies[i] || p.descricaoSensorial}
-              perfumeId={p.perfumeId ?? `${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
-            />
-          ))}
-
-          {/* Bottom border */}
-          <div style={{ borderTop: "1px solid rgba(26,26,24,0.12)", marginTop: "0" }} />
+          {/* Cards — 2-column grid desktop, 1-column mobile */}
+          <div className="tendencias-semana-grid">
+            {tendencias.map((p, i) => (
+              <CardTendencia
+                key={p.id}
+                variant="card"
+                rank={i + 1}
+                nome={p.nome}
+                marca={p.marca}
+                badge={limparBadge(p.badge)}
+                tipo={p.tipo}
+                preco={p.preco_estimado}
+                copy={copies[i] || p.descricaoSensorial}
+                perfumeId={p.perfumeId ?? `${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
