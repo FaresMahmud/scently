@@ -29,12 +29,14 @@ interface ContratipoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
   familia: string; notas: string[]; preco_brl: number
   inspiradoEm: string; marcaOriginal: string; categoria: string
+  disponivel?: boolean
 }
 
 interface ExpandidoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
   familia: string; notas: string[]; preco_brl: number
   categoria: string; inspiradoEm?: string; marcaOriginal?: string
+  disponivel?: boolean
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -111,10 +113,12 @@ const NAO_PERFUME = /desodorante|body\s?splash|col[oô]nia corporal|hidratante|s
 
 export default function PaginaCatalogo() {
   // ── FIX: filtrar não-perfumes em TODAS as fontes ──────────────────────────
-  const contratipos = (contratiposData as ContratipoEntry[]).map(contratipoParaCard)
+  const contratipos = (contratiposData as ContratipoEntry[])
+    .filter(p => p.disponivel !== false)
+    .map(contratipoParaCard)
 
   const expandido = (expandidoData as ExpandidoEntry[])
-    .filter(p => !NAO_PERFUME.test(p.tipo ?? "") && !NAO_PERFUME.test(p.nome))
+    .filter(p => p.disponivel !== false && !NAO_PERFUME.test(p.tipo ?? "") && !NAO_PERFUME.test(p.nome))
     .map(expandidoParaCard)
 
   // Todos os 11k perfumes com campos lean (~3.3MB RSC) — sem limite de corte.
