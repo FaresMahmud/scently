@@ -33,8 +33,15 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
   if (entradas.length === 0) return null
 
   return (
-    <section className="editorial-banda">
-      <div className="container-site">
+    <section
+      className="editorial-banda"
+      style={{
+        backgroundColor: "#1A1A18",
+        borderTop: "1px solid rgba(245,242,237,0.08)",
+        padding: "89px 0",
+      }}
+    >
+      <div className="container-site" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <p style={{
           fontFamily: "var(--fonte-corpo)",
           fontSize: "13px",
@@ -59,7 +66,17 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
 
         <div className="editorial-grid">
           {entradas.map(entrada => (
-            <div key={entrada.titulo} className="editorial-banda-card">
+            <div
+              key={entrada.titulo}
+              className="editorial-banda-card"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.04)",
+                padding: "34px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "13px",
+              }}
+            >
               <h3 style={{
                 fontFamily: "var(--fonte-titulo)",
                 fontWeight: 300,

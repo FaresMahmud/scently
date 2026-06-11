@@ -479,24 +479,15 @@ a:hover article {
 /* ----------------------------------------
    Tendências editoriais — bandas escuras + grid
    ---------------------------------------- */
-.editorial-banda {
-  background-color: #1A1A18;
-  border-top: 1px solid rgba(245,242,237,0.08);
-  padding: 89px 0;
-}
-
+/* grid columns — base 3-col, override to 1-col on mobile */
 .editorial-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 21px;
 }
 
+/* hover lift + lighten on dark cards */
 .editorial-banda-card {
-  background-color: rgba(255,255,255,0.04);
-  padding: 34px;
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
   transition:
     background-color 0.22s ease,
     transform 0.22s cubic-bezier(0.23, 1, 0.32, 1),
@@ -504,7 +495,7 @@ a:hover article {
 }
 
 .editorial-banda-card:hover {
-  background-color: rgba(255,255,255,0.08);
+  background-color: rgba(255,255,255,0.08) !important;
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
@@ -522,9 +513,6 @@ a:hover article {
 @media (max-width: 768px) {
   .editorial-grid {
     grid-template-columns: 1fr;
-  }
-  .editorial-banda {
-    padding: 55px 0;
   }
 }
 
