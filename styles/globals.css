@@ -315,12 +315,29 @@ a:hover article {
   opacity: 1;
 }
 
-/* Card sem anchor wrapper — hover direto no article */
+/* ----------------------------------------
+   Card de perfume — coreografia de hover
+   Lift sutil no card + zoom lento no frasco.
+   Apenas transform/opacity (GPU, sem reflow).
+   ---------------------------------------- */
 .card-perfume {
-  transition: border-color 0.2s;
+  transition:
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.4s ease;
 }
 .card-perfume:hover {
-  border-color: var(--cor-texto-suave) !important;
+  transform: translateY(-3px);
+  border-color: var(--cor-dourado) !important;
+}
+
+/* O frasco "se aproxima" — gesto de olhar de perto */
+.card-perfume-img {
+  transition:
+    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.45s ease;
+}
+.card-perfume:hover .card-perfume-img {
+  transform: scale(1.045);
 }
 
 /* Link de marca — suave com hover terracota */
@@ -451,27 +468,88 @@ a:hover article {
 }
 
 /* ----------------------------------------
-   Card de perfume — hover sem nested <a>
+   Tendências — numeral de ranking e seta animada
    ---------------------------------------- */
-.card-perfume {
-  transition: border-color 0.2s;
+@media (max-width: 640px) {
+  .card-tendencia-rank {
+    display: none;
+  }
 }
 
-.card-perfume:hover {
-  border-color: var(--cor-texto-suave) !important;
+/* ----------------------------------------
+   Tendências editoriais — grid 3 colunas
+   ---------------------------------------- */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 21px;
 }
 
-/* Link de marca — terracota no hover */
-.link-marca {
-  font-family: var(--fonte-corpo);
-  font-size: 0.8rem;
-  color: var(--cor-texto-suave);
-  font-weight: 300;
-  text-decoration: none;
-  transition: color 0.15s;
+.editorial-card {
+  border: 1px solid var(--cor-borda);
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
 }
 
-.link-marca:hover {
-  color: var(--cor-destaque) !important;
+@media (max-width: 768px) {
+  .editorial-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Seta desliza no hover — transform apenas, sem reflow */
+.link-seta-arrow {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.link-seta:hover .link-seta-arrow {
+  transform: translateX(4px);
+}
+
+/* ----------------------------------------
+   Botão primário — aprofunda no hover em vez
+   de desbotar (terracota-hover + lift sutil)
+   ---------------------------------------- */
+.btn-primario {
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.btn-primario:hover {
+  background-color: var(--cor-destaque-hover) !important;
+  transform: translateY(-1px);
   opacity: 1 !important;
+}
+
+/* ----------------------------------------
+   Quiz — opção com hover de borda terracota
+   (preview da escolha antes do clique)
+   ---------------------------------------- */
+.opcao-quiz {
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+.opcao-quiz:hover {
+  border-color: var(--cor-destaque) !important;
+  opacity: 1 !important;
+}
+
+/* ----------------------------------------
+   Página de perfume — imagem fixa no scroll
+   (sticky via CSS, sem listener JS de resize)
+   ---------------------------------------- */
+.imagem-perfume-wrap {
+  position: sticky;
+  top: 84px;
+  align-self: flex-start;
+}
+
+@media (max-width: 768px) {
+  .imagem-perfume-wrap {
+    position: relative;
+    top: auto;
+  }
 }

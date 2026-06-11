@@ -117,14 +117,6 @@ const CONTEUDO: Record<string, Entrada[]> = {
         { genero: "feminino",  nome: "Libre",              marca: "Yves Saint Laurent" },
       ],
     },
-    {
-      titulo: "Doces sofisticados",
-      descricao: "Caramelo salgado e fava tonka criam fragrâncias gourmand que aquecem sem pesar.",
-      sugestoes: [
-        { genero: "masculino", nome: "Boss Bottled Parfum", marca: "Hugo Boss" },
-        { genero: "feminino",  nome: "Good Girl",           marca: "Carolina Herrera" },
-      ],
-    },
   ],
   primavera: [
     {
@@ -150,13 +142,6 @@ const CONTEUDO: Record<string, Entrada[]> = {
         { genero: "unissex", nome: "212 VIP", marca: "Carolina Herrera" },
       ],
     },
-    {
-      titulo: "Doçura sutil",
-      descricao: "Amêndoa e pistache substituem a baunilha tradicional, trazendo conforto sem exagero.",
-      sugestoes: [
-        { genero: "feminino", nome: "Si", marca: "Giorgio Armani" },
-      ],
-    },
   ],
   global: [
     {
@@ -170,11 +155,6 @@ const CONTEUDO: Record<string, Entrada[]> = {
       sugestoes: [
         { genero: "unissex", nome: "Aventus", marca: "Creed" },
       ],
-    },
-    {
-      titulo: "Formatos menores",
-      descricao: "Travel sizes de 10ml e 30ml viram porta de entrada para experimentação antes do frasco grande.",
-      sugestoes: [],
     },
     {
       titulo: "Brasil na conversa global",
@@ -228,6 +208,14 @@ async function main() {
 
   console.log("Resolução das sugestões:\n")
   console.table(resumo)
+
+  // Remove any rows beyond the 3 kept per category (idempotent cleanup)
+  for (const categoria of Object.keys(CONTEUDO)) {
+    const deleted = await db.tendenciaEditorial.deleteMany({
+      where: { categoria, ordem: { gt: 3 } },
+    })
+    if (deleted.count > 0) console.log(`Removidas ${deleted.count} entrada(s) extras de [${categoria}]`)
+  }
 
   const total = await db.tendenciaEditorial.count()
   const totalSug = await db.tendenciaEditorialSugestao.count()

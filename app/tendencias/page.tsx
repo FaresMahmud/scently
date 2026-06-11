@@ -56,92 +56,85 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
         {titulo}
       </h2>
 
-      {entradas.map(entrada => (
-        <div key={entrada.titulo} style={{
-          borderTop: "1px solid var(--cor-borda)",
-          paddingTop: "34px",
-          paddingBottom: "34px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "13px",
-        }}>
-          <h3 style={{
-            fontFamily: "var(--fonte-titulo)",
-            fontWeight: 300,
-            fontSize: "26px",
-            lineHeight: 1.15,
-            color: "var(--cor-texto)",
-            margin: 0,
-          }}>
-            {entrada.titulo}
-          </h3>
-          <p style={{
-            fontFamily: "var(--fonte-corpo)",
-            fontSize: "16px",
-            color: "var(--cor-texto-suave)",
-            lineHeight: 1.6,
-            margin: 0,
-            maxWidth: "580px",
-          }}>
-            {entrada.descricao}
-          </p>
+      <div className="editorial-grid">
+        {entradas.map(entrada => (
+          <div key={entrada.titulo} className="editorial-card">
+            <h3 style={{
+              fontFamily: "var(--fonte-titulo)",
+              fontWeight: 300,
+              fontSize: "26px",
+              lineHeight: 1.15,
+              color: "var(--cor-texto)",
+              margin: 0,
+            }}>
+              {entrada.titulo}
+            </h3>
+            <p style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "14px",
+              color: "var(--cor-texto-suave)",
+              lineHeight: 1.6,
+              margin: 0,
+              flexGrow: 1,
+            }}>
+              {entrada.descricao}
+            </p>
 
-          {entrada.sugestoes.length > 0 && (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 21px", marginTop: "8px" }}>
-              {entrada.sugestoes.map(s => {
-                const label = (
-                  <span style={{
-                    fontSize: "11px",
-                    fontWeight: 500,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase" as const,
-                    color: "var(--cor-texto-suave)",
-                  }}>
-                    {s.genero}
-                  </span>
-                )
-                return s.perfumeId ? (
-                  <a
-                    key={`${s.genero}-${s.nome}`}
-                    href={`/perfume/${s.perfumeId}`}
-                    className="link-seta"
-                    style={{
-                      fontFamily: "var(--fonte-corpo)",
-                      fontSize: "13px",
-                      textDecoration: "none",
-                      display: "inline-flex",
-                      alignItems: "baseline",
-                      gap: "8px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {label}
-                    <span className="link-seta-arrow" aria-hidden>→</span>
-                    <span style={{ color: "var(--cor-destaque)", fontWeight: 500 }}>{s.nome}</span>
-                  </a>
-                ) : (
-                  <span
-                    key={`${s.genero}-${s.nome}`}
-                    style={{
-                      fontFamily: "var(--fonte-corpo)",
-                      fontSize: "13px",
-                      display: "inline-flex",
-                      alignItems: "baseline",
-                      gap: "8px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {label}
-                    <span style={{ color: "var(--cor-texto-suave)" }}>{s.nome}</span>
-                  </span>
-                )
-              })}
-            </div>
-          )}
-        </div>
-      ))}
+            {entrada.sugestoes.length > 0 && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {entrada.sugestoes.map(s => {
+                  const label = (
+                    <span style={{
+                      fontSize: "11px",
+                      fontWeight: 500,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase" as const,
+                      color: "var(--cor-texto-suave)",
+                    }}>
+                      {s.genero}
+                    </span>
+                  )
+                  return s.perfumeId ? (
+                    <a
+                      key={`${s.genero}-${s.nome}`}
+                      href={`/perfume/${s.perfumeId}`}
+                      className="link-seta"
+                      style={{
+                        fontFamily: "var(--fonte-corpo)",
+                        fontSize: "13px",
+                        textDecoration: "none",
+                        display: "inline-flex",
+                        alignItems: "baseline",
+                        gap: "8px",
+                      }}
+                    >
+                      {label}
+                      <span className="link-seta-arrow" aria-hidden>→</span>
+                      <span style={{ color: "var(--cor-destaque)", fontWeight: 500 }}>{s.nome}</span>
+                    </a>
+                  ) : (
+                    <span
+                      key={`${s.genero}-${s.nome}`}
+                      style={{
+                        fontFamily: "var(--fonte-corpo)",
+                        fontSize: "13px",
+                        display: "inline-flex",
+                        alignItems: "baseline",
+                        gap: "8px",
+                      }}
+                    >
+                      {label}
+                      <span style={{ color: "var(--cor-texto-suave)" }}>{s.nome}</span>
+                    </span>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
-      <div style={{ borderTop: "1px solid var(--cor-borda)" }} />
+      <div style={{ borderTop: "1px solid var(--cor-borda)", marginTop: "34px" }} />
     </section>
   )
 }
