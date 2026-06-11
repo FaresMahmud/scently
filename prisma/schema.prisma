@@ -122,6 +122,7 @@ model Tendencia {
   badge         String?
   posicao       Int?
   fonte         String?
+  descricao     String?  // copy editorial — fallback: "{nome} da {marca}."
   // Coluna existente no banco (de versão anterior do código) — mantida para não perder dados
   perfumeId     String?  @map("perfume_id")
   estacao       Boolean  @default(false)

@@ -28,6 +28,7 @@ function dbRowToTendencia(row: {
   badge: string | null
   posicao: number | null
   fonte: string | null
+  descricao: string | null
   perfumeId: string | null
   scrapedAt: Date
 }): PerfumeTendencia {
@@ -38,7 +39,7 @@ function dbRowToTendencia(row: {
     marca:             row.marca,
     concentracao:      "EDP",
     familia:           "Tendência",
-    descricaoSensorial:`${nomeClean} da ${row.marca}.`,
+    descricaoSensorial: row.descricao ?? `${nomeClean} da ${row.marca}.`,
     badge:             row.badge ?? "↑ em alta",
     preco_estimado:    row.preco ?? "Consultar",
     tipo:              row.tipo as PerfumeTendencia["tipo"],
