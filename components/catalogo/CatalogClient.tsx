@@ -240,7 +240,7 @@ export default function CatalogClient({ perfumes }: Props) {
           style={{
             width:           "100%",
             fontFamily:      "var(--fonte-corpo)",
-            fontSize:        "0.9rem",
+            fontSize:        "1rem", // ≥16px — evita zoom-on-focus no iOS Safari
             color:           "var(--cor-texto)",
             backgroundColor: "var(--cor-card)",
             border:          "1px solid var(--cor-borda)",

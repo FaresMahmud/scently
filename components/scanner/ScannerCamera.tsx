@@ -258,7 +258,8 @@ export default function ScannerCamera({ isDesktop }: Props) {
         style={{
           position: "relative",
           width: "100%",
-          aspectRatio: "16/9",
+          // Frascos são verticais — retrato no celular, paisagem no desktop
+          aspectRatio: isDesktop ? "16/9" : "3/4",
           backgroundColor: "#1A1A18",
           overflow: "hidden",
           border: "1px solid rgba(196,113,74,0.4)",

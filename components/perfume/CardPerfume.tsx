@@ -140,7 +140,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
           style={{
             display: "inline-flex",
             alignItems: "center",
-            minHeight: "34px",
+            minHeight: "44px",
             fontSize: "0.68rem",
             fontWeight: 500,
             letterSpacing: "0.16em",

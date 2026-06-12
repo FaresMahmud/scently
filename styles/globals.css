@@ -422,6 +422,13 @@ a:hover article {
     z-index: 40;
     border-top: 1px solid var(--cor-borda);
     background: var(--cor-base);
+    /* iPhone home indicator — estende o fundo sem encolher a área de toque */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Compensa a barra fixa: só na página que a contém */
+  main:has(.cta-mobile-fixo) {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   }
 }
 

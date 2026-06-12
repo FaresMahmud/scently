@@ -36,7 +36,7 @@ export default function CardTendencia({ nome, marca, badge, tipo, preco, copy, p
   ) : null
 
   const MetaRow = (
-    <div style={{ display: "flex", alignItems: "center", gap: "21px", marginTop: "8px" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: "13px 21px", flexWrap: "wrap", marginTop: "8px" }}>
       {tipo && (
         <span style={{
           fontSize: "13px",

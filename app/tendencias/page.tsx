@@ -122,7 +122,8 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
                           fontSize: "13px",
                           textDecoration: "none",
                           display: "inline-flex",
-                          alignItems: "baseline",
+                          alignItems: "center",
+                          minHeight: "44px",
                           gap: "8px",
                         }}
                       >
