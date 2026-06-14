@@ -22,20 +22,25 @@ export default function EmAltaAgora() {
       <div className="container-site" style={{ paddingTop: "89px", paddingBottom: "89px" }}>
 
         {/* Cabeçalho */}
-        <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
-          em alta esta semana
-        </p>
-        <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "600px", fontSize: "clamp(42px, 5vw, 68px)" }}>
-          O que o mundo está usando agora
-        </h2>
-        <div className="separador" />
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "21px", marginBottom: "55px" }}>
+          <div>
+            <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
+              em alta esta semana
+            </p>
+            <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "600px", fontSize: "clamp(42px, 5vw, 68px)" }}>
+              Três fragrâncias que todo mundo está buscando.
+            </h2>
+          </div>
+          <a href="/tendencias" style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", color: "var(--cor-destaque)", textDecoration: "none", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>
+            Ver todas →
+          </a>
+        </div>
 
         {/* Grid — 3 cols desktop, 1 col mobile */}
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "0 55px",
-          marginTop: "55px",
+          gap: "34px 55px",
         }}>
           {perfumes.map(p => (
             <CardTendencia

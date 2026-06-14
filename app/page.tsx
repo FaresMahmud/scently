@@ -43,9 +43,9 @@ const jsonLdWebSite = {
 
 // Os três passos da seção "como funciona"
 const passos = [
-  { numero: "01", titulo: "Responda", descricao: "Algumas perguntas rápidas sobre o que você busca num perfume." },
-  { numero: "02", titulo: "Analise",  descricao: "Seu consultor cruza seu perfil com milhares de fragrâncias." },
-  { numero: "03", titulo: "Descubra", descricao: "Receba uma recomendação personalizada com explicação sensorial." },
+  { numero: "01", titulo: "Responda", descricao: "Conte o que você busca. O clima onde você vive, a ocasião, o que sente." },
+  { numero: "02", titulo: "Analise",  descricao: "Seu perfil é cruzado com mais de 12.000 fragrâncias do mundo todo." },
+  { numero: "03", titulo: "Descubra", descricao: "Você recebe uma recomendação feita para você — com o cheiro descrito em palavras." },
 ]
 
 export default function PaginaInicial() {
@@ -64,29 +64,23 @@ export default function PaginaInicial() {
 
             {/* Coluna esquerda — texto */}
             <div className="hero-texto">
-              <p style={{ fontFamily: "var(--fonte-titulo)", fontSize: "0.78rem", letterSpacing: "0.22em", color: "var(--cor-destaque)", marginBottom: "1.75rem" }}>
+              <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "21px" }}>
                 {siteMeta.nome}
               </p>
 
-              <h1 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(38px, 4vw, 55px)", lineHeight: 1.15, marginBottom: "1.75rem", maxWidth: "560px" }}>
-                {textosHome.heroTitulo}
-              </h1>
-
-              <div className="separador" />
-
-              <h2 style={{
+              <h1 style={{
                 fontFamily: "var(--fonte-titulo)",
                 fontWeight: 300,
-                fontSize: "clamp(28px, 3vw, 42px)",
+                fontSize: "clamp(48px, 7vw, 68px)",
                 color: "#1A1A18",
-                lineHeight: 1.2,
+                lineHeight: 1.1,
                 maxWidth: "720px",
                 marginBottom: "21px",
               }}>
                 Você tem um perfume. Mas ainda não encontrou o seu.
-              </h2>
+              </h1>
 
-              <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "clamp(18px, 1.8vw, 21px)", fontWeight: 400, lineHeight: 1.6, marginTop: "21px" }}>
+              <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "16px", fontWeight: 400, lineHeight: 1.6, color: "var(--cor-texto-suave)", marginTop: "21px" }}>
                 {textosHome.heroSubtitulo}
               </p>
 
@@ -143,21 +137,19 @@ export default function PaginaInicial() {
       {/* ── Como funciona ─────────────────────────────────── */}
       <section style={{ backgroundColor: "var(--cor-card)", borderTop: "1px solid var(--cor-borda)", borderBottom: "1px solid var(--cor-borda)" }}>
         <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)" }}>
-          <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
+          <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
             {textosHome.secaoConsultor}
           </p>
           <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "520px" }}>
             {textosHome.secaoConsultorDescricao}
           </h2>
 
-          <div className="separador" />
-
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
               gap: "34px",
-              marginTop: "34px",
+              marginTop: "55px",
             }}
           >
             {passos.map((passo) => (
@@ -179,7 +171,7 @@ export default function PaginaInicial() {
                 <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "8px" }}>
                   {passo.titulo}
                 </h3>
-                <p style={{ fontSize: "0.9rem" }}>{passo.descricao}</p>
+                <p style={{ fontSize: "1rem" }}>{passo.descricao}</p>
               </div>
             ))}
           </div>
@@ -189,15 +181,14 @@ export default function PaginaInicial() {
       {/* ── CTA central ───────────────────────────────────── */}
       <section style={{ borderBottom: "1px solid var(--cor-borda)" }}>
         <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "520px", margin: "0 auto 1.25rem" }}>
+          <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, maxWidth: "520px", margin: "0 auto 21px" }}>
             Pronto para encontrar o seu perfume?
           </h2>
-          <p style={{ maxWidth: "380px", margin: "0 auto 2rem" }}>
+          <p style={{ maxWidth: "380px", margin: "0 auto 34px" }}>
             Sem cadastro. Sem compromisso. Resultado em menos de 2 minutos.
           </p>
-          {/* Prova social — reduz fricção */}
           <p style={{ fontSize: "0.75rem", color: "var(--cor-texto-suave)", marginBottom: "34px", letterSpacing: "0.05em" }}>
-            Mais de 12.000 fragrâncias no catálogo · Sem cadastro · Resultado em 2 minutos
+            Mais de 12.000 fragrâncias analisadas — do Boticário ao Parfums de Marly.
           </p>
           <Link
             href="/consultor"
@@ -224,14 +215,19 @@ export default function PaginaInicial() {
       {/* ── Destaques ─────────────────────────────────────── */}
       <section id="destaques" style={{ backgroundColor: "var(--cor-card)" }}>
         <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)" }}>
-          <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "0.75rem" }}>
-            do nosso catálogo
-          </p>
-          <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, marginBottom: "0.5rem" }}>
-            {textosHome.secaoCatalogo}
-          </h2>
-
-          <div className="separador" />
+          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "21px", marginBottom: "34px" }}>
+            <div>
+              <p style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "13px" }}>
+                catálogo
+              </p>
+              <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300 }}>
+                {textosHome.secaoCatalogo}
+              </h2>
+            </div>
+            <Link href="/catalogo" style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", color: "var(--cor-destaque)", textDecoration: "none", whiteSpace: "nowrap", letterSpacing: "0.05em" }}>
+              Ver catálogo →
+            </Link>
+          </div>
 
           <div
             style={{
@@ -270,7 +266,7 @@ export default function PaginaInicial() {
                 alignItems: "center",
                 minHeight: "44px",
                 padding: "0 34px",
-                border: "1px solid rgba(245,242,237,0.2)",
+                border: "1px solid rgba(245,242,237,0.4)",
                 borderRadius: "var(--raio-borda)",
                 fontFamily: "var(--fonte-corpo)",
                 fontSize: "0.875rem",
@@ -297,7 +293,7 @@ export default function PaginaInicial() {
                 scanner de perfume
               </p>
               <h2 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(26px, 5vw, 42px)", lineHeight: 1.1, marginBottom: "21px" }}>
-                Aponte para o frasco. Descubra o que está no ar.
+                Escaneie qualquer frasco. Reconheça qualquer fragrância.
               </h2>
               <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)", lineHeight: 1.6, marginBottom: "34px", maxWidth: "420px" }}>
                 Tire uma foto de qualquer frasco de perfume e nossa IA identifica a fragrância, as notas olfativas e muito mais.
@@ -318,7 +314,7 @@ export default function PaginaInicial() {
             </div>
             {/* Visual placeholder */}
             <div style={{
-              aspectRatio: "16/9",
+              aspectRatio: "3/4",
               backgroundColor: "#1A1A18",
               borderRadius: "var(--raio-borda-suave)",
               border: "1px solid rgba(196,113,74,0.3)",
@@ -345,9 +341,6 @@ export default function PaginaInicial() {
                   ))}
                   <div style={{ position: "absolute", inset: "50%", transform: "translate(-50%,-50%)", width: "16px", height: "16px", borderRadius: "50%", backgroundColor: "#C4714A", opacity: 0.6 }} />
                 </div>
-                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", letterSpacing: "0.15em", color: "rgba(245,242,237,0.35)", textTransform: "uppercase" }}>
-                  Identificando…
-                </p>
               </div>
             </div>
           </div>
