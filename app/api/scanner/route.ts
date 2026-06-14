@@ -227,7 +227,7 @@ export async function POST(req: NextRequest) {
       generationConfig: {
         temperature: 0.1,
         topP: 0.8,
-        maxOutputTokens: 320,
+        maxOutputTokens: 1024,
         responseMimeType: "application/json",
         responseSchema: GeminiResultSchema,
       },
@@ -240,7 +240,11 @@ export async function POST(req: NextRequest) {
     try {
       geminiResult = JSON.parse(json) as GeminiResult
     } catch {
+      const candidate = result.response.candidates?.[0]
       console.error("[Scanner] Gemini raw response:", json)
+      console.error("[Scanner] finishReason:", candidate?.finishReason)
+      console.error("[Scanner] usageMetadata:", JSON.stringify(result.response.usageMetadata))
+      console.error("[Scanner] safetyRatings:", JSON.stringify(candidate?.safetyRatings))
       throw new Error("JSON inválido na resposta do Gemini")
     }
 
