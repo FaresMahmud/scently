@@ -8,6 +8,65 @@ import { db } from "@/lib/db"
 import { scannerSchema, zodError } from "@/lib/schemas"
 import { z } from "zod"
 import { SCANNER_TONE_GUIDE } from "@/lib/aiPrompts"
+import { getEditorialContent } from "@/lib/perfumeEditorial"
+import * as fs from "fs"
+import * as path from "path"
+
+interface ExpandidoEntry {
+  id: string
+  nome: string
+  marca: string
+  notas?: string[]
+}
+
+let _expandidoCache: ExpandidoEntry[] | null = null
+function carregarExpandido(): ExpandidoEntry[] {
+  if (_expandidoCache) return _expandidoCache
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "data", "perfumes-expandido.json"), "utf-8")
+    const data = JSON.parse(raw)
+    _expandidoCache = Array.isArray(data) ? data : []
+  } catch {
+    _expandidoCache = []
+  }
+  return _expandidoCache
+}
+
+function buscarExpandido(nome: string, marca: string): ExpandidoEntry | null {
+  if (!nome && !marca) return null
+  const n = normalizar(nome)
+  const m = normalizar(marca)
+  let best: { item: ExpandidoEntry; score: number } | null = null
+
+  for (const p of carregarExpandido()) {
+    const pn = normalizar(p.nome)
+    const pm = normalizar(p.marca)
+    let score = 0
+
+    if (pn === n) score += 5
+    else if (pn.includes(n) || n.includes(pn)) score += 3
+    else {
+      const sim = similaridade(n, pn)
+      if (sim >= 0.6) score += Math.round(sim * 3)
+    }
+
+    if (pm === m) score += 4
+    else if (pm.includes(m) || m.includes(pm)) score += 2
+    else {
+      const sim = similaridade(m, pm)
+      if (sim >= 0.5) score += 1
+    }
+
+    // Require at least some brand overlap to avoid spurious cross-brand matches
+    const brandSim = similaridade(m, pm)
+    const brandOverlap = pm === m || pm.includes(m) || m.includes(pm) || brandSim >= 0.3
+    if (!brandOverlap) continue
+
+    if (score >= 3 && (!best || score > best.score)) best = { item: p, score }
+  }
+
+  return best?.item ?? null
+}
 
 export interface GeminiResult {
   found: boolean
@@ -50,6 +109,12 @@ interface CatalogMatch {
   familia?: string
   notas?: string[]
   imagem?: string
+  editorial?: {
+    comoCheira: string
+    paraQuem: string
+    quandoUsar: string
+    comoSeComporta: string
+  } | null
 }
 
 const VISION_PROMPT = `${SCANNER_TONE_GUIDE}
@@ -275,8 +340,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ erro: "Gemini falhou", detail: e?.message }, { status: 422 })
   }
 
-  // Traduz notas e família para PT (Gemini responde em inglês mesmo com prompt PT)
-  geminiResult.notes = geminiResult.notes.map(traduzirNota)
+  // Traduz família para PT (notas handled below after catalog lookup)
   geminiResult.family = traduzirFamilia(geminiResult.family)
 
   // Tenta catalog match sempre que há nome/marca — independente de found/confidence
@@ -284,15 +348,27 @@ export async function POST(req: NextRequest) {
     ? buscarMatchCatalogo(geminiResult.name, geminiResult.brand)
     : null
 
-  // Substitui notas inventadas pelo Gemini pelas notas reais do catálogo
-  if (catalogMatch?.notas && catalogMatch.notas.length > 0) {
-    geminiResult.notes = catalogMatch.notas
+  // Look up expandido catalog for canonical ID (matches perfume_editorial keys)
+  // and Portuguese notes. Fragella IDs are long (dior-sauvage-eau-de-toilette-christian-dior);
+  // expandido IDs match what /perfume/[id] and perfume_editorial use (dior-sauvage).
+  const expandidoMatch = (geminiResult.name && geminiResult.brand)
+    ? buscarExpandido(geminiResult.name, geminiResult.brand)
+    : null
+
+  // Use expandido Portuguese notas if available; fall back to Fragella notas then Gemini
+  const notasCanonicas = expandidoMatch?.notas?.length
+    ? expandidoMatch.notas
+    : catalogMatch?.notas
+  if (notasCanonicas && notasCanonicas.length > 0) {
+    geminiResult.notes = notasCanonicas
+  } else {
+    geminiResult.notes = geminiResult.notes.map(traduzirNota)
   }
 
   // Optionally save to acervo if user is authenticated
   const authUser = getAuthUser(req)
   if (authUser && geminiResult.found && geminiResult.confidence !== "low") {
-    const pid = catalogMatch?.id ?? `${slugify(geminiResult.name)}-${slugify(geminiResult.brand)}`
+    const pid = expandidoMatch?.id ?? catalogMatch?.id ?? `${slugify(geminiResult.name)}-${slugify(geminiResult.brand)}`
     await db.userPerfume.upsert({
       where:  { userId_perfumeId: { userId: authUser.userId, perfumeId: pid } },
       create: {
@@ -304,6 +380,11 @@ export async function POST(req: NextRequest) {
       },
       update: {},
     }).catch(() => null)
+  }
+
+  if (catalogMatch) {
+    const editorialId = expandidoMatch?.id ?? catalogMatch.id
+    catalogMatch.editorial = await getEditorialContent(editorialId).catch(() => null)
   }
 
   return NextResponse.json({ perfume: geminiResult, catalogMatch })
