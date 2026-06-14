@@ -224,13 +224,15 @@ export async function POST(req: NextRequest) {
     const genAI = new GoogleGenerativeAI(apiKey)
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       generationConfig: {
         temperature: 0.1,
         topP: 0.8,
         maxOutputTokens: 1024,
         responseMimeType: "application/json",
         responseSchema: GeminiResultSchema,
-      },
+        thinkingConfig: { thinkingBudget: 0 },
+      } as any,
     })
     const result = await model.generateContent([
       { inlineData: { mimeType, data: imageBase64 } },
