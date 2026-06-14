@@ -23,6 +23,7 @@ when the fuzzy fallback (buscarPorNomeMarca) also failed to recover them.
 | 6 | perfume-banderas-the-icon-attitude-masculino-eau-de-parfum-banderas | PERFUME BANDERAS THE ICON ATTITUDE MASCULINO EAU DE PARFUM | BANDERAS | Same brand normalization issue as #5 |
 | 7 | mist-perfumado-kylie-fragrances-sweet-eclair-hair-body-mist-kylie-fragances | Mist Perfumado Kylie Fragrances Sweet Éclair Hair & Body Mist | KYLIE FRAGANCES | Body mist — not in fragella (niche/beauty brand). Decide: add to expandido or exclude from tendencias |
 | 8 | mist-perfumado-kylie-fragrances-caramel-cloud-hair-body-mist-kylie-fragances | Mist Perfumado Kylie Fragrances Caramel Cloud Hair & Body Mist | KYLIE FRAGANCES | Same as #7 |
+| 9 | _(no DB entry)_ | Light Blue Pour Homme | Dolce & Gabbana | Classic men's flanker not in catalog; only limited-edition variants (Discover Vulcano, Living Stromboli) exist. Add canonical entry to perfumes-expandido.json |
 
 ---
 
