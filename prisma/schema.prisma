@@ -113,6 +113,18 @@ model TendenciaEditorialSugestao {
   @@map("tendencias_editorial_sugestoes")
 }
 
+model PerfumeEditorial {
+  perfumeId      String   @id @map("perfume_id")
+  comoCheira     String
+  paraQuem       String
+  quandoUsar     String
+  comoSeComporta String
+  geradoEm       DateTime @default(now()) @map("gerado_em")
+  atualizadoEm   DateTime @updatedAt @map("atualizado_em")
+
+  @@map("perfume_editorial")
+}
+
 model Tendencia {
   id            String   @id @default(uuid())
   nome          String

@@ -18,7 +18,9 @@
     "contratipos:merge": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/merge-contratipos.ts",
     "catalog:expand": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/expand-catalog.ts",
     "catalog:expand:deepseek-ct": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/expand-catalog.ts --phase=deepseek-ct",
-    "tendencias:editorial:seed": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/seed-tendencias-editorial.ts"
+    "tendencias:editorial:seed": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/seed-tendencias-editorial.ts",
+    "catalog:enrich": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/enrich-catalog-notes.ts",
+    "editorial:enrich": "npx ts-node -r tsconfig-paths/register --project tsconfig.scripts.json scripts/enrich-perfume-editorial.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
