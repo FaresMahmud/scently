@@ -28,11 +28,11 @@ interface Props {
 
 const CONFIANCA: Record<GeminiResult["confidence"], { label: string; cor: string; bg: string }> = {
   high:   { label: "Identificado com alta confiança",  cor: "#F5F2ED", bg: "#C4714A" },
-  medium: { label: "Resultado provável",               cor: "#F5F2ED", bg: "#C9A84C" },
-  low:    { label: "Identificação incerta",            cor: "#1A1A18", bg: "rgba(26,26,24,0.1)" },
+  medium: { label: "Identificado com boa confiança",   cor: "#F5F2ED", bg: "#C9A84C" },
+  low:    { label: "Talvez seja este.",                cor: "#1A1A18", bg: "rgba(26,26,24,0.1)" },
 }
 
-function Chip({ text, cor }: { text: string; cor?: string }) {
+function NotaChip({ text }: { text: string }) {
   return (
     <span style={{
       display: "inline-flex", alignItems: "center",
@@ -40,20 +40,27 @@ function Chip({ text, cor }: { text: string; cor?: string }) {
       fontSize: "0.78rem",
       padding: "6px 13px",
       borderRadius: "999px",
-      border: `1px solid ${cor ? `rgba(${hexToRgb(cor)},0.4)` : "var(--cor-borda)"}`,
-      backgroundColor: cor ? `rgba(${hexToRgb(cor)},0.08)` : "var(--cor-card)",
-      color: cor ?? "var(--cor-texto-suave)",
+      backgroundColor: "#C4714A",
+      color: "#F5F2ED",
     }}>{text}</span>
   )
 }
 
-function hexToRgb(hex: string): string {
-  const clean = hex.replace("#", "")
-  const r = parseInt(clean.slice(0,2),16)
-  const g = parseInt(clean.slice(2,4),16)
-  const b = parseInt(clean.slice(4,6),16)
-  return `${r},${g},${b}`
+function OcasiaoChip({ text }: { text: string }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center",
+      fontFamily: "var(--fonte-corpo)",
+      fontSize: "0.78rem",
+      padding: "6px 13px",
+      borderRadius: "999px",
+      border: "1px solid rgba(196,113,74,0.5)",
+      backgroundColor: "transparent",
+      color: "var(--cor-destaque)",
+    }}>{text}</span>
+  )
 }
+
 
 function BotaoSalvar({ nome, marca }: { nome: string; marca: string }) {
   const [estado, setEstado] = useState<"idle"|"saving"|"saved"|"error">("idle")
@@ -181,9 +188,9 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
       {/* Notes */}
       {perfume.notes.length > 0 && (
         <div>
-          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "8px" }}>Notas</p>
+          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "8px" }}>Notas</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-            {perfume.notes.map(n => <Chip key={n} text={n} cor="#C4714A" />)}
+            {perfume.notes.map(n => <NotaChip key={n} text={n} />)}
           </div>
         </div>
       )}
@@ -191,9 +198,9 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
       {/* Occasions */}
       {perfume.occasions.length > 0 && (
         <div>
-          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.68rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "8px" }}>Ocasiões</p>
+          <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cor-texto-suave)", marginBottom: "8px" }}>Ocasiões</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-            {perfume.occasions.map(o => <Chip key={o} text={o} />)}
+            {perfume.occasions.map(o => <OcasiaoChip key={o} text={o} />)}
           </div>
         </div>
       )}
@@ -202,7 +209,7 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
       {perfume.description && (
         <p style={{
           fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)",
-          lineHeight: 1.7,
+          lineHeight: 1.7, maxWidth: "480px",
         }}>
           {perfume.description}
         </p>

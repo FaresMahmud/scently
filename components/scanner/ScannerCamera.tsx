@@ -87,7 +87,7 @@ export default function ScannerCamera({ isDesktop }: Props) {
         body: fd,
       })
       if (res.status === 429) {
-        setErroMsg("Limite de scans atingido. Tente de novo em alguns minutos.")
+        setErroMsg("Você chegou no limite por agora. Volta em alguns minutos.")
         setEstado("erro")
         return
       }
@@ -99,7 +99,7 @@ export default function ScannerCamera({ isDesktop }: Props) {
       }
       const data = await res.json() as { perfume: GeminiResult; catalogMatch: CatalogMatch | null }
       if (!data.perfume.found || data.perfume.confidence === "low") {
-        setErroMsg("Não consegui identificar. Tente outro ângulo ou melhor iluminação.")
+        setErroMsg("Não consegui reconhecer. Uma foto mais nítida do rótulo ajudaria.")
         setEstado("erro")
         return
       }
@@ -109,7 +109,7 @@ export default function ScannerCamera({ isDesktop }: Props) {
       streamRef.current?.getTracks().forEach(t => t.stop())
       setEstado("resultado")
     } catch {
-      setErroMsg("Erro de conexão. Verifique sua internet e tente novamente.")
+      setErroMsg("Parece que perdemos a conexão. Tente de novo.")
       setEstado("erro")
     }
   }
@@ -216,7 +216,7 @@ export default function ScannerCamera({ isDesktop }: Props) {
             <>
               <Spinner cor="var(--cor-destaque)" />
               <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)" }}>
-                Identificando perfume…
+                Analisando a fragrância…
               </p>
             </>
           ) : estado === "erro" ? (
@@ -236,10 +236,10 @@ export default function ScannerCamera({ isDesktop }: Props) {
               </svg>
               <div>
                 <p style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "26px", marginBottom: "8px" }}>
-                  Envie uma foto do frasco
+                  Mostre o frasco. O resto é com a gente.
                 </p>
                 <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)" }}>
-                  JPG ou PNG — máxima qualidade possível
+                  A foto não precisa ser profissional — só mostrar o rótulo.
                 </p>
               </div>
             </>
@@ -279,10 +279,10 @@ export default function ScannerCamera({ isDesktop }: Props) {
           const b = pos.startsWith("bottom") ? "13px" : "auto"
           const l = pos.endsWith("left")     ? "13px" : "auto"
           const r = pos.endsWith("right")    ? "13px" : "auto"
-          const borderT = pos.startsWith("top")    ? "2px solid #C4714A" : "none"
-          const borderB = pos.startsWith("bottom") ? "2px solid #C4714A" : "none"
-          const borderL = pos.endsWith("left")     ? "2px solid #C4714A" : "none"
-          const borderR = pos.endsWith("right")    ? "2px solid #C4714A" : "none"
+          const borderT = pos.startsWith("top")    ? "2.5px solid #C4714A" : "none"
+          const borderB = pos.startsWith("bottom") ? "2.5px solid #C4714A" : "none"
+          const borderL = pos.endsWith("left")     ? "2.5px solid #C4714A" : "none"
+          const borderR = pos.endsWith("right")    ? "2.5px solid #C4714A" : "none"
           return (
             <div key={pos} style={{ position: "absolute", top: t, bottom: b, left: l, right: r, width: "24px", height: "24px", borderTop: borderT, borderBottom: borderB, borderLeft: borderL, borderRight: borderR }} />
           )
@@ -293,7 +293,7 @@ export default function ScannerCamera({ isDesktop }: Props) {
           <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(26,26,24,0.7)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "21px" }}>
             <Spinner cor="#F5F2ED" />
             <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "#F5F2ED", letterSpacing: "0.04em" }}>
-              {estado === "carregando" ? "Identificando perfume…" : "Ativando câmera…"}
+              {estado === "carregando" ? "Analisando a fragrância…" : "Preparando o enquadramento…"}
             </p>
           </div>
         )}
@@ -346,16 +346,17 @@ export default function ScannerCamera({ isDesktop }: Props) {
             width: "72px",
             height: "72px",
             borderRadius: "50%",
-            backgroundColor: estado === "streaming" ? "#C4714A" : "rgba(196,113,74,0.3)",
+            backgroundColor: "#C4714A",
             border: "3px solid rgba(245,242,237,0.3)",
             cursor: estado === "streaming" ? "pointer" : "not-allowed",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            transition: "background-color 0.2s",
+            transition: "opacity 0.2s",
+            opacity: estado === "streaming" ? 1 : 0.4,
           }}
         >
-          <div style={{ width: "28px", height: "28px", borderRadius: "50%", backgroundColor: "#F5F2ED", opacity: estado === "streaming" ? 1 : 0.4 }} />
+          <div style={{ width: "28px", height: "28px", borderRadius: "50%", backgroundColor: "#F5F2ED" }} />
         </button>
 
         {/* Placeholder right side for visual balance */}
