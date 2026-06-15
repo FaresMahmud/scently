@@ -10,6 +10,12 @@ interface CatalogMatch {
   marca: string
   concentracao?: string
   familia?: string
+  editorial?: {
+    comoCheira: string
+    paraQuem: string
+    quandoUsar: string
+    comoSeComporta: string
+  } | null
 }
 
 type Estado = "idle" | "solicitando" | "streaming" | "carregando" | "resultado" | "negado" | "erro"

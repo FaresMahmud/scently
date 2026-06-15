@@ -18,6 +18,12 @@ interface CatalogMatch {
   concentracao?: string
   familia?: string
   imagem?: string
+  editorial?: {
+    comoCheira: string
+    paraQuem: string
+    quandoUsar: string
+    comoSeComporta: string
+  } | null
 }
 
 interface Props {
@@ -205,14 +211,26 @@ export default function ResultadoScanner({ perfume, catalogMatch, onReiniciar }:
         </div>
       )}
 
-      {/* Description */}
-      {perfume.description && (
-        <p style={{
-          fontFamily: "var(--fonte-corpo)", fontSize: "16px", color: "var(--cor-texto-suave)",
-          lineHeight: 1.7, maxWidth: "480px",
-        }}>
-          {perfume.description}
-        </p>
+      {/* Description — editorial comoCheira if available, Gemini fallback */}
+      {(catalogMatch?.editorial?.comoCheira || perfume.description) && (
+        <div style={{ maxWidth: "480px" }}>
+          <p style={{
+            fontFamily: "var(--fonte-titulo)", fontWeight: 300,
+            fontSize: "18px", lineHeight: 1.6,
+            color: "var(--cor-texto)",
+            margin: catalogMatch?.editorial?.quandoUsar ? "0 0 13px" : "0",
+          }}>
+            {catalogMatch?.editorial?.comoCheira ?? perfume.description}
+          </p>
+          {catalogMatch?.editorial?.quandoUsar && (
+            <p style={{
+              fontFamily: "var(--fonte-corpo)", fontSize: "14px",
+              color: "var(--cor-texto-suave)", lineHeight: 1.5, margin: 0,
+            }}>
+              {catalogMatch.editorial.quandoUsar}
+            </p>
+          )}
+        </div>
       )}
 
       {/* Onde encontrar — only for high/medium confidence, after all details */}
