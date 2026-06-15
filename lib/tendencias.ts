@@ -30,6 +30,7 @@ function dbRowToTendencia(row: {
   fonte: string | null
   descricao: string | null
   perfumeId: string | null
+  ativo: boolean
   scrapedAt: Date
 }): PerfumeTendencia {
   const nomeClean = limparNomePerfume(row.nome, row.marca)
@@ -50,6 +51,7 @@ function dbRowToTendencia(row: {
 export async function getTendencias(): Promise<PerfumeTendencia[]> {
   try {
     const rows = await db.tendencia.findMany({
+      where: { ativo: true },
       orderBy: [{ posicao: "asc" }, { scrapedAt: "desc" }],
       take: 5,
     })

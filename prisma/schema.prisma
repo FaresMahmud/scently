@@ -125,6 +125,19 @@ model PerfumeEditorial {
   @@map("perfume_editorial")
 }
 
+model AnalyticsEvent {
+  id        String   @id @default(uuid())
+  tipo      String
+  sessionId String   @map("session_id")
+  userId    String?  @map("user_id")
+  dados     Json?
+  criadoEm DateTime @default(now()) @map("criado_em")
+
+  @@index([tipo, criadoEm])
+  @@index([criadoEm])
+  @@map("analytics_events")
+}
+
 model Tendencia {
   id            String   @id @default(uuid())
   nome          String
@@ -139,6 +152,7 @@ model Tendencia {
   perfumeId     String?  @map("perfume_id")
   estacao       Boolean  @default(false)
   marcaDestaque Boolean  @default(false)
+  ativo         Boolean  @default(true)
   scrapedAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

@@ -242,7 +242,7 @@ export default async function PaginaTendencias() {
                 tipo={p.tipo}
                 preco={p.preco_estimado}
                 copy={copies[i] || p.descricaoSensorial}
-                perfumeId={p.perfumeId ?? `${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
+                perfumeId={p.perfumeId ?? undefined}
               />
             ))}
           </div>
