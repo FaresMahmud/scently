@@ -24,6 +24,8 @@ import { slugify, traduzir } from "@/lib/utils"
 import { limparNomePerfume } from "@/lib/limparNomePerfume"
 import { gerarRankingEstacao, gerarRankingOcasiao } from "@/lib/gerarRanking"
 import type { Acorde } from "@/lib/types"
+import { getEditorialContent } from "@/lib/perfumeEditorial"
+import PerfumeViewTracker from "@/components/perfume/PerfumeViewTracker"
 
 export const dynamicParams = true
 export const revalidate = 86400
@@ -374,9 +376,10 @@ export default async function PaginaPerfume(
     ...(perfume.notasCoracao || []),
     ...(perfume.notasFundo   || []),
   ]
-  const [rankingEstacao, rankingOcasiao] = await Promise.all([
+  const [rankingEstacao, rankingOcasiao, editorial] = await Promise.all([
     gerarRankingEstacao(perfume.nome, perfume.familia || "", notasAll),
     gerarRankingOcasiao(perfume.nome, perfume.familia || "", notasAll),
+    getEditorialContent(id),
   ])
 
   const acordes: Acorde[] = acordesFragellaParaAcorde(perfume.acordesPorcentagem)
@@ -464,6 +467,7 @@ export default async function PaginaPerfume(
 
   return (
     <main>
+      <PerfumeViewTracker perfumeId={id} nome={perfume.nome} marca={perfume.marca} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -695,6 +699,42 @@ export default async function PaginaPerfume(
                   familia={perfume.familia ?? ""}
                 />
               </>
+            )}
+
+            {/* ── EDITORIAL ───────────────────────────────────────── */}
+            {editorial && (
+              <div style={{ marginTop: "55px" }}>
+                <p style={{
+                  fontFamily: "var(--fonte-corpo)", fontSize: "11px",
+                  letterSpacing: "0.14em", textTransform: "uppercase",
+                  color: "var(--cor-texto-suave)", margin: "0 0 34px",
+                }}>
+                  Sobre o perfume
+                </p>
+                {[
+                  { label: "Como ele cheira",  value: editorial.comoCheira },
+                  { label: "Para quem é",      value: editorial.paraQuem },
+                  { label: "Quando usar",      value: editorial.quandoUsar },
+                  { label: "Como se comporta", value: editorial.comoSeComporta },
+                ].map(({ label, value }, i) => (
+                  <div key={label} style={{ marginBottom: i < 3 ? "34px" : 0 }}>
+                    <p style={{
+                      fontFamily: "var(--fonte-corpo)", fontSize: "11px",
+                      letterSpacing: "0.14em", textTransform: "uppercase",
+                      color: "var(--cor-texto-suave)", margin: "0 0 13px",
+                    }}>
+                      {label}
+                    </p>
+                    <p style={{
+                      fontFamily: "var(--fonte-corpo)",
+                      fontSize: "16px", lineHeight: 1.65,
+                      color: "var(--cor-texto)", margin: 0,
+                    }}>
+                      {value}
+                    </p>
+                  </div>
+                ))}
+              </div>
             )}
 
             {/* Onde encontrar — affiliate links */}

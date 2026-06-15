@@ -10,6 +10,7 @@ import {
   refreshCookieOptions,
 } from "@/lib/auth"
 import { loginRateLimit, getClientIp } from "@/lib/rateLimit"
+import { trackEvent } from "@/lib/analytics"
 import { loginSchema, zodError } from "@/lib/schemas"
 
 async function validateTurnstile(token: string): Promise<boolean> {
@@ -116,6 +117,7 @@ export async function POST(req: NextRequest) {
   })
 
   console.info(`[AUTH] login_success ip=${ip} userId=${user.id}`)
+  trackEvent("user_session", user.id, { ip }, user.id)
 
   const res = NextResponse.json({ user: { id: user.id, email: user.email, name: user.name } })
   res.headers.append("Set-Cookie", serializeCookie("accessToken",  accessToken,  accessCookieOptions))

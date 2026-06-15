@@ -9,6 +9,7 @@ import { scannerSchema, zodError } from "@/lib/schemas"
 import { z } from "zod"
 import { SCANNER_TONE_GUIDE } from "@/lib/aiPrompts"
 import { getEditorialContent } from "@/lib/perfumeEditorial"
+import { trackEvent } from "@/lib/analytics"
 import * as fs from "fs"
 import * as path from "path"
 
@@ -386,6 +387,14 @@ export async function POST(req: NextRequest) {
     const editorialId = expandidoMatch?.id ?? catalogMatch.id
     catalogMatch.editorial = await getEditorialContent(editorialId).catch(() => null)
   }
+
+  const sid = authUser?.userId ?? ip
+  trackEvent("scanner_used", sid, {
+    encontrado: geminiResult.found,
+    confianca: geminiResult.confidence,
+    nome: geminiResult.found ? geminiResult.name : undefined,
+    marca: geminiResult.found ? geminiResult.brand : undefined,
+  }, authUser?.userId)
 
   return NextResponse.json({ perfume: geminiResult, catalogMatch })
 }

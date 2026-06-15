@@ -3,6 +3,7 @@ import { db } from "@/lib/db"
 import { getAuthUser, unauthorized } from "@/lib/apiAuth"
 import { perfilRateLimit } from "@/lib/rateLimit"
 import { acervoPostSchema, zodError } from "@/lib/schemas"
+import { trackEvent } from "@/lib/analytics"
 
 function rl(userId: string) {
   const { allowed, retryAfter } = perfilRateLimit(userId)
@@ -55,5 +56,6 @@ export async function POST(req: NextRequest) {
     update: { perfumeName, brand, status, rating: rating ?? null, notes: notes ?? null },
   })
 
+  trackEvent("acervo_item_added", user.userId, { perfumeId, perfumeName, brand, status }, user.userId)
   return NextResponse.json({ item })
 }

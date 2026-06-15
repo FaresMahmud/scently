@@ -8,6 +8,7 @@
 "use client"
 
 import { useState, useMemo, useEffect, useRef } from "react"
+import { track } from "@/lib/analytics-client"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import type { DadosCardPerfume } from "@/components/perfume/CardPerfume"
 import { familiaParaIngles } from "@/lib/utils"
@@ -155,6 +156,16 @@ export default function CatalogClient({ perfumes }: Props) {
   const [ordenacao,    setOrdenacao]    = useState<Ordenacao>("relevancia")
   const [limite,       setLimite]       = useState(PAGE_SIZE)
   const sentinelaRef                    = useRef<HTMLDivElement>(null)
+
+  // Rastreia buscas com debounce de 1s
+  useEffect(() => {
+    const termo = busca.trim()
+    if (!termo) return
+    const t = setTimeout(() => {
+      track("catalog_search", { termo })
+    }, 1000)
+    return () => clearTimeout(t)
+  }, [busca])
 
   // Filtra + ordena
   const resultados = useMemo(() => {

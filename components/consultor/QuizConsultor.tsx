@@ -8,6 +8,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { track } from "@/lib/analytics-client"
 import SelecaoModo      from "./SelecaoModo"
 import PerguntaOpcoes   from "./PerguntaOpcoes"
 import BarraProgresso   from "./BarraProgresso"
@@ -41,6 +42,8 @@ export default function QuizConsultor() {
     setRecomendacao(null)
     setErroMsg(null)
     setEstado("pergunta")
+    track("quiz_start", { modo: modoEscolhido })
+    if (modoEscolhido === "premium") track("premium_click", { origem: "quiz_selecao" })
   }
 
   function voltar() {
@@ -61,6 +64,8 @@ export default function QuizConsultor() {
     const stored  = isMulti ? valor.split(",").filter(Boolean) : valor
     const novas   = { ...respostas, [perguntaAtual.id]: stored }
     setRespostas(novas)
+
+    track("quiz_question_answered", { modo, pergunta: passo + 1, perguntaId: perguntaAtual.id })
 
     if (passo + 1 < totalPerguntas) {
       setPasso(p => p + 1)
@@ -89,6 +94,13 @@ export default function QuizConsultor() {
       const data = await res.json() as RecomendacaoQuiz
       setRecomendacao(data)
       setEstado("resultado")
+      track("quiz_completed", { modo })
+      track("quiz_result_shown", {
+        modo,
+        perfumes: [data.ideal, data.alternativo, data.ousado]
+          .filter(Boolean)
+          .map(r => r!.nome),
+      })
     } catch (err) {
       setErroMsg(err instanceof Error ? err.message : "Erro inesperado.")
       setEstado("erro")

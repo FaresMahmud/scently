@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { getAffiliateLinks } from "@/lib/afiliados"
+import { track } from "@/lib/analytics-client"
 
 // External link icon (inline SVG — no extra dep)
 function IconExterno() {
@@ -26,7 +27,7 @@ function IconExterno() {
   )
 }
 
-function BotaoLoja({ loja, url }: { loja: string; url: string }) {
+function BotaoLoja({ loja, url, perfumeName, brand }: { loja: string; url: string; perfumeName: string; brand: string }) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -34,6 +35,7 @@ function BotaoLoja({ loja, url }: { loja: string; url: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => track("affiliate_click", { loja, perfumeName, brand })}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onTouchStart={() => setHovered(true)}
@@ -103,7 +105,7 @@ export default function OndeComprar({ perfumeName, brand }: Props) {
       {/* Buttons */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "13px" }}>
         {links.map(link => (
-          <BotaoLoja key={link.loja} loja={link.loja} url={link.url} />
+          <BotaoLoja key={link.loja} loja={link.loja} url={link.url} perfumeName={perfumeName} brand={brand} />
         ))}
       </div>
     </div>
