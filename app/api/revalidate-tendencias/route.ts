@@ -9,10 +9,11 @@ export async function POST(req: NextRequest) {
   }
 
   revalidatePath("/tendencias")
+  revalidatePath("/")
 
   return NextResponse.json({
     ok: true,
-    revalidated: "/tendencias",
+    revalidated: ["/", "/tendencias"],
     timestamp: new Date().toISOString(),
   })
 }

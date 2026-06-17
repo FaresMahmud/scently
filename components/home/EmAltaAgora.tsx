@@ -5,17 +5,15 @@
 // DEPENDE DE: lib/repositories/TendenciasRepository, components/tendencias/CardTendencia
 // ============================================
 
-import { tendenciasRepository } from "@/lib/repositories/TendenciasRepository"
+import { getTendencias } from "@/lib/tendencias"
 import CardTendencia from "@/components/tendencias/CardTendencia"
-import { slugify } from "@/lib/utils"
-import { limparNomePerfume } from "@/lib/limparNomePerfume"
 
 function limparBadge(badge: string): string {
   return badge.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}↑↓]/gu, "").trim()
 }
 
-export default function EmAltaAgora() {
-  const perfumes = tendenciasRepository.findAll().slice(0, 3)
+export default async function EmAltaAgora() {
+  const perfumes = (await getTendencias()).slice(0, 3)
 
   return (
     <section style={{ borderBottom: "1px solid var(--cor-borda)" }}>
@@ -51,7 +49,7 @@ export default function EmAltaAgora() {
               tipo={p.tipo}
               preco={p.preco_estimado}
               copy={p.descricaoSensorial}
-              perfumeId={`${slugify(limparNomePerfume(p.nome, p.marca))}-${slugify(p.marca)}`}
+              perfumeId={p.perfumeId ?? undefined}
             />
           ))}
         </div>
