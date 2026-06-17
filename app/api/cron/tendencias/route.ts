@@ -1,11 +1,16 @@
 // ============================================
 // ARQUIVO: app/api/cron/tendencias/route.ts
-// O QUE FAZ: endpoint chamado pelo Cron Job do Vercel toda segunda-feira
-// DEPENDE DE: SCRAPINGBEE_API_KEY, CRON_SECRET, DATABASE_URL
+// O QUE FAZ: job semanal — Gemini grounding + Google Trends → top 5 tendências
+// DEPENDE DE: GEMINI_API_KEY, CRON_SECRET, DATABASE_URL
+// DRY-RUN: GET /api/cron/tendencias?dryRun=true  (não escreve no banco)
 // ============================================
 
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
+import { GoogleGenerativeAI } from "@google/generative-ai"
+import { buscarNoCatalogo, carregarCatalogo } from "@/lib/catalogoFragella"
+// @ts-expect-error — google-trends-api has no type definitions
+import googleTrends from "google-trends-api"
 
 const MARCAS_CONTRATIPOS = ["in the box", "maison viegas", "ja essence", "azza parfum", "essencia e perfume"]
 const MARCAS_NACIONAIS   = ["o boticário", "boticario", "natura", "eudora", "avon", "jequiti"]
@@ -17,164 +22,422 @@ function tipoDaMarca(marca: string): "importado" | "contratipo" | "nacional" {
   return "importado"
 }
 
-function decodeHtml(s: string): string {
-  // SECURITY: Strip all HTML tags first, then decode entities.
-  // Prevents stored XSS if scraping returns crafted markup.
-  const stripped = s.replace(/<[^>]+>/g, "")
-  return stripped
-    .replace(/&amp;/g, "&").replace(/&nbsp;/g, " ")
-    .replace(/&agrave;/g, "à").replace(/&aacute;/g, "á").replace(/&atilde;/g, "ã")
-    .replace(/&eacute;/g, "é").replace(/&ecirc;/g, "ê")
-    .replace(/&oacute;/g, "ó").replace(/&ocirc;/g, "ô").replace(/&otilde;/g, "õ")
-    .replace(/&ccedil;/g, "ç")
-    .replace(/&#(\d+);/g, (_, n: string) => {
-      const code = parseInt(n)
-      // SECURITY: Only allow printable ASCII and accented Latin chars
-      if (code < 32 || (code > 127 && code < 160)) return ""
-      return String.fromCharCode(code)
-    })
-    // SECURITY: Final pass — remove any remaining angle brackets that could encode tags
-    .replace(/[<>]/g, "")
-    .trim()
-    // Limit length to prevent DB pollution
-    .slice(0, 100)
+function slugify(s: string): string {
+  return s.toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
 }
 
-interface PerfumeRaspado {
+interface CandidatoGemini {
   nome: string
   marca: string
-  preco?: number
-  fonte: string
+  genero: "masculino" | "feminino" | "unissex"
+  posicaoGemini: number
 }
 
-async function scraperBee(url: string, render_js = false): Promise<string> {
-  const chave = process.env.SCRAPINGBEE_API_KEY
-  if (!chave) throw new Error("SCRAPINGBEE_API_KEY não configurada")
-  const params = new URLSearchParams({
-    api_key: chave,
-    url,
-    render_js: render_js ? "true" : "false",
-    premium_proxy: "false",
-    block_resources: render_js ? "false" : "true",
+interface CandidatoScorado extends CandidatoGemini {
+  perfumeId: string | null
+  temEditorial: boolean
+  scoreGemini: number
+  scoreTrends: number
+  boostEditorial: number
+  scoreTotal: number
+}
+
+// ── Fase 1: Gemini com grounding ──────────────────────────────────────────────
+
+async function buscarCandidatosGemini(): Promise<CandidatoGemini[]> {
+  const chave = process.env.GEMINI_API_KEY
+  if (!chave) throw new Error("GEMINI_API_KEY não configurada")
+
+  const genAI = new GoogleGenerativeAI(chave)
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    tools: [{ googleSearch: {} } as never],
   })
-  const res = await fetch(`https://app.scrapingbee.com/api/v1/?${params}`)
-  if (!res.ok) throw new Error(`ScrapingBee ${res.status}`)
-  return res.text()
-}
 
-async function raspaSephora(): Promise<PerfumeRaspado[]> {
-  const urls = [
-    "https://www.sephora.com.br/perfumes/masculino?ordenacao=mais-vendidos",
-    "https://www.sephora.com.br/perfumes/feminino?ordenacao=mais-vendidos",
-  ]
-  const lista: PerfumeRaspado[] = []
-  for (const url of urls) {
-    try {
-      const html = await scraperBee(url, true)
-      const nomes  = [...html.matchAll(/(?:data-product-name|data-name|itemprop="name")="([^"]{3,80})"/gi)].map(m => decodeHtml(m[1]))
-      const marcas = [...html.matchAll(/(?:data-brand|data-product-brand|itemprop="brand")="([^"]{2,60})"/gi)].map(m => decodeHtml(m[1]))
-      for (let i = 0; i < Math.min(nomes.length, marcas.length, 20); i++) {
-        if (nomes[i] && marcas[i]) lista.push({ nome: nomes[i], marca: marcas[i], fonte: "sephora" })
-      }
-    } catch { /* fonte opcional */ }
-  }
-  return lista
-}
+  const hoje = new Date().toLocaleDateString("pt-BR", {
+    day:   "numeric",
+    month: "long",
+    year:  "numeric",
+  })
 
-async function raspaFragrantica(): Promise<PerfumeRaspado[]> {
-  const lista: PerfumeRaspado[] = []
+  const prompt = `Você é um especialista em perfumaria no Brasil.
+Pesquise e liste os 10 perfumes masculinos E 10 perfumes femininos mais buscados e comentados no Brasil na semana de ${hoje}.
+Considere: TikTok, Instagram, Mercado Livre, Amazon BR, Sephora Brasil, Pinterest e mídia especializada.
+Priorize perfumes importados de marcas reconhecidas (Dior, Chanel, YSL, Tom Ford, Armani, Lancôme, etc).
+
+Retorne APENAS um JSON válido, sem markdown, sem texto antes ou depois:
+[
+  {"nome": "nome do perfume", "marca": "nome da marca", "genero": "masculino|feminino|unissex", "posicaoGemini": 1},
+  ...
+]
+
+Regras:
+- posicaoGemini: 1 a 20 (1 = mais procurado)
+- Total: exatamente 20 itens (10 masculinos + 10 femininos)
+- nome: sem a marca, apenas o nome do produto
+- marca: apenas o nome da marca
+- genero: "masculino", "feminino" ou "unissex"`
+
+  const result = await model.generateContent(prompt)
+  const texto  = result.response.text().trim()
+
+  // Remover possível markdown ```json ... ```
+  const limpo = texto.replace(/^```(?:json)?\n?/i, "").replace(/\n?```$/i, "").trim()
+
+  let parsed: unknown
   try {
-    const html   = await scraperBee("https://www.fragrantica.com.br/perfumes/mais-populares/", false)
-    const nomes  = [...html.matchAll(/itemprop="name"[^>]*>([^<]{2,80})</gi)].map(m => decodeHtml(m[1]))
-    const marcas = [...html.matchAll(/itemprop="brand"[^>]*>([^<]{2,60})</gi)].map(m => decodeHtml(m[1]))
-    for (let i = 0; i < Math.min(nomes.length, marcas.length, 30); i++) {
-      if (nomes[i] && marcas[i]) lista.push({ nome: nomes[i], marca: marcas[i], fonte: "fragrantica" })
-    }
-  } catch { /* fonte opcional */ }
-  return lista
+    parsed = JSON.parse(limpo)
+  } catch {
+    throw new Error(`Gemini retornou JSON inválido. Raw: ${texto.slice(0, 500)}`)
+  }
+
+  if (!Array.isArray(parsed)) {
+    throw new Error(`Gemini não retornou array. Tipo: ${typeof parsed}`)
+  }
+
+  const candidatos: CandidatoGemini[] = (parsed as Record<string, unknown>[])
+    .filter(item =>
+      typeof item.nome  === "string" && item.nome.trim().length > 0 &&
+      typeof item.marca === "string" && item.marca.trim().length > 0 &&
+      typeof item.posicaoGemini === "number"
+    )
+    .map(item => ({
+      nome:          String(item.nome).trim().slice(0, 100),
+      marca:         String(item.marca).trim().slice(0, 80),
+      genero:        (["masculino","feminino","unissex"].includes(String(item.genero))
+                       ? String(item.genero)
+                       : "unissex") as CandidatoGemini["genero"],
+      posicaoGemini: Number(item.posicaoGemini),
+    }))
+
+  return candidatos
 }
+
+// ── Fase 2: Google Trends (com fallback silencioso) ───────────────────────────
+
+async function buscarScoresTrends(
+  candidatos: CandidatoGemini[]
+): Promise<Record<string, number>> {
+  const scores: Record<string, number> = {}
+  const seteDiasAtras = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+
+  // Trends aceita max 5 keywords por chamada
+  const batches: CandidatoGemini[][] = []
+  for (let i = 0; i < candidatos.length; i += 5) {
+    batches.push(candidatos.slice(i, i + 5))
+  }
+
+  for (const batch of batches) {
+    try {
+      const keywords = batch.map(c => `${c.nome} ${c.marca}`)
+      const raw = await googleTrends.interestOverTime({
+        keyword:   keywords,
+        geo:       "BR",
+        startTime: seteDiasAtras,
+      })
+      const data = JSON.parse(raw) as {
+        default: { timelineData: { value: number[] }[] }
+      }
+      const pontos = data?.default?.timelineData ?? []
+
+      batch.forEach((c, idx) => {
+        const chave = slugify(`${c.nome} ${c.marca}`)
+        const valores = pontos.map((p: { value: number[] }) => p.value[idx] ?? 0)
+        const media = valores.length > 0
+          ? valores.reduce((a: number, b: number) => a + b, 0) / valores.length
+          : 0
+        scores[chave] = Math.round(media)
+      })
+    } catch {
+      // Batch falhou — não propagamos, apenas ignoramos esse batch
+    }
+  }
+
+  return scores
+}
+
+// ── Endpoint principal ────────────────────────────────────────────────────────
 
 export async function GET(request: Request) {
-  const secret = process.env.CRON_SECRET
+  const inicio = Date.now()
+  const url    = new URL(request.url)
+  const dryRun = url.searchParams.get("dryRun") === "true"
 
-  // Vercel's edge can strip the Authorization header — accept both forms:
-  // 1. Authorization: Bearer <secret>  (Vercel cron default)
-  // 2. x-cron-secret: <secret>         (resilient fallback, never stripped)
+  const secret = process.env.CRON_SECRET
   const authHeader   = request.headers.get("authorization")
   const customHeader = request.headers.get("x-cron-secret")
-
-  const authorized =
-    authHeader === `Bearer ${secret}` ||
-    customHeader === secret
+  const authorized   = authHeader === `Bearer ${secret}` || customHeader === secret
 
   if (!authorized) {
-    return NextResponse.json({ erro: "Não autorizado" }, { status: 401 })
+    return NextResponse.json({ erro: "Não autorizado." }, { status: 401 })
   }
 
-  const inicio = Date.now()
+  const log = (nivel: "INFO" | "ERROR" | "DEBUG", msg: string, dados?: unknown) => {
+    const linha = `[tendencias-cron][${nivel}] ${msg}`
+    if (dados !== undefined) {
+      console.error(linha, JSON.stringify(dados, null, 2))
+    } else {
+      console.error(linha)
+    }
+  }
 
-  const [resSephora, resFragrantica] = await Promise.allSettled([
-    raspaSephora(),
-    raspaFragrantica(),
-  ])
+  log("INFO", `Iniciando job${dryRun ? " [DRY-RUN]" : ""}`)
 
-  const sephora     = resSephora.status     === "fulfilled" ? resSephora.value     : []
-  const fragrantica = resFragrantica.status === "fulfilled" ? resFragrantica.value : []
-
-  // Deduplicate
-  const vistos = new Set<string>()
-  const todos  = [...sephora, ...fragrantica].filter(p => {
-    const chave = `${p.marca.toLowerCase()}|${p.nome.toLowerCase()}`
-    if (vistos.has(chave)) return false
-    vistos.add(chave)
-    return true
-  })
-
-  const badges = ["🔥 Em alta", "⭐ Popular", "✨ Destaque", "💎 Top vendas"]
-  const lote   = todos.slice(0, 20)
-
-  // Upsert each trend into the database
-  const agora = new Date()
-  const upserts = lote.map((p, i) =>
-    db.tendencia.upsert({
-      where:  { nome_marca: { nome: p.nome, marca: p.marca } },
-      create: {
-        nome:     p.nome,
-        marca:    p.marca,
-        tipo:     tipoDaMarca(p.marca),
-        preco:    p.preco ? `R$ ${Math.round(p.preco).toLocaleString("pt-BR")}` : null,
-        badge:    badges[i % badges.length],
-        posicao:  i,
-        fonte:    p.fonte,
-        scrapedAt: agora,
-      },
-      update: {
-        tipo:     tipoDaMarca(p.marca),
-        preco:    p.preco ? `R$ ${Math.round(p.preco).toLocaleString("pt-BR")}` : null,
-        badge:    badges[i % badges.length],
-        posicao:  i,
-        fonte:    p.fonte,
-        scrapedAt: agora,
-      },
-    })
-  )
-
-  await Promise.all(upserts)
-
-  // Trigger ISR revalidation
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
   try {
-    await fetch(`${baseUrl}/api/revalidate-tendencias`, {
-      method: "POST",
-      headers: { "x-cron-secret": process.env.CRON_SECRET ?? "" },
-    })
-  } catch { /* non-fatal */ }
+    // ── Fase 1: Gemini ────────────────────────────────────────────────────────
+    log("INFO", "Fase 1: buscando candidatos no Gemini com grounding...")
+    let candidatosGemini: CandidatoGemini[]
+    try {
+      candidatosGemini = await buscarCandidatosGemini()
+    } catch (err) {
+      log("ERROR", "Gemini falhou — abortando, banco não será alterado", { erro: String(err) })
+      return NextResponse.json({ ok: false, erro: "Gemini falhou", detalhes: String(err) }, { status: 500 })
+    }
 
-  return NextResponse.json({
-    ok: true,
-    atualizados: lote.length,
-    fontes: { sephora: sephora.length, fragrantica: fragrantica.length },
-    timestamp: agora.toISOString(),
-    duracao_ms: Date.now() - inicio,
-  })
+    log("INFO", `Gemini retornou ${candidatosGemini.length} candidatos (bruto)`, candidatosGemini)
+
+    if (candidatosGemini.length < 5) {
+      log("ERROR", `Gemini retornou apenas ${candidatosGemini.length} candidatos — mínimo 5. Abortando.`)
+      return NextResponse.json({ ok: false, erro: "Poucos candidatos do Gemini", quantidade: candidatosGemini.length }, { status: 500 })
+    }
+
+    // ── Fase 2: Google Trends ─────────────────────────────────────────────────
+    log("INFO", "Fase 2: buscando scores no Google Trends...")
+    let scoresTrends: Record<string, number> = {}
+    let trendsDisponivel = false
+    try {
+      scoresTrends    = await buscarScoresTrends(candidatosGemini)
+      trendsDisponivel = Object.keys(scoresTrends).length > 0
+      log("INFO", `Google Trends: ${trendsDisponivel ? "disponível" : "sem dados"}`, scoresTrends)
+    } catch (err) {
+      log("INFO", "Google Trends indisponível — usando só Gemini (100%)", { erro: String(err) })
+    }
+
+    // ── Fase 3: Buscar dados do catálogo + editorial ──────────────────────────
+    log("INFO", "Fase 3: cruzando com catálogo Nozze e PerfumeEditorial...")
+
+    // Catálogo é JSON em memória — busca por nome+marca substring
+    // Para cada candidato: pega o primeiro match e extrai o id canônico
+    carregarCatalogo() // aquece o cache (sync)
+    const candidatosComCatalogo = candidatosGemini.map(c => {
+      const resultados = buscarNoCatalogo(`${c.nome} ${c.marca}`, 3)
+      // Confirma: o resultado deve conter tanto o nome quanto a marca do candidato
+      const match = resultados.find(r => {
+        const rNome  = r.nome.toLowerCase()
+        const rMarca = r.marca.toLowerCase()
+        const cNome  = c.nome.toLowerCase()
+        const cMarca = c.marca.toLowerCase()
+        return (rNome.includes(cNome) || cNome.includes(rNome.split(" ")[0])) &&
+               (rMarca.includes(cMarca) || cMarca.includes(rMarca.split(" ")[0]))
+      })
+      return { ...c, perfumeIdCatalogo: match?.id ?? null }
+    })
+
+    const slugsNoCatalogo = candidatosComCatalogo
+      .filter(c => c.perfumeIdCatalogo !== null)
+      .map(c => c.perfumeIdCatalogo as string)
+
+    const [perfumesComEditorial, blocklist, pinnados] = await Promise.all([
+      db.perfumeEditorial.findMany({
+        where:  { perfumeId: { in: slugsNoCatalogo } },
+        select: { perfumeId: true },
+      }),
+      db.tendenciaBlocklist.findMany({ select: { nomeMarca: true } }),
+      db.tendencia.findMany({
+        where:   { pinned: true, ativo: true },
+        orderBy: { posicao: "asc" },
+      }),
+    ])
+
+    const editorialSet  = new Set(perfumesComEditorial.map(p => p.perfumeId))
+    const blocklistSet  = new Set(blocklist.map(b => b.nomeMarca))
+
+    const noCatalogoCount = candidatosComCatalogo.filter(c => c.perfumeIdCatalogo !== null).length
+    log("INFO", `Catálogo: ${noCatalogoCount} matches | Editorial: ${editorialSet.size} | Blocklist: ${blocklistSet.size} | Pins: ${pinnados.length}`)
+
+    // ── Fase 4: Score composto ────────────────────────────────────────────────
+    log("INFO", "Fase 4: calculando scores compostos...")
+    const candidatosScorados: CandidatoScorado[] = candidatosComCatalogo.map(c => {
+      const slug         = slugify(`${c.nome} ${c.marca}`)
+      const scoreGemini  = Math.round(((20 - c.posicaoGemini) / 19) * 100)
+      const scoreTrends  = scoresTrends[slug] ?? 0
+      const temEditorial = c.perfumeIdCatalogo !== null && editorialSet.has(c.perfumeIdCatalogo)
+      const boostEditorial = temEditorial ? 10 : 0
+
+      const scoreTotal = trendsDisponivel
+        ? Math.round(scoreGemini * 0.6 + scoreTrends * 0.4) + boostEditorial
+        : scoreGemini + boostEditorial
+
+      return {
+        ...c,
+        perfumeId:    c.perfumeIdCatalogo,
+        temEditorial,
+        scoreGemini,
+        scoreTrends,
+        boostEditorial,
+        scoreTotal,
+      }
+    })
+
+    log("DEBUG", "Scores detalhados (todos os candidatos)", candidatosScorados.map(c => ({
+      nome:            c.nome,
+      marca:           c.marca,
+      perfumeId:       c.perfumeId,
+      temEditorial:    c.temEditorial,
+      scoreGemini:     c.scoreGemini,
+      scoreTrends:     c.scoreTrends,
+      boostEditorial:  c.boostEditorial,
+      scoreTotal:      c.scoreTotal,
+      noCatalogo:      c.perfumeId !== null,
+    })))
+
+    // ── Fase 5: Filtros ───────────────────────────────────────────────────────
+    const aposFiltroCatalogo = candidatosScorados.filter(c => c.perfumeId !== null)
+    log("INFO", `Após filtro catálogo: ${aposFiltroCatalogo.length}`, aposFiltroCatalogo.map(c => `${c.nome} - ${c.marca}`))
+
+    const aposBlocklist = aposFiltroCatalogo.filter(c => {
+      const chave = `${c.nome.toLowerCase()}|${c.marca.toLowerCase()}`
+      return !blocklistSet.has(chave)
+    })
+    log("INFO", `Após filtro blocklist: ${aposBlocklist.length}`, aposBlocklist.map(c => `${c.nome} - ${c.marca}`))
+
+    if (aposBlocklist.length < 5) {
+      log("ERROR", `Apenas ${aposBlocklist.length} candidatos válidos após filtros — mínimo 5. Abortando para não degradar tendências.`)
+      return NextResponse.json({
+        ok: false,
+        erro: "Candidatos insuficientes após filtros",
+        aposFiltroCatalogo: aposFiltroCatalogo.length,
+        aposBlocklist: aposBlocklist.length,
+      }, { status: 500 })
+    }
+
+    // ── Fase 6: Selecionar top 5 respeitando pins ─────────────────────────────
+    const vagasDisponiveis = Math.max(0, 5 - pinnados.length)
+    const ordenados = [...aposBlocklist].sort((a, b) => b.scoreTotal - a.scoreTotal)
+    const novasTendencias = ordenados.slice(0, vagasDisponiveis)
+
+    log("INFO", `Pins existentes (${pinnados.length})`, pinnados.map(p => `pos${p.posicao}: ${p.nome} - ${p.marca}`))
+    log("INFO", `Top ${vagasDisponiveis} automáticos escolhidos`, novasTendencias.map((c, i) => `pos${pinnados.length + i + 1}: ${c.nome} - ${c.marca} (score ${c.scoreTotal})`))
+
+    const fonteValor = trendsDisponivel ? "gemini+trends" : "gemini"
+
+    if (dryRun) {
+      const duracao = Date.now() - inicio
+      log("INFO", `[DRY-RUN] Simulação concluída em ${duracao}ms — banco NÃO alterado`)
+      return NextResponse.json({
+        ok:           true,
+        dryRun:       true,
+        duracao_ms:   duracao,
+        trendsDisponivel,
+        fonte:        fonteValor,
+        pins:         pinnados.map(p => ({ nome: p.nome, marca: p.marca, posicao: p.posicao })),
+        novasTendencias: novasTendencias.map((c, i) => ({
+          posicao:       pinnados.length + i + 1,
+          nome:          c.nome,
+          marca:         c.marca,
+          genero:        c.genero,
+          perfumeId:     c.perfumeId,
+          temEditorial:  c.temEditorial,
+          scoreGemini:   c.scoreGemini,
+          scoreTrends:   c.scoreTrends,
+          boostEditorial: c.boostEditorial,
+          scoreTotal:    c.scoreTotal,
+        })),
+        candidatosDescartados: {
+          semCatalogo:  candidatosScorados.filter(c => c.perfumeId === null).map(c => `${c.nome} - ${c.marca}`),
+          naBlocklist:  aposFiltroCatalogo.filter(c => {
+            const chave = `${c.nome.toLowerCase()}|${c.marca.toLowerCase()}`
+            return blocklistSet.has(chave)
+          }).map(c => `${c.nome} - ${c.marca}`),
+        },
+      })
+    }
+
+    // ── Fase 7: Escrever no banco ─────────────────────────────────────────────
+    log("INFO", "Fase 7: atualizando banco de dados...")
+    const agora = new Date()
+
+    // Desativar automáticos antigos (não toca nos pins)
+    await db.tendencia.updateMany({
+      where: {
+        pinned: false,
+        ativo:  true,
+        fonte:  { in: ["gemini", "gemini+trends", "sephora", "fragrantica"] },
+      },
+      data: { ativo: false },
+    })
+
+    // Upsert novos automáticos
+    for (let i = 0; i < novasTendencias.length; i++) {
+      const c       = novasTendencias[i]
+      const posicao = pinnados.length + i + 1
+      const badges  = ["🔥 Em alta", "⭐ Popular", "✨ Destaque", "💎 Top vendas", "📈 Subindo"]
+
+      await db.tendencia.upsert({
+        where:  { nome_marca: { nome: c.nome, marca: c.marca } },
+        create: {
+          nome:          c.nome,
+          marca:         c.marca,
+          tipo:          tipoDaMarca(c.marca),
+          badge:         badges[i % badges.length],
+          posicao,
+          fonte:         fonteValor,
+          perfumeId:     c.perfumeId,
+          tendencyScore: c.scoreTotal,
+          ativo:         true,
+          pinned:        false,
+          scrapedAt:     agora,
+        },
+        update: {
+          tipo:          tipoDaMarca(c.marca),
+          badge:         badges[i % badges.length],
+          posicao,
+          fonte:         fonteValor,
+          perfumeId:     c.perfumeId,
+          tendencyScore: c.scoreTotal,
+          ativo:         true,
+          pinned:        false,
+          scrapedAt:     agora,
+        },
+      })
+    }
+
+    // Revalidar ISR
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nozze.app"
+    try {
+      await fetch(`${baseUrl}/api/revalidate-tendencias`, {
+        method:  "POST",
+        headers: { "x-cron-secret": process.env.CRON_SECRET ?? "" },
+      })
+      log("INFO", "ISR revalidado: / e /tendencias")
+    } catch (err) {
+      log("INFO", "ISR revalidation falhou (não fatal)", { erro: String(err) })
+    }
+
+    const duracao = Date.now() - inicio
+    log("INFO", `Job concluído em ${duracao}ms. ${novasTendencias.length} tendências escritas, ${pinnados.length} pins preservados.`)
+
+    return NextResponse.json({
+      ok:               true,
+      duracao_ms:       duracao,
+      trendsDisponivel,
+      fonte:            fonteValor,
+      pinsPreservados:  pinnados.length,
+      novasInseridas:   novasTendencias.length,
+      tendencias:       novasTendencias.map((c, i) => ({
+        posicao:   pinnados.length + i + 1,
+        nome:      c.nome,
+        marca:     c.marca,
+        scoreTotal: c.scoreTotal,
+      })),
+    })
+
+  } catch (err) {
+    const duracao = Date.now() - inicio
+    log("ERROR", `Erro não esperado após ${duracao}ms`, { erro: String(err), stack: err instanceof Error ? err.stack : undefined })
+    return NextResponse.json({ ok: false, erro: String(err) }, { status: 500 })
+  }
 }

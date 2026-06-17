@@ -153,10 +153,22 @@ model Tendencia {
   estacao       Boolean  @default(false)
   marcaDestaque Boolean  @default(false)
   ativo         Boolean  @default(true)
+  pinned        Boolean  @default(false)
+  tendencyScore Float?   @map("tendency_score")
   scrapedAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   @@unique([nome, marca])
   @@index([scrapedAt])
+  @@index([pinned, ativo])
   @@map("tendencias")
+}
+
+model TendenciaBlocklist {
+  id        String   @id @default(uuid())
+  nomeMarca String   @unique @map("nome_marca")
+  motivo    String?
+  criadoEm  DateTime @default(now()) @map("criado_em")
+
+  @@map("tendencias_blocklist")
 }

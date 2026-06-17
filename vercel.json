@@ -1,5 +1,5 @@
 {
-  "crons": [
+  "_crons_disabled_until_dry_run_approved": [
     {
       "path": "/api/cron/tendencias",
       "schedule": "0 3 * * 1"

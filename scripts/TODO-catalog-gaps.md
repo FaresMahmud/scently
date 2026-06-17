@@ -1,3 +1,20 @@
+# TODO — Catalog Gaps & Enrichment Priorities
+
+## HIGH PRIORITY — Tendências automáticas (Gemini algorithm)
+
+**Enriquecer os 11.000+ perfumes restantes do catálogo que não têm PerfumeEditorial linkado.**
+
+Impacto direto no algoritmo de tendências automáticas: candidatos com `PerfumeEditorial` ganham
++10 pontos no score composto, sendo priorizados sobre perfumes sem editorial. Quanto mais perfumes
+enriquecidos existirem, mais opções de qualidade o algoritmo tem para escolher nos top 5 semanais.
+
+Prioridade de enriquecimento:
+1. Perfumes das marcas mais frequentes nas tendências (Dior, Chanel, YSL, Tom Ford, Armani, Lancôme)
+2. Perfumes com alto rating/popularidade no catálogo (`perfumesPopulares()`)
+3. Clássicos masculinos e femininos (Sauvage, Bleu de Chanel, La Vie est Belle, etc.)
+
+---
+
 # TODO — Catalog Gaps (Tendencia entries with no catalog match)
 
 These perfumes exist in the `tendencias` DB table but have no matching entry
