@@ -8,7 +8,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { GoogleGenerativeAI } from "@google/generative-ai"
-import { buscarNoCatalogo, carregarCatalogo } from "@/lib/catalogoFragella"
+import { buscarNoCatalogo, carregarCatalogo, buscarPerfumePorSlug } from "@/lib/catalogoFragella"
 // @ts-expect-error — google-trends-api has no type definitions
 import googleTrends from "google-trends-api"
 
@@ -219,11 +219,30 @@ export async function GET(request: Request) {
     // ── Fase 3: Buscar dados do catálogo + editorial ──────────────────────────
     log("INFO", "Fase 3: cruzando com catálogo Nozze e PerfumeEditorial...")
 
+    // ── DEBUG: candidatos brutos do Gemini ───────────────────────────────────
+    log("DEBUG", "Lista bruta do Gemini (20 candidatos)", candidatosGemini.map(c => ({
+      posicao: c.posicaoGemini,
+      nome:    c.nome,
+      marca:   c.marca,
+      genero:  c.genero,
+    })))
+
+    // ── DEBUG: tendencias atuais no banco (perfumeId format de referência) ────
+    const tendenciasAtuais = await db.tendencia.findMany({
+      where:   { ativo: true },
+      orderBy: { posicao: "asc" },
+      take:    10,
+      select:  { nome: true, marca: true, perfumeId: true, fonte: true },
+    })
+    log("DEBUG", "Tendencias atualmente no banco (para comparar formato de ID)", tendenciasAtuais)
+
     // Catálogo é JSON em memória — busca por nome+marca substring
     // Para cada candidato: pega o primeiro match e extrai o id canônico
     carregarCatalogo() // aquece o cache (sync)
     const candidatosComCatalogo = candidatosGemini.map(c => {
-      const resultados = buscarNoCatalogo(`${c.nome} ${c.marca}`, 3)
+      const queryBusca = `${c.nome} ${c.marca}`
+      const slugGerado = slugify(queryBusca)
+      const resultados = buscarNoCatalogo(queryBusca, 3)
       // Confirma: o resultado deve conter tanto o nome quanto a marca do candidato
       const match = resultados.find(r => {
         const rNome  = r.nome.toLowerCase()
@@ -233,6 +252,18 @@ export async function GET(request: Request) {
         return (rNome.includes(cNome) || cNome.includes(rNome.split(" ")[0])) &&
                (rMarca.includes(cMarca) || cMarca.includes(rMarca.split(" ")[0]))
       })
+
+      // ── DEBUG: log de cada candidato ───────────────────────────────────────
+      const slugMatch = buscarPerfumePorSlug(slugGerado)
+      log("DEBUG", `MATCH [${c.posicaoGemini}] "${c.nome}" / "${c.marca}"`, {
+        queryBusca,
+        slugGerado,
+        buscarNoCatalogo_resultados: resultados.map(r => ({ id: r.id, nome: r.nome, marca: r.marca })),
+        buscarNoCatalogo_match:      match ? { id: match.id, nome: match.nome, marca: match.marca } : null,
+        buscarPerfumePorSlug_result: slugMatch ? { id: slugMatch.id, nome: slugMatch.nome, marca: slugMatch.marca } : null,
+        encontrado:                  match !== undefined || slugMatch !== null,
+      })
+
       return { ...c, perfumeIdCatalogo: match?.id ?? null }
     })
 
