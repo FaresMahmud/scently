@@ -8,7 +8,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { GoogleGenerativeAI } from "@google/generative-ai"
-import { buscarNoCatalogo, carregarCatalogo, buscarPerfumePorSlug } from "@/lib/catalogoFragella"
+import { carregarCatalogo, buscarPerfumePorSlug } from "@/lib/catalogoFragella"
 // @ts-expect-error — google-trends-api has no type definitions
 import googleTrends from "google-trends-api"
 
@@ -27,6 +27,40 @@ function slugify(s: string): string {
     .normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")
+}
+
+// FIX 3: remove gender suffixes so "212 VIP Men" → "212 VIP", "Light Blue Pour Homme" → "Light Blue"
+function removerSufixoGenero(nome: string): string {
+  return nome
+    .replace(/\b(pour homme|pour femme|for men|for women|men|women|homme|femme)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+// FIX 2: warn when catalog match has > 2× words of candidate (likely a flanker)
+function isAmbiguousMatch(nomeCandidate: string, nomeMatch: string): boolean {
+  const wCand  = nomeCandidate.trim().split(/\s+/).length
+  const wMatch = nomeMatch.trim().split(/\s+/).length
+  return wMatch > wCand * 2
+}
+
+// GENDER GUARD — PASSO 1: detecta gênero por tokens no texto (testa feminino ANTES de masculino)
+function detectarGenero(texto: string): "masculino" | "feminino" | "neutro" {
+  const t = texto.toLowerCase()
+  // feminino primeiro — "for women" contém "men", teste inverso daria falso positivo masculino
+  if (/\b(pour femme|for women|femme|women|feminino)\b/.test(t)) return "feminino"
+  if (/\b(pour homme|for men|homme|men|masculino)\b/.test(t))    return "masculino"
+  return "neutro"
+}
+
+// GENDER GUARD — PASSO 2: mapeia campo genero do catálogo fragella para nosso vocabulário
+// Valores conhecidos: 'women', 'men', 'Men' (typo), 'unisex', ''
+function mapearGeneroFragella(genero: string): "masculino" | "feminino" | "neutro" {
+  const g = (genero ?? "").toLowerCase().trim()
+  if (g === "women")                     return "feminino"
+  if (g === "men")                       return "masculino"
+  if (g === "unisex" || g === "")        return "neutro"
+  return "neutro" // qualquer valor inesperado → neutro (conservador)
 }
 
 interface CandidatoGemini {
@@ -236,32 +270,53 @@ export async function GET(request: Request) {
     })
     log("DEBUG", "Tendencias atualmente no banco (para comparar formato de ID)", tendenciasAtuais)
 
-    // Catálogo é JSON em memória — busca por nome+marca substring
-    // Para cada candidato: pega o primeiro match e extrai o id canônico
+    // Catálogo é JSON em memória — usa buscarPerfumePorSlug (fuzzy word-level match)
     carregarCatalogo() // aquece o cache (sync)
     const candidatosComCatalogo = candidatosGemini.map(c => {
-      const queryBusca = `${c.nome} ${c.marca}`
-      const slugGerado = slugify(queryBusca)
-      const resultados = buscarNoCatalogo(queryBusca, 3)
-      // Confirma: o resultado deve conter tanto o nome quanto a marca do candidato
-      const match = resultados.find(r => {
-        const rNome  = r.nome.toLowerCase()
-        const rMarca = r.marca.toLowerCase()
-        const cNome  = c.nome.toLowerCase()
-        const cMarca = c.marca.toLowerCase()
-        return (rNome.includes(cNome) || cNome.includes(rNome.split(" ")[0])) &&
-               (rMarca.includes(cMarca) || cMarca.includes(rMarca.split(" ")[0]))
-      })
+      // FIX 1: slug-based lookup (fuzzy) substitui buscarNoCatalogo (substring exact)
+      const slugPrimario = slugify(`${c.nome} ${c.marca}`)
+      let match = buscarPerfumePorSlug(slugPrimario)
 
-      // ── DEBUG: log de cada candidato ───────────────────────────────────────
-      const slugMatch = buscarPerfumePorSlug(slugGerado)
+      // FIX 3: se não achou, tentar removendo sufixo de gênero do nome + GENDER GUARD
+      let usouVariacao = false
+      let guardGeneroLog: string | undefined
+      if (!match) {
+        const nomeSemSufixo = removerSufixoGenero(c.nome)
+        if (nomeSemSufixo !== c.nome) {
+          const slugVariacao    = slugify(`${nomeSemSufixo} ${c.marca}`)
+          const candidatoVaria  = buscarPerfumePorSlug(slugVariacao)
+
+          if (candidatoVaria) {
+            const generoScan      = detectarGenero(c.nome)
+            const generoCandidato = mapearGeneroFragella((candidatoVaria as unknown as { genero?: string }).genero ?? "")
+
+            if (generoScan === "neutro") {
+              match = candidatoVaria
+              usouVariacao = true
+              guardGeneroLog = `ok — nome neutro, sem restrição de gênero`
+            } else if (generoCandidato === generoScan) {
+              match = candidatoVaria
+              usouVariacao = true
+              guardGeneroLog = `ok — "${c.nome}" (${generoScan}) → candidato ${generoCandidato}`
+            } else {
+              // REJEITAR: oposto ou neutro/ambíguo com gênero explícito no scan
+              guardGeneroLog = `rejeitado — "${c.nome}" (${generoScan}) casou com "${candidatoVaria.nome}" (${generoCandidato}); caindo para sem match`
+            }
+          }
+        }
+      }
+
+      // FIX 2: warning quando match parece ser flanker (nome do resultado > 2× palavras do candidato)
+      const ambiguo = match !== null && isAmbiguousMatch(c.nome, match.nome)
+
       log("DEBUG", `MATCH [${c.posicaoGemini}] "${c.nome}" / "${c.marca}"`, {
-        queryBusca,
-        slugGerado,
-        buscarNoCatalogo_resultados: resultados.map(r => ({ id: r.id, nome: r.nome, marca: r.marca })),
-        buscarNoCatalogo_match:      match ? { id: match.id, nome: match.nome, marca: match.marca } : null,
-        buscarPerfumePorSlug_result: slugMatch ? { id: slugMatch.id, nome: slugMatch.nome, marca: slugMatch.marca } : null,
-        encontrado:                  match !== undefined || slugMatch !== null,
+        slugPrimario,
+        usouVariacao,
+        nomeSemSufixo: usouVariacao ? removerSufixoGenero(c.nome) : undefined,
+        match:         match ? { id: match.id, nome: match.nome, marca: match.marca } : null,
+        encontrado:    match !== null,
+        guardGenero:   guardGeneroLog,
+        aviso:         ambiguo ? `FLANKER? resultado "${match!.nome}" tem mais palavras que candidato "${c.nome}"` : undefined,
       })
 
       return { ...c, perfumeIdCatalogo: match?.id ?? null }
@@ -334,6 +389,11 @@ export async function GET(request: Request) {
       return !blocklistSet.has(chave)
     })
     log("INFO", `Após filtro blocklist: ${aposBlocklist.length}`, aposBlocklist.map(c => `${c.nome} - ${c.marca}`))
+
+    // FIX 4: info para diagnóstico futuro — se o mínimo fosse menor, teria passado?
+    if (aposBlocklist.length < 5) {
+      log("INFO", `[FIX4-INFO] Candidatos por threshold: >=1=${aposBlocklist.length >= 1}, >=3=${aposBlocklist.length >= 3}, >=5=${aposBlocklist.length >= 5}`)
+    }
 
     if (aposBlocklist.length < 5) {
       log("ERROR", `Apenas ${aposBlocklist.length} candidatos válidos após filtros — mínimo 5. Abortando para não degradar tendências.`)
