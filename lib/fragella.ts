@@ -87,18 +87,31 @@ function headers(): Record<string, string> {
 }
 
 // Converte o objeto bruto da API para PerfumeFragella normalizado
+// Dados incorretos no Fragella upstream que não são detectáveis por token de nome.
+// Cada entrada é um caso comprovado — não adicionar em lote sem verificação individual.
+const GENERO_OVERRIDES: Record<string, "men" | "women" | "unisex"> = {
+  // "212 VIP" original é feminino (lançado 2010); "212 VIP Men" é o masculino (2011).
+  // Fragella retorna "Men" para o base, o que causaria colisão no gender guard do cron.
+  "212-vip-carolina-herrera": "women",
+}
+
 function normalizarPerfume(raw: Record<string, unknown>): PerfumeFragella {
   const nome = String(raw["Name"] ?? "")
   const marca = String(raw["Brand"] ?? "")
   const notasObj = raw["Notes"] as { Top?: NotaFragella[]; Middle?: NotaFragella[]; Base?: NotaFragella[] } | undefined
   const acordes = (raw["Main Accords"] as string[] | undefined) ?? []
+  const slug = ebayParaSlug(nome, marca)
+
+  // Normalizar casing upstream ("Men" → "men") e aplicar override para dados incorretos
+  const generoRaw      = String(raw["Gender"] ?? "").toLowerCase().trim()
+  const generoFinal    = GENERO_OVERRIDES[slug] ?? generoRaw
 
   return {
-    id: ebayParaSlug(nome, marca),
+    id: slug,
     nome,
     marca,
     concentracao: String(raw["OilType"] ?? "EDP"),
-    genero: String(raw["Gender"] ?? ""),
+    genero: generoFinal,
     ano: Number(raw["Year"] ?? 0),
     familia: acordes[0] ?? "",
     descricao: acordes.length ? `${acordes.slice(0, 3).join(", ")}.` : "",
