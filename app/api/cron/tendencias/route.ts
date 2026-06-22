@@ -9,6 +9,7 @@ import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { carregarCatalogo, buscarPerfumePorSlug } from "@/lib/catalogoFragella"
+import type { PerfumeFragella } from "@/lib/fragella"
 // @ts-expect-error — google-trends-api has no type definitions
 import googleTrends from "google-trends-api"
 
@@ -35,6 +36,44 @@ function removerSufixoGenero(nome: string): string {
     .replace(/\b(pour homme|pour femme|for men|for women|men|women|homme|femme)\b/gi, "")
     .replace(/\s+/g, " ")
     .trim()
+}
+
+// FIX 5: variantes antigas/descontinuadas que colidem com o nome moderno via fuzzy match
+// (ex: "Eau Sauvage" 1966 vs "Sauvage" 2015 — nomes parecidos, perfumes totalmente diferentes)
+const PREFIXOS_ANTIGOS_CATALOGO = ["eau de", "eau ", "pour ", "l'", "l’", "fraicheur", "fraîcheur"]
+
+function temPrefixoAntigo(nome: string): boolean {
+  const n = nome.toLowerCase().trim()
+  return PREFIXOS_ANTIGOS_CATALOGO.some(pre => n.startsWith(pre))
+}
+
+// Re-rankeia candidatos fuzzy do catálogo contra o nome literal do Gemini.
+// Usado SÓ na fonte Gemini (não muda o scanner) — buscarPerfumePorSlug por padrão
+// escolhe o candidato com slug nome+marca mais curto, o que pode acidentalmente
+// preferir uma variante antiga ("Eau Sauvage") sobre a atual ("Sauvage") por
+// diferença de poucos caracteres no slug combinado.
+function rankearCandidatoGemini(nomeGemini: string) {
+  return (candidatos: PerfumeFragella[]): PerfumeFragella | null => {
+    if (candidatos.length === 0) return null
+
+    const nomeGeminiSlug   = slugify(nomeGemini)
+    const geminiTemPrefixo = temPrefixoAntigo(nomeGemini)
+
+    const score = (p: PerfumeFragella): number => {
+      const nomePSlug = slugify(p.nome)
+
+      // 1. Match exato do nome
+      if (nomePSlug === nomeGeminiSlug) return 0
+      // 2. Nome do catálogo começa com o nome do Gemini ("Sauvage" → "Sauvage Elixir")
+      if (nomePSlug.startsWith(`${nomeGeminiSlug}-`)) return 10
+      // 3. Penaliza prefixo antigo no catálogo quando Gemini não tem
+      if (temPrefixoAntigo(p.nome) && !geminiTemPrefixo) return 1000 + p.nome.length
+      // 4. Fallback — nome mais curto primeiro
+      return 100 + p.nome.length
+    }
+
+    return [...candidatos].sort((a, b) => score(a) - score(b))[0]
+  }
 }
 
 // FIX 2: warn when catalog match has > 2× words of candidate (likely a flanker)
@@ -290,6 +329,16 @@ function selecionarComBalanceamento(
   return selecionados
 }
 
+// BUG ENCODING: NextResponse.json() não declara charset explícito no header
+// Content-Type — alguns proxies/clientes assumem latin1 e corrompem acentos
+// ("Lancôme" → "LancÃ´me"). Força UTF-8 explicitamente serializando à mão.
+function jsonResponse(body: unknown, init?: { status?: number }): NextResponse {
+  return new NextResponse(JSON.stringify(body), {
+    status: init?.status ?? 200,
+    headers: { "Content-Type": "application/json; charset=utf-8" },
+  })
+}
+
 // ── Endpoint principal ────────────────────────────────────────────────────────
 
 export async function GET(request: Request) {
@@ -303,7 +352,7 @@ export async function GET(request: Request) {
   const authorized   = authHeader === `Bearer ${secret}` || customHeader === secret
 
   if (!authorized) {
-    return NextResponse.json({ erro: "Não autorizado." }, { status: 401 })
+    return jsonResponse({ erro: "Não autorizado." }, { status: 401 })
   }
 
   const log = (nivel: "INFO" | "ERROR" | "DEBUG", msg: string, dados?: unknown) => {
@@ -325,14 +374,14 @@ export async function GET(request: Request) {
       candidatosGemini = await buscarCandidatosGemini()
     } catch (err) {
       log("ERROR", "Gemini falhou — abortando, banco não será alterado", { erro: String(err) })
-      return NextResponse.json({ ok: false, erro: "Gemini falhou", detalhes: String(err) }, { status: 500 })
+      return jsonResponse({ ok: false, erro: "Gemini falhou", detalhes: String(err) }, { status: 500 })
     }
 
     log("INFO", `Gemini retornou ${candidatosGemini.length} candidatos (bruto)`, candidatosGemini)
 
     if (candidatosGemini.length < 5) {
       log("ERROR", `Gemini retornou apenas ${candidatosGemini.length} candidatos — mínimo 5. Abortando.`)
-      return NextResponse.json({ ok: false, erro: "Poucos candidatos do Gemini", quantidade: candidatosGemini.length }, { status: 500 })
+      return jsonResponse({ ok: false, erro: "Poucos candidatos do Gemini", quantidade: candidatosGemini.length }, { status: 500 })
     }
 
     // ── Fase 2: Google Trends ─────────────────────────────────────────────────
@@ -372,7 +421,7 @@ export async function GET(request: Request) {
     const candidatosComCatalogo = candidatosGemini.map(c => {
       // FIX 1: slug-based lookup (fuzzy) substitui buscarNoCatalogo (substring exact)
       const slugPrimario = slugify(`${c.nome} ${c.marca}`)
-      let match = buscarPerfumePorSlug(slugPrimario)
+      let match = buscarPerfumePorSlug(slugPrimario, rankearCandidatoGemini(c.nome))
 
       // FIX 3: se não achou, tentar removendo sufixo de gênero do nome + GENDER GUARD
       let usouVariacao = false
@@ -381,7 +430,7 @@ export async function GET(request: Request) {
         const nomeSemSufixo = removerSufixoGenero(c.nome)
         if (nomeSemSufixo !== c.nome) {
           const slugVariacao    = slugify(`${nomeSemSufixo} ${c.marca}`)
-          const candidatoVaria  = buscarPerfumePorSlug(slugVariacao)
+          const candidatoVaria  = buscarPerfumePorSlug(slugVariacao, rankearCandidatoGemini(nomeSemSufixo))
 
           if (candidatoVaria) {
             const generoScan      = detectarGenero(c.nome)
@@ -494,7 +543,7 @@ export async function GET(request: Request) {
 
     if (aposBlocklist.length < 5) {
       log("ERROR", `Apenas ${aposBlocklist.length} candidatos válidos após filtros — mínimo 5. Abortando para não degradar tendências.`)
-      return NextResponse.json({
+      return jsonResponse({
         ok: false,
         erro: "Candidatos insuficientes após filtros",
         aposFiltroCatalogo: aposFiltroCatalogo.length,
@@ -510,7 +559,7 @@ export async function GET(request: Request) {
       novasTendencias = selecionarComBalanceamento(aposBlocklist, vagasDisponiveis, log)
     } catch (err) {
       log("ERROR", "Balanceamento de gênero falhou — abortando, banco não será alterado", { erro: String(err) })
-      return NextResponse.json({ ok: false, erro: "Balanceamento de gênero falhou", detalhes: String(err) }, { status: 500 })
+      return jsonResponse({ ok: false, erro: "Balanceamento de gênero falhou", detalhes: String(err) }, { status: 500 })
     }
 
     log("INFO", `Pins existentes (${pinnados.length})`, pinnados.map(p => `pos${p.posicao}: ${p.nome} - ${p.marca}`))
@@ -521,7 +570,7 @@ export async function GET(request: Request) {
     if (dryRun) {
       const duracao = Date.now() - inicio
       log("INFO", `[DRY-RUN] Simulação concluída em ${duracao}ms — banco NÃO alterado`)
-      return NextResponse.json({
+      return jsonResponse({
         ok:           true,
         dryRun:       true,
         duracao_ms:   duracao,
@@ -614,7 +663,7 @@ export async function GET(request: Request) {
     const duracao = Date.now() - inicio
     log("INFO", `Job concluído em ${duracao}ms. ${novasTendencias.length} tendências escritas, ${pinnados.length} pins preservados.`)
 
-    return NextResponse.json({
+    return jsonResponse({
       ok:               true,
       duracao_ms:       duracao,
       trendsDisponivel,
@@ -632,6 +681,6 @@ export async function GET(request: Request) {
   } catch (err) {
     const duracao = Date.now() - inicio
     log("ERROR", `Erro não esperado após ${duracao}ms`, { erro: String(err), stack: err instanceof Error ? err.stack : undefined })
-    return NextResponse.json({ ok: false, erro: String(err) }, { status: 500 })
+    return jsonResponse({ ok: false, erro: String(err) }, { status: 500 })
   }
 }

@@ -76,8 +76,16 @@ export function metadadosCatalogo() {
   return { timestamp: _timestamp, total: _cache?.length ?? 0 }
 }
 
-/** Busca um perfume pelo slug/id — tolera sufixos -ebay/-contratipo/-fragella */
-export function buscarPerfumePorSlug(slug: string): PerfumeFragella | null {
+/**
+ * Busca um perfume pelo slug/id — tolera sufixos -ebay/-contratipo/-fragella.
+ * `selecionarEntreCandidatos`: callback opcional pra re-rankear os candidatos do
+ * tier 4 (fuzzy) quando há ambiguidade. Se omitido, mantém o comportamento padrão
+ * (candidato com slug nome+marca mais curto) — usado pelo scanner sem alteração.
+ */
+export function buscarPerfumePorSlug(
+  slug: string,
+  selecionarEntreCandidatos?: (candidatos: PerfumeFragella[]) => PerfumeFragella | null
+): PerfumeFragella | null {
   const catalogo = carregarCatalogo()
 
   // Remove sufixos de fonte do slug
@@ -112,6 +120,10 @@ export function buscarPerfumePorSlug(slug: string): PerfumeFragella | null {
       return palavras.every(palavra => textoP.includes(palavra))
     })
     if (candidatos.length > 0) {
+      if (selecionarEntreCandidatos) {
+        const escolhido = selecionarEntreCandidatos(candidatos)
+        if (escolhido) return escolhido
+      }
       candidatos.sort((a, b) =>
         slugify(a.nome + " " + a.marca).length - slugify(b.nome + " " + b.marca).length
       )
