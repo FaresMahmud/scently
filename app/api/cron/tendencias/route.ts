@@ -193,6 +193,103 @@ async function buscarScoresTrends(
   return scores
 }
 
+// ── Balanceamento de gênero (3M/2F alternado por semana ISO) ─────────────────
+
+function getISOWeek(date: Date): number {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+  const dayNum = d.getUTCDay() || 7
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum)
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1))
+  return Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7)
+}
+
+// Seleciona `vagas` candidatos respeitando split 3M/2F (semana ímpar) ou 2M/3F (semana par).
+// Unissex preenche shortfalls primeiro; ausência TOTAL de um gênero (não apenas insuficiência)
+// aborta com erro explícito em vez de cair silenciosamente para um gênero só.
+function selecionarComBalanceamento(
+  candidatos: CandidatoScorado[],
+  vagas: number,
+  log: (nivel: "INFO" | "ERROR" | "DEBUG", msg: string, dados?: unknown) => void
+): CandidatoScorado[] {
+  if (vagas <= 0) return []
+
+  const semanaISO       = getISOWeek(new Date())
+  const tresMasculinos  = semanaISO % 2 === 1
+  let slotsM = tresMasculinos ? 3 : 2
+  let slotsF = tresMasculinos ? 2 : 3
+
+  // Pins podem reduzir as vagas abaixo de 5 — escalar o split proporcionalmente
+  if (vagas < slotsM + slotsF) {
+    const total = slotsM + slotsF
+    slotsM = Math.round((slotsM / total) * vagas)
+    slotsF = vagas - slotsM
+  }
+
+  const porScoreDesc = (a: CandidatoScorado, b: CandidatoScorado) => b.scoreTotal - a.scoreTotal
+  const masculinos = candidatos.filter(c => c.genero === "masculino").sort(porScoreDesc)
+  const femininos  = candidatos.filter(c => c.genero === "feminino").sort(porScoreDesc)
+  const unissex    = candidatos.filter(c => c.genero === "unissex").sort(porScoreDesc)
+
+  log("INFO", `Balanceamento: semana ISO ${semanaISO} → split ${slotsM}M/${slotsF}F`, {
+    disponiveis: { masculino: masculinos.length, feminino: femininos.length, unissex: unissex.length },
+  })
+
+  const usados = new Set<CandidatoScorado>()
+  const selecionados: CandidatoScorado[] = []
+
+  function pegar(lista: CandidatoScorado[], n: number): number {
+    let pego = 0
+    for (const c of lista) {
+      if (pego >= n) break
+      if (usados.has(c)) continue
+      usados.add(c)
+      selecionados.push(c)
+      pego++
+    }
+    return pego
+  }
+
+  const pegouM = pegar(masculinos, slotsM)
+  const pegouF = pegar(femininos, slotsF)
+
+  let faltam = vagas - selecionados.length
+  if (faltam > 0) {
+    pegar(unissex, faltam)
+    faltam = vagas - selecionados.length
+  }
+
+  if (faltam > 0) {
+    const masculinosAusentesTotal = masculinos.length === 0 && slotsM > 0
+    const femininosAusentesTotal  = femininos.length === 0 && slotsF > 0
+
+    if (masculinosAusentesTotal || femininosAusentesTotal) {
+      const generoEmFalta: string[] = []
+      if (pegouM < slotsM) generoEmFalta.push(`masculino (${pegouM}/${slotsM})`)
+      if (pegouF < slotsF) generoEmFalta.push(`feminino (${pegouF}/${slotsF})`)
+
+      throw new Error(
+        `Balanceamento de gênero impossível: split exige ${slotsM}M/${slotsF}F, mas há ` +
+        `${masculinos.length} masculinos, ${femininos.length} femininos, ${unissex.length} unissex ` +
+        `disponíveis após filtros. Faltam: ${generoEmFalta.join(", ")}. Abortando — não caindo ` +
+        `silenciosamente para um gênero só.`
+      )
+    }
+
+    // Shortfall comum (não é ausência total de um gênero) — completar com o que restar
+    const restantes = candidatos.filter(c => !usados.has(c)).sort(porScoreDesc)
+    pegar(restantes, faltam)
+  }
+
+  // Reordenar pelos 5 finais por score desc, pra exibir mais relevante primeiro
+  selecionados.sort(porScoreDesc)
+
+  log("INFO", "Selecionados (balanceados, ordenados por score)", selecionados.map(c =>
+    `${c.nome} - ${c.marca} (${c.genero}, score ${c.scoreTotal})`
+  ))
+
+  return selecionados
+}
+
 // ── Endpoint principal ────────────────────────────────────────────────────────
 
 export async function GET(request: Request) {
@@ -405,10 +502,16 @@ export async function GET(request: Request) {
       }, { status: 500 })
     }
 
-    // ── Fase 6: Selecionar top 5 respeitando pins ─────────────────────────────
+    // ── Fase 6: Selecionar top 5 respeitando pins + balanceamento de gênero ──
     const vagasDisponiveis = Math.max(0, 5 - pinnados.length)
-    const ordenados = [...aposBlocklist].sort((a, b) => b.scoreTotal - a.scoreTotal)
-    const novasTendencias = ordenados.slice(0, vagasDisponiveis)
+
+    let novasTendencias: CandidatoScorado[]
+    try {
+      novasTendencias = selecionarComBalanceamento(aposBlocklist, vagasDisponiveis, log)
+    } catch (err) {
+      log("ERROR", "Balanceamento de gênero falhou — abortando, banco não será alterado", { erro: String(err) })
+      return NextResponse.json({ ok: false, erro: "Balanceamento de gênero falhou", detalhes: String(err) }, { status: 500 })
+    }
 
     log("INFO", `Pins existentes (${pinnados.length})`, pinnados.map(p => `pos${p.posicao}: ${p.nome} - ${p.marca}`))
     log("INFO", `Top ${vagasDisponiveis} automáticos escolhidos`, novasTendencias.map((c, i) => `pos${pinnados.length + i + 1}: ${c.nome} - ${c.marca} (score ${c.scoreTotal})`))
