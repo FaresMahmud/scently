@@ -1,5 +1,48 @@
 # TODO — Catalog Gaps & Enrichment Priorities
 
+## PRIORIDADE ALTA — escolherMelhorMatch confunde fragrâncias homônimas/prefixos (2026-06-22)
+
+O algoritmo `escolherMelhorMatch` (auditoria de catálogo, scripts/_audit-fase1b-v2.mjs) e o
+`rankearCandidatoGemini` (app/api/cron/tendencias/route.ts) podem escolher o candidato errado
+quando dois perfumes compartilham nome parcial mas são fragrâncias completamente diferentes.
+
+Casos documentados:
+- **"CK Be"** → matchou com **"Obsessed"** (Calvin Klein) — fragrâncias completamente diferentes,
+  sem relação de nome real além de pertencerem à mesma marca.
+- **"Bvlgari Black"** (1998, unissex icônico) → matchou com **"Man in Black"** (2014, perfil
+  totalmente diferente) — anos e perfis olfativos divergentes.
+- **"Sauvage"** (2015, moderno) → matchou com **"Eau Sauvage"** (1966) — 49 anos de diferença,
+  fragrâncias completamente distintas. (Esse caso específico já foi corrigido no cron via
+  `rankearCandidatoGemini` com penalização de prefixos antigos — ver commit `0e5622e` — mas o
+  princípio geral do problema permanece para outros pares homônimos não cobertos pela lista de
+  prefixos conhecidos.)
+
+**Risco:** o scanner pode identificar o perfume errado em produção, e o cron de tendências pode
+direcionar para a página de detalhe errada.
+
+**Próxima sessão:** revisitar `rankearCandidatoGemini` (route.ts) com testes adicionais de
+fragrâncias homônimas/prefixos — provavelmente precisa de uma lista curada de pares conhecidos
+"parecem iguais mas são diferentes" (CK Be/Obsessed, Bvlgari Black/Man in Black, etc.) além da
+heurística de prefixo antigo já existente, já que esses dois casos não compartilham prefixo
+algum — são apenas nomes de marca cujos produtos têm pouca relação textual mas caíram no mesmo
+grupo de candidatos fuzzy.
+
+**CONFIRMADO (2026-06-22, Fase 2 da auditoria de catálogo):** "CK Be" e "Acqua di Giò Profumo"
+JÁ EXISTIAM corretamente em `catalogo-fragella.json` (ids `ck-be-calvin-klein` e
+`acqua-di-gio-profumo-giorgio-armani`) — o algoritmo de matching da auditoria escolheu o
+candidato errado (`obsessed-calvin-klein` no caso do CK Be) quando o candidato certo estava
+disponível no mesmo pool. Isso prova que o bug é de **ranking de candidatos**, não de
+**cobertura de catálogo** — adicionar uma entrada nova para esses dois casos teria criado uma
+duplicata (e de fato criou — removida em seguida). Ao corrigir `rankearCandidatoGemini`/
+`escolherMelhorMatch`, usar esses dois pares como casos de teste de regressão.
+
+**Achado relacionado (não corrigido nesta sessão):** existem pelo menos 2 IDs duplicados entre
+`perfumes-expandido.json` e `catalogo-fragella.json`, pré-existentes a esta sessão (não
+introduzidos por ela): `jimmy-choo-jimmy-choo` e `chanel-gabrielle-chanel`. Precisa de
+investigação separada pra decidir qual fonte é a autoritativa e remover a duplicata.
+
+---
+
 ## HIGH PRIORITY — Tendências automáticas (Gemini algorithm)
 
 **Enriquecer os 11.000+ perfumes restantes do catálogo que não têm PerfumeEditorial linkado.**
