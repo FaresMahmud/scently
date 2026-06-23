@@ -11,6 +11,7 @@ import * as fs from "fs"
 import * as path from "path"
 import type { PerfumeFragella } from "@/lib/fragella"
 import { slugify } from "@/lib/utils"
+import { removerSufixoGenero, detectarGenero, mapearGeneroFragella } from "@/lib/generoGuard"
 
 const CAMINHO = path.join(process.cwd(), "data", "catalogo-fragella.json")
 
@@ -38,9 +39,155 @@ export function carregarCatalogo(): PerfumeFragella[] {
   }
 }
 
-/** Busca por nome ou marca (case-insensitive, substring) */
-export function buscarNoCatalogo(query: string, limit = 20): PerfumeFragella[] {
-  const q = query.toLowerCase().trim()
+// ── Matching robusto (cascade) ────────────────────────────────────────────────
+// Inspirado no cascade de 4 passes do buscarPerfumePorSlug, mas operando sobre
+// nome+marca separados (não um slug único) — pensado pra busca livre/autocomplete.
+
+function normalizar(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+// Remove sufixos de concentração ("Eau de Parfum", "Eau de Toilette", etc.) do
+// nome — o catálogo às vezes omite esse sufixo, então o núcleo é o que compara.
+function nucleoNome(nome: string): string {
+  return nome
+    .replace(/\b(eau de parfum|eau de toilette|eau de cologne|extrait de parfum)\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+// Aliases de marca conhecidos — abreviações e variações de nome completo que
+// aparecem tanto em queries quanto embutidas no campo `nome` do catálogo
+// (ex: catálogo tem "D & G Light Blue" mas marca canônica é "Dolce & Gabbana").
+// Todo alias resolve pra uma forma canônica; marcas já canônicas não precisam de entrada.
+const ALIASES_MARCA: Record<string, string> = {
+  "christian dior": "dior",
+  "ck": "calvin klein",
+  "ysl": "yves saint laurent",
+  "d g": "dolce gabbana",
+  "dg": "dolce gabbana",
+  "ch": "carolina herrera",
+  "jpg": "jean paul gaultier",
+}
+
+export function normalizarMarca(marca: string): string {
+  const n = normalizar(marca)
+  return ALIASES_MARCA[n] ?? n
+}
+
+// Remove até 3 palavras do início de `nomeNormalizado` se elas, juntas,
+// canonicalizarem pra mesma marca de `marcaCatalogo` — resolve nomes onde o
+// catálogo embute a marca no campo nome (ex: "Dior Sauvage", "D & G Light Blue").
+function removerPrefixoMarca(nomeNormalizado: string, marcaCatalogo: string): string {
+  const marcaCanon = normalizarMarca(marcaCatalogo)
+  const palavras = nomeNormalizado.split(" ")
+  for (let n = Math.min(3, palavras.length); n >= 1; n--) {
+    const prefixo = palavras.slice(0, n).join(" ")
+    if (normalizarMarca(prefixo) === marcaCanon) {
+      return palavras.slice(n).join(" ").trim()
+    }
+  }
+  return nomeNormalizado
+}
+
+function marcaCompativel(marcaQuery: string | undefined, marcaCatalogo: string): boolean {
+  if (!marcaQuery) return true // busca sem marca — não filtra
+  return normalizarMarca(marcaQuery) === normalizarMarca(marcaCatalogo)
+}
+
+// Pontua candidatos fuzzy (tier 3) — favorece núcleo exato, gênero compatível,
+// e menos palavras extras (evita flanker tipo "212 Vip Black" quando pediram "212 Vip").
+function pontuarCandidatoFuzzy(
+  nucleoQuery: string,
+  generoQuery: "masculino" | "feminino" | "neutro",
+  p: PerfumeFragella
+): number {
+  const nucleoP = normalizar(removerPrefixoMarca(normalizar(p.nome), p.marca))
+  let pontuacao = 0
+
+  if (nucleoP === nucleoQuery) pontuacao += 0
+  else if (nucleoP.startsWith(nucleoQuery + " ") || nucleoQuery.startsWith(nucleoP + " ")) pontuacao += 10
+  else pontuacao += 30
+
+  const generoCandidato = mapearGeneroFragella((p as unknown as { genero?: string }).genero ?? "")
+  if (generoQuery !== "neutro" && generoCandidato !== "neutro" && generoCandidato !== generoQuery) {
+    pontuacao += 1000 // praticamente desqualifica sem excluir (mantém determinístico)
+  }
+
+  pontuacao += nucleoP.split(" ").length // penaliza nomes com mais palavras (flankers)
+  return pontuacao
+}
+
+function buscarComCascade(nome: string, marca: string | undefined, limit: number): PerfumeFragella[] {
+  const catalogo = carregarCatalogo()
+
+  // Gender guard: detecta gênero explícito no nome ANTES de remover o sufixo
+  const generoQuery   = detectarGenero(nome)
+  const nomeSemSufixo = removerSufixoGenero(nome)
+  const nucleoQuery   = normalizar(nucleoNome(nomeSemSufixo))
+
+  if (!nucleoQuery) return marca ? [] : carregarCatalogo().slice(0, limit)
+
+  function generoCompativel(p: PerfumeFragella): boolean {
+    if (generoQuery === "neutro") return true
+    const generoCandidato = mapearGeneroFragella((p as unknown as { genero?: string }).genero ?? "")
+    return generoCandidato === "neutro" || generoCandidato === generoQuery
+  }
+
+  // Tier 1: match exato do nome (sem stripping de marca) + marca compatível + gênero compatível
+  const tier1 = catalogo.filter(p =>
+    normalizar(nucleoNome(p.nome)) === nucleoQuery &&
+    marcaCompativel(marca, p.marca) &&
+    generoCompativel(p)
+  )
+  if (tier1.length > 0) return tier1.slice(0, limit)
+
+  // Tier 2: match exato do núcleo após remover a marca embutida no nome do catálogo
+  // (ex: "Dior Sauvage" → "Sauvage", "D & G Light Blue" → "Light Blue")
+  const tier2 = catalogo.filter(p => {
+    const nucleoCatalogo = normalizar(removerPrefixoMarca(normalizar(nucleoNome(p.nome)), p.marca))
+    return nucleoCatalogo === nucleoQuery && marcaCompativel(marca, p.marca) && generoCompativel(p)
+  })
+  if (tier2.length > 0) return tier2.slice(0, limit)
+
+  // Tier 3: fuzzy — todas as palavras do núcleo presentes no nome+marca do catálogo,
+  // marca compatível, gênero compatível; rankeado por pontuarCandidatoFuzzy (menor = melhor)
+  const palavrasNucleo = nucleoQuery.split(" ").filter(w => w.length > 2)
+  if (palavrasNucleo.length === 0) return []
+
+  const tier3 = catalogo.filter(p => {
+    if (!marcaCompativel(marca, p.marca) || !generoCompativel(p)) return false
+    const textoP = normalizar(`${p.nome} ${p.marca}`)
+    return palavrasNucleo.every(palavra => textoP.includes(palavra))
+  })
+
+  return tier3
+    .sort((a, b) => pontuarCandidatoFuzzy(nucleoQuery, generoQuery, a) - pontuarCandidatoFuzzy(nucleoQuery, generoQuery, b))
+    .slice(0, limit)
+}
+
+/** Busca por nome ou marca — assinatura antiga (query única, substring) preservada. */
+export function buscarNoCatalogo(query: string, limit?: number): PerfumeFragella[]
+/** Busca por nome+marca com cascade robusto (normalização de marca, núcleo, fuzzy, gender guard). */
+export function buscarNoCatalogo(nome: string, marca: string, limit?: number): PerfumeFragella[]
+export function buscarNoCatalogo(
+  nomeOuQuery: string,
+  marcaOuLimit?: string | number,
+  limitTalvez?: number
+): PerfumeFragella[] {
+  // Assinatura nova: (nome, marca, limit?)
+  if (typeof marcaOuLimit === "string") {
+    return buscarComCascade(nomeOuQuery, marcaOuLimit, limitTalvez ?? 20)
+  }
+
+  // Assinatura antiga: (query, limit?) — comportamento substring inalterado
+  const limit = marcaOuLimit ?? 20
+  const q = nomeOuQuery.toLowerCase().trim()
   if (!q) return carregarCatalogo().slice(0, limit)
   return carregarCatalogo()
     .filter(p =>

@@ -41,6 +41,20 @@ duplicata (e de fato criou — removida em seguida). Ao corrigir `rankearCandida
 introduzidos por ela): `jimmy-choo-jimmy-choo` e `chanel-gabrielle-chanel`. Precisa de
 investigação separada pra decidir qual fonte é a autoritativa e remover a duplicata.
 
+**RESOLVIDO (2026-06-23):** `buscarNoCatalogo` (lib/catalogoFragella.ts) foi reescrita com cascade
+de 3 tiers + `normalizarMarca` (aliases CK/Calvin Klein, YSL/Yves Saint Laurent, Christian
+Dior/Dior, D&G/Dolce Gabbana) + gender guard reusando `lib/generoGuard.ts`. Os casos CK Be e
+Acqua di Giò Profumo agora resolvem corretamente — confirmado em dry-run com 10/10 testes.
+`detectarGenero`/`mapearGeneroFragella`/`removerSufixoGenero` foram extraídos de `route.ts` para
+`lib/generoGuard.ts` (módulo compartilhado, sem mudança de lógica).
+
+**Novo achado durante o dry-run da reescrita:** `catalogo-fragella.json` tem uma duplicata real
+— `dior-sauvage-christian-dior` (nome "Dior Sauvage") e
+`dior-sauvage-eau-de-toilette-christian-dior` (nome "Dior Sauvage Eau De Toilette") têm
+concentração, gênero e ano idênticos — são o mesmo SKU, provavelmente de dois scrapes
+diferentes do mesmo produto. Não é bug de matching, é dado duplicado na fonte. Fica pra dedup
+numa sessão futura de limpeza de catálogo.
+
 ---
 
 ## HIGH PRIORITY — Tendências automáticas (Gemini algorithm)

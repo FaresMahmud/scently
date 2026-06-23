@@ -10,6 +10,7 @@ import { db } from "@/lib/db"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { carregarCatalogo, buscarPerfumePorSlug } from "@/lib/catalogoFragella"
 import type { PerfumeFragella } from "@/lib/fragella"
+import { removerSufixoGenero, detectarGenero, mapearGeneroFragella } from "@/lib/generoGuard"
 // @ts-expect-error — google-trends-api has no type definitions
 import googleTrends from "google-trends-api"
 
@@ -28,14 +29,6 @@ function slugify(s: string): string {
     .normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "")
-}
-
-// FIX 3: remove gender suffixes so "212 VIP Men" → "212 VIP", "Light Blue Pour Homme" → "Light Blue"
-function removerSufixoGenero(nome: string): string {
-  return nome
-    .replace(/\b(pour homme|pour femme|for men|for women|men|women|homme|femme)\b/gi, "")
-    .replace(/\s+/g, " ")
-    .trim()
 }
 
 // FIX 5: variantes antigas/descontinuadas que colidem com o nome moderno via fuzzy match
@@ -81,25 +74,6 @@ function isAmbiguousMatch(nomeCandidate: string, nomeMatch: string): boolean {
   const wCand  = nomeCandidate.trim().split(/\s+/).length
   const wMatch = nomeMatch.trim().split(/\s+/).length
   return wMatch > wCand * 2
-}
-
-// GENDER GUARD — PASSO 1: detecta gênero por tokens no texto (testa feminino ANTES de masculino)
-function detectarGenero(texto: string): "masculino" | "feminino" | "neutro" {
-  const t = texto.toLowerCase()
-  // feminino primeiro — "for women" contém "men", teste inverso daria falso positivo masculino
-  if (/\b(pour femme|for women|femme|women|feminino)\b/.test(t)) return "feminino"
-  if (/\b(pour homme|for men|homme|men|masculino)\b/.test(t))    return "masculino"
-  return "neutro"
-}
-
-// GENDER GUARD — PASSO 2: mapeia campo genero do catálogo fragella para nosso vocabulário
-// Valores conhecidos: 'women', 'men', 'Men' (typo), 'unisex', ''
-function mapearGeneroFragella(genero: string): "masculino" | "feminino" | "neutro" {
-  const g = (genero ?? "").toLowerCase().trim()
-  if (g === "women")                     return "feminino"
-  if (g === "men")                       return "masculino"
-  if (g === "unisex" || g === "")        return "neutro"
-  return "neutro" // qualquer valor inesperado → neutro (conservador)
 }
 
 interface CandidatoGemini {
