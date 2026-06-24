@@ -7241,7 +7241,7 @@
       "Jasmim",
       "Rosa",
       "Âmbar",
-      "Musk"
+      "Almíscar"
     ],
     "preco_brl": 180,
     "categoria": "arabe",
@@ -7262,7 +7262,7 @@
       "Pimenta",
       "Lavanda",
       "Sândalo",
-      "Musk"
+      "Almíscar"
     ],
     "preco_brl": 180,
     "categoria": "arabe",
@@ -7283,7 +7283,7 @@
       "Gengibre",
       "Jasmim",
       "Âmbar",
-      "Musk"
+      "Almíscar"
     ],
     "preco_brl": 180,
     "categoria": "arabe",
@@ -7325,7 +7325,7 @@
       "Hortelã",
       "Lavanda",
       "Sândalo",
-      "Musk"
+      "Almíscar"
     ],
     "preco_brl": 180,
     "categoria": "arabe",
@@ -7346,7 +7346,7 @@
       "Lavanda",
       "Âmbar",
       "Sândalo",
-      "Musk"
+      "Almíscar"
     ],
     "preco_brl": 180,
     "categoria": "arabe",
@@ -7888,11 +7888,11 @@
     "marcaOriginal": null,
     "familia": "Oriental Amadeirado",
     "notas": [
-      "Âmbar",
-      "Oud",
-      "Açafrão",
-      "Rosa",
-      "Almíscar"
+      "âmbar",
+      "oud",
+      "açafrão",
+      "rosa",
+      "almíscar"
     ],
     "preco_brl": 220,
     "categoria": "arabe",
@@ -10026,7 +10026,7 @@
       "Gengibre",
       "Pimenta",
       "Vetiver",
-      "Musk"
+      "Almíscar"
     ],
     "preco_brl": 180,
     "categoria": "arabe",
@@ -10358,11 +10358,11 @@
     "marcaOriginal": null,
     "familia": "Floral Frutal",
     "notas": [
-      "Rosa",
-      "Groselha",
-      "Âmbar",
-      "Oud",
-      "Baunilha"
+      "rosa",
+      "groselha",
+      "âmbar",
+      "oud",
+      "baunilha"
     ],
     "preco_brl": 220,
     "categoria": "arabe",
@@ -12277,18 +12277,18 @@
       "Patchouli"
     ],
     "notasTopo": [
-      "Notas Aquosas",
-      "Algas Marinhas",
-      "Frutas Vermelhas"
+      "Notas aquáticas",
+      "Algas marinhas",
+      "Frutas vermelhas"
     ],
     "notasCoracao": [
-      "Acorde Floral Aquoso",
+      "Acorde floral aquático",
       "Pataqueira",
-      "Nuances Frutadas"
+      "Nuances frutadas"
     ],
     "notasFundo": [
-      "Âmbar Marinho",
-      "Madeiras Escuras",
+      "Âmbar marinho",
+      "Madeiras escuras",
       "Cedro",
       "Patchouli"
     ],
@@ -12724,20 +12724,20 @@
       "Patchouli"
     ],
     "notasTopo": [
-      "Sal Marinho",
-      "Bergamota",
-      "Canela"
+      "sal marinho",
+      "bergamota",
+      "canela"
     ],
     "notasCoracao": [
-      "Tuberosa",
-      "Ylang Ylang",
-      "Lírio-do-Vale"
+      "tuberosa",
+      "ylang ylang",
+      "lírio-do-vale"
     ],
     "notasFundo": [
-      "Baunilha",
-      "Âmbar",
-      "Couro",
-      "Patchouli"
+      "baunilha",
+      "âmbar",
+      "couro",
+      "patchouli"
     ],
     "descricaoTraduzida": "Amyi 5.21 transforma a baunilha em leveza e frescor, combinando a doçura da fava com o toque inesperado do sal marinho, evocando a pele aquecida pelo sol e a brisa costeira. É um ritual de autocuidado, confortável e essencial. No coração, flores etéreas se desdobram, levando a um fundo cremoso de baunilha, âmbar, couro e patchouli. Uma fragrância unissex que sussurra originalidade e presença.",
     "preco_brl": 500,
