@@ -157,7 +157,6 @@ const primeiraExecucao = checkpoint === null
 if (primeiraExecucao) {
   const totalCandidatosInicial = mestre.filter(item => precisaAlgo(precisa(item))).length
   checkpoint = {
-    ultimoIndiceProcessado: -1,
     totalCandidatosInicial,
     totalBatches: Math.ceil(totalCandidatosInicial / 5),
     batchesProcessados: 0,
@@ -165,11 +164,18 @@ if (primeiraExecucao) {
     falhas: 0,
     tempoTotalMs: 0,
     falhasDetalhe: [],
+    falhaContagem: {}, // id -> quantas vezes falhou cumulativamente (entre execuções)
+    desistidos: [],     // ids que falharam 3x e não são mais retentados (dado provavelmente ruim)
   }
   console.log(`Primeira execução — ${totalCandidatosInicial} candidatos, ${checkpoint.totalBatches} batches estimados.\n`)
 } else {
-  console.log(`Retomando checkpoint: índice ${checkpoint.ultimoIndiceProcessado}, batch ${checkpoint.batchesProcessados}/${checkpoint.totalBatches}, ${checkpoint.sucessos} sucessos, ${checkpoint.falhas} falhas até agora.\n`)
+  // Compat: checkpoints de execuções anteriores (antes deste fix) podem não ter esses campos
+  checkpoint.falhaContagem ??= {}
+  checkpoint.desistidos ??= []
+  console.log(`Retomando checkpoint: batch ${checkpoint.batchesProcessados}/${checkpoint.totalBatches}, ${checkpoint.sucessos} sucessos, ${checkpoint.falhas} falhas até agora (${checkpoint.desistidos.length} desistidos permanentemente).\n`)
 }
+
+const idsDesistidos = new Set(checkpoint.desistidos)
 
 // ── Backup (só na primeira execução, antes de qualquer escrita) ─────────────
 if (!DRY_RUN && primeiraExecucao) {
@@ -311,18 +317,34 @@ if (DRY_RUN) {
 }
 
 // ── Execução completa (resumível) ───────────────────────────────────────────
+// IMPORTANTE: a lista de pendentes é recalculada a partir do estado REAL (precisa())
+// a cada batch, não de um índice congelado — assim, itens que falharam numa execução
+// anterior continuam aparecendo como pendentes e são automaticamente retentados na
+// próxima, em vez de ficarem marcados como "processados" só por terem sido tentados.
 async function rodarCampanhaCompleta() {
-let indiceAtual = checkpoint.ultimoIndiceProcessado + 1
 
-while (indiceAtual < mestre.length) {
-  const candidatosBatch = []
-  let i = indiceAtual
-  while (i < mestre.length && candidatosBatch.length < 5) {
-    if (precisaAlgo(precisa(mestre[i]))) candidatosBatch.push(mestre[i])
-    i++
+function proximoBatch() {
+  const batch = []
+  for (const item of mestre) {
+    if (batch.length >= 5) break
+    if (idsDesistidos.has(item.ref.id)) continue
+    if (precisaAlgo(precisa(item))) batch.push(item)
   }
-  if (candidatosBatch.length === 0) break // acabaram os candidatos
+  return batch
+}
 
+function registrarFalha(item, motivo) {
+  checkpoint.falhas++
+  checkpoint.falhasDetalhe.push({ id: item.ref.id, motivo })
+  checkpoint.falhaContagem[item.ref.id] = (checkpoint.falhaContagem[item.ref.id] ?? 0) + 1
+  if (checkpoint.falhaContagem[item.ref.id] >= 3) {
+    idsDesistidos.add(item.ref.id)
+    checkpoint.desistidos.push(item.ref.id)
+  }
+}
+
+let candidatosBatch = proximoBatch()
+while (candidatosBatch.length > 0) {
   const inicioBatch = Date.now()
   checkpoint.batchesProcessados++
 
@@ -331,15 +353,11 @@ while (indiceAtual < mestre.length) {
     const texto = await gerarComRetry(montarPrompt(candidatosBatch))
     dadosBatch = JSON.parse(limparJSON(texto))
   } catch (err) {
-    for (const item of candidatosBatch) {
-      checkpoint.falhas++
-      checkpoint.falhasDetalhe.push({ id: item.ref.id, motivo: `batch falhou: ${String(err).slice(0, 100)}` })
-    }
-    indiceAtual = i
-    checkpoint.ultimoIndiceProcessado = i - 1
+    for (const item of candidatosBatch) registrarFalha(item, `batch falhou: ${String(err).slice(0, 100)}`)
     checkpoint.tempoTotalMs += Date.now() - inicioBatch
     salvarCheckpoint(checkpoint)
     console.log(`[batch ${checkpoint.batchesProcessados}/${checkpoint.totalBatches}] 0/${candidatosBatch.length} ❌ (batch falhou)`)
+    candidatosBatch = proximoBatch()
     continue
   }
 
@@ -361,8 +379,7 @@ while (indiceAtual < mestre.length) {
     }
 
     if (erros.length > 0) {
-      checkpoint.falhas++
-      checkpoint.falhasDetalhe.push({ id: item.ref.id, motivo: erros.join("; ") })
+      registrarFalha(item, erros.join("; "))
       continue
     }
 
@@ -374,8 +391,6 @@ while (indiceAtual < mestre.length) {
   salvarFragella()
   salvarExpandido()
 
-  indiceAtual = i
-  checkpoint.ultimoIndiceProcessado = i - 1
   checkpoint.tempoTotalMs += Date.now() - inicioBatch
   salvarCheckpoint(checkpoint)
 
@@ -385,16 +400,19 @@ while (indiceAtual < mestre.length) {
   const elapsed = fmtDuracao(Date.now() - inicioExecucao)
 
   console.log(`[batch ${checkpoint.batchesProcessados}/${checkpoint.totalBatches}] ${sucessosBatch}/${candidatosBatch.length} ✅ (elapsed: ${elapsed}, ETA: ${eta})`)
+
+  candidatosBatch = proximoBatch()
 }
 
 console.log("\n" + "═".repeat(60))
-console.log("CAMPANHA CONCLUÍDA")
+console.log("CAMPANHA CONCLUÍDA — sem mais candidatos pendentes")
 console.log("═".repeat(60))
-console.log(`Sucessos: ${checkpoint.sucessos}`)
-console.log(`Falhas:   ${checkpoint.falhas}`)
-if (checkpoint.falhasDetalhe.length > 0) {
-  console.log("\nFalhas (IDs):")
-  checkpoint.falhasDetalhe.forEach(f => console.log(`  - ${f.id}: ${f.motivo}`))
+console.log(`Sucessos (cumulativo): ${checkpoint.sucessos}`)
+console.log(`Falhas (cumulativo, inclui retentativas): ${checkpoint.falhas}`)
+console.log(`Desistidos permanentemente (falharam 3x): ${checkpoint.desistidos.length}`)
+if (checkpoint.desistidos.length > 0) {
+  console.log("\nIDs desistidos:")
+  checkpoint.desistidos.forEach(id => console.log(`  - ${id}`))
 }
 
 await db.$disconnect()
