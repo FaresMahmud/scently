@@ -116,7 +116,8 @@ export default function Header() {
             scanner
           </Link>
 
-          <LinkConsultor
+          <Link
+            href="/consultor/chat"
             style={{
               fontFamily: "var(--fonte-corpo)",
               fontSize: "0.8rem",
@@ -130,7 +131,7 @@ export default function Header() {
             }}
           >
             consultor
-          </LinkConsultor>
+          </Link>
 
           <LinkConsultor
             style={{

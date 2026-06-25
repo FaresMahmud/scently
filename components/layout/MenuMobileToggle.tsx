@@ -30,7 +30,7 @@ export default function MenuMobileToggle() {
     { href: "/tendencias", label: "Tendências" },
     { href: "/catalogo",   label: "Catálogo" },
     { href: "/scanner",    label: "Scanner" },
-    { href: "/consultor",  label: "Consultor" },
+    { href: "/consultor/chat", label: "Consultor" },
   ]
 
   return (

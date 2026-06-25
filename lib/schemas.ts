@@ -78,3 +78,16 @@ export const consultorSchema = z.object({
   // Optional quiz mode — when present routes to the new 4-rec quiz engine
   mode: z.enum(["free", "premium"]).optional(),
 })
+
+// ── Consultor Chat ───────────────────────────────────────────────────────────
+
+export const consultorChatSchema = z.object({
+  mensagem: z.string().trim().min(1).max(1000),
+  historico: z
+    .array(z.object({
+      role: z.enum(["user", "assistant"]),
+      content: z.string().max(2000),
+    }))
+    .max(40)
+    .default([]),
+})
