@@ -74,6 +74,12 @@ export async function POST(req: NextRequest) {
     )
   }
 
+  // Conta criada via Google/link mágico ainda não tem senha definida
+  if (!user.passwordHash) {
+    console.info(`[AUTH] login_failed_no_password ip=${ip} userId=${user.id}`)
+    return NextResponse.json({ error: "Credenciais inválidas." }, { status: 401 })
+  }
+
   const valid = await verifyPassword(password, user.passwordHash)
 
   if (!valid) {

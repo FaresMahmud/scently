@@ -22,7 +22,9 @@ enum Intensity {
 model User {
   id                   String          @id @default(uuid())
   email                String          @unique
-  passwordHash         String
+  passwordHash         String?
+  provider             String          @default("credentials")
+  googleId             String?         @unique
   name                 String?
   createdAt            DateTime        @default(now())
   updatedAt            DateTime        @updatedAt
@@ -33,6 +35,17 @@ model User {
   userPreference       UserPreference?
 
   @@map("users")
+}
+
+model VerificationToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  email     String
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@map("verification_tokens")
 }
 
 model RefreshToken {

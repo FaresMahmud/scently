@@ -29,6 +29,10 @@ export const loginSchema = z.object({
   turnstileToken: z.string().optional(),
 })
 
+export const magicLinkSchema = z.object({
+  email: z.string().email("E-mail inválido.").max(254),
+})
+
 // ── Perfil ────────────────────────────────────────────────────────────────────
 
 const perfumeStatusEnum = z.enum(["TENHO", "JA_SENTI_GOSTEI", "QUERO_EXPERIMENTAR"])

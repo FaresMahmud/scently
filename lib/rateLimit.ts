@@ -56,6 +56,11 @@ export function registerRateLimit(ip: string) {
   return check(`register:${ip}`, 5, 60 * 60 * 1000)
 }
 
+/** 5 magic link requests per IP per hour */
+export function magicLinkRateLimit(ip: string) {
+  return check(`magic-link:${ip}`, 5, 60 * 60 * 1000)
+}
+
 /** 10 scans per IP per hour */
 export function scannerRateLimit(ip: string) {
   return check(`scanner:${ip}`, 10, 60 * 60 * 1000)

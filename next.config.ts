@@ -19,7 +19,7 @@ const CSP = [
   "img-src 'self' data: blob: https:",
   // SECURITY: Only browser-initiated fetch targets allowed here.
   // Server-side services (DeepSeek, Gemini, Neon, ScrapingBee) removed — they don't run in browser
-  "connect-src 'self' https://challenges.cloudflare.com",
+  "connect-src 'self' https://challenges.cloudflare.com https://accounts.google.com https://oauth2.googleapis.com",
   "frame-src https://challenges.cloudflare.com",
   "object-src 'none'",
   "base-uri 'self'",
