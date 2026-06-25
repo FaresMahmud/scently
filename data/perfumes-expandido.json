@@ -6493,27 +6493,6 @@
     "linkCompra": "https://www.sephora.com.br/busca?q=Uomo%20Signature%20Ferragamo"
   },
   {
-    "id": "jimmy-choo-jimmy-choo",
-    "nome": "Jimmy Choo",
-    "marca": "Jimmy Choo",
-    "tipo": "EDP",
-    "genero": "Feminino",
-    "inspiradoEm": null,
-    "marcaOriginal": null,
-    "familia": "Floral Frutal",
-    "notas": [
-      "Pera",
-      "Tangerina",
-      "Jasmim",
-      "Almíscar",
-      "Patchouli"
-    ],
-    "preco_brl": 320,
-    "categoria": "importado-designer",
-    "disponivel": true,
-    "linkCompra": "https://www.sephora.com.br/busca?q=Jimmy%20Choo%20Jimmy%20Choo"
-  },
-  {
     "id": "jimmy-choo-jimmy-choo-man",
     "nome": "Jimmy Choo Man",
     "marca": "Jimmy Choo",
@@ -9259,27 +9238,6 @@
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "https://www.sephora.com.br/busca?q=Chanel%20N%C2%BA5%20Chanel"
-  },
-  {
-    "id": "chanel-gabrielle-chanel",
-    "nome": "Gabrielle Chanel",
-    "marca": "Chanel",
-    "tipo": "EDP",
-    "genero": "Feminino",
-    "inspiradoEm": null,
-    "marcaOriginal": null,
-    "familia": "Floral",
-    "notas": [
-      "Jasmim",
-      "Ylang-Ylang",
-      "Laranja",
-      "Baunilha",
-      "Sândalo"
-    ],
-    "preco_brl": 800,
-    "categoria": "importado-designer",
-    "disponivel": true,
-    "linkCompra": "https://www.sephora.com.br/busca?q=Gabrielle%20Chanel%20Chanel"
   },
   {
     "id": "chanel-chanel-n-5-l-eau",
