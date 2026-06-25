@@ -47,18 +47,24 @@ function salvarParcial() {
   fs.writeFileSync(caminhoExpandido, JSON.stringify(saida, null, 2), "utf8")
 }
 
-const MARCAS_BR = ["o boticário", "boticario", "natura", "eudora", "avon", "jequiti", "granado"]
+const MARCAS_BR = [
+  "o boticário", "boticario", "natura", "eudora", "avon", "jequiti", "granado",
+  "mahogany", "quem disse berenice", "l'occitane au brasil", "l'occitane au brésil",
+  "avatim", "phebo",
+]
 function categoriaPorMarca(marca) {
   const m = marca.toLowerCase()
   return MARCAS_BR.some(b => m.includes(b)) ? "nacional" : "importado-designer"
 }
 
-function tipoPorNome(nome) {
+function tipoPorNome(nome, marca) {
   const n = nome.toLowerCase()
+  const ehMarcaBR = MARCAS_BR.some(b => marca.toLowerCase().includes(b))
   if (/extrait/.test(n)) return "Extrait de Parfum"
   if (/elixir/.test(n)) return "Elixir"
   if (/profumo/.test(n)) return "Profumo"
-  if (/desodorante col[oô]nia|cologne/.test(n)) return "Desodorante Colônia"
+  if (/desodorante col[oô]nia/.test(n)) return "Desodorante Colônia"
+  if (/cologne/.test(n)) return ehMarcaBR ? "Desodorante Colônia" : "Eau de Cologne"
   if (/eau de parfum/.test(n)) return "EDP"
   if (/eau de toilette/.test(n)) return "EDT"
   return "EDP"
@@ -153,7 +159,7 @@ Retorne APENAS um JSON válido (objeto único, não array), sem markdown:
   const precoMax = Number(gerado.precoMaxBrl) || precoMin
 
   const novoPerfume = {
-    id, nome: gerado.nome, marca: gerado.marca, tipo: tipoPorNome(original.nome),
+    id, nome: gerado.nome, marca: gerado.marca, tipo: tipoPorNome(original.nome, original.marca),
     genero: gerado.genero, ano: gerado.ano, inspiradoEm: null, marcaOriginal: null,
     familia: gerado.familia, notas: notasFlat,
     notasTopo: gerado.notasTopo, notasCoracao: gerado.notasCoracao, notasFundo: gerado.notasFundo,
