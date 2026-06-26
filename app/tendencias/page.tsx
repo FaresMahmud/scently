@@ -112,6 +112,7 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
                         {s.papel ?? s.genero}
                       </span>
                     )
+                    const nomeClean = limparNomePerfume(s.nome, s.marca)
                     return s.perfumeId ? (
                       <a
                         key={`${s.genero}-${s.nome}`}
@@ -129,7 +130,7 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
                       >
                         {label}
                         <span className="link-seta-arrow" aria-hidden>→</span>
-                        <span className="editorial-banda-sugestao-nome" style={{ color: "var(--cor-destaque)", fontWeight: 500 }}>{s.nome}</span>
+                        <span className="editorial-banda-sugestao-nome" style={{ color: "var(--cor-destaque)", fontWeight: 500 }}>{nomeClean}</span>
                       </a>
                     ) : (
                       <span
@@ -143,7 +144,7 @@ function SecaoEditorial({ eyebrow, titulo, entradas }: {
                         }}
                       >
                         {label}
-                        <span style={{ color: "rgba(245,242,237,0.4)" }}>{s.nome}</span>
+                        <span style={{ color: "rgba(245,242,237,0.4)" }}>{nomeClean}</span>
                       </span>
                     )
                   })}
