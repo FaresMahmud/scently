@@ -7,6 +7,7 @@
 const COPIES_MANUAIS: Record<string, string> = {
   "light blue":        "Fresco, direto, sem esforço. Funciona no trabalho e ainda está presente no fim do dia.",
   "tommy new york":    "O clássico americano que o Brasil nunca abandonou. Limpo, jovem, confiável.",
+  "tommy summer":      "Cítrico, leve, feito para dias quentes. O irmão mais despretensioso do Tommy New York.",
   "sauvage edp":       "Todo mundo reconhece. Poucos sabem por quê funciona tão bem. A resposta está no ambroxan.",
   "sauvage":           "Todo mundo reconhece. Poucos sabem por quê funciona tão bem. A resposta está no ambroxan.",
   "baccarat rouge 540":"O perfume mais imitado do mundo por uma razão: ninguém consegue replicar o original.",
