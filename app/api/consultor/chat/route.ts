@@ -6,13 +6,15 @@
 //                       busca de catálogo usada como contexto
 // ============================================
 
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, after } from "next/server"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { consultorChatSchema } from "@/lib/schemas"
 import { consultorChatRateLimit, getClientIp } from "@/lib/rateLimit"
 import { CONSULTOR_CHAT_SYSTEM_PROMPT } from "@/lib/aiPrompts"
 import { buscarNoCatalogo } from "@/lib/catalogoFragella"
 import type { PerfumeFragella } from "@/lib/fragella"
+import { getAuthUser } from "@/lib/apiAuth"
+import { carregarMemorias, extrairEArmazenarFatos } from "@/lib/consultorMemoria"
 
 // perfumes-expandido.json (marcas nacionais/nicho) é um catálogo separado do
 // fragella (importados) — buscarNoCatalogo só cobre fragella, então o chat
@@ -89,14 +91,21 @@ function buscarContextoCatalogo(mensagem: string): CandidatoCatalogo[] {
   return [...encontrados.values()].slice(0, 5)
 }
 
-function montarSystemInstruction(catalogo: CandidatoCatalogo[]): string {
-  if (catalogo.length === 0) return CONSULTOR_CHAT_SYSTEM_PROMPT
+function montarSystemInstruction(catalogo: CandidatoCatalogo[], memoria: string | null): string {
+  let prompt = CONSULTOR_CHAT_SYSTEM_PROMPT
 
-  const lista = catalogo
-    .map(p => `- "${p.nome}" (${p.marca}) — id: ${p.id} — gênero: ${p.genero || "?"} — família: ${p.familia || "?"}`)
-    .join("\n")
+  if (catalogo.length > 0) {
+    const lista = catalogo
+      .map(p => `- "${p.nome}" (${p.marca}) — id: ${p.id} — gênero: ${p.genero || "?"} — família: ${p.familia || "?"}`)
+      .join("\n")
+    prompt += `\n\nCandidatos do catálogo Nozze relacionados à mensagem atual (priorize estes quando forem relevantes pra resposta):\n${lista}`
+  }
 
-  return `${CONSULTOR_CHAT_SYSTEM_PROMPT}\n\nCandidatos do catálogo Nozze relacionados à mensagem atual (priorize estes quando forem relevantes pra resposta):\n${lista}`
+  if (memoria) {
+    prompt += `\n\n${memoria} Use isso pra personalizar a conversa sem fazer o cliente repetir o que já disse. Se o cliente perguntar diretamente o que você sabe ou lembra sobre ele (ex: "o que você sabe sobre mim?"), essa pergunta está dentro do seu escopo — responda contando essas informações de forma natural, como uma consultora que realmente conhece o cliente.`
+  }
+
+  return prompt
 }
 
 export async function POST(request: NextRequest) {
@@ -138,12 +147,14 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const usuario = getAuthUser(request)
     const catalogo = buscarContextoCatalogo(mensagem)
+    const memoria = usuario ? await carregarMemorias(usuario.userId) : null
 
     const genAI = new GoogleGenerativeAI(chave)
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
-      systemInstruction: montarSystemInstruction(catalogo),
+      systemInstruction: montarSystemInstruction(catalogo, memoria),
       tools: [{ googleSearch: {} } as never],
       generationConfig: { thinkingConfig: { thinkingBudget: 0 } } as never,
     })
@@ -162,7 +173,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ erro: "Não foi possível gerar uma resposta." }, { status: 500 })
     }
 
-    return NextResponse.json({ resposta })
+    // Extração de memória roda após a resposta ser enviada — não atrasa o usuário
+    if (usuario) {
+      after(() => extrairEArmazenarFatos(usuario.userId, mensagem, resposta))
+    }
+
+    return NextResponse.json({ resposta, memoriaAtiva: !!usuario })
   } catch (err) {
     console.error("[API /consultor/chat] Erro:", err)
     return NextResponse.json({ erro: "Não foi possível gerar uma resposta." }, { status: 500 })

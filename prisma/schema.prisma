@@ -33,8 +33,21 @@ model User {
   refreshTokens        RefreshToken[]
   userPerfumes         UserPerfume[]
   userPreference       UserPreference?
+  consultorMemorias    ConsultorMemoria[]
 
   @@map("users")
+}
+
+model ConsultorMemoria {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fato      String
+  categoria String
+  criadoEm  DateTime @default(now())
+
+  @@index([userId])
+  @@map("consultor_memorias")
 }
 
 model VerificationToken {
