@@ -30,7 +30,8 @@ export const loginSchema = z.object({
 })
 
 export const magicLinkSchema = z.object({
-  email: z.string().email("E-mail inválido.").max(254),
+  email:    z.string().email("E-mail inválido.").max(254),
+  redirect: z.string().max(2048).optional(),
 })
 
 // ── Perfil ────────────────────────────────────────────────────────────────────

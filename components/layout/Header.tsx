@@ -13,6 +13,54 @@ import { useState, useEffect } from "react"
 import { siteMeta } from "@/config/site"
 import MenuMobileToggle from "./MenuMobileToggle"
 import Logo from "@/components/ui/Logo"
+import { useSessao } from "@/lib/useSessao"
+
+function AuthArea() {
+  const { usuario, carregando, sair } = useSessao()
+
+  const linkStyle: React.CSSProperties = {
+    fontFamily: "var(--fonte-corpo)",
+    fontSize: "0.8rem",
+    fontWeight: 500,
+    letterSpacing: "0.08em",
+    display: "inline-flex",
+    alignItems: "center",
+    minHeight: "44px",
+    padding: "0 8px",
+  }
+
+  if (carregando) return <span style={{ minHeight: "44px", width: "1px", display: "inline-block" }} />
+
+  if (!usuario) {
+    return (
+      <Link href="/entrar" style={{ ...linkStyle, color: "var(--cor-destaque)" }}>
+        Entrar
+      </Link>
+    )
+  }
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "13px" }}>
+      <span style={{ ...linkStyle, color: "var(--cor-texto-suave)", padding: 0 }}>
+        {usuario.name ?? usuario.email}
+      </span>
+      <button
+        onClick={sair}
+        style={{
+          ...linkStyle,
+          padding: "0 13px",
+          color: "var(--cor-texto)",
+          background: "none",
+          border: "1px solid var(--cor-borda)",
+          borderRadius: "var(--raio-borda)",
+          cursor: "pointer",
+        }}
+      >
+        Sair
+      </button>
+    </div>
+  )
+}
 
 function LinkConsultor({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   const router = useRouter()
@@ -150,6 +198,8 @@ export default function Header() {
           >
             iniciar consulta
           </LinkConsultor>
+
+          <AuthArea />
         </nav>
 
         {/* Ícone hambúrguer — só aparece no mobile */}

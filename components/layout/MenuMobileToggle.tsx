@@ -2,11 +2,13 @@
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { useSessao } from "@/lib/useSessao"
 
 export default function MenuMobileToggle() {
   const [aberto, setAberto] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
+  const { usuario, carregando, sair } = useSessao()
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 640)
@@ -120,6 +122,49 @@ export default function MenuMobileToggle() {
                 }}>{label}</Link>
               ))}
             </nav>
+
+            {/* Auth */}
+            <div style={{
+              padding: "20px 34px",
+              borderTop: "1px solid rgba(26,26,24,0.08)",
+              fontFamily: "DM Sans, sans-serif",
+            }}>
+              {carregando ? null : usuario ? (
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "13px" }}>
+                  <span style={{ fontSize: "14px", color: "#1A1A18" }}>
+                    {usuario.name ?? usuario.email}
+                  </span>
+                  <button
+                    onClick={() => { sair(); fechar() }}
+                    style={{
+                      background: "none",
+                      border: "1px solid rgba(26,26,24,0.2)",
+                      borderRadius: "8px",
+                      padding: "8px 16px",
+                      fontSize: "13px",
+                      letterSpacing: "0.05em",
+                      color: "#1A1A18",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Sair
+                  </button>
+                </div>
+              ) : (
+                <Link href="/entrar" onClick={fechar} style={{
+                  display: "block",
+                  textAlign: "center",
+                  padding: "12px",
+                  fontSize: "14px",
+                  fontWeight: 500,
+                  letterSpacing: "0.05em",
+                  color: "#C4714A",
+                  border: "1px solid #C4714A",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                }}>Entrar</Link>
+              )}
+            </div>
 
             {/* CTA */}
             <div style={{ padding: "0 34px 34px" }}>

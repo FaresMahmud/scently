@@ -1,16 +1,28 @@
 import { NextRequest, NextResponse } from "next/server"
 import { db } from "@/lib/db"
-import { clearCookie } from "@/lib/auth"
+import { clearCookie, verifyRefreshToken } from "@/lib/auth"
 
 export async function POST(req: NextRequest) {
   const rawToken = req.cookies.get("refreshToken")?.value
 
   if (rawToken) {
-    // Best-effort revoke — ignore errors if token already gone
-    await db.refreshToken.updateMany({
-      where: { token: rawToken, revokedAt: null },
-      data: { revokedAt: new Date() },
-    }).catch(() => null)
+    // SECURITY: tokens are stored as bcrypt hashes, so we must scan unrevoked
+    // candidates and compare — same approach as app/api/auth/refresh/route.ts
+    const candidates = await db.refreshToken.findMany({
+      where: { revokedAt: null },
+      orderBy: { createdAt: "desc" },
+      take: 100,
+    }).catch(() => [])
+
+    for (const candidate of candidates) {
+      if (await verifyRefreshToken(rawToken, candidate.token)) {
+        await db.refreshToken.update({
+          where: { id: candidate.id },
+          data: { revokedAt: new Date() },
+        }).catch(() => null)
+        break
+      }
+    }
   }
 
   const res = NextResponse.json({ ok: true })

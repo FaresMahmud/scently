@@ -11,6 +11,7 @@ import {
 } from "@/lib/auth"
 import { trackEvent } from "@/lib/analytics"
 import { getClientIp } from "@/lib/rateLimit"
+import { safeRedirect } from "@/lib/safeRedirect"
 
 const OAUTH_STATE_COOKIE = "oauthState"
 
@@ -44,6 +45,8 @@ export async function GET(req: NextRequest) {
   if (!code || !state || !cookieState || state !== cookieState) {
     return failRedirect("invalid_state")
   }
+
+  const redirectTo = safeRedirect(decodeURIComponent(state.slice(state.indexOf(".") + 1)))
 
   const clientId     = process.env.GOOGLE_CLIENT_ID
   const clientSecret  = process.env.GOOGLE_CLIENT_SECRET
@@ -127,7 +130,7 @@ export async function GET(req: NextRequest) {
   console.info(`[AUTH] google_login_success ip=${ip} userId=${user.id}`)
   trackEvent("user_session", user.id, { ip, provider: "google" }, user.id)
 
-  const res = NextResponse.redirect(new URL("/", req.url))
+  const res = NextResponse.redirect(new URL(redirectTo, req.url))
   res.headers.append("Set-Cookie", serializeCookie("accessToken",  accessToken,  accessCookieOptions))
   res.headers.append("Set-Cookie", serializeCookie("refreshToken", refreshToken, refreshCookieOptions))
   res.headers.append("Set-Cookie", clearCookie(OAUTH_STATE_COOKIE, "/api/auth/google"))

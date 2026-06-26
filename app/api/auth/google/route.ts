@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
 import { serializeCookie } from "@/lib/auth"
+import { safeRedirect } from "@/lib/safeRedirect"
 
 const OAUTH_STATE_COOKIE = "oauthState"
 
@@ -12,7 +13,10 @@ export async function GET(req: NextRequest) {
 
   const siteUrl     = process.env.NEXT_PUBLIC_SITE_URL ?? new URL(req.url).origin
   const redirectUri = `${siteUrl}/api/auth/google/callback`
-  const state        = crypto.randomBytes(32).toString("hex")
+  const redirectTo  = safeRedirect(new URL(req.url).searchParams.get("redirect"))
+  // The redirect target rides inside Google's echoed `state` param — no extra cookie needed.
+  // CSRF protection still holds because the random prefix is the part verified against the cookie.
+  const state = `${crypto.randomBytes(32).toString("hex")}.${encodeURIComponent(redirectTo)}`
 
   const params = new URLSearchParams({
     client_id:     clientId,

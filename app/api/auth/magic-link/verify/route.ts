@@ -11,6 +11,7 @@ import {
 } from "@/lib/auth"
 import { trackEvent } from "@/lib/analytics"
 import { getClientIp } from "@/lib/rateLimit"
+import { safeRedirect } from "@/lib/safeRedirect"
 
 function hashToken(token: string): string {
   return crypto.createHash("sha256").update(token).digest("hex")
@@ -18,7 +19,9 @@ function hashToken(token: string): string {
 
 export async function GET(req: NextRequest) {
   const ip = getClientIp(req)
-  const token = new URL(req.url).searchParams.get("token")
+  const url = new URL(req.url)
+  const token = url.searchParams.get("token")
+  const redirectTo = safeRedirect(url.searchParams.get("redirect"))
 
   if (!token) {
     return NextResponse.redirect(new URL("/entrar?error=magic_link", req.url))
@@ -61,7 +64,7 @@ export async function GET(req: NextRequest) {
   console.info(`[AUTH] magic_link_login_success ip=${ip} userId=${user.id}`)
   trackEvent("user_session", user.id, { ip, provider: "magic_link" }, user.id)
 
-  const res = NextResponse.redirect(new URL("/", req.url))
+  const res = NextResponse.redirect(new URL(redirectTo, req.url))
   res.headers.append("Set-Cookie", serializeCookie("accessToken",  accessToken,  accessCookieOptions))
   res.headers.append("Set-Cookie", serializeCookie("refreshToken", refreshToken, refreshCookieOptions))
   return res

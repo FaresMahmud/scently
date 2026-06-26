@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import Turnstile from "@/components/auth/Turnstile"
 
@@ -51,6 +51,8 @@ function DividerOu() {
 
 export default function PaginaCadastro() {
   const router = useRouter()
+  const params = useSearchParams()
+  const redirectTo = params.get("redirect") ?? "/"
 
   const [mode,      setMode]      = useState<"senha" | "magico">("senha")
   const [name,      setName]      = useState("")
@@ -79,7 +81,7 @@ export default function PaginaCadastro() {
       const res = await fetch("/api/auth/magic-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: magicEmail }),
+        body: JSON.stringify({ email: magicEmail, redirect: redirectTo }),
       })
       if (res.status === 429) {
         const { error } = await res.json()
@@ -134,7 +136,7 @@ export default function PaginaCadastro() {
         return
       }
 
-      router.push("/")
+      router.push(redirectTo)
       router.refresh()
     } catch {
       setErrors({ global: "Erro de conexão. Tente novamente." })
@@ -226,7 +228,7 @@ export default function PaginaCadastro() {
 
           {/* Google */}
           <a
-            href="/api/auth/google"
+            href={`/api/auth/google${redirectTo !== "/" ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`}
             style={{
               width: "100%",
               minHeight: "44px",

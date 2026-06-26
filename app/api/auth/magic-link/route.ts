@@ -4,6 +4,7 @@ import { Resend } from "resend"
 import { db } from "@/lib/db"
 import { magicLinkRateLimit, getClientIp } from "@/lib/rateLimit"
 import { magicLinkSchema, zodError } from "@/lib/schemas"
+import { safeRedirect } from "@/lib/safeRedirect"
 
 function hashToken(token: string): string {
   return crypto.createHash("sha256").update(token).digest("hex")
@@ -40,8 +41,9 @@ export async function POST(req: NextRequest) {
     },
   })
 
+  const redirectTo = safeRedirect(parsed.data.redirect)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? new URL(req.url).origin
-  const verifyUrl = `${siteUrl}/api/auth/magic-link/verify?token=${rawToken}`
+  const verifyUrl = `${siteUrl}/api/auth/magic-link/verify?token=${rawToken}&redirect=${encodeURIComponent(redirectTo)}`
 
   const resendKey = process.env.RESEND_API_KEY
   if (resendKey) {

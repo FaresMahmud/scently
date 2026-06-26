@@ -51,7 +51,7 @@ function DividerOu() {
 export default function PaginaEntrar() {
   const router = useRouter()
   const params = useSearchParams()
-  const next   = params.get("next") ?? "/"
+  const redirectTo = params.get("redirect") ?? "/"
   const oauthError = params.get("error")
 
   const [mode,      setMode]      = useState<"senha" | "magico">("senha")
@@ -81,7 +81,7 @@ export default function PaginaEntrar() {
       const res = await fetch("/api/auth/magic-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: magicEmail }),
+        body: JSON.stringify({ email: magicEmail, redirect: redirectTo }),
       })
       if (res.status === 429) {
         const { error } = await res.json()
@@ -138,7 +138,7 @@ export default function PaginaEntrar() {
         return
       }
 
-      router.push(next)
+      router.push(redirectTo)
       router.refresh()
     } catch {
       setErrors({ global: "Erro de conexão. Tente novamente." })
@@ -250,7 +250,7 @@ export default function PaginaEntrar() {
 
           {/* Google */}
           <a
-            href={`/api/auth/google${next !== "/" ? `?next=${encodeURIComponent(next)}` : ""}`}
+            href={`/api/auth/google${redirectTo !== "/" ? `?redirect=${encodeURIComponent(redirectTo)}` : ""}`}
             style={{
               width: "100%",
               minHeight: "44px",
