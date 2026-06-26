@@ -77,8 +77,22 @@ export default function PaginaInicial() {
                 maxWidth: "720px",
                 marginBottom: "21px",
               }}>
-                Você tem um perfume. Mas ainda não encontrou o seu.
+                O perfume que você ainda não conhece está aqui.
               </h1>
+
+              <div style={{ width: "55px", height: "2px", backgroundColor: "var(--cor-destaque)", marginBottom: "21px" }} />
+
+              <h2 style={{
+                fontFamily: "var(--fonte-titulo)",
+                fontWeight: 300,
+                fontSize: "clamp(26px, 3vw, 34px)",
+                color: "var(--cor-texto-suave)",
+                lineHeight: 1.2,
+                maxWidth: "560px",
+                marginBottom: "21px",
+              }}>
+                Você tem um perfume. Mas ainda não encontrou o seu.
+              </h2>
 
               <p style={{ maxWidth: "400px", marginBottom: "34px", fontSize: "16px", fontWeight: 400, lineHeight: 1.6, color: "var(--cor-texto-suave)", marginTop: "21px" }}>
                 {textosHome.heroSubtitulo}
