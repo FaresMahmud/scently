@@ -338,7 +338,7 @@ export async function POST(req: NextRequest) {
     console.error("[Scanner] Gemini error status:", e?.status)
     console.error("[Scanner] Gemini error message:", e?.message)
     console.error("[Scanner] Gemini error details:", JSON.stringify(e?.errorDetails ?? e?.response ?? "no details"))
-    return NextResponse.json({ erro: "Gemini falhou", detail: e?.message }, { status: 422 })
+    return NextResponse.json({ erro: "Não foi possível identificar o perfume. Tente novamente." }, { status: 422 })
   }
 
   // Traduz família para PT (notas handled below after catalog lookup)

@@ -26,6 +26,7 @@ import { gerarRankingEstacao, gerarRankingOcasiao } from "@/lib/gerarRanking"
 import type { Acorde } from "@/lib/types"
 import { getEditorialContent } from "@/lib/perfumeEditorial"
 import PerfumeViewTracker from "@/components/perfume/PerfumeViewTracker"
+import { safeJsonLd } from "@/lib/jsonld"
 
 export const dynamicParams = true
 export const revalidate = 86400
@@ -470,7 +471,7 @@ export default async function PaginaPerfume(
       <PerfumeViewTracker perfumeId={id} nome={perfume.nome} marca={perfume.marca} />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <div className="container-site" style={{ paddingTop: "34px", paddingBottom: "89px" }}>
 

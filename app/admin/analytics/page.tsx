@@ -6,7 +6,11 @@ import { db } from "@/lib/db"
 
 async function checkAuth(secret: string | null | undefined): Promise<boolean> {
   const adminSecret = process.env.ADMIN_SECRET
-  if (!adminSecret) return true // sem env = sem proteção (dev)
+  if (!adminSecret) {
+    // SECURITY: fail closed — an unset ADMIN_SECRET must never leave this
+    // page open in production. Only allow the no-secret dev shortcut locally.
+    return process.env.NODE_ENV !== "production"
+  }
   return secret === adminSecret
 }
 

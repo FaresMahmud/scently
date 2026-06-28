@@ -192,7 +192,7 @@ async function apiFetch<T>(path: string, params: Record<string, string | number>
 
     return (await res.json()) as T
   } catch (e) {
-    console.error(`[Fragella] Erro em ${path}:`, (e as Error).message)
+    console.error("[Fragella] Erro:", path, (e as Error).message)
     return null
   } finally {
     clearTimeout(timeout)

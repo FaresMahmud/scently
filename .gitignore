@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# scraper/debug script outputs — not part of the app, shouldn't be tracked
+/scripts/output/
+
 # next.js
 /.next/
 /out/

@@ -11,6 +11,7 @@ import { siteMeta, textosHome } from "@/config/site"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import EmAltaAgora from "@/components/home/EmAltaAgora"
 import { perfumesPopulares } from "@/lib/catalogoFragella"
+import { safeJsonLd } from "@/lib/jsonld"
 
 export const metadata: Metadata = {
   title: { absolute: "Nozze — Encontre o perfume certo para você" },
@@ -55,7 +56,7 @@ export default function PaginaInicial() {
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebSite) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLdWebSite) }}
       />
       {/* ── Hero ──────────────────────────────────────────── */}
       <section style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", borderBottom: "1px solid var(--cor-borda)" }}>

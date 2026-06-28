@@ -31,6 +31,10 @@ const PREFIXOS_AMBIGUOS = [
   "perfume",
 ]
 
+function escapeRegExp(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
 export function limparNomePerfume(nome: string, marca: string): string {
   if (!nome) return nome
 
@@ -38,7 +42,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
 
   // 1. Remove prefixos ambíguos (case insensitive), do mais específico ao mais genérico
   for (const prefixo of PREFIXOS_AMBIGUOS) {
-    const regex = new RegExp(`^${prefixo}\\s+`, "i")
+    const regex = new RegExp(`^${escapeRegExp(prefixo)}\\s+`, "i")
     const tentativa = limpo.replace(regex, "").trim()
     if (tentativa !== limpo && tentativa.length > 2) { limpo = tentativa; break }
   }
@@ -54,7 +58,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
       const prefixes = BRAND_PREFIXES[marcaNorm]
       if (prefixes) {
         for (const prefix of prefixes) {
-          const regex = new RegExp(`^${prefix}\\s+`, "i")
+          const regex = new RegExp(`^${escapeRegExp(prefix)}\\s+`, "i")
           const tentativa = limpo.replace(regex, "").trim()
           if (tentativa.length > 2) { limpo = tentativa; break }
         }
@@ -85,7 +89,7 @@ export function limparNomePerfume(nome: string, marca: string): string {
     "edc",
   ]
   for (const conc of concentracoes) {
-    const regex    = new RegExp(`\\s+${conc}$`, "i")
+    const regex    = new RegExp(`\\s+${escapeRegExp(conc)}$`, "i")
     const tentativa = limpo.replace(regex, "").trim()
     if (tentativa !== limpo && tentativa.length > 2) { limpo = tentativa; break }
   }

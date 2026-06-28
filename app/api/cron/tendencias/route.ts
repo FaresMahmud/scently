@@ -329,12 +329,16 @@ export async function GET(request: Request) {
     return jsonResponse({ erro: "Não autorizado." }, { status: 401 })
   }
 
+  // SECURITY: `msg`/`dados` may contain text sourced from Gemini output (perfume
+  // names, etc). Keep them out of the first console.error argument — util.format
+  // treats only the first string arg as a printf-style format string, so a stray
+  // "%s" inside attacker-influenced text could otherwise corrupt the log line.
   const log = (nivel: "INFO" | "ERROR" | "DEBUG", msg: string, dados?: unknown) => {
-    const linha = `[tendencias-cron][${nivel}] ${msg}`
+    const prefixo = `[tendencias-cron][${nivel}]`
     if (dados !== undefined) {
-      console.error(linha, JSON.stringify(dados, null, 2))
+      console.error(prefixo, msg, JSON.stringify(dados, null, 2))
     } else {
-      console.error(linha)
+      console.error(prefixo, msg)
     }
   }
 
