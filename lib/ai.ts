@@ -7,10 +7,10 @@
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
-import { traduzir } from "@/lib/utils"
+import { traduzir, slugify } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
-import { buscarNoCatalogo, carregarCatalogo } from "@/lib/catalogoFragella"
+import { buscarNoCatalogo, carregarCatalogo, buscarPerfumePorSlug } from "@/lib/catalogoFragella"
 import { db } from "@/lib/db"
 import { z } from "zod"
 
@@ -376,6 +376,7 @@ export interface RecomendacaoCard {
   explicacao: string
   notas: string[]
   quandoUsar?: string
+  slug?: string
 }
 
 export interface RecomendacaoQuiz {
@@ -391,6 +392,7 @@ const RecomendacaoCardSchema = z.object({
   explicacao:   z.string().min(1),
   notas:        z.array(z.string()).min(1).max(6),
   quandoUsar:   z.string().optional(),
+  slug:         z.string().optional(),
 })
 
 const RecomendacaoQuizSchema = z.object({
@@ -403,6 +405,7 @@ const RecomendacaoQuizSchema = z.object({
 const LABELS_QUIZ: Record<string, string> = {
   genero:               "Gênero",
   ocasiao:              "Ocasião",
+  clima:                "Clima",
   cena:                 "Cena",
   projecao:             "Projeção",
   ousadia:              "Ousadia",
@@ -459,6 +462,37 @@ const CENA_PARA_FAMILIAS: Array<{ palavras: string[]; familias: string[] }> = [
   { palavras: ["assinatura pessoal"],                               familias: ["amadeirado", "oriental", "nicho"] },
 ]
 
+// Mapeamento PT → EN para comparar com campo `familia` do catálogo Fragella (inglês)
+const FAMILIA_PT_EN: Record<string, string[]> = {
+  "amadeirado":  ["woody", "wood"],
+  "oriental":    ["oriental", "amber"],
+  "especiado":   ["spicy"],
+  "cítrico":     ["citrus"],
+  "fresco":      ["fresh", "ozonic", "aquatic"],
+  "aromático":   ["aromatic", "fougere", "fougère"],
+  "floral":      ["floral", "flower"],
+  "aquático":    ["aquatic", "marine", "oceanic", "water"],
+  "verde":       ["green"],
+  "nicho":       ["niche"],
+  "oud":         ["oud", "aoud"],
+  "couro":       ["leather"],
+  "gourmand":    ["gourmand", "sweet"],
+}
+
+// Famílias priorizadas por clima (adicionadas ao familiasBusca da Camada B)
+const CLIMA_BONUS: Record<string, string[]> = {
+  "quente o ano todo":              ["cítrico", "fresco", "aquático", "aromático"],
+  "calor no verão, frio no inverno": [],
+  "frio a maior parte do ano":      ["oriental", "amadeirado", "especiado", "gourmand", "couro"],
+}
+
+function familiaMatch(familiaItem: string, termoPT: string): boolean {
+  const fl = familiaItem.toLowerCase()
+  if (fl.includes(termoPT)) return true
+  const equivalentes = FAMILIA_PT_EN[termoPT]
+  return equivalentes ? equivalentes.some(en => fl.includes(en)) : false
+}
+
 /**
  * Monta o bloco CATÁLOGO injetado no prompt do quiz.
  * Três camadas: A) perfume existente + família olfativa, B) cena+ocasião → famílias
@@ -507,7 +541,10 @@ async function montarContextoCatalogo(respostas: Record<string, string>): Promis
   function addExpandido(p: PerfumeExpandido) {
     const k = chave(p.nome, p.marca)
     if (mapa.has(k)) return
-    mapa.set(k, { id: p.id, nome: p.nome, marca: p.marca, concentracao: p.tipo, genero: p.genero, notas: (p.notas ?? []).slice(0, 5), preco: p.preco_brl, familia: p.familia, categoria: p.categoria })
+    const notasList = Array.isArray(p.notas)
+      ? p.notas.slice(0, 5)
+      : [...(p.notas?.topo ?? []), ...(p.notas?.coracao ?? []), ...(p.notas?.fundo ?? [])].slice(0, 5)
+    mapa.set(k, { id: p.id, nome: p.nome, marca: p.marca, concentracao: p.tipo, genero: p.genero, notas: notasList, preco: p.preco_brl, familia: p.familia, categoria: p.categoria })
   }
 
   const catalogo  = carregarCatalogo()
@@ -521,8 +558,10 @@ async function montarContextoCatalogo(respostas: Record<string, string>): Promis
     const familias = [...new Set(achados.map(p => p.familia).filter(Boolean))]
     for (const fam of familias) {
       const fl = fam.toLowerCase()
-      catalogo .filter(p => p.familia.toLowerCase().includes(fl) && generoFragellaOk(p.genero) && precoOk(p.preco)).slice(0, 5).forEach(addFragella)
-      expandido.filter(p => p.familia.toLowerCase().includes(fl) && generoExpandidoOk(p.genero) && precoOk(p.preco_brl)).slice(0, 5).forEach(addExpandido)
+      // Expandido primeiro
+      expandido.filter(p => familiaMatch(p.familia, fl) || p.familia.toLowerCase().includes(fl)).filter(p => generoExpandidoOk(p.genero) && precoOk(p.preco_brl)).slice(0, 5).forEach(addExpandido)
+      // Fragella depois
+      catalogo .filter(p => familiaMatch(p.familia, fl) || p.familia.toLowerCase().includes(fl)).filter(p => generoFragellaOk(p.genero) && precoOk(p.preco)).slice(0, 5).forEach(addFragella)
     }
   }
 
@@ -536,19 +575,26 @@ async function montarContextoCatalogo(respostas: Record<string, string>): Promis
     familiasBusca.add("nicho"); familiasBusca.add("oud"); familiasBusca.add("oriental")
   }
 
+  // Clima: adiciona famílias bônus ao conjunto de busca
+  const climaTexto = (respostas["clima"] ?? "").toLowerCase()
+  const climaFamilias = CLIMA_BONUS[climaTexto] ?? []
+  climaFamilias.forEach(f => familiasBusca.add(f))
+
   if (familiasBusca.size > 0) {
     const fArr = [...familiasBusca]
-    ;[...catalogo].filter(p => fArr.some(f => p.familia.toLowerCase().includes(f)) && generoFragellaOk(p.genero) && precoOk(p.preco))
-      .sort(() => Math.random() - 0.5).slice(0, 20).forEach(addFragella)
-    ;[...expandido].filter(p => fArr.some(f => p.familia.toLowerCase().includes(f)) && generoExpandidoOk(p.genero) && precoOk(p.preco_brl))
-      .sort(() => Math.random() - 0.5).slice(0, 20).forEach(addExpandido)
+    // Expandido primeiro (fonte primária: 25)
+    ;[...expandido].filter(p => fArr.some(f => familiaMatch(p.familia, f)) && generoExpandidoOk(p.genero) && precoOk(p.preco_brl))
+      .sort(() => Math.random() - 0.5).slice(0, 25).forEach(addExpandido)
+    // Fragella depois (complementa: 15)
+    ;[...catalogo].filter(p => fArr.some(f => familiaMatch(p.familia, f)) && generoFragellaOk(p.genero) && precoOk(p.preco))
+      .sort(() => Math.random() - 0.5).slice(0, 15).forEach(addFragella)
   }
 
-  // ── CAMADA C — Diversidade forçada ───────────────────────────────────────
+  // ── CAMADA C — Diversidade forçada (shuffle só do expandido) ─────────────
   if (mapa.size < 25) {
-    ;[...catalogo].filter(p => generoFragellaOk(p.genero) && precoOk(p.preco))
+    ;[...expandido].filter(p => generoExpandidoOk(p.genero) && precoOk(p.preco_brl))
       .sort(() => Math.random() - 0.5).slice(0, 30)
-      .forEach(p => { if (mapa.size < 40) addFragella(p) })
+      .forEach(p => { if (mapa.size < 40) addExpandido(p) })
   }
 
   // Garante ≥ 3 contratipos/nacionais
@@ -650,6 +696,21 @@ ${mode === "premium" ? FORMATO_PREMIUM : FORMATO_FREE}
 Responda SOMENTE com o JSON. Sem texto antes ou depois. Sem markdown.`
 }
 
+function verificarSlugExiste(nome: string, marca: string): string | null {
+  const targetSlug = `${slugify(nome)}-${slugify(marca)}`
+
+  // 1. Procurar no expandido
+  const expandido = getExpandido()
+  const exMatch = expandido.find(p => p.id === targetSlug || (slugify(p.nome) === slugify(nome) && slugify(p.marca) === slugify(marca)))
+  if (exMatch) return exMatch.id
+
+  // 2. Procurar no Fragella
+  const fgMatch = buscarPerfumePorSlug(targetSlug)
+  if (fgMatch) return fgMatch.id
+
+  return null
+}
+
 export async function gerarRecomendacaoQuiz(
   respostas: Record<string, string>,
   mode: "free" | "premium"
@@ -715,8 +776,24 @@ export async function gerarRecomendacaoQuiz(
     return null
   }
 
-  console.log("[QuizIA] Sucesso —", mode, "—", parsed.data.ideal.nome)
-  return parsed.data
+  const recomendacao = parsed.data
+
+  // Resolve slugs para os links da página de perfume
+  if (recomendacao.ideal) {
+    const slug = verificarSlugExiste(recomendacao.ideal.nome, recomendacao.ideal.marca)
+    if (slug) recomendacao.ideal.slug = slug
+  }
+  if (recomendacao.alternativa) {
+    const slug = verificarSlugExiste(recomendacao.alternativa.nome, recomendacao.alternativa.marca)
+    if (slug) recomendacao.alternativa.slug = slug
+  }
+  if (recomendacao.ousado) {
+    const slug = verificarSlugExiste(recomendacao.ousado.nome, recomendacao.ousado.marca)
+    if (slug) recomendacao.ousado.slug = slug
+  }
+
+  console.log("[QuizIA] Sucesso —", mode, "—", recomendacao.ideal.nome)
+  return recomendacao
 }
 
 // ── Expanded catalog (perfumes-expandido.json) ────────────────────────────────
@@ -730,7 +807,7 @@ interface PerfumeExpandido {
   inspiradoEm:   string | null
   marcaOriginal: string | null
   familia:       string
-  notas:         string[]
+  notas:         string[] | { topo?: string[]; coracao?: string[]; fundo?: string[] }
   preco_brl:     number
   categoria:     "contratipo" | "arabe" | "nacional" | "importado-designer" | "nicho"
   disponivel:    boolean
@@ -790,7 +867,9 @@ function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
           marca: compativel.marca,
           concentracao: compativel.tipo,
           descricao: `${compativel.familia}. Inspirado em ${compativel.inspiradoEm} da ${compativel.marcaOriginal}.`,
-          notas: compativel.notas.slice(0, 4),
+          notas: Array.isArray(compativel.notas)
+            ? compativel.notas.slice(0, 4)
+            : [...(compativel.notas?.topo ?? []), ...(compativel.notas?.coracao ?? []), ...(compativel.notas?.fundo ?? [])].slice(0, 4),
         },
         conselho: clima === 'frio'
           ? 'Aplique no pulso e pescoço. O frio potencializa a fixação.'

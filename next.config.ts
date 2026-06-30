@@ -29,6 +29,10 @@ const CSP = [
 
 const nextConfig: NextConfig = {
   productionBrowserSourceMaps: false,
+  experimental: {
+    // Reduce static generation workers to avoid OOM with large JSON data files
+    cpus: 2,
+  },
   images: {
     // SECURITY: Restrict to known perfume image CDNs only.
     // hostname:"**" was an open SSRF-like proxy — any attacker could probe

@@ -78,7 +78,7 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
                     marginBottom: "10px",
                   }}
                 >
-                  Gratuito · 6 perguntas · 1 recomendação
+                  Gratuito · 7 perguntas · 1 recomendação
                 </span>
                 <p
                   style={{
@@ -133,7 +133,7 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
                     marginBottom: "10px",
                   }}
                 >
-                  Nozze+ · 8 perguntas · 3 recomendações
+                  Nozze+ · 9 perguntas · 3 recomendações
                 </span>
                 <p
                   style={{
@@ -147,7 +147,7 @@ export default function SelecaoModo({ onSelecionar }: PropsSelecaoModo) {
                   Consulta completa
                 </p>
                 <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem", color: "var(--cor-texto-suave)", lineHeight: 1.5 }}>
-                  Análise profunda em 8 etapas. Recomendação mais precisa.
+                  Análise profunda em 9 etapas. Recomendação mais precisa.
                 </p>
               </div>
               <span style={{ color: "var(--cor-dourado)", fontSize: "1.1rem", marginTop: "0.3rem", flexShrink: 0 }}>→</span>

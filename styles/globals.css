@@ -607,3 +607,249 @@ a:hover article {
     top: auto;
   }
 }
+
+/* ----------------------------------------
+   Novas animações e efeitos premium
+   ---------------------------------------- */
+
+/* Animação laser scan */
+@keyframes laserScan {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.laser-scan-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cor-destaque), transparent);
+  box-shadow: 0 0 8px var(--cor-destaque);
+  animation: laserScan 3.5s linear infinite;
+  pointer-events: none;
+}
+
+/* Partícula dourada para o hero background */
+.hero-particula-gold {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--cor-dourado);
+  animation: particula-flutua 6s ease-in-out infinite;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+/* Animações do menu mobile */
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.slide-in-right {
+  animation: slideInFromRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 0.6; }
+}
+
+.fade-in-overlay {
+  animation: fadeInOverlay 0.25s ease-out forwards;
+}
+
+/* ----------------------------------------
+   Ajustes de Responsividade Mobile
+   ---------------------------------------- */
+
+/* Empilhamento de botões binários no quiz no mobile */
+.opcao-binaria-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+@media (max-width: 480px) {
+  .opcao-binaria-container {
+    flex-direction: column;
+  }
+}
+
+/* Rolagem horizontal de pills de filtros no mobile */
+.scroll-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+@media (max-width: 640px) {
+  .scroll-pills-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .scroll-pills-container::-webkit-scrollbar {
+    display: none; /* Safari/Chrome */
+  }
+  .scroll-pills-divider {
+    display: none !important; /* Esconde a barra divisora no mobile */
+  }
+}
+
+/* Alinhamento da linha de ordenação */
+.ordenacao-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 13px;
+}
+@media (max-width: 640px) {
+  .ordenacao-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ordenacao-row p {
+    align-self: flex-end;
+    margin-top: 4px;
+  }
+}
+
+/* Altura da seção hero no mobile */
+.hero-section {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    padding-top: var(--fib-4);
+    padding-bottom: var(--fib-4);
+  }
+}
+
+/* Alinhamento do separador do hero no mobile */
+.separador-hero {
+  margin-top: 0;
+  margin-bottom: 21px;
+}
+@media (max-width: 768px) {
+  .separador-hero {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Padding reduzido para os cards de tendência em telas pequenas */
+.card-tendencia-wrapper {
+  padding: 34px;
+}
+@media (max-width: 640px) {
+  .card-tendencia-wrapper {
+    padding: 21px;
+  }
+}
+
+/* Grade de perfumes responsiva (2 colunas no mobile) */
+.perfumes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 21px;
+}
+@media (max-width: 640px) {
+  .perfumes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+  }
+}
+
+/* Espaçamento interno responsivo do card de perfume */
+.card-perfume-info {
+  padding: 21px;
+}
+@media (max-width: 640px) {
+  .card-perfume-info {
+    padding: 13px;
+  }
+}
+
+/* Título responsivo do card de perfume */
+.card-perfume-title {
+  font-family: var(--fonte-titulo);
+  font-weight: 300;
+  font-size: 26px;
+  line-height: 1.15;
+  color: var(--cor-texto);
+}
+@media (max-width: 640px) {
+  .card-perfume-title {
+    font-size: 18px;
+  }
+}
+
+/* Marca responsiva do card de perfume */
+.card-perfume-brand {
+  font-size: 0.68rem;
+}
+@media (max-width: 640px) {
+  .card-perfume-brand {
+    font-size: 0.6rem;
+  }
+}
+
+/* ----------------------------------------
+   Suporte a Modo Noturno (Tema Escuro)
+   ---------------------------------------- */
+
+/* Definição de variáveis do tema escuro */
+[data-theme="dark"] {
+  --cor-base: #121210;         /* cinza muito escuro/quase preto — fundo do site */
+  --cor-destaque: #C4714A;     /* mantemos o terracota oficial */
+  --cor-texto: #F5F2ED;        /* bege acinzentado — texto principal */
+  --cor-dourado: #D9B85C;      /* dourado oficial */
+
+  --cor-texto-suave: #A3A39E;  /* cinza claro — textos secundários */
+  --cor-borda: #2C2C28;        /* cinza escuro — bordas e separadores */
+  --cor-card: #1C1C19;         /* cinza ligeiramente mais claro — fundo dos cards */
+  --cor-destaque-hover: #D7825B; /* terracota hover escuro */
+  --cor-header-bg: rgba(18, 18, 16, 0.8);
+  --cor-card-overlay: rgba(255, 255, 255, 0.04);
+}
+
+/* Variáveis adicionais para o tema claro */
+:root {
+  --cor-header-bg: rgba(245, 242, 237, 0.8);
+  --cor-card-overlay: rgba(26, 26, 24, 0.03);
+}
+
+/* Botão de alternância de tema (ThemeToggle) */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-texto);
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--raio-borda-suave);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.theme-toggle-btn:hover {
+  background-color: rgba(26, 26, 24, 0.05);
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Adaptação de elementos especiais para o tema escuro */
+[data-theme="dark"] img {
+  filter: brightness(0.9) contrast(1.05); /* Suaviza imagens brancas fortes no modo escuro */
+}

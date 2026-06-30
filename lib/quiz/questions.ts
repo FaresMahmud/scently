@@ -67,6 +67,15 @@ export const FREE_QUIZ_QUESTIONS: PerguntaQuiz[] = [
     ],
   },
   {
+    id: "clima",
+    pergunta: "Qual o clima da sua cidade na maior parte do ano?",
+    opcoes: [
+      { id: "quente",     texto: "Quente o ano todo" },
+      { id: "temperado",  texto: "Calor no verão, frio no inverno" },
+      { id: "frio",       texto: "Frio a maior parte do ano" },
+    ],
+  },
+  {
     id: "cena",
     pergunta: "Qual dessas cenas combina mais com você?",
     opcoes: [

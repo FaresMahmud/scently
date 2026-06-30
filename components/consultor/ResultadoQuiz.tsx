@@ -32,7 +32,7 @@ const SLOT_META: Record<
   },
   ousado: {
     label: "Para explorar",
-    descricao: "Empurra o perfil além — para quem quer descobrir",
+    descricao: "Para quem quer ir além e descobrir algo novo",
     cor: "var(--cor-dourado)",
   },
 }
@@ -181,7 +181,7 @@ function CardRecomendacao({
             fontWeight: 300,
             fontSize: destaque ? "clamp(26px, 5vw, 34px)" : "26px",
             lineHeight: 1.1,
-            color: "#1A1A18",
+            color: "var(--cor-texto)",
             margin: 0,
           }}
         >
@@ -195,7 +195,8 @@ function CardRecomendacao({
         style={{
           fontFamily: "var(--fonte-corpo)",
           fontSize: "16px",
-          color: "rgba(26,26,24,0.85)",
+          color: "var(--cor-texto)",
+          opacity: 0.9,
           lineHeight: 1.6,
           marginBottom: "21px",
         }}
@@ -230,6 +231,24 @@ function CardRecomendacao({
       {/* Ações */}
       <div style={{ display: "flex", gap: "13px", flexWrap: "wrap", alignItems: "center", marginTop: "auto" }}>
         <BotaoOndeComprar nome={card.nome} marca={card.marca} />
+        {card.slug && (
+          <Link
+            href={`/perfume/${card.slug}`}
+            style={{
+              fontFamily: "var(--fonte-corpo)",
+              fontSize: "14px",
+              color: "var(--cor-dourado)",
+              background: "none",
+              border: "none",
+              minHeight: "44px",
+              display: "inline-flex",
+              alignItems: "center",
+              textDecoration: "none",
+            }}
+          >
+            Ver perfume →
+          </Link>
+        )}
         <Link
           href={linkCatalogo}
           style={{
@@ -315,7 +334,7 @@ export default function ResultadoQuiz({ recomendacao, onRecomecar }: PropsResult
         style={{
           fontFamily: "var(--fonte-corpo)",
           fontSize: "0.9375rem",
-          color: "rgba(26,26,24,0.6)",
+          color: "var(--cor-texto-suave)",
           marginBottom: "34px",
           lineHeight: 1.5,
         }}

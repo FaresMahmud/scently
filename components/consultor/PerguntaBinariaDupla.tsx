@@ -65,7 +65,7 @@ export default function PerguntaBinariaDupla({ pergunta, pares, onResponder }: P
 
       <div style={{ display: "flex", flexDirection: "column", gap: "21px" }}>
         {pares.map((par) => (
-          <div key={par.id} style={{ display: "flex", gap: "8px" }}>
+          <div key={par.id} className="opcao-binaria-container">
             <button onClick={() => selecionar(par.id, par.opcaoA.id)} style={estiloOpcao(par.id, par.opcaoA.id)}>
               {par.opcaoA.texto}
             </button>

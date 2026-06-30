@@ -32,9 +32,11 @@ interface ContratipoEntry {
   disponivel?: boolean
 }
 
+interface NotasExpandido { topo?: string[]; coracao?: string[]; fundo?: string[] }
+
 interface ExpandidoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
-  familia: string; notas: string[]; preco_brl: number
+  familia: string; notas: string[] | NotasExpandido; preco_brl: number
   categoria: string; inspiradoEm?: string; marcaOriginal?: string
   disponivel?: boolean
 }
@@ -71,13 +73,16 @@ function expandidoParaCard(p: ExpandidoEntry): CardUnificado {
   const inspiracaoInfo = p.inspiradoEm
     ? `inspirado em ${p.inspiradoEm}${p.marcaOriginal ? ` da ${p.marcaOriginal}` : ""}`
     : undefined
+  const notas: string[] = Array.isArray(p.notas)
+    ? p.notas
+    : [...(p.notas.topo ?? []), ...(p.notas.coracao ?? []), ...(p.notas.fundo ?? [])]
   return {
     id:             p.id,
     nome:           p.nome,
     marca:          p.marca,
     concentracao:   p.tipo,
     familia:        p.familia,
-    notas:          p.notas,
+    notas,
     preco_brl:      p.preco_brl,
     inspiracaoInfo,
     categoria:      p.categoria,

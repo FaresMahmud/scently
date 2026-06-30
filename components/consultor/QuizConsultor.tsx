@@ -10,6 +10,7 @@
 import { useState, useEffect, useRef } from "react"
 import { track } from "@/lib/analytics-client"
 import SelecaoModo        from "./SelecaoModo"
+import TransicaoQuiz     from "./TransicaoQuiz"
 import PerguntaOpcoes     from "./PerguntaOpcoes"
 import PerguntaTexto       from "./PerguntaTexto"
 import PerguntaBinariaDupla from "./PerguntaBinariaDupla"
@@ -21,7 +22,7 @@ import {
 } from "@/lib/quiz/questions"
 import type { RecomendacaoQuiz } from "@/lib/ai"
 
-type EstadoQuiz = "selecao" | "pergunta" | "carregando" | "resultado" | "erro"
+type EstadoQuiz = "selecao" | "pergunta" | "transicao" | "carregando" | "resultado" | "erro"
 
 export default function QuizConsultor() {
   const [estado, setEstado]           = useState<EstadoQuiz>("selecao")
@@ -30,6 +31,10 @@ export default function QuizConsultor() {
   const [respostas, setRespostas]     = useState<Record<string, string | string[]>>({})
   const [recomendacao, setRecomendacao] = useState<RecomendacaoQuiz | null>(null)
   const [erroMsg, setErroMsg]         = useState<string | null>(null)
+
+  // Refs para coordenar transição (3s mín.) com resposta da IA
+  const recomendacaoRef = useRef<RecomendacaoQuiz | null>(null)
+  const erroMsgRef      = useRef<string | null>(null)
 
   const perguntas    = modo === "premium" ? PREMIUM_QUIZ_QUESTIONS : FREE_QUIZ_QUESTIONS
   const perguntaAtual = perguntas[passo]
@@ -99,15 +104,17 @@ export default function QuizConsultor() {
     if (passo + 1 < totalPerguntas) {
       setPasso(p => p + 1)
     } else {
+      // Mostra transição enquanto a IA processa em paralelo
+      setEstado("transicao")
       enviarParaIA(novas)
     }
   }
 
   async function enviarParaIA(respostasFinais: Record<string, string | string[]>) {
-    setEstado("carregando")
+    erroMsgRef.current      = null
+    recomendacaoRef.current = null
     setErroMsg(null)
     try {
-      // Serialise array values (multiSelect) to comma-joined strings for the API
       const respostasSerializadas: Record<string, string> = Object.fromEntries(
         Object.entries(respostasFinais).map(([k, v]) => [k, Array.isArray(v) ? v.join(",") : v])
       )
@@ -121,8 +128,10 @@ export default function QuizConsultor() {
         throw new Error((body as { erro?: string }).erro ?? `HTTP ${res.status}`)
       }
       const data = await res.json() as RecomendacaoQuiz
+      recomendacaoRef.current = data
       setRecomendacao(data)
-      setEstado("resultado")
+      // Se a transição já terminou (estado = "carregando"), vai direto pro resultado
+      setEstado(prev => prev === "carregando" ? "resultado" : prev)
       track("quiz_completed", { modo })
       track("quiz_result_shown", {
         modo,
@@ -131,8 +140,21 @@ export default function QuizConsultor() {
           .map(r => r!.nome),
       })
     } catch (err) {
-      setErroMsg(err instanceof Error ? err.message : "Erro inesperado.")
+      const msg = err instanceof Error ? err.message : "Erro inesperado."
+      erroMsgRef.current = msg
+      setErroMsg(msg)
+      setEstado(prev => prev === "carregando" ? "erro" : prev)
+    }
+  }
+
+  function onTransicaoConcluida() {
+    if (recomendacaoRef.current) {
+      setEstado("resultado")
+    } else if (erroMsgRef.current) {
       setEstado("erro")
+    } else {
+      // IA ainda processando — mostra loading clássico até terminar
+      setEstado("carregando")
     }
   }
 
@@ -178,6 +200,10 @@ export default function QuizConsultor() {
   // ── Telas ──────────────────────────────────────────────────────────────────
 
   if (estado === "selecao") return <SelecaoModo onSelecionar={iniciarQuiz} />
+
+  if (estado === "transicao") {
+    return <TransicaoQuiz respostas={respostas} onConcluir={onTransicaoConcluida} />
+  }
 
   if (estado === "carregando") {
     return (

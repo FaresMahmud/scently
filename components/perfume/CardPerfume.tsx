@@ -132,16 +132,15 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
       </Link>
 
       {/* Informações — ordem editorial: marca → nome → meta */}
-      <div style={{ padding: "21px" }}>
+      <div className="card-perfume-info">
         {/* Marca como eyebrow — pequenas capitulares espaçadas */}
         <Link
           href={`/marca/${slugify(perfume.marca)}`}
-          className="link-marca"
+          className="link-marca card-perfume-brand"
           style={{
             display: "inline-flex",
             alignItems: "center",
             minHeight: "44px",
-            fontSize: "0.68rem",
             fontWeight: 500,
             letterSpacing: "0.16em",
             textTransform: "uppercase",
@@ -152,15 +151,7 @@ export default function CardPerfume({ perfume }: PropsCardPerfume) {
 
         {/* Nome do perfume — protagonista do card */}
         <Link href={href} style={{ display: "flex", alignItems: "center", minHeight: "44px", textDecoration: "none" }}>
-          <h3
-            style={{
-              fontFamily: "var(--fonte-titulo)",
-              fontWeight: 300,
-              fontSize: "26px",
-              lineHeight: 1.15,
-              color: "var(--cor-texto)",
-            }}
-          >
+          <h3 className="card-perfume-title">
             {nomeLimpo}
           </h3>
         </Link>

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
+import { createPortal } from "react-dom"
 import { useSessao } from "@/lib/useSessao"
 
 export default function MenuMobileToggle() {
@@ -54,31 +55,38 @@ export default function MenuMobileToggle() {
         <span style={{ width: "22px", height: "1.5px", background: "#1A1A18", display: "block" }} />
       </button>
 
-      {aberto && (
+      {aberto && createPortal(
         <>
           {/* Overlay */}
           <div
             onClick={fechar}
+            className="fade-in-overlay"
             style={{
               position: "fixed", inset: 0,
-              backgroundColor: "rgba(0,0,0,0.6)",
+              backgroundColor: "#000",
               zIndex: 9998,
             }}
           />
 
           {/* Drawer */}
-          <div style={{
-            position: "fixed",
-            top: 0,
-            right: 0,
-            width: "min(320px, 80vw)",
-            height: "100dvh",
-            backgroundColor: "#F5F2ED",
-            zIndex: 9999,
-            display: "flex",
-            flexDirection: "column",
-            boxShadow: "-8px 0 40px rgba(0,0,0,0.15)",
-          }}>
+          <div
+            className="slide-in-right"
+            style={{
+              position: "fixed",
+              top: 0,
+              bottom: 0,
+              right: 0,
+              width: "min(320px, 80vw)",
+              backgroundColor: "var(--cor-base)",
+              zIndex: 9999,
+              display: "flex",
+              flexDirection: "column",
+              boxShadow: "-8px 0 40px rgba(0,0,0,0.15)",
+              paddingTop: "env(safe-area-inset-top, 0px)",
+              paddingBottom: "env(safe-area-inset-bottom, 0px)",
+              overflow: "hidden",
+            }}
+          >
             {/* Header row */}
             <div style={{
               height: "64px",
@@ -170,8 +178,8 @@ export default function MenuMobileToggle() {
             <div style={{ padding: "0 34px 34px" }}>
               <Link href="/consultor" onClick={fechar} style={{
                 display: "block",
-                backgroundColor: "#C4714A",
-                color: "#F5F2ED",
+                backgroundColor: "var(--cor-destaque)",
+                color: "var(--cor-base)",
                 textAlign: "center",
                 padding: "16px",
                 fontFamily: "DM Sans, sans-serif",
@@ -182,7 +190,8 @@ export default function MenuMobileToggle() {
               }}>Iniciar consulta</Link>
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
     </>
   )

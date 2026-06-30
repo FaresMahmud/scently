@@ -52,9 +52,9 @@ function BotaoLoja({ loja, url, perfumeName, brand }: { loja: string; url: strin
         letterSpacing: "0.04em",
         textDecoration: "none",
         borderRadius: "var(--raio-borda)",
-        border: "1px solid #1A1A18",
-        backgroundColor: hovered ? "#1A1A18" : "#F5F2ED",
-        color: hovered ? "#F5F2ED" : "#1A1A18",
+        border: "1px solid var(--cor-texto)",
+        backgroundColor: hovered ? "var(--cor-texto)" : "var(--cor-base)",
+        color: hovered ? "var(--cor-base)" : "var(--cor-texto)",
         transition: "background-color 0.15s, color 0.15s",
         whiteSpace: "nowrap",
       }}

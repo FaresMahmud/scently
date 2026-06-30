@@ -31,6 +31,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className="h-full">
       <head>
+        {/* Script para evitar "flicker" de tema claro/escuro no Next.js (SSR) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const savedTheme = localStorage.getItem('theme');
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  const theme = savedTheme || systemTheme;
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {
+                  console.error(e);
+                }
+              })();
+            `
+          }}
+        />
         {/* Viewport */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         {/* PWA */}

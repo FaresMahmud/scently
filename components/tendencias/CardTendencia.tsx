@@ -78,11 +78,10 @@ export default function CardTendencia({ nome, marca, badge, tipo, preco, copy, p
   if (variant === "card") {
     return (
       <div
-        className="tendencia-card"
+        className="tendencia-card card-tendencia-wrapper"
         style={{
           backgroundColor: "rgba(26,26,24,0.03)",
           border: "1px solid var(--cor-borda)",
-          padding: "34px",
           display: "flex",
           flexDirection: "column",
           gap: "13px",

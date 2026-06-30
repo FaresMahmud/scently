@@ -59,12 +59,12 @@ export default function PaginaInicial() {
         dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLdWebSite) }}
       />
       {/* ── Hero ──────────────────────────────────────────── */}
-      <section style={{ minHeight: "calc(100vh - 64px)", display: "flex", alignItems: "center", borderBottom: "1px solid var(--cor-borda)" }}>
+      <section className="hero-section" style={{ borderBottom: "1px solid var(--cor-borda)" }}>
         <div className="container-site" style={{ paddingTop: "var(--fib-6)", paddingBottom: "var(--fib-6)", width: "100%" }}>
           <div className="hero-grid">
 
             {/* Coluna esquerda — texto */}
-            <div className="hero-texto">
+            <div className="hero-texto fade-in">
               <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--cor-destaque)", marginBottom: "21px" }}>
                 {siteMeta.nome}
               </p>
@@ -73,7 +73,7 @@ export default function PaginaInicial() {
                 fontFamily: "var(--fonte-titulo)",
                 fontWeight: 300,
                 fontSize: "clamp(48px, 7vw, 68px)",
-                color: "#1A1A18",
+                color: "var(--cor-texto)",
                 lineHeight: 1.1,
                 maxWidth: "720px",
                 marginBottom: "21px",
@@ -81,7 +81,7 @@ export default function PaginaInicial() {
                 O perfume que você ainda não conhece está aqui.
               </h1>
 
-              <div style={{ width: "55px", height: "2px", backgroundColor: "var(--cor-destaque)", marginBottom: "21px" }} />
+              <div className="separador-hero" style={{ width: "55px", height: "2px", backgroundColor: "var(--cor-destaque)", marginBottom: "21px" }} />
 
               <h2 style={{
                 fontFamily: "var(--fonte-titulo)",
@@ -132,7 +132,7 @@ export default function PaginaInicial() {
                 { left: "10%", top: "55%", size: 4, dur: "8s" },
                 { left: "90%", top: "30%", size: 2, dur: "6s" },
               ].map((p, i) => (
-                <div key={i} className="hero-particula" style={{
+                <div key={i} className={i % 2 === 0 ? "hero-particula" : "hero-particula-gold"} style={{
                   left: p.left, top: p.top,
                   width: `${p.size}px`, height: `${p.size}px`,
                   animationDuration: p.dur,
@@ -244,14 +244,7 @@ export default function PaginaInicial() {
             </Link>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-              gap: "21px",
-              marginTop: "34px",
-            }}
-          >
+          <div className="perfumes-grid" style={{ marginTop: "34px" }}>
             {perfumes.map((perfume) => (
               <CardPerfume key={perfume.id} perfume={perfume} />
             ))}
@@ -336,7 +329,10 @@ export default function PaginaInicial() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              position: "relative",
+              overflow: "hidden",
             }}>
+              <div className="laser-scan-line" />
               <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "13px" }}>
                 {/* Corner marks */}
                 <div style={{ position: "relative", width: "80px", height: "80px" }}>

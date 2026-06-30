@@ -302,19 +302,19 @@ export default function CatalogClient({ perfumes }: Props) {
       )}
 
       {/* Pills — gênero */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "8px" }}>
+      <div className="scroll-pills-container" style={{ marginBottom: "8px" }}>
         {(["Masculino", "Feminino", "Unissex"] as Genero[]).map(g => (
           <Pill key={g} label={g} ativo={generos.includes(g)} onClick={() => setGeneros(toggle(generos, g))} />
         ))}
-        <div style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 4px", alignSelf: "stretch" }} />
+        <div className="scroll-pills-divider" style={{ width: "1px", backgroundColor: "var(--cor-borda)", margin: "0 4px", alignSelf: "stretch" }} />
         {(Object.entries(CATEGORIA_LABELS) as [Categoria, string][]).map(([val, label]) => (
           <Pill key={val} label={label} ativo={categorias.includes(val)} onClick={() => setCategorias(toggle(categorias, val))} />
         ))}
       </div>
 
       {/* Pills — ordenação + contador */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center", marginBottom: "34px" }}>
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+      <div className="ordenacao-row" style={{ marginBottom: "34px" }}>
+        <div className="scroll-pills-container">
           {([
             { valor: "relevancia",  label: "Relevância" },
             { valor: "menor-preco", label: "Menor preço" },
@@ -325,8 +325,9 @@ export default function CatalogClient({ perfumes }: Props) {
           ))}
         </div>
         <p style={{
-          marginLeft: "auto", fontFamily: "var(--fonte-corpo)",
+          fontFamily: "var(--fonte-corpo)",
           fontSize: "0.8rem", color: "var(--cor-texto-suave)",
+          whiteSpace: "nowrap",
         }}>
           {visiveis.length.toLocaleString("pt-BR")} / {resultados.length.toLocaleString("pt-BR")} fragrâncias
         </p>
@@ -335,7 +336,7 @@ export default function CatalogClient({ perfumes }: Props) {
       {/* Grid */}
       {resultados.length > 0 ? (
         <>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "21px" }}>
+          <div className="perfumes-grid">
             {visiveis.map(perfume => (
               <div key={perfume.id}>
                 <CardPerfume perfume={perfume} />

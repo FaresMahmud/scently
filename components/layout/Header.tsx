@@ -12,6 +12,7 @@ import { useRouter, usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import { siteMeta } from "@/config/site"
 import MenuMobileToggle from "./MenuMobileToggle"
+import ThemeToggle from "../ui/ThemeToggle"
 import Logo from "@/components/ui/Logo"
 import { useSessao } from "@/lib/useSessao"
 
@@ -96,7 +97,7 @@ export default function Header() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        backgroundColor: "var(--cor-base)",
+        backgroundColor: "rgba(245, 242, 237, 0.8)",
         borderBottom: "1px solid var(--cor-borda)",
         backdropFilter: "blur(8px)",
         WebkitBackdropFilter: "blur(8px)",
@@ -202,8 +203,11 @@ export default function Header() {
           <AuthArea />
         </nav>
 
-        {/* Ícone hambúrguer — só aparece no mobile */}
-        <MenuMobileToggle />
+        {/* Alternador de tema + hambúrguer mobile */}
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <ThemeToggle />
+          <MenuMobileToggle />
+        </div>
       </div>
     </header>
   )

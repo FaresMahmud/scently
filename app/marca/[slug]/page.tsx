@@ -28,7 +28,7 @@ interface ContratipoEntry {
 
 interface ExpandidoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
-  familia: string; notas: string[]; preco_brl: number
+  familia: string; notas: string[] | { topo?: string[]; coracao?: string[]; fundo?: string[] }; preco_brl: number
   categoria: string; inspiradoEm?: string; marcaOriginal?: string
 }
 
@@ -71,13 +71,16 @@ function coletarPerfumesDaMarca(slug: string): DadosCardPerfume[] {
     if (slugify(p.marca) !== slug) continue
     if (vistosId.has(p.id)) continue
     vistosId.add(p.id)
+    const notasEx: string[] = Array.isArray(p.notas)
+      ? p.notas
+      : [...(p.notas.topo ?? []), ...(p.notas.coracao ?? []), ...(p.notas.fundo ?? [])]
     lista.push({
       id:           p.id,
       nome:         limparNomePerfume(p.nome, p.marca),
       marca:        p.marca,
       concentracao: p.tipo,
       familia:      p.familia,
-      notas:        p.notas,
+      notas:        notasEx,
     })
   }
 
@@ -207,11 +210,7 @@ export default async function PaginaMarca(
         {/* Grid */}
         {perfumes.length > 0 ? (
           <section>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-              gap: "21px",
-            }}>
+            <div className="perfumes-grid">
               {perfumes.map(p => (
                 <CardPerfume key={p.id} perfume={p} />
               ))}

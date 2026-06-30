@@ -43,7 +43,7 @@ interface ContratipoEntry {
 
 interface ExpandidoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
-  familia: string; notas: string[]; preco_brl: number
+  familia: string; notas: string[] | { topo?: string[]; coracao?: string[]; fundo?: string[] }; preco_brl: number
   categoria: string; inspiradoEm?: string; marcaOriginal?: string
   linkCompra?: string
 }
@@ -221,11 +221,14 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   // Step 2: exact match in perfumes-expandido.json
   const ex = (expandidoData as ExpandidoEntry[]).find(p => p.id === id)
   if (ex) {
-    const perfume = perfumeMinimo(ex.nome, ex.marca, ex.tipo, ex.genero, ex.familia, ex.notas)
+    const notasEx: string[] = Array.isArray(ex.notas)
+      ? ex.notas
+      : [...(ex.notas.topo ?? []), ...(ex.notas.coracao ?? []), ...(ex.notas.fundo ?? [])]
+    const perfume = perfumeMinimo(ex.nome, ex.marca, ex.tipo, ex.genero, ex.familia, notasEx)
     // Enrich: use original if has inspiradoEm, else search by own name+brand
     const nomeBusca  = ex.inspiradoEm ?? ex.nome
     const marcaBusca = ex.inspiradoEm ? ex.marcaOriginal : ex.marca
-    enriquecerComFragella(perfume, nomeBusca, marcaBusca, ex.notas)
+    enriquecerComFragella(perfume, nomeBusca, marcaBusca, notasEx)
     return {
       perfume,
       fonte: "expandido",
@@ -281,10 +284,13 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   })
   if (exLoose) {
     console.log("[Perfume] Normalized match (ex):", exLoose.id, "→", id)
-    const perfume = perfumeMinimo(exLoose.nome, exLoose.marca, exLoose.tipo, exLoose.genero, exLoose.familia, exLoose.notas)
+    const notasExLoose: string[] = Array.isArray(exLoose.notas)
+      ? exLoose.notas
+      : [...(exLoose.notas.topo ?? []), ...(exLoose.notas.coracao ?? []), ...(exLoose.notas.fundo ?? [])]
+    const perfume = perfumeMinimo(exLoose.nome, exLoose.marca, exLoose.tipo, exLoose.genero, exLoose.familia, notasExLoose)
     const nomeBusca  = exLoose.inspiradoEm ?? exLoose.nome
     const marcaBusca = exLoose.inspiradoEm ? exLoose.marcaOriginal : exLoose.marca
-    enriquecerComFragella(perfume, nomeBusca, marcaBusca, exLoose.notas)
+    enriquecerComFragella(perfume, nomeBusca, marcaBusca, notasExLoose)
     return {
       perfume,
       fonte: "expandido",
@@ -487,7 +493,7 @@ export default async function PaginaPerfume(
         {/* Layout duas colunas */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(290px, 100%), 1fr))",
           gap: "55px",
           alignItems: "start",
         }}>
