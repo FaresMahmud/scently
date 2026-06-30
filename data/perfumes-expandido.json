@@ -54665,34 +54665,68 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "romã",
+        "mandarina",
+        "acorde vegetal",
+        "frutas vermelhas"
+      ],
+      "coracao": [
+        "flor de laranjeira",
+        "jasmim",
+        "tuberosa",
+        "rosas",
+        "flores brancas"
+      ],
+      "fundo": [
+        "cashmeran",
+        "patchouli",
+        "almíscar",
+        "madeiras cremosas",
+        "âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 699,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "floral branco",
+        "percentagem": 90
+      },
+      {
+        "nome": "frutado",
+        "percentagem": 85
+      },
+      {
+        "nome": "amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "fresco especiado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão frutada de romã e mandarina abre esta fragrância, seguida por um buquê floral radiante de jasmim e flor de laranjeira. A base amadeirada com cashmeran e patchouli confere um toque cremoso e sensual, criando um rastro hipnótico.",
+    "paraQuem": "Este perfume é para a mulher audaciosa e confiante, que gosta de quebrar regras e expressar sua verdadeira individualidade. Ele celebra a feminilidade em sua forma mais extravagante e poderosa.",
+    "quandoUsar": "Ideal para noites glamourosas, eventos especiais e momentos em que você deseja ser o centro das atenções. Sua intensidade e sensualidade o tornam perfeito para marcar presença.",
+    "comoSeComporta": "Com uma concentração Eau de Parfum, Lady Million Royal apresenta longa duração e projeção moderada a alta. Ele deixa um rastro marcante e envolvente, perceptível nas primeiras horas de uso."
   },
   {
     "id": "212-heroes-men-carolina-herrera",
@@ -54702,34 +54736,65 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "aromático frutado amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Gengibre",
+        "Pera",
+        "Cannabis"
+      ],
+      "coracao": [
+        "Sálvia",
+        "Gerânio"
+      ],
+      "fundo": [
+        "Couro",
+        "Almíscar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 739.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 80
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 78
+      },
+      {
+        "nome": "Especiado Fresco",
+        "percentagem": 65
+      },
+      {
+        "nome": "Couro",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão inicial de pera suculenta e gengibre vibrante se mistura a um toque sutil e verde de cannabis. O coração floral-aromático de gerânio e sálvia traz equilíbrio, enquanto a base de couro e almíscar confere um rastro moderno e envolvente.",
+    "paraQuem": "Para o homem jovem e otimista, que celebra a liberdade e autenticidade. É ideal para quem busca uma fragrância fresca, moderna e fácil de usar no dia a dia.",
+    "quandoUsar": "É perfeito para uso diurno, em momentos casuais, encontros informais, passeios urbanos ou happy hour. Sua versatilidade permite que seja usado em climas quentes.",
+    "comoSeComporta": "Com fixação moderada, entre 4 a 7 horas, e projeção discreta nas primeiras horas, o perfume cria uma aura refrescante e convidativa. Ele permanece perceptível na pele de forma sutil, mas marcante."
   },
   {
     "id": "212-heroes-her-carolina-herrera",
@@ -54739,34 +54804,64 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Mandarina",
+        "Framboesa",
+        "Frutas Cítricas"
+      ],
+      "coracao": [
+        "Jasmim",
+        "Flor de Laranjeira",
+        "Peônia",
+        "Flores Brancas"
+      ],
+      "fundo": [
+        "Sândalo",
+        "Cedro",
+        "Baunilha"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 624.15,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Frutado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 80
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 75
+      },
+      {
+        "nome": "Flores Brancas",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão efervescente de frutas cítricas e framboesa, seguida por um buquê de flores brancas e jasmim. Finaliza com um toque cremoso e envolvente de sândalo e cedro, deixando um rastro suave e moderno.",
+    "paraQuem": "Para a mulher jovem, autêntica e livre que celebra sua individualidade e expressa sua verdadeira essência. É um perfume para quem busca uma fragrância que reflita otimismo e um espírito dinâmico.",
+    "quandoUsar": "Ideal para uso diário, especialmente em climas quentes, durante o dia. Perfeito para encontros casuais, passeios ao ar livre e ambientes criativos onde se deseja uma presença marcante, mas sem excessos.",
+    "comoSeComporta": "Possui uma intensidade moderada e projeção equilibrada, criando uma aura envolvente que é notada por quem está próximo. A fixação é boa, permanecendo perceptível na pele por cerca de 6 a 8 horas."
   },
   {
     "id": "212-nyc-men-carolina-herrera",
@@ -54776,34 +54871,80 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado floral almiscarado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "folhas cítricas",
+        "grama cortada",
+        "especiarias",
+        "petitgrain",
+        "lavanda",
+        "toranja",
+        "bergamota"
+      ],
+      "coracao": [
+        "gardênia",
+        "gengibre",
+        "pimenta verde",
+        "violeta",
+        "sálvia"
+      ],
+      "fundo": [
+        "sândalo",
+        "almíscar",
+        "incenso",
+        "madeira guaiac",
+        "vetiver",
+        "ládano"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Fresco",
+        "percentagem": 70
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância vibrante e energética, que remete à grama recém-cortada e notas cítricas. Desenvolve-se para um coração floral especiado, com um fundo amadeirado e almiscarado, transmitindo uma sensação de limpeza e sofisticação urbana.",
+    "paraQuem": "Para o homem moderno, dinâmico e confiante, que valoriza a elegância e a versatilidade no dia a dia. É ideal para quem busca uma fragrância que seja marcante sem ser excessivamente intensa.",
+    "quandoUsar": "É um perfume excelente para uso diurno, seja no trabalho, em atividades casuais ou nos fins de semana. Também pode ser usado em saídas noturnas mais leves, especialmente em climas quentes.",
+    "comoSeComporta": "Possui uma projeção equilibrada, perceptível na primeira hora e meia a duas horas, e uma fixação moderada a longa, durando cerca de 6 a 7 horas na pele. É um Eau de Toilette com um frescor leve e duradouro."
   },
   {
     "id": "good-girl-blush-carolina-herrera",
@@ -54813,34 +54954,60 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "chipre floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Bergamota",
+        "Amêndoa Amarga"
+      ],
+      "coracao": [
+        "Peônia",
+        "Ylang Ylang"
+      ],
+      "fundo": [
+        "Baunilha",
+        "Cumarina"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral",
+        "percentagem": 90
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 85
+      },
+      {
+        "nome": "Fresco",
+        "percentagem": 70
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Good Girl Blush é uma explosão fresca e floral, uma reinterpretação suave da feminilidade moderna. Ele equilibra o frescor cítrico com a doçura floral e um toque amendoado, terminando em uma base quente e cremosa de baunilha.",
+    "paraQuem": "Este perfume é para a mulher que celebra sua feminilidade multifacetada, combinando delicadeza e força. É para quem busca uma fragrância que seja romântica, porém empoderada, e que deixe uma impressão inesquecível.",
+    "quandoUsar": "Ideal para uso diurno, especialmente em climas mais quentes, como primavera e verão. É perfeito para almoços, encontros casuais ou passeios ao ar livre, onde sua presença se destaca com uma aura fresca e luminosa.",
+    "comoSeComporta": "Possui fixação média a boa, permanecendo perceptível na pele por aproximadamente 6 a 8 horas. Sua projeção é moderada, elegante e perceptível sem ser invasiva, deixando um rastro de feminilidade e delicadeza."
   },
   {
     "id": "good-girl-blush-elixir-carolina-herrera",
@@ -54850,34 +55017,72 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "âmbar floral chipre",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Bergamota",
+        "Amêndoa Amarga"
+      ],
+      "coracao": [
+        "Ylang Ylang",
+        "Rosa"
+      ],
+      "fundo": [
+        "Baunilha",
+        "Patchouli"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 819.93,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Baunilha",
+        "percentagem": 90
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Floral Amarelo",
+        "percentagem": 80
+      },
+      {
+        "nome": "Patchouli",
+        "percentagem": 75
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 70
+      },
+      {
+        "nome": "Rosa",
+        "percentagem": 65
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "É uma fragrância sensual e intensa, com um equilíbrio entre o frescor cítrico e um floral sofisticado. Revela uma mistura de rosa e ylang-ylang que derretem em uma base cremosa de baunilha, patchouli esfumaçado e um toque de amêndoa amarga, criando uma trilha sedutora e misteriosa.",
+    "paraQuem": "Ideal para mulheres que desejam deixar uma impressão duradoura e marcante, exalando confiança e elegância. É para quem busca uma fragrância versátil com um toque de mistério e sedução.",
+    "quandoUsar": "Perfeito para ocasiões especiais à noite, como jantares românticos ou eventos. Sua versatilidade também permite o uso durante o dia, em ambientes de trabalho ou encontros casuais.",
+    "comoSeComporta": "Possui uma projeção notável nas primeiras horas e uma excelente fixação, permanecendo na pele ao longo do dia e da noite. Forma uma nuvem perfumada que se mantém próxima ao corpo, mas não passa despercebida."
   },
   {
     "id": "good-girl-legere-carolina-herrera",
@@ -54887,34 +55092,84 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Ylang Ylang",
+        "Mandarina",
+        "Bergamota",
+        "Limão"
+      ],
+      "coracao": [
+        "Tuberosa",
+        "Jasmim",
+        "Flor de Laranjeira",
+        "Rosa Búlgara"
+      ],
+      "fundo": [
+        "Doce de Leite",
+        "Pralinê",
+        "Fava Tonka",
+        "Madeira de Cashmir",
+        "Canela",
+        "Sândalo",
+        "Almíscar",
+        "Âmbar",
+        "Patchouli",
+        "Cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 680,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Doce",
+        "percentagem": 90
+      },
+      {
+        "nome": "Floral branco",
+        "percentagem": 85
+      },
+      {
+        "nome": "Lactônico",
+        "percentagem": 75
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 70
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 60
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 60
+      },
+      {
+        "nome": "Especiado quente",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma interpretação mais luminosa e suave do Good Girl original, combinando florais brancos cremosos com uma doçura viciante e madeiras quentes. Revela um toque doce e cremoso que hipnotiza, mantendo a sofisticação e sensualidade da linha.",
+    "paraQuem": "Para a mulher multifacetada que celebra sua dualidade, exibindo confiança e graça. É ideal para quem busca uma fragrância feminina que equilibra frescor e calor.",
+    "quandoUsar": "Perfeito para uso diurno sofisticado e para o charme noturno. Ideal para encontros, eventos noturnos, ocasiões especiais e uso elegante durante o dia.",
+    "comoSeComporta": "Possui longevidade entre 7 a 9 horas em média. A projeção é elegante e suave, deixando um rastro memorável, sendo notável sem ser avassalador."
   },
   {
     "id": "ch-men-prive-carolina-herrera",
@@ -54924,34 +55179,69 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "couro",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Whisky",
+        "Toranja",
+        "Pomelo"
+      ],
+      "coracao": [
+        "Cardamomo",
+        "Lavanda",
+        "Sálvia",
+        "Tomilho Vermelho"
+      ],
+      "fundo": [
+        "Couro",
+        "Fava Tonka",
+        "Notas Amadeiradas",
+        "Benjoim"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Couro",
+        "percentagem": 90
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 75
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 60
+      },
+      {
+        "nome": "Alcoólico",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância sedutora e elegante, CH Men Privé combina o calor do whisky e do couro preto com um toque de especiarias e doçura. É um aroma rico e luxuoso, com uma aura misteriosa e envolvente.",
+    "paraQuem": "Ideal para o homem moderno, sofisticado e com um charme irresistível. É para quem busca uma fragrância que transmita confiança e elegância, deixando uma impressão marcante.",
+    "quandoUsar": "Melhor utilizado em ocasiões noturnas e em climas mais amenos, como outono e inverno. Perfeito para encontros românticos, jantares e eventos especiais.",
+    "comoSeComporta": "Possui uma boa projeção nos primeiros momentos, tornando-se mais intimista com o tempo. Sua fixação é duradoura, podendo permanecer na pele por várias horas."
   },
   {
     "id": "212-vip-men-party-fever-carolina-herrera",
@@ -54961,34 +55251,71 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado especiado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Maçã Vermelha",
+        "Cítricos",
+        "Gengibre",
+        "Bagas de Zimbro",
+        "Tamarindo"
+      ],
+      "coracao": [
+        "Cannabis",
+        "Gerânio",
+        "Frésia"
+      ],
+      "fundo": [
+        "Fava Tonka",
+        "Cedro",
+        "Almíscar",
+        "Vetiver",
+        "Olíbano"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 979,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Especiado Fresco",
+        "percentagem": 70
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância vibrante e energética que se inicia com um frescor cítrico e frutado, como maçã e gengibre. Evolui para um coração herbal e exótico, com um toque inusitado de cannabis, finalizando com uma base amadeirada e doce de fava tonka e cedro.",
+    "paraQuem": "Ideal para o homem confiante e exuberante que gosta de se destacar em ambientes festivos e sociais. É perfeito para jovens e para quem aprecia perfumes frescos com um toque de originalidade.",
+    "quandoUsar": "Melhor utilizado em noites de festa, eventos sociais e saídas casuais, especialmente em climas mais quentes como primavera e verão.",
+    "comoSeComporta": "Apresenta uma projeção moderada a alta nas primeiras horas e uma boa duração na pele, mantendo uma presença olfativa notável por diversas horas. Não é considerado um perfume 'beast mode', mas tem um desempenho sólido."
   },
   {
     "id": "bad-boy-cobalt-carolina-herrera",
@@ -54998,34 +55325,66 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aromático frutado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pimenta Rosa",
+        "Lavanda"
+      ],
+      "coracao": [
+        "Gerânio",
+        "Ameixa Preta"
+      ],
+      "fundo": [
+        "Acorde de Trufa",
+        "Vetiver",
+        "Cedro",
+        "Carvalho"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 689.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Fresco",
+        "percentagem": 70
+      },
+      {
+        "nome": "Terroso",
+        "percentagem": 65
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância eletrizante de contrastes, com um frescor vibrante e uma profundidade amadeirada. Inicia com um toque picante e herbal, evoluindo para um coração floral e frutado.",
+    "paraQuem": "Para o homem moderno que celebra a amizade e a dualidade de sua masculinidade, ousado e sofisticado.",
+    "quandoUsar": "Ideal para uso diurno em estações mais quentes, mas sua versatilidade permite que seja usado em diversas ocasiões ao longo do ano.",
+    "comoSeComporta": "Possui boa projeção nas primeiras horas, criando uma aura marcante, e uma fixação sólida que dura até 8 horas na pele."
   },
   {
     "id": "bad-boy-extreme-carolina-herrera",
@@ -55035,34 +55394,92 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "ambarino aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "bergamota",
+        "gengibre",
+        "sálvia"
+      ],
+      "coracao": [
+        "vetiver",
+        "cacau",
+        "ameixa",
+        "incenso",
+        "olíbano",
+        "sálvia esclaréia",
+        "davana"
+      ],
+      "fundo": [
+        "patchouli",
+        "fava tonka",
+        "ládano",
+        "opoponax"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "âmbar",
+        "percentagem": 92
+      },
+      {
+        "nome": "especiado quente",
+        "percentagem": 88
+      },
+      {
+        "nome": "cacau",
+        "percentagem": 85
+      },
+      {
+        "nome": "aromático",
+        "percentagem": 80
+      },
+      {
+        "nome": "amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "doce",
+        "percentagem": 70
+      },
+      {
+        "nome": "balsâmico",
+        "percentagem": 65
+      },
+      {
+        "nome": "patchouli",
+        "percentagem": 60
+      },
+      {
+        "nome": "terroso",
+        "percentagem": 55
+      },
+      {
+        "nome": "defumado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma tensão ousada entre o frescor do gengibre e o calor do vetiver indiano, com um toque sedutor de cacau e uma base amadeirada de patchouli. É um aroma agridoce que mistura o doce do cacau e da fava tonka com incenso balsâmico de resinas e madeiras.",
+    "paraQuem": "Para o homem moderno, ousado e sofisticado, que busca redefinir a masculinidade e deixar uma impressão marcante. Ideal para quem deseja ser notado sem exageros, com uma personalidade única e provocante.",
+    "quandoUsar": "Perfeito para ocasiões especiais, baladas e encontros noturnos. Sua intensidade e sensualidade o tornam ideal para a noite e eventos mais sofisticados.",
+    "comoSeComporta": "Apresenta alta fixação e projeção marcante. O perfume exala uma aura perfumada que as pessoas conseguem sentir ao se aproximar. A fixação pode durar de 8 a 12 horas na pele."
   },
   {
     "id": "y-elixir-yves-saint-laurent",
@@ -55072,34 +55489,58 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "ambarado aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "lavanda"
+      ],
+      "coracao": [
+        "gerânio"
+      ],
+      "fundo": [
+        "olíbano",
+        "oud"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 870,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 75
+      },
+      {
+        "nome": "Fresco",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Ótimo",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância intensa e rica, com uma abertura de lavanda fresca e gerânio vibrante. Revela um coração profundo de olíbano resinoso e oud sensual, criando uma experiência olfativa amadeirada-especiada.",
+    "paraQuem": "Para o homem realizado que busca uma fragrância sofisticada e de longa duração. Ideal para quem deseja se destacar com uma essência enigmática e luxuosa.",
+    "quandoUsar": "É perfeito para ser usado durante o dia e a noite, em diversas ocasiões. Sua versatilidade permite o uso em ambientes profissionais ou em momentos de lazer.",
+    "comoSeComporta": "Possui alta intensidade e projeção forte, com uma presença contínua desde a aplicação. A fixação na pele varia entre 8 e 10 horas, dependendo do tipo de pele e da temperatura."
   },
   {
     "id": "myslf-yves-saint-laurent",
@@ -55109,34 +55550,63 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Bergamota da Calábria",
+        "Bergamota verde"
+      ],
+      "coracao": [
+        "Flor de Laranjeira Tunisiana"
+      ],
+      "fundo": [
+        "Ambrofix™",
+        "Patchouli da Indonésia"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 739,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 85
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 80
+      },
+      {
+        "nome": "Patchouli",
+        "percentagem": 70
+      },
+      {
+        "nome": "Ambarado",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "MYSLF se revela com um frescor vibrante e suculento de bergamotas, evoluindo para um coração floral delicado de flor de laranjeira. A base amadeirada e sensual de Ambrofix™ e patchouli confere profundidade e elegância duradoura.",
+    "paraQuem": "Este perfume é para o homem moderno que abraça a complexidade de sua masculinidade com confiança e sensibilidade. É ideal para quem busca uma assinatura olfativa autêntica e marcante.",
+    "quandoUsar": "Versátil, MYSLF é excelente para o uso diário, em ambientes profissionais, encontros sociais e momentos de lazer, especialmente durante o dia e ao entardecer.",
+    "comoSeComporta": "Com uma fixação que varia de moderada a alta, este Eau de Parfum oferece uma projeção equilibrada e um rastro bem definido que evolui progressivamente ao longo das horas."
   },
   {
     "id": "myslf-le-parfum-yves-saint-laurent",
@@ -55146,34 +55616,64 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pimenta Preta"
+      ],
+      "coracao": [
+        "Flor de Laranjeira da Tunísia"
+      ],
+      "fundo": [
+        "Baunilha Bourbon",
+        "Âmbar",
+        "Patchouli",
+        "Madeiras sensuais"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 809,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 85
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 80
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 75
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "MYSLF Le Parfum envolve com uma abertura picante e vibrante. Em seguida, revela um coração floral branco luminoso, aquecendo-se em um fundo cremoso e amadeirado com um toque sensual de baunilha.",
+    "paraQuem": "Este perfume é para o homem moderno que celebra sua individualidade e dualidade, buscando uma fragrância intensa e sofisticada. É ideal para quem deseja expressar autenticidade e confiança com um aroma marcante.",
+    "quandoUsar": "Ideal para ocasiões especiais e eventos noturnos, principalmente em climas mais frescos como outono e inverno, onde sua intensidade e calor podem ser apreciados.",
+    "comoSeComporta": "Com uma concentração Eau de Parfum, MYSLF Le Parfum oferece projeção poderosa e alta fixação, durando entre 8 a 12 horas na pele e deixando um rastro elegante e envolvente."
   },
   {
     "id": "la-nuit-de-lhomme-bleu-electrique-yves-saint-laurent",
@@ -55183,34 +55683,61 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "aromático especiado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Cardamomo",
+        "Gengibre",
+        "Bergamota"
+      ],
+      "coracao": [
+        "Lavanda",
+        "Gerânio"
+      ],
+      "fundo": [
+        "Cedro",
+        "Vetiver"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 856.39,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 85
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 78
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma interpretação vibrante e moderna do clássico La Nuit de L'Homme, com um toque fresco e energizante. Abre com especiarias e cítricos, evoluindo para um coração floral e uma base amadeirada sensual.",
+    "paraQuem": "Este perfume é para o homem elegante e sedutor que busca uma fragrância versátil e marcante. Ideal para quem aprecia um aroma sofisticado com um toque contemporâneo.",
+    "quandoUsar": "Perfeito para encontros e saídas noturnas, mas sua versatilidade permite o uso em diversas ocasiões. Adapta-se bem a climas amenos, sendo uma excelente escolha para primavera e outono.",
+    "comoSeComporta": "Possui uma projeção moderada e uma longevidade aceitável, geralmente durando cerca de 6 horas na pele. É uma fragrância que agrada e gera elogios, tornando-se mais íntima na secagem."
   },
   {
     "id": "black-opium-le-parfum-yves-saint-laurent",
@@ -55220,34 +55747,70 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental baunilha",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pera",
+        "Canela",
+        "Mandarina Verde"
+      ],
+      "coracao": [
+        "Jasmim Sambac",
+        "Notas Solares",
+        "Flor de Laranjeira"
+      ],
+      "fundo": [
+        "Baunilha de Madagascar",
+        "Baunilha Bourbon",
+        "Absoluto de Baunilha",
+        "Café",
+        "Orquídea Baunilha",
+        "Patchouli"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 715.6,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Baunilha",
+        "percentagem": 95
+      },
+      {
+        "nome": "Café",
+        "percentagem": 85
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 70
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 60
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância intensa e quente, que irradia um impulso inesperado de quatro preciosas baunilhas. O icônico café floral é realçado por um sensual buquê de flores brancas.",
+    "paraQuem": "Para a mulher ousada e confiante que busca uma fragrância marcante. É ideal para quem aprecia a vida noturna e deseja deixar uma impressão duradoura.",
+    "quandoUsar": "É perfeito para noites inesquecíveis e momentos especiais, destacando-se em climas frios. Pode ser usado durante o dia em ambientes informais em dias mais amenos.",
+    "comoSeComporta": "Este perfume de longa duração é a interpretação mais intensa e quente do Black Opium original, com uma projeção que se destaca. A fragrância é viciante e envolvente, com a baunilha e o café como notas proeminentes."
   },
   {
     "id": "black-opium-over-red-yves-saint-laurent",
@@ -55257,34 +55820,86 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado gourmand",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "cereja",
+        "mandarina verde"
+      ],
+      "coracao": [
+        "jasmim",
+        "flor de laranjeira",
+        "chá preto"
+      ],
+      "fundo": [
+        "baunilha de Madagascar",
+        "café",
+        "patchouli indonésio"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cereja",
+        "percentagem": 93
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 92
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 88
+      },
+      {
+        "nome": "Café",
+        "percentagem": 85
+      },
+      {
+        "nome": "Floral branco",
+        "percentagem": 78
+      },
+      {
+        "nome": "Quente especiado",
+        "percentagem": 75
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 68
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 55
+      },
+      {
+        "nome": "Patchouli",
+        "percentagem": 48
+      },
+      {
+        "nome": "Nozes",
+        "percentagem": 30
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão vibrante de cereja e tangerina verde, seguida por um coração sedutor de jasmim e chá preto. A base cremosa de baunilha, café e patchouli confere um toque quente e viciante.",
+    "paraQuem": "Para a mulher ousada e confiante que vive a vida em seus próprios termos. É uma fragrância para quem gosta de se destacar e exalar sensualidade.",
+    "quandoUsar": "Ideal para noites frias de outono e inverno, ou como um perfume de ocasião especial na primavera e verão. Perfeito para eventos noturnos e encontros românticos.",
+    "comoSeComporta": "Possui uma projeção moderada a forte, que se mantém por várias horas na pele. Sua fixação é duradoura, permanecendo por dias em roupas."
   },
   {
     "id": "libre-le-parfum-yves-saint-laurent",
@@ -55294,34 +55909,73 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "âmbar floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Gengibre",
+        "Açafrão",
+        "Mandarina",
+        "Bergamota"
+      ],
+      "coracao": [
+        "Flor de Laranjeira",
+        "Lavanda",
+        "Lavandim"
+      ],
+      "fundo": [
+        "Baunilha Bourbon",
+        "Mel",
+        "Fava Tonka",
+        "Vetiver"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1149,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Baunilha",
+        "percentagem": 90
+      },
+      {
+        "nome": "Lavanda",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 80
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 75
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 60
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Libre Le Parfum é uma fragrância quente e picante, com uma fusão luxuosa de lavanda e flor de laranjeira, acentuada por um toque de açafrão. A baunilha bourbon e o mel adicionam uma doçura envolvente, criando um rastro intenso e inesquecível.",
+    "paraQuem": "Este perfume é para a mulher ousada, confiante e carismática que vive sua liberdade intensamente. É uma escolha para quem busca uma fragrância marcante, sensual e poderosa.",
+    "quandoUsar": "Ideal para momentos em que se deseja exalar liberdade e presença, perfeito para a noite ou ocasiões especiais em climas amenos a frios.",
+    "comoSeComporta": "Libre Le Parfum possui fixação e projeção excepcionais, mantendo-se presente por longos períodos na pele. Sua intensidade se amplifica com o calor do corpo, deixando um rastro envolvente e duradouro."
   },
   {
     "id": "libre-platine-yves-saint-laurent",
@@ -55331,34 +55985,66 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "aldeídos",
+        "bergamota",
+        "mandarina"
+      ],
+      "coracao": [
+        "lavanda",
+        "lavanda azul",
+        "flor de laranjeira"
+      ],
+      "fundo": [
+        "baunilha",
+        "âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1229,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral",
+        "percentagem": 90
+      },
+      {
+        "nome": "Lavanda",
+        "percentagem": 85
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 70
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 60
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Libre L'Absolu Platine exala uma elegância fria e ardente. Abre com um frescor vibrante de citrinos e aldeídos, evoluindo para um coração floral de lavanda e flor de laranjeira. Finaliza com um toque quente e sensual de baunilha e âmbar, criando uma aura sofisticada e marcante.",
+    "paraQuem": "Este perfume é para a mulher forte, ousada e livre, que exala confiança e modernidade. É ideal para quem aprecia fragrâncias com um toque de lavanda e uma sensualidade envolvente.",
+    "quandoUsar": "Versátil, pode ser usado tanto durante o dia quanto à noite, especialmente em climas mais amenos. É uma excelente escolha para eventos formais ou encontros românticos, onde se deseja deixar uma impressão memorável.",
+    "comoSeComporta": "Possui uma ótima projeção, criando uma aura perceptível ao redor de quem o usa. Sua fixação é duradoura, permanecendo na pele por até 8 horas ou mais, desenvolvendo-se lindamente ao longo do dia."
   },
   {
     "id": "dylan-blue-pour-homme-parfum-versace",
@@ -55368,34 +56054,71 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "aromático fougère",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "bergamota da Calábria",
+        "notas aquáticas",
+        "toranja",
+        "folha de figo"
+      ],
+      "coracao": [
+        "ambroxan",
+        "pimenta preta",
+        "patchouli",
+        "folha de violeta",
+        "papiro"
+      ],
+      "fundo": [
+        "incenso",
+        "almíscar",
+        "fava tonka",
+        "açafrão"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Aquático",
+        "percentagem": 75
+      },
+      {
+        "nome": "Ambarado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Fresco",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma mistura vibrante de toranja fresca e bergamota da Calábria, ancorada por uma base poderosa de ambroxan e incenso. O perfume se abre com uma energia aquática nítida, transita para um coração ligeiramente picante e verde, e seca para um final quente, almiscarado e sutilmente doce.",
+    "paraQuem": "Para o homem contemporâneo que busca força, carisma e um toque de mistério. É uma fragrância versátil para quem aprecia um aroma fresco e aquático que mantém uma presença quente e amadeirada por horas.",
+    "quandoUsar": "É extremamente versátil e pode ser usado a qualquer hora e em qualquer lugar, sendo ligeiramente melhor para climas mais quentes. Perfeito para o escritório, encontros românticos ou para o dia a dia.",
+    "comoSeComporta": "Sua performance é considerada sólida, durando cerca de 6 a 8 horas na pele, com uma projeção moderada a forte nas primeiras horas."
   },
   {
     "id": "eros-parfum-versace",
@@ -55405,34 +56128,73 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental fougère",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Hortelã",
+        "Limão",
+        "Pimenta Preta",
+        "Elemi",
+        "Litsea Cubeba"
+      ],
+      "coracao": [
+        "Maçã Verde",
+        "Gerânio",
+        "Lavanda",
+        "Sálvia",
+        "Pomarose"
+      ],
+      "fundo": [
+        "Fava Tonka",
+        "Âmbar",
+        "Baunilha",
+        "Patchouli",
+        "Benjoim"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 873,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 75
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 70
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Eros Parfum é uma fragrância intensa e cativante, com uma abertura fresca e energética de limão e hortelã. Evolui para um coração sofisticado e quente, finalizando com um fundo rico e cremoso de baunilha e madeiras.",
+    "paraQuem": "É ideal para o homem que deseja expressar paixão e poder, confiante e que não teme ser o centro das atenções.",
+    "quandoUsar": "Perfeito para momentos especiais, eventos noturnos e encontros românticos, onde se busca deixar uma impressão inesquecível.",
+    "comoSeComporta": "Com excelente longevidade, geralmente de 8 a 12 horas na pele, possui uma projeção marcante nas primeiras horas, tornando-se mais suave e íntima depois."
   },
   {
     "id": "versace-man-eau-fraiche-versace",
@@ -55442,34 +56204,72 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aquático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Limão",
+        "Bergamota",
+        "Carambola",
+        "Cardamomo",
+        "Pau-rosa"
+      ],
+      "coracao": [
+        "Cedro",
+        "Estragão",
+        "Sálvia",
+        "Pimenta"
+      ],
+      "fundo": [
+        "Almíscar",
+        "Notas amadeiradas",
+        "Açafrão",
+        "Âmbar",
+        "Plátano"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 85
+      },
+      {
+        "nome": "Aquático",
+        "percentagem": 70
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 65
+      },
+      {
+        "nome": "Fresco Especiado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Ótimo",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância vibrante e refrescante que evoca a brisa mediterrânea. Abre com um frescor cítrico e frutado, evoluindo para um coração aromático e um fundo amadeirado sutil, limpo e masculino.",
+    "paraQuem": "Para o homem moderno que busca uma fragrância leve, confiante e versátil, ideal para o dia a dia e climas quentes.",
+    "quandoUsar": "Perfeito para dias ensolarados de verão e primavera, seja em passeios casuais, na praia ou em ambientes informais.",
+    "comoSeComporta": "Possui projeção moderada nas primeiras horas, tornando-se mais íntimo na secagem, e uma fixação que varia de moderada a baixa, geralmente entre 3 a 6 horas."
   },
   {
     "id": "versace-pour-femme-dylan-blue-versace",
@@ -55479,34 +56279,72 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "maçã Granny Smith",
+        "groselha preta",
+        "trevo",
+        "miosótis",
+        "shiso"
+      ],
+      "coracao": [
+        "pêssego gelado",
+        "petalia",
+        "rosa mosqueta",
+        "rosa",
+        "jasmim"
+      ],
+      "fundo": [
+        "almíscar",
+        "madeiras brancas",
+        "patchouli",
+        "estoraque"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Frutado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Floral",
+        "percentagem": 78
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 50
+      },
+      {
+        "nome": "Fresco",
+        "percentagem": 45
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma abertura fresca e cintilante de maçã verde e groselha. Evolui para um coração floral moderno e uma base amadeirada e almiscarada. O aroma é limpo e elegante, sem ser excessivamente doce.",
+    "paraQuem": "Para a mulher que exala força e sensualidade, com uma elegância refinada e que conhece seu próprio poder. É versátil, ideal para quem busca uma fragrância que se destaque com sofisticação.",
+    "quandoUsar": "É perfeito para uso diurno, especialmente nos meses mais quentes de primavera e verão. Adequado para o escritório e ambientes profissionais, sendo uma fragrância 'coringa'.",
+    "comoSeComporta": "Apresenta uma projeção moderada nas primeiras horas e uma boa fixação, durando por várias horas na pele. É notável sem ser avassalador."
   },
   {
     "id": "versace-pour-femme-dylan-purple-versace",
@@ -55516,34 +56354,69 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado almiscarado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pera",
+        "Laranja Amarga",
+        "Bergamota"
+      ],
+      "coracao": [
+        "Frésia Roxa",
+        "Pomarose",
+        "Mohanial"
+      ],
+      "fundo": [
+        "Ambroxan",
+        "Iso E Super",
+        "Madeira de Cedro da Virgínia",
+        "Sylkolide",
+        "Belambra"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 799,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral",
+        "percentagem": 90
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 75
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão luminosa e vibrante de frutas e flores, com a doçura suculenta da pera e a efervescência cítrica da laranja e bergamota. Um toque floral delicado da frésia roxa se entrelaça com notas amadeiradas e almiscaradas no fundo, criando um aroma elegante e sensual.",
+    "paraQuem": "É para a mulher moderna, confiante e de espírito livre que busca uma fragrância sofisticada com um toque jovial. Ideal para quem aprecia perfumes alegres, divertidos e coloridos.",
+    "quandoUsar": "É perfeito para o dia a dia e eventos casuais, especialmente durante a primavera e o verão. Embora versátil, sua leveza o torna mais adequado para o calor.",
+    "comoSeComporta": "Possui fixação moderada, durando de 4 a 7 horas na pele, com projeção notável nas primeiras 1-2 horas. Alguns usuários notam que se torna mais íntimo após esse período, podendo durar mais em roupas."
   },
   {
     "id": "versace-pour-femme-dylan-turquoise-versace",
@@ -55553,34 +56426,68 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Limão Primofiore",
+        "Mandarina Italiana",
+        "Pimenta Rosa"
+      ],
+      "coracao": [
+        "Goiaba",
+        "Frésia",
+        "Cassis",
+        "Jasmim"
+      ],
+      "fundo": [
+        "Clearwood®",
+        "Almíscar",
+        "Cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 55
+      },
+      {
+        "nome": "Floral",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância luminosa e fresca que evoca a brisa do mar e ilhas paradisíacas. Inicia com um coquetel cítrico vibrante, evoluindo para um coração floral frutado e um fundo amadeirado almiscarado e suave.",
+    "paraQuem": "Para mulheres modernas e elegantes que apreciam fragrâncias refrescantes, alegres e sofisticadas. É ideal para quem busca um aroma que transmita liberdade e bem-estar.",
+    "quandoUsar": "Perfeito para dias ensolarados e climas quentes, como passeios ao ar livre e momentos de lazer durante o verão e a primavera. Também pode ser usado no outono para um toque de frescor.",
+    "comoSeComporta": "A projeção é moderada no início, tornando-se mais íntima após a primeira hora, e a fixação na pele é de cerca de 3 a 4 horas."
   },
   {
     "id": "the-one-intense-dolce-gabbana",
@@ -55590,34 +56497,69 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "couro",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Cardamomo",
+        "Néroli",
+        "Cipreste"
+      ],
+      "coracao": [
+        "Cashmeran",
+        "Benjoim",
+        "Sálvia Esclaréia",
+        "Néroli"
+      ],
+      "fundo": [
+        "Couro",
+        "Patchouli",
+        "Ládano",
+        "Néroli"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 619.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 92
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 80
+      },
+      {
+        "nome": "Couro",
+        "percentagem": 75
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância sedutora e profunda, com uma abertura especiada de cardamomo. Evolui para um coração amadeirado e resinoso, revelando um fundo intenso de couro defumado e patchouli. É um aroma quente e envolvente, com uma elegância enigmática.",
+    "paraQuem": "Para o homem moderno que busca um perfume marcante e sofisticado, que exala carisma e refinamento. Ideal para quem deseja deixar uma impressão memorável sem precisar dizer uma palavra.",
+    "quandoUsar": "Perfeito para as noites frias de outono e inverno, em eventos sociais, jantares e encontros românticos. Sua intensidade e fixação o tornam ideal para ocasiões em que se deseja uma presença marcante.",
+    "comoSeComporta": "A fixação é impressionante, durando por um longo período na pele. A projeção é moderada a alta, criando uma aura elegante e perceptível sem ser invasiva."
   },
   {
     "id": "the-one-edp-pour-homme-dolce-gabbana",
@@ -55627,34 +56569,67 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado especiado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Toranja",
+        "Coentro",
+        "Manjericão"
+      ],
+      "coracao": [
+        "Gengibre",
+        "Cardamomo",
+        "Flor de Laranjeira"
+      ],
+      "fundo": [
+        "Âmbar",
+        "Tabaco",
+        "Cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 85
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 70
+      },
+      {
+        "nome": "Tabaco",
+        "percentagem": 75
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 80
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "The One EDP Pour Homme exala uma aura sensual e sofisticada, combinando a vivacidade cítrica com um coração especiado quente. A base amadeirada de tabaco e âmbar confere uma profundidade envolvente, criando um rastro marcante. É um aroma elegante e moderno, com um toque clássico.",
+    "paraQuem": "Ideal para o homem carismático e refinado, que busca uma fragrância que complemente sua presença sem ser excessivamente chamativa. É para quem aprecia um perfume com personalidade, capaz de transmitir confiança e charme de forma discreta, mas impactante.",
+    "quandoUsar": "É perfeito para ser usado em encontros românticos, eventos noturnos ou ocasiões especiais, especialmente em climas mais amenos ou frios. Sua intensidade e sofisticação o tornam uma escolha excelente para momentos em que se deseja deixar uma impressão duradoura e elegante.",
+    "comoSeComporta": "Sua projeção é moderada, criando uma 'bolha' perfumada discreta ao redor de quem usa, e sua fixação é boa, perdurando na pele por cerca de 5 a 8 horas. É um perfume que envolve discretamente, mas com presença notável em situações de proximidade."
   },
   {
     "id": "light-blue-forever-pour-homme-dolce-gabbana",
@@ -55664,34 +56639,57 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aquático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Toranja",
+        "Bergamota"
+      ],
+      "coracao": [
+        "Notas Ozônicas",
+        "Folha de Violeta"
+      ],
+      "fundo": [
+        "Óleo de Vetiver Java",
+        "Almíscar Branco",
+        "Patchouli"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 550,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Aquático",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Este perfume se inicia com uma explosão vibrante e autêntica de toranja e bergamota, remetendo a frutas cítricas recém-cortadas. No coração, notas ozônicas e folha de violeta trazem uma brisa aquática e um toque verde, antes de assentar em um fundo amadeirado de vetiver, almíscar e patchouli que confere profundidade e sensualidade.",
+    "paraQuem": "Ideal para o homem que busca uma fragrância fresca e energizante, perfeita para os dias quentes e ensolarados. É para quem aprecia um cítrico natural e marcante, sem ser excessivamente doce ou sintético.",
+    "quandoUsar": "É um perfume excelente para uso diurno, especialmente na primavera e no verão. Pode ser usado em diversas situações casuais, no trabalho ou até mesmo em encontros românticos durante o dia.",
+    "comoSeComporta": "A projeção é moderada, sendo mais forte na primeira hora e depois ficando mais próxima da pele. A fixação é boa, durando em torno de 5 a 7 horas na pele."
   },
   {
     "id": "light-blue-forever-pour-femme-dolce-gabbana",
@@ -55701,34 +56699,62 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Limão",
+        "Laranja Sanguínea",
+        "Maçã Verde"
+      ],
+      "coracao": [
+        "Flor de Laranjeira",
+        "Flores Brancas"
+      ],
+      "fundo": [
+        "Almíscar Branco",
+        "Cedro",
+        "Cashmeran"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 609.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 75
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão ensolarada de frutas cítricas, como limão e laranja sanguínea, harmonizada com a doçura da maçã verde. Evolui para um coração floral radiante de flor de laranjeira e flores brancas, com um fundo suavemente amadeirado e almiscarado.",
+    "paraQuem": "Para a mulher que busca uma fragrância que evoca a alegria e o romance de um verão mediterrâneo. É ideal para quem aprecia perfumes frescos, luminosos e com um toque sensual.",
+    "quandoUsar": "É perfeito para os dias quentes de verão e primavera, seja para um passeio casual, um encontro romântico ou para trazer a sensação de dias ensolarados ao seu dia a dia.",
+    "comoSeComporta": "Possui uma projeção moderada, criando uma aura elegante e discreta. Sua fixação é duradoura, permanecendo na pele por horas, acompanhando-a ao longo do dia."
   },
   {
     "id": "light-blue-italian-love-pour-homme-dolce-gabbana",
@@ -55738,34 +56764,68 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "aromático verde",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Bergamota Siciliana",
+        "Toranja"
+      ],
+      "coracao": [
+        "Folha de Violeta",
+        "Notas Ozônicas",
+        "Notas Verdes",
+        "Cashmeran"
+      ],
+      "fundo": [
+        "Vetiver",
+        "Patchouli",
+        "Madeira Guaiac",
+        "Almíscar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 90
+      },
+      {
+        "nome": "Ozônico",
+        "percentagem": 85
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 70
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão vibrante de toranja e bergamota que se transforma em um coração ozônico e verde. A base amadeirada com vetiver e almíscar confere um toque sensual e envolvente.",
+    "paraQuem": "Para o homem moderno que aprecia frescor e sofisticação, buscando uma fragrância que transmita a paixão e a atmosfera vibrante do verão italiano.",
+    "quandoUsar": "Ideal para os dias quentes de primavera e verão, seja para um passeio casual, um dia na praia ou até mesmo no ambiente profissional.",
+    "comoSeComporta": "Possui uma projeção que cria uma bolha de aroma perceptível e uma fixação moderada a longa, permanecendo na pele por várias horas."
   },
   {
     "id": "light-blue-summer-vibes-pour-homme-dolce-gabbana",
@@ -55775,34 +56835,53 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Limão Siciliano"
+      ],
+      "coracao": [
+        "Cipreste"
+      ],
+      "fundo": [
+        "Madeira de Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 70
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 65
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância vibrante que evoca a energia do verão italiano, com a vivacidade do limão siciliano e a masculinidade do cipreste. Finaliza com um calor agradável e amadeirado.",
+    "paraQuem": "Para homens modernos que buscam uma fragrância energizante e refrescante, ideal para dias ensolarados e momentos de lazer.",
+    "quandoUsar": "É perfeito para uso diurno, especialmente durante o verão e a primavera, em ocasiões casuais, na praia ou em atividades ao ar livre.",
+    "comoSeComporta": "A projeção é moderada, inicialmente irradiando um pouco além do comprimento do braço, e a fixação dura cerca de 5 a 7 horas na pele."
   },
   {
     "id": "k-by-dolce-gabbana-parfum-dolce-gabbana",
@@ -55812,34 +56891,72 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Laranja Sanguínea",
+        "Bagas de Zimbro",
+        "Pimenta da Jamaica",
+        "Limão",
+        "Limão Siciliano",
+        "Cardamomo"
+      ],
+      "coracao": [
+        "Néctar de Figo",
+        "Lavanda",
+        "Gerânio",
+        "Sálvia Esclaréia"
+      ],
+      "fundo": [
+        "Cedro",
+        "Patchouli",
+        "Vetiver",
+        "Nagarmota"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 70
+      },
+      {
+        "nome": "Especiado Fresco",
+        "percentagem": 65
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância intensa e contemporânea, K by Dolce & Gabbana Parfum abre com um frescor vibrante de cítricos e especiarias, evoluindo para um coração aromático e um fundo amadeirado. Possui um aroma que equilibra notas de figo, alcaçuz, sândalo e toques doces e frutados.",
+    "paraQuem": "Este perfume é para o homem moderno, confiante e carismático, que escolhe seu destino com paixão e elegância. Ele transmite uma masculinidade forte e sofisticada, ideal para quem busca presença e personalidade.",
+    "quandoUsar": "Ideal para uso durante o dia e a noite, especialmente em climas amenos, sendo versátil para eventos sociais e encontros casuais. Embora possa ser usado em todas as estações, destaca-se na primavera e no verão.",
+    "comoSeComporta": "K by Dolce & Gabbana Parfum apresenta uma projeção moderada e fixação intensa, com duração de 7 a 12 horas na pele. Ele deixa um rastro sofisticado e envolvente, sem ser excessivamente pesado."
   },
   {
     "id": "q-by-dolce-gabbana-dolce-gabbana",
@@ -55849,34 +56966,79 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Limão Siciliano",
+        "Laranja Sanguínea",
+        "Pétalas de Jasmim",
+        "Frangipani"
+      ],
+      "coracao": [
+        "Cereja",
+        "Heliotrópio",
+        "Jasmim Sambac"
+      ],
+      "fundo": [
+        "Almíscar",
+        "Cedro",
+        "Almíscar de Cristal",
+        "Almíscar Mole",
+        "Âmbar",
+        "Notas Amadeiradas"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 840,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cereja",
+        "percentagem": 90
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 85
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 70
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 65
+      },
+      {
+        "nome": "Amendoado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 75
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância vibrante e elegante, com uma saída suculenta de frutas cítricas e cereja. O coração floral se entrelaça com um toque amendoado e cremoso, culminando em uma base amadeirada e almiscarada que proporciona profundidade e calor.",
+    "paraQuem": "Q by Dolce & Gabbana é ideal para a mulher moderna que deseja se sentir poderosa e confiante, como uma rainha contemporânea. É uma fragrância que realça a presença e a sofisticação.",
+    "quandoUsar": "Versátil, pode ser usado tanto durante o dia quanto à noite, adaptando-se a diversas ocasiões. É especialmente recomendado para a primavera e o verão, mas também se comporta bem em climas mais amenos.",
+    "comoSeComporta": "Possui uma fixação moderada a alta, permanecendo na pele por cerca de 4 a 8 horas, e uma projeção que envolve, mas não deixa um rastro estrondoso, sendo mais elegante e íntimo."
   },
   {
     "id": "born-in-roma-donna-intense-valentino",
@@ -56330,34 +57492,64 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado ambarado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Olíbano",
+        "Mandarina"
+      ],
+      "coracao": [
+        "Figueira",
+        "Raiz de Orris"
+      ],
+      "fundo": [
+        "Cedro",
+        "Acorde de Couro Vegetal"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 664.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Couro",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 70
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 60
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Ótimo",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Este perfume se revela com um frescor vibrante e um toque incensado, evoluindo para um coração nobre e terroso. A base se aprofunda em um amadeirado suave e um couro elegante.",
+    "paraQuem": "Para o homem que confia em seus instintos e assume o controle de sua vida, exalando sofisticação e uma atitude poderosa.",
+    "quandoUsar": "Ideal para as estações mais frias, como outono e inverno, e para ocasiões noturnas ou profissionais onde se deseja uma presença marcante e refinada.",
+    "comoSeComporta": "Possui uma fixação superior a 10-12 horas na pele, com projeção que varia de moderada a forte nas primeiras horas, tornando-se mais intimista depois."
   },
   {
     "id": "boss-bottled-night-hugo-boss",
@@ -56367,34 +57559,63 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "lavanda",
+        "vidoeiro"
+      ],
+      "coracao": [
+        "violeta"
+      ],
+      "fundo": [
+        "notas amadeiradas",
+        "almíscar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 609.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Violeta",
+        "percentagem": 78
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Lavanda",
+        "percentagem": 60
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância sedutora e intensamente masculina que combina o frescor aromático da lavanda com um fundo amadeirado denso e elegante. O toque de violeta africana adiciona uma nuance misteriosa e sofisticada.",
+    "paraQuem": "Ideal para o homem ambicioso e autoconfiante que busca uma fragrância marcante para eventos noturnos e ocasiões especiais. É para quem aprecia sofisticação sem ser exagerado.",
+    "quandoUsar": "Perfeito para ser usado à noite, em jantares, encontros e eventos sociais elegantes, onde se deseja deixar uma impressão memorável e sofisticada. Também pode ser usado em climas mais frescos.",
+    "comoSeComporta": "Possui fixação moderada a longa, entre 6 e 9 horas, e projeção intensa nos primeiros minutos, tornando-se mais suave e envolvente. É uma fragrância que se faz notar sem ser invasiva."
   },
   {
     "id": "boss-bottled-elixir-hugo-boss",
@@ -56404,34 +57625,60 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "olíbano",
+        "cardamomo"
+      ],
+      "coracao": [
+        "patchouli",
+        "vetiver"
+      ],
+      "fundo": [
+        "ládano",
+        "cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 659,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 70
+      },
+      {
+        "nome": "Terroso",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Um elixir amadeirado e ambarado, com calor de incenso e cardamomo. O coração terroso de vetiver e patchouli se funde com a profundidade do cedro e ládano. É uma fragrância rica e envolvente.",
+    "paraQuem": "Para o homem confiante e de atitude, que busca uma fragrância que potencialize sua presença. Ideal para quem aprecia perfumes intensos e sofisticados com um toque de mistério.",
+    "quandoUsar": "Perfeito para as noites frias e eventos especiais, onde a elegância e a sofisticação são essenciais. Recomenda-se cautela em dias quentes devido à sua intensidade.",
+    "comoSeComporta": "Possui excelente fixação, podendo durar mais de 12 horas na pele, e uma projeção forte nas primeiras horas, deixando um rastro marcante no ambiente. É um perfume com ótima performance."
   },
   {
     "id": "boss-alive-hugo-boss",
@@ -56441,34 +57688,70 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Maçã",
+        "Ameixa",
+        "Canela",
+        "Groselha Preta",
+        "Baunilha de Madagascar"
+      ],
+      "coracao": [
+        "Jasmim Sambac",
+        "Tomilho",
+        "Tuberosa"
+      ],
+      "fundo": [
+        "Sândalo",
+        "Cedro",
+        "Baunilha",
+        "Oliveira"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 499,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 78
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 75
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 60
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Este perfume se inicia com uma explosão frutada e energética de maçã e ameixa, evoluindo para um coração floral delicado de jasmim. A base amadeirada de sândalo e cedro, combinada com a doçura da baunilha, confere um toque quente e reconfortante.",
+    "paraQuem": "Criado para a mulher confiante e moderna que celebra a vida com intensidade e elegância. É ideal para quem busca uma assinatura olfativa versátil e sofisticada.",
+    "quandoUsar": "É um perfume versátil, perfeito para o dia a dia, tanto no ambiente de trabalho quanto em encontros casuais. Também pode ser usado à noite em ocasiões especiais.",
+    "comoSeComporta": "Apresenta boa durabilidade e fixação na pele, com projeção moderada a alta nas primeiras horas. Não é sufocante, sendo perceptível ao longo do dia."
   },
   {
     "id": "boss-alive-intense-hugo-boss",
@@ -56478,34 +57761,53 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "framboesa"
+      ],
+      "coracao": [
+        "vetiver"
+      ],
+      "fundo": [
+        "benjoim"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 75
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão inicial de framboesa suculenta e vibrante, seguida por um coração amadeirado e sofisticado de vetiver. A base se revela em um abraço quente e sensual de benjoim, com uma nuance adocicada e cremosa que encanta.",
+    "paraQuem": "Criado para a mulher audaciosa e confiante, que abraça a vida com paixão e busca inspiração em cada momento. É um convite para viver plenamente, celebrar a individualidade e a força feminina.",
+    "quandoUsar": "Ideal para uso diurno e noturno, especialmente em momentos que pedem uma fragrância marcante e envolvente. Perfeito para realçar a confiança e a elegância em diversas ocasiões.",
+    "comoSeComporta": "Com uma concentração Eau de Parfum, oferece uma boa fixação na pele, mantendo sua projeção moderada a forte por horas. É uma fragrância que se faz notar, sem ser excessivamente imponente."
   },
   {
     "id": "boss-ma-vie-hugo-boss",
@@ -56515,34 +57817,56 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Flor de Cacto"
+      ],
+      "coracao": [
+        "Frésia Rosa",
+        "Rosa",
+        "Jasmim"
+      ],
+      "fundo": [
+        "Notas Amadeiradas",
+        "Cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral",
+        "percentagem": 80
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Fresco",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Boss Ma Vie é uma fragrância floral fresca e única, com um toque verde da flor de cacto. Em seu coração, desabrocham notas delicadas de frésia, rosa e jasmim, que se assentam em uma base amadeirada e quente de cedro.",
+    "paraQuem": "Este perfume é ideal para a mulher moderna, independente e confiante, que aprecia os pequenos momentos da vida. É para quem busca uma fragrância elegante e sutil para o dia a dia.",
+    "quandoUsar": "É perfeito para uso diário, especialmente durante a primavera e o verão, seja no trabalho ou em ocasiões casuais.",
+    "comoSeComporta": "Sua projeção é moderada no início e a fixação é geralmente boa, deixando um rastro sutil e elegante na pele."
   },
   {
     "id": "boss-the-scent-elixir-him-hugo-boss",
@@ -56552,34 +57876,62 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado ambarado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pimenta vermelha",
+        "Pimentão"
+      ],
+      "coracao": [
+        "Lavanda"
+      ],
+      "fundo": [
+        "Sândalo da Caledônia"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 563,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 90
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Lavanda",
+        "percentagem": 80
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 75
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão inicial de pimenta picante e carismática, que evolui para um coração vibrante de lavanda. A base é enriquecida por um sândalo cremoso, trazendo um toque amadeirado e suave.",
+    "paraQuem": "Para homens que desejam uma presença marcante e elegante, que apreciam fragrâncias com personalidade forte e um toque sedutor. É uma fragrância para o homem confiante e moderno.",
+    "quandoUsar": "Ideal para noites e ocasiões especiais, especialmente nos meses mais frios. Pode ser usado em encontros românticos, onde se deseja deixar uma impressão duradoura.",
+    "comoSeComporta": "Possui alta projeção e uma fixação notável, podendo durar mais de 12 horas na pele. É um perfume intenso que se faz presente sem ser excessivo com poucas borrifadas."
   },
   {
     "id": "le-male-elixir-jean-paul-gaultier",
@@ -56589,34 +57941,90 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental fougère",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "lavanda",
+        "hortelã",
+        "bergamota",
+        "fava tonka",
+        "mel",
+        "tabaco"
+      ],
+      "coracao": [
+        "baunilha",
+        "benjoim",
+        "lavanda",
+        "hortelã",
+        "bergamota"
+      ],
+      "fundo": [
+        "mel",
+        "fava tonka",
+        "tabaco",
+        "benjoim",
+        "baunilha"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 750,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Mel",
+        "percentagem": 90
+      },
+      {
+        "nome": "Tabaco",
+        "percentagem": 85
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 88
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 80
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 92
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 87
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 75
+      },
+      {
+        "nome": "Lavanda",
+        "percentagem": 70
+      },
+      {
+        "nome": "Balsâmico",
+        "percentagem": 78
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Le Male Elixir exala uma aura quente e sedutora, com a doçura do mel e baunilha, notas de tabaco e a frescura sutil da lavanda. É uma fragrância ambarada e envolvente que desperta o desejo.",
+    "paraQuem": "Este perfume é para o homem que busca uma fragrância intensa, marcante e sedutora, que gosta de deixar uma presença magnética e moderna.",
+    "quandoUsar": "É ideal para noites e ocasiões especiais, especialmente em climas mais frios, onde suas notas quentes podem brilhar.",
+    "comoSeComporta": "Possui uma excelente fixação, podendo durar mais de 10 horas na pele, com projeção intensa nas primeiras horas, criando um rastro marcante."
   },
   {
     "id": "le-beau-paradise-garden-jean-paul-gaultier",
@@ -56626,34 +58034,71 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aquático verde",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Notas Verdes",
+        "Notas Aquáticas",
+        "Hortelã",
+        "Gengibre"
+      ],
+      "coracao": [
+        "Coco",
+        "Figo",
+        "Sal"
+      ],
+      "fundo": [
+        "Sândalo",
+        "Fava Tonka"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 680,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Aquático",
+        "percentagem": 85
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 80
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 75
+      },
+      {
+        "nome": "Tropical",
+        "percentagem": 70
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 30
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância sedutora que evoca um jardim exuberante, misturando o frescor salgado do coco com a vivacidade do figo verde e o calor sensual do sândalo. Possui nuances de gengibre picante e hortelã revigorante, equilibradas pela doçura da fava tonka.",
+    "paraQuem": "Ideal para homens enérgicos e apaixonados que buscam um aroma marcante e elegante. É para quem aprecia fragrâncias tropicais, mas com uma sofisticação amadeirada e um toque maduro.",
+    "quandoUsar": "Perfeito para uso durante o dia e em climas quentes, especialmente primavera e verão. Pode ser usado em ocasiões casuais e até mesmo para eventos especiais durante o dia.",
+    "comoSeComporta": "Este Eau de Parfum oferece ótima fixação e projeção, mantendo sua presença por várias horas. A projeção inicial é forte, chamando a atenção nos primeiros momentos, e a longevidade pode ultrapassar 8 horas na pele."
   },
   {
     "id": "scandal-le-parfum-homme-jean-paul-gaultier",
@@ -56663,34 +58108,57 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Gerânio"
+      ],
+      "coracao": [
+        "Fava Tonka"
+      ],
+      "fundo": [
+        "Sândalo"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 699,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 85
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 80
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância intensa e sedutora, abrindo com um toque herbal e evoluindo para um abraço quente de fava tonka. Finaliza com a cremosidade do sândalo, criando um rastro amadeirado e adocicado.",
+    "paraQuem": "Para o homem confiante e ousado, que gosta de se destacar e busca uma fragrância marcante. É ideal para quem aprecia perfumes amadeirados e adocicados com uma presença sensual.",
+    "quandoUsar": "Melhor utilizado em climas mais amenos a frios, especialmente à noite, em encontros românticos ou eventos especiais. Sua intensidade o torna perfeito para ocasiões em que se deseja deixar uma impressão duradoura.",
+    "comoSeComporta": "Possui alta projeção nas primeiras horas e uma excelente fixação, permanecendo na pele por mais de 8 a 10 horas. Cria uma aura envolvente e sedutora que se mantém por um longo período."
   },
   {
     "id": "scandal-le-parfum-femme-jean-paul-gaultier",
@@ -56700,34 +58168,66 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "ambar floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Jasmim"
+      ],
+      "coracao": [
+        "Caramelo",
+        "Sal"
+      ],
+      "fundo": [
+        "Baunilha"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 549,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Caramelo",
+        "percentagem": 92
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 88
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 75
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 70
+      },
+      {
+        "nome": "Salgado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância envolvente e sedutora, com um toque doce de caramelo salgado e baunilha, equilibrado por um jasmim delicado. Revela uma feminilidade ousada e elegante, deixando um rastro cativante.",
+    "paraQuem": "Para a mulher moderna que busca uma fragrância marcante e sexy, com um toque de ousadia. É ideal para quem aprecia perfumes gourmands com um diferencial floral e salgado.",
+    "quandoUsar": "Perfeito para ser usado em ocasiões especiais e eventos noturnos, onde a fragrância pode se desenvolver plenamente. Também é uma excelente escolha para encontros românticos, adicionando um toque de sensualidade.",
+    "comoSeComporta": "Possui uma intensidade moderada a alta e uma fixação longa, garantindo que o aroma permaneça na pele por horas. A projeção é notável, criando uma aura envolvente sem ser excessiva."
   },
   {
     "id": "la-belle-jean-paul-gaultier",
@@ -56737,34 +58237,63 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental baunilha",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pera",
+        "Bergamota"
+      ],
+      "coracao": [
+        "Notas Florais",
+        "Couro",
+        "Vetiver"
+      ],
+      "fundo": [
+        "Baunilha",
+        "Vetiver",
+        "Âmbar",
+        "Almíscar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 754,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Baunilha",
+        "percentagem": 90
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 80
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão suculenta de pera caramelizada e baunilha cremosa, com um toque terroso de vetiver e nuances de couro. É uma fragrância envolvente, doce e sensual, que se desenvolve de forma luxuosa na pele.",
+    "paraQuem": "Para a mulher confiante e sedutora que deseja deixar um rastro marcante e sofisticado. Ideal para quem aprecia perfumes doces, intensos e sensuais.",
+    "quandoUsar": "Melhor utilizado em noites e ocasiões especiais, ou em dias mais amenos e frios, devido à sua intensidade e doçura.",
+    "comoSeComporta": "Possui alta fixação, permanecendo na pele por 8 a 10 horas, com projeção moderada a forte nas primeiras horas."
   },
   {
     "id": "la-belle-le-parfum-jean-paul-gaultier",
@@ -56774,34 +58303,58 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental baunilha",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pera"
+      ],
+      "coracao": [
+        "Fava Tonka",
+        "Jasmim"
+      ],
+      "fundo": [
+        "Baunilha"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 679.2,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Baunilha",
+        "percentagem": 95
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 90
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância opulenta e viciante, com a suculência da pera entrelaçada à doçura cremosa da fava tonka e da baunilha. Revela uma aura sensual e profundamente feminina.",
+    "paraQuem": "Para a mulher confiante e sedutora, que aprecia uma fragrância marcante e envolvente. É um convite à tentação e à celebração da feminilidade.",
+    "quandoUsar": "Ideal para noites especiais, encontros românticos e ocasiões em que se deseja deixar um rastro inesquecível. Perfeito para o outono e inverno.",
+    "comoSeComporta": "Possui uma projeção avassaladora e uma fixação excepcional, deixando um rastro de desejo e mistério por horas a fio."
   },
   {
     "id": "so-scandal-jean-paul-gaultier",
@@ -56811,34 +58364,66 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral frutado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "flor de laranjeira",
+        "framboesa",
+        "leite"
+      ],
+      "coracao": [
+        "tuberosa",
+        "jasmim Sambac",
+        "flor de laranjeira"
+      ],
+      "fundo": [
+        "notas lácteas",
+        "framboesa"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 685,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral Branco",
+        "percentagem": 95
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 80
+      },
+      {
+        "nome": "Lactônico",
+        "percentagem": 75
+      },
+      {
+        "nome": "Cremoso",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão floral luminosa com a doçura suculenta da framboesa, envolta em um abraço cremoso e viciante de notas lácteas. É uma fragrância intensa e sedutora, que equilibra a opulência floral com um toque frutado e adocicado.",
+    "paraQuem": "Para a mulher moderna, ousada e confiante que não tem medo de ser o centro das atenções. É para quem busca uma fragrância que celebre sua individualidade e deixe uma impressão inesquecível.",
+    "quandoUsar": "Ideal para noites e ocasiões especiais, como encontros e festas, onde se deseja uma presença marcante e sensual. Também pode ser usado em dias amenos para um toque de sofisticação.",
+    "comoSeComporta": "Possui uma projeção exuberante e um rastro duradouro, deixando sua presença ser notada por onde passa. A fixação é ótima, permanecendo na pele por mais de 10 horas."
   },
   {
     "id": "gaultier-divine-jean-paul-gaultier",
@@ -56848,34 +58433,65 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral gourmand marinho",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "calypsone",
+        "bergamota",
+        "frutas vermelhas",
+        "notas salgadas"
+      ],
+      "coracao": [
+        "lírio",
+        "ylang-ylang",
+        "jasmim",
+        "flores brancas"
+      ],
+      "fundo": [
+        "merengue",
+        "almíscar",
+        "patchouli"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 810.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral Branco",
+        "percentagem": 90
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 85
+      },
+      {
+        "nome": "Marinho",
+        "percentagem": 75
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Gaultier Divine é uma fragrância envolvente que equilibra notas florais e gourmands com um toque salgado. Abre com uma brisa marinha e frutas vermelhas, evoluindo para um coração de lírio majestoso e jasmim, finalizando com a doçura etérea do merengue e almíscar.",
+    "paraQuem": "Este perfume é para a mulher que celebra sua singularidade e poder, que se sente confiante e audaciosa. É para quem busca uma fragrância que exala uma feminilidade radiante e extraordinária.",
+    "quandoUsar": "Ideal para uso diurno, especialmente nas estações mais quentes como primavera e verão. Pode ser usado em diversas ocasiões, desde um encontro casual até um evento mais sofisticado.",
+    "comoSeComporta": "Possui uma ótima longevidade na pele, com uma projeção que se mantém perceptível sem ser excessivamente forte. Ele se desdobra lindamente, com a doçura cremosa surgindo no dry-down."
   },
   {
     "id": "la-vie-est-belle-leclat-lancome",
@@ -57440,34 +59056,64 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "couro",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Cardamomo"
+      ],
+      "coracao": [
+        "Couro",
+        "Jasmim Sambac"
+      ],
+      "fundo": [
+        "Âmbar",
+        "Musgo",
+        "Patchouli"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1534,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Couro",
+        "percentagem": 92
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 78
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 75
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 60
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 30
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Ombré Leather EDP evoca a sensação tátil de couro preto, texturizado com especiarias e flores. Possui um aroma que remete ao interior de um carro de luxo novo ou uma jaqueta de couro de alta costura, com nuances quentes e ambaradas.",
+    "paraQuem": "Este perfume é para indivíduos que buscam uma fragrância ousada e imponente, que transmite luxo e sofisticação. É ideal para homens e mulheres que desejam expressar liberdade e sensualidade.",
+    "quandoUsar": "É um perfume excelente para eventos formais, jantares sofisticados e saídas noturnas. Devido à sua intensidade, é mais adequado para climas frios.",
+    "comoSeComporta": "Sua fixação é excelente, durando facilmente o dia todo na pele e em tecidos. A projeção é forte nas primeiras horas, criando uma aura marcante."
   },
   {
     "id": "ombre-leather-parfum-tom-ford",
@@ -57477,34 +59123,65 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "couro floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Folha de Violeta",
+        "Cedro"
+      ],
+      "coracao": [
+        "Jasmim Sambac",
+        "Raiz de Lírio"
+      ],
+      "fundo": [
+        "Couro",
+        "Notas Amadeiradas",
+        "Tabaco"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2447,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Couro",
+        "percentagem": 90
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Floral",
+        "percentagem": 70
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Tabaco",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma interpretação sofisticada e intensa do couro, este perfume evoca a sensualidade do deserto americano. Mescla um couro rico com a frescura verde da folha de violeta e um toque amadeirado. É uma fragrância ousada e envolvente, com nuances florais e um calor ambarado.",
+    "paraQuem": "Ideal para quem busca uma fragrância marcante e de luxo, que expressa individualidade e sofisticação. É uma escolha excelente para homens e mulheres que apreciam aromas com profundidade e caráter.",
+    "quandoUsar": "Melhor utilizado em climas mais amenos, como outono e inverno, e em ocasiões noturnas ou eventos especiais, onde sua presença se destaca. Pode ser uma boa opção para ambientes profissionais ou encontros românticos, com moderação.",
+    "comoSeComporta": "Possui uma projeção moderada a forte e uma excelente fixação, podendo durar de 8 a 10 horas na pele. Sua intensidade se manifesta de forma elegante, deixando uma aura cativante e duradoura."
   },
   {
     "id": "noir-extreme-parfum-tom-ford",
@@ -57514,34 +59191,74 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Cardamomo",
+        "Gengibre",
+        "Mandarina",
+        "Néroli",
+        "Cítricos"
+      ],
+      "coracao": [
+        "Kulfi",
+        "Rosa Búlgara",
+        "Flor de Laranjeira",
+        "Jasmim"
+      ],
+      "fundo": [
+        "Baunilha",
+        "Couro",
+        "Camurça",
+        "Âmbar",
+        "Fava Tonka",
+        "Madeira Guaiac",
+        "Cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1699,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 85
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 80
+      },
+      {
+        "nome": "Couro",
+        "percentagem": 70
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 75
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância sedutora e intensa que se inicia com especiarias quentes e cítricos vibrantes. Revela um coração cremoso e floral, finalizando com um rastro rico de âmbar, baunilha e notas amadeiradas e de couro, criando uma aura sofisticada e indulgente.",
+    "paraQuem": "Para o homem que aprecia luxo e ousadia, que se deleita em prazeres e não teme ser extraordinário. É uma fragrância que transmite confiança e magnetismo.",
+    "quandoUsar": "Ideal para noites frias de outono e inverno, em eventos especiais ou encontros românticos, onde se deseja deixar uma impressão marcante e elegante.",
+    "comoSeComporta": "Possui uma excelente longevidade, podendo durar de 10 a 12 horas, com projeção moderada a forte nas primeiras horas, criando uma aura notável ao redor de quem o usa."
   },
   {
     "id": "costa-azzurra-edp-tom-ford",
@@ -57551,34 +59268,72 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Madeira à deriva",
+        "Alga marinha",
+        "Oud (Agarwood)",
+        "Ambreta (almíscar malva)",
+        "Cardamomo",
+        "Sementes de aipo"
+      ],
+      "coracao": [
+        "Limão",
+        "Cipreste",
+        "Mandarina amarela",
+        "Lavanda",
+        "Murta",
+        "Artemísia"
+      ],
+      "fundo": [
+        "Incenso",
+        "Vetiver",
+        "Carvalho",
+        "Olíbano",
+        "Mástique",
+        "Baunilha"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2100,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Marinho",
+        "percentagem": 65
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma brisa costeira revigorante com um toque amadeirado e cítrico. Traz a sensação de ar do mar, notas frescas e aromas de cipreste e carvalho.",
+    "paraQuem": "É um perfume unissex, ideal para quem busca uma fragrância sofisticada, fresca e limpa, que remeta a um escape mediterrâneo.",
+    "quandoUsar": "Perfeito para dias quentes de primavera e verão, durante o dia, seja para ocasiões casuais ou ambientes profissionais.",
+    "comoSeComporta": "Possui uma longevidade de 6 a 8 horas, com projeção moderada nas primeiras horas, tornando-se mais íntimo na pele."
   },
   {
     "id": "soleil-blanc-tom-ford",
@@ -57588,34 +59343,89 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pistache",
+        "Bergamota",
+        "Cardamomo",
+        "Pimenta Rosa"
+      ],
+      "coracao": [
+        "Tuberosa",
+        "Ylang Ylang",
+        "Jasmim"
+      ],
+      "fundo": [
+        "Coco",
+        "Âmbar",
+        "Fava Tonka",
+        "Benjoim"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2781,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral Branco",
+        "percentagem": 92
+      },
+      {
+        "nome": "Coco",
+        "percentagem": 88
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 85
+      },
+      {
+        "nome": "Tuberosa",
+        "percentagem": 80
+      },
+      {
+        "nome": "Ambarado",
+        "percentagem": 78
+      },
+      {
+        "nome": "Floral Amarelo",
+        "percentagem": 70
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 65
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 55
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Soleil Blanc evoca a sensação de ilhas privadas, onde o verão nunca termina. É um floral solar ambarado, com notas cremosas de coco e um toque exótico de ylang-ylang. Uma fragrância sofisticada que remete a um protetor solar luxuoso e à brisa do mar.",
+    "paraQuem": "Este perfume é para quem busca uma fragrância unissex, elegante e envolvente, que remeta a dias ensolarados e luxo. Ideal para amantes de aromas que capturam a essência de um verão eterno.",
+    "quandoUsar": "É perfeito para ser usado durante o dia, especialmente em climas quentes como verão e primavera. Sua versatilidade permite que também seja uma boa escolha para ocasiões casuais e românticas.",
+    "comoSeComporta": "Soleil Blanc possui uma projeção moderada, que geralmente dura de 4 a 5 horas, e uma longevidade que pode se estender por até 14 horas na pele. No entanto, alguns usuários relatam fixação e projeção mais suaves."
   },
   {
     "id": "cafe-rose-tom-ford",
@@ -57625,34 +59435,67 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Rosa Turca",
+        "Café"
+      ],
+      "coracao": [
+        "Rosa Búlgara",
+        "Patchouli",
+        "Cardamomo",
+        "Coentro",
+        "Ylang Ylang"
+      ],
+      "fundo": [
+        "Olíbano",
+        "Sândalo"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1420,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Rosa",
+        "percentagem": 90
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 75
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Café",
+        "percentagem": 55
+      },
+      {
+        "nome": "Patchouli",
+        "percentagem": 45
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Tom Ford Cafe Rose é uma fragrância sofisticada que captura a essência sensual de uma rosa elegante, infundida com um toque inesperado de café escuro. Revela uma profundidade sensual e uma floralidade opulenta.",
+    "paraQuem": "Ideal para quem busca exclusividade e elegância, é um perfume para a mulher que aprecia uma fragrância floral profunda com um toque oriental irresistível.",
+    "quandoUsar": "É perfeito para ser usado em climas mais frios, como outono e inverno, e em ocasiões especiais noturnas ou encontros românticos.",
+    "comoSeComporta": "Apresenta uma fixação de moderada a longa e projeção que varia de moderada a forte nas primeiras horas, tornando-se mais suave e próxima à pele com o tempo."
   },
   {
     "id": "rose-prick-tom-ford",
@@ -57662,34 +59505,65 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "chipre floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pimenta de Sichuan",
+        "Açafrão"
+      ],
+      "coracao": [
+        "Rosa de Maio",
+        "Rosa Búlgara",
+        "Rosa Turca"
+      ],
+      "fundo": [
+        "Patchouli",
+        "Fava Tonka"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 650,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Rosa",
+        "percentagem": 92
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 79
+      },
+      {
+        "nome": "Patchouli",
+        "percentagem": 77
+      },
+      {
+        "nome": "Especiado Fresco",
+        "percentagem": 68
+      },
+      {
+        "nome": "Terroso",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Rose Prick se abre com um toque picante de pimenta de Sichuan e açafrão, que rapidamente evolui para um buquê de rosas exuberantes. O fundo revela uma base quente e terrosa de patchouli e fava tonka, conferindo profundidade e sensualidade.",
+    "paraQuem": "Este perfume é para quem aprecia uma rosa com uma reviravolta ousada e espinhosa, desafiando a percepção tradicional da flor. É uma fragrância unissex que exala elegância e confiança.",
+    "quandoUsar": "Ideal para as estações de transição como primavera e outono, suas notas picantes e florais se adaptam bem a eventos semiformais ou formais, e noites românticas. Evite em dias muito quentes devido à proeminência da pimenta.",
+    "comoSeComporta": "Rose Prick apresenta uma longevidade boa a moderada, durando de 6 a 8 horas na pele. A projeção é moderada nas primeiras horas, tornando-se uma fragrância de pele mais suave depois."
   },
   {
     "id": "white-suede-tom-ford",
@@ -57699,34 +59573,75 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral amadeirado almiscarado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Tomilho",
+        "Chá",
+        "Açafrão",
+        "Rosa Búlgara",
+        "Lírio-do-vale"
+      ],
+      "coracao": [
+        "Lírio-do-vale",
+        "Açafrão",
+        "Rosa",
+        "Mate",
+        "Couro branco",
+        "Camurça"
+      ],
+      "fundo": [
+        "Camurça",
+        "Almíscar",
+        "Sândalo",
+        "Âmbar",
+        "Olíbano",
+        "Baunilha"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2672,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Almiscarado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 85
+      },
+      {
+        "nome": "Couro",
+        "percentagem": 80
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "Floral Branco",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Ótimo",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "White Suede evoca a sensação tátil de camurça macia na pele, um perfume limpo, cremoso e atalcado. Abre com um toque delicado de especiarias e flores, evoluindo para um coração de camurça e almíscar suave.",
+    "paraQuem": "Este perfume é para quem aprecia sofisticação sutil e luxo discreto, buscando uma fragrância elegante e versátil. É ideal para mulheres que desejam realçar sua elegância e singularidade.",
+    "quandoUsar": "É uma fragrância versátil, ideal para uso diurno em ambientes profissionais ou encontros sociais, e para eventos noturnos mais íntimos. Brilha especialmente bem nos meses mais frios, mas pode ser usado durante todo o ano.",
+    "comoSeComporta": "Tom Ford White Suede apresenta uma longevidade impressionante, durando de 6 a 8 horas na pele. Possui uma projeção moderada, criando uma aura íntima e elegante sem ser avassaladora."
   },
   {
     "id": "metallique-tom-ford",
@@ -57736,34 +59651,68 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral aldeídico",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "aldeídos",
+        "pimenta rosa",
+        "bergamota"
+      ],
+      "coracao": [
+        "heliotrópio",
+        "espinheiro branco",
+        "lírio-do-vale"
+      ],
+      "fundo": [
+        "baunilha",
+        "ambrette",
+        "bálsamo do Peru",
+        "sândalo"
+      ]
     },
     "preco_brl": 0,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "baunilha",
+        "percentagem": 90
+      },
+      {
+        "nome": "aldeídico",
+        "percentagem": 85
+      },
+      {
+        "nome": "atalcado",
+        "percentagem": 75
+      },
+      {
+        "nome": "floral branco",
+        "percentagem": 70
+      },
+      {
+        "nome": "amadeirado",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Metallique abre com um brilho metálico efervescente dos aldeídos, seguido por um coração floral delicado e cremoso. A fragrância se aprofunda em uma base quente e envolvente de baunilha e sândalo, com um toque almiscarado e amendoado.",
+    "paraQuem": "Este perfume é para a mulher moderna e confiante que busca uma fragrância única e sofisticada. É ideal para quem aprecia aromas que combinam frescor e calor de forma elegante.",
+    "quandoUsar": "Melhor utilizado em climas mais amenos, como outono e inverno, ou em noites frescas. Pode ser uma ótima opção para o dia a dia no trabalho ou para eventos sociais.",
+    "comoSeComporta": "Possui uma projeção moderada, criando uma aura elegante ao redor de quem usa. Sua fixação é duradoura, permanecendo na pele por muitas horas com um rastro envolvente."
   },
   {
     "id": "grey-vetiver-edp-tom-ford",
@@ -57773,34 +59722,63 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado especiado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Toranja",
+        "Flor de Laranjeira",
+        "Sálvia"
+      ],
+      "coracao": [
+        "Noz-moscada",
+        "Raiz de Orris (Lírio Florentino)",
+        "Pimentão"
+      ],
+      "fundo": [
+        "Vetiver",
+        "Musgo de Carvalho",
+        "Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1500,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Terroso",
+        "percentagem": 70
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Ótimo",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Grey Vetiver EDP exala uma essência amadeirada especiada, fresca e limpa. A fragrância se inicia com um toque cítrico brilhante, evoluindo para um coração sofisticado de vetiver terroso, finalizando com madeiras quentes e um toque de âmbar.",
+    "paraQuem": "Este perfume é para o homem carismático, confiante e dinâmico que aprecia um luxo discreto. Ideal para quem busca uma fragrância madura e refinada, que transmite elegância sem esforço.",
+    "quandoUsar": "É uma escolha excelente para o uso diário e ambientes profissionais, bem como para encontros importantes. Sua versatilidade permite que seja usado em diversas ocasiões onde se busca transmitir presença e classe.",
+    "comoSeComporta": "Possui uma projeção moderada, sendo notado sem ser invasivo, e uma fixação de moderada a alta, permanecendo na pele por várias horas. A fragrância evolui graciosamente ao longo do dia, do frescor inicial às profundezas amadeiradas."
   },
   {
     "id": "explorer-platinum-montblanc",
@@ -57995,34 +59973,75 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental fougère",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Pimenta Rosa",
+        "Limão Siciliano",
+        "Bergamota"
+      ],
+      "coracao": [
+        "Cedro",
+        "Angélica",
+        "Gálbano"
+      ],
+      "fundo": [
+        "Sândalo",
+        "Madeira Oud",
+        "Almíscar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 4557,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 50
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 45
+      },
+      {
+        "nome": "Especiado Suave",
+        "percentagem": 40
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 35
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Ótimo",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância opulenta e sofisticada que equilibra a riqueza do oud com frescor. Abre com notas cítricas e pimenta, evoluindo para um coração amadeirado e um fundo cremoso de sândalo e almíscar. É um oud versátil, limpo e elegante, diferente dos ouds tradicionais intensos.",
+    "paraQuem": "Creed Royal Oud é ideal para homens e mulheres que apreciam um aroma amadeirado e oriental refinado. É para quem busca uma fragrância luxuosa e atemporal, com uma aura de realeza e confiança.",
+    "quandoUsar": "Perfeito para ambientes formais e eventos especiais, tanto de dia quanto à noite. Sua versatilidade permite o uso diário em climas amenos, sendo uma excelente escolha para ocasiões profissionais e encontros elegantes.",
+    "comoSeComporta": "Royal Oud apresenta uma longevidade excelente, geralmente durando de 7 a 10 horas na pele. Sua projeção é moderada, criando uma aura perceptível, mas não invasiva, que se suaviza em um aroma de pele refinado."
   },
   {
     "id": "millesime-imperial-creed",
@@ -58032,34 +60051,75 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado floral almiscarado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Sal marinho",
+        "Notas frutadas",
+        "Bergamota",
+        "Limão siciliano",
+        "Mandarina verde",
+        "Folhas de violeta"
+      ],
+      "coracao": [
+        "Limão siciliano",
+        "Bergamota",
+        "Íris",
+        "Mandarina",
+        "Acorde marinho"
+      ],
+      "fundo": [
+        "Notas oceânicas",
+        "Almíscar",
+        "Notas amadeiradas",
+        "Cedro",
+        "Sândalo",
+        "Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 3596,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Marinho",
+        "percentagem": 75
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Salgado",
+        "percentagem": 55
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Millesime Imperial exala uma aura luxuosa de cítricos ensolarados e sal marinho, evocando a brisa mediterrânea. A fragrância se desenvolve com um coração de íris e notas marinhas, repousando sobre uma base elegante de almíscar e madeiras.",
+    "paraQuem": "Este perfume unissex é ideal para quem aprecia fragrâncias frescas, aquáticas e sofisticadas, com um toque de realeza. É perfeito para indivíduos que buscam elegância versátil.",
+    "quandoUsar": "É mais adequado para uso durante o dia e em climas quentes, como primavera e verão. Sua versatilidade permite ser usado em diversas ocasiões, do casual ao profissional.",
+    "comoSeComporta": "Possui uma longevidade moderada a longa, geralmente durando de 6 a 8 horas na pele, com projeção moderada. Em climas mais quentes, sua performance tende a ser ainda melhor."
   },
   {
     "id": "wind-flowers-creed",
@@ -58069,34 +60129,61 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Jasmim",
+        "Flor de Laranjeira",
+        "Pêssego"
+      ],
+      "coracao": [
+        "Jasmim Sambac",
+        "Tuberosa",
+        "Rosa Centifolia"
+      ],
+      "fundo": [
+        "Íris",
+        "Flor de Laranjeira",
+        "Almíscar",
+        "Sândalo",
+        "Pralinê"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 3688,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral Branco",
+        "percentagem": 90
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 85
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância floral cintilante e fresca, que se abre com o doce jasmim e a flor de laranjeira, suavizada por uma nota frutada de pêssego. O coração floral se aprofunda com tuberosa e rosa, finalizando com um toque quente de sândalo e pralinê.",
+    "paraQuem": "Wind Flowers é ideal para mulheres que apreciam perfumes luxuosos, sofisticados e femininos, com uma assinatura floral moderna. É para a mulher que busca elegância e graça em seu aroma.",
+    "quandoUsar": "Este perfume é perfeito para uso diurno, especialmente na primavera e no verão. Sua versatilidade permite que seja usado em diversas ocasiões, desde o casual até eventos mais formais durante o dia.",
+    "comoSeComporta": "Com uma projeção moderada a intensa e longa duração, Wind Flowers se mantém presente ao longo do dia na pele. Possui um rastro refinado e notável, deixando uma impressão duradoura."
   },
   {
     "id": "love-in-black-creed",
@@ -58106,34 +60193,62 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "violeta italiana",
+        "cedro da Virgínia",
+        "flores silvestres"
+      ],
+      "coracao": [
+        "íris florentina",
+        "almíscar",
+        "trevos"
+      ],
+      "fundo": [
+        "cassis",
+        "rosa búlgara"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 354.1,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Floral",
+        "percentagem": 90
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 75
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 55
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância elegante e opulenta, que evoca a imagem de veludo preto salpicado com violetas de Parma. Abre com notas florais doces e vibrantes, evoluindo para um coração sofisticado e empoeirado, com uma base amadeirada e almiscarada que perdura.",
+    "paraQuem": "Inspirado em Jacqueline Kennedy, este perfume é para mulheres misteriosas, confiantes e com um gosto impecável, que apreciam uma fragrância intrigante e elegante.",
+    "quandoUsar": "Ideal para uso em ocasiões noturnas e especiais, especialmente durante o outono e a primavera, quando suas notas florais e amadeiradas podem ser mais apreciadas.",
+    "comoSeComporta": "Com projeção moderada a forte e longevidade de 6 a 8 horas, este Eau de Parfum cria uma aura refinada e envolvente, deixando um rastro elegante e marcante."
   },
   {
     "id": "gypsy-water-byredo",
@@ -71463,34 +73578,72 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado especiado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Canela",
+        "Pimenta"
+      ],
+      "coracao": [
+        "Folha de Tabaco",
+        "Incenso",
+        "Osmanthus",
+        "Ládano"
+      ],
+      "fundo": [
+        "Baunilha",
+        "Cedro",
+        "Vetiver",
+        "Almíscar",
+        "Patchouli",
+        "Cypriol (Nagarmotha)",
+        "Iso E Super",
+        "Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2490,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 85
+      },
+      {
+        "nome": "Tabaco",
+        "percentagem": 80
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 75
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Herod é uma sinfonia olfativa de tabaco adocicado e baunilha cremosa, com um toque especiado da canela e pimenta. É uma fragrância envolvente e sofisticada, que se revela em camadas de calor e resina, deixando um rastro inesquecível.",
+    "paraQuem": "Este perfume é para o cavalheiro que busca elegância e refinamento, com uma assinatura olfativa marcante. Embora seja classificado como masculino, mulheres que apreciam fragrâncias de tabaco e baunilha podem usá-lo com maestria.",
+    "quandoUsar": "Ideal para as noites frias de outono e inverno, Herod brilha em ocasiões especiais e encontros românticos. Sua projeção moderada o torna perfeito para momentos íntimos, onde a elegância fala mais alto que a exuberância.",
+    "comoSeComporta": "Herod oferece uma projeção moderada por cerca de 1 a 3 horas, criando uma aura elegante ao redor de quem o usa. Sua fixação é excelente, permanecendo na pele por 8 a 10 horas, evoluindo para um aroma mais próximo da pele ao longo do tempo."
   },
   {
     "id": "carlisle-parfums-de-marly",
@@ -71500,34 +73653,68 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Maçã verde",
+        "Noz-moscada",
+        "Açafrão"
+      ],
+      "coracao": [
+        "Fava Tonka",
+        "Rosa",
+        "Osmanthus",
+        "Davana"
+      ],
+      "fundo": [
+        "Baunilha",
+        "Patchouli",
+        "Opoponax"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2889,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 90
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 85
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 80
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 75
+      },
+      {
+        "nome": "Resinoso",
+        "percentagem": 70
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Carlisle se revela com uma abertura frutada e especiada, onde a maçã verde e a noz-moscada se entrelaçam com o açafrão. Em seu coração, a fava tonka e a rosa se unem a nuances de osmanthus e davana, criando uma complexidade floral e cremosa. Na base, a baunilha, o patchouli e o opoponax proporcionam um rastro quente, resinoso e levemente terroso.",
+    "paraQuem": "Este perfume é para indivíduos que buscam uma fragrância sofisticada, intensa e que exale presença e elegância. É ideal para quem aprecia aromas únicos e marcantes, com um toque luxuoso e sensual.",
+    "quandoUsar": "Carlisle é melhor apreciado em climas mais frios, como outono e inverno, e para eventos noturnos ou ocasiões especiais. Sua intensidade e longevidade o tornam perfeito para momentos em que se deseja deixar uma impressão duradoura.",
+    "comoSeComporta": "Com uma performance notável, Carlisle possui uma projeção forte nas primeiras horas e uma fixação impressionante, podendo durar de 10 a 14 horas na pele e até mais nas roupas. Ele preenche o ambiente sem esforço, garantindo uma presença marcante."
   },
   {
     "id": "greenley-parfums-de-marly",
@@ -71537,34 +73724,66 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "cítrico aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Maçã Verde",
+        "Bergamota da Calábria",
+        "Mandarina",
+        "Madeira de Cashmere"
+      ],
+      "coracao": [
+        "Petitgrain",
+        "Cedro",
+        "Violeta",
+        "Pomarose",
+        "Cashmeran"
+      ],
+      "fundo": [
+        "Musgo de Carvalho",
+        "Almíscar",
+        "Madeira de Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2030,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Frutado",
+        "percentagem": 70
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Greenley é um perfume que evoca a pura energia da natureza, com uma explosão vibrante de maçã verde e cítricos frescos. Possui um toque amadeirado sutil e um fundo almiscarado que o torna sofisticado.",
+    "paraQuem": "Este perfume é ideal para homens e mulheres que apreciam fragrâncias limpas, verdes e cítricas, com um toque luxuoso. É para quem busca um aroma energizante e refinado.",
+    "quandoUsar": "É perfeito para uso diurno, especialmente durante a primavera e o verão, e se adapta bem a ambientes profissionais e casuais. Sua versatilidade permite usá-lo em diversas situações.",
+    "comoSeComporta": "Com projeção moderada, Greenley possui uma fixação impressionante para uma fragrância fresca, durando cerca de 6 a 8 horas na pele."
   },
   {
     "id": "haltane-parfums-de-marly",
@@ -71574,34 +73793,69 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "bergamota",
+        "lavanda",
+        "sálvia esclaréia"
+      ],
+      "coracao": [
+        "açafrão",
+        "pralinê"
+      ],
+      "fundo": [
+        "oud (agarwood)",
+        "cedro",
+        "patchouli",
+        "vetiver",
+        "almíscar",
+        "couro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 3056.13,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 85
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 70
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 65
+      },
+      {
+        "nome": "Oud",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Haltane é uma fragrância que captura a dualidade entre a luz e a sombra, abrindo com um frescor vibrante e evoluindo para um coração rico e refinado. A doçura elegante do pralinê e a intensidade do açafrão se mesclam com um oud acessível, criando uma composição sofisticada e cativante.",
+    "paraQuem": "Este perfume é para o cavalheiro moderno que aprecia elegância e sofisticação, buscando uma fragrância versátil e luxuosa com personalidade única. É frequentemente recomendado para um público mais maduro que valoriza a complexidade das notas amadeiradas.",
+    "quandoUsar": "Ideal para momentos especiais e climas mais frios, especialmente outono e inverno. Pode ser usado em diversas ocasiões, desde formais até casuais, sendo uma excelente escolha para a noite.",
+    "comoSeComporta": "Com performance notável, Haltane oferece excelente projeção e ótima fixação, criando uma aura perfumada sem ser avassaladora. Sua longevidade pode ultrapassar 14 horas, com projeção moderada a forte."
   },
   {
     "id": "layton-exclusif-parfums-de-marly",
@@ -71611,34 +73865,90 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Bergamota",
+        "Toranja",
+        "Maçã",
+        "Amêndoa",
+        "Tangerina",
+        "Notas Aquáticas"
+      ],
+      "coracao": [
+        "Civeta",
+        "Gerânio",
+        "Rosa",
+        "Gardênia",
+        "Nenúfar",
+        "Lavanda",
+        "Canela"
+      ],
+      "fundo": [
+        "Madeira de Oud (Laos)",
+        "Madeira Guaiac",
+        "Baunilha",
+        "Café",
+        "Sândalo",
+        "Folha de Patchouli Indonésio",
+        "Âmbar",
+        "Pimenta Rosa",
+        "Musgo de Carvalho",
+        "Couro",
+        "Óleo de Cipriol"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 3299,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Oud",
+        "percentagem": 85
+      },
+      {
+        "nome": "Animal",
+        "percentagem": 70
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 65
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 60
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 55
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Ótimo",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Layton Exclusif é uma fragrância profunda, rica e amadeirada que se abre com notas cítricas frescas e um toque de maçã, evoluindo para um coração floral e especiado com nuances animálicas. A base é opulentamente amadeirada com oud, sândalo e baunilha, criando uma experiência olfativa sensual e duradoura.",
+    "paraQuem": "É um perfume para o conhecedor que busca causar uma boa impressão, ideal para homens que desejam uma fragrância sofisticada e distintiva que realce sua personalidade e estilo.",
+    "quandoUsar": "Ideal para ocasiões noturnas, eventos formais ou encontros especiais, principalmente em estações mais frias como outono e inverno, onde suas notas quentes proporcionam uma sensação de conforto e luxo.",
+    "comoSeComporta": "Layton Exclusif possui uma longevidade duradoura e uma projeção sólida, garantindo que você se sinta confiante e elegante do início ao fim."
   },
   {
     "id": "amyris-homme-maison-francis-kurkdjian",
@@ -71648,34 +73958,68 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Mandarina Siciliana",
+        "Alecrim"
+      ],
+      "coracao": [
+        "Amyris",
+        "Íris",
+        "Chocolate ao leite",
+        "Coco",
+        "Café"
+      ],
+      "fundo": [
+        "Fava Tonka",
+        "Madeiras Modernas",
+        "Oud"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1688.4,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Doce",
+        "percentagem": 70
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 65
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma fragrância elegante e luminosa, com um toque fresco e amadeirado. Notas cítricas e aromáticas se entrelaçam com nuances cremosas e um fundo doce e amadeirado.",
+    "paraQuem": "Para o homem que busca uma fragrância refinada, versátil e fácil de usar, com uma elegância discreta e moderna.",
+    "quandoUsar": "Ideal para uso diurno, especialmente na primavera e no verão, mas também pode ser uma boa opção para encontros noturnos.",
+    "comoSeComporta": "A projeção é moderada, criando uma aura agradável, e a fixação é geralmente boa, durando cerca de 6 horas na pele."
   },
   {
     "id": "oud-satin-mood-maison-francis-kurkdjian",
@@ -71685,34 +74029,69 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "oriental amadeirado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "rosa búlgara",
+        "violeta",
+        "morango"
+      ],
+      "coracao": [
+        "rosa turca",
+        "óleo de styrax"
+      ],
+      "fundo": [
+        "oud de Laos",
+        "baunilha",
+        "benjoim",
+        "âmbar",
+        "caramelo",
+        "cedro"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 3371,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Rosa",
+        "percentagem": 92
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 89
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 85
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 80
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 75
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Oud Satin Mood envolve a pele em um abraço aveludado e sensual. É uma fragrância luxuosa com a doçura da violeta e da rosa damascena, combinada com a profundidade do oud e a riqueza do acorde de âmbar e baunilha.",
+    "paraQuem": "É um perfume unissex, ideal para quem aprecia fragrâncias sofisticadas e envolventes, com um toque de mistério e elegância. A rosa exuberante e o oud polido se equilibram para criar um aroma luxuoso.",
+    "quandoUsar": "É perfeito para ser usado em ocasiões especiais, eventos noturnos e nos meses mais frios. Duas a três borrifadas são suficientes para uma presença marcante.",
+    "comoSeComporta": "Possui uma projeção forte que preenche o ambiente e uma longevidade excelente, podendo durar mais de 10 horas na pele e o dobro em roupas."
   },
   {
     "id": "renaissance-xerjoff",
@@ -71722,34 +74101,65 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "cítrico aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Limão de Amalfi",
+        "Tangerina",
+        "Bergamota",
+        "Petitgrain"
+      ],
+      "coracao": [
+        "Hortelã",
+        "Lírio-do-vale",
+        "Rosa Búlgara"
+      ],
+      "fundo": [
+        "Almíscar",
+        "Cedro da Virgínia",
+        "Patchouli",
+        "Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 2755,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 92
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 78
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 65
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 50
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Bom",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão cítrica e revigorante, com o frescor vibrante do limão e da tangerina. O coração floral e mentolado se entrelaça com uma base amadeirada e almiscarada, transmitindo elegância italiana.",
+    "paraQuem": "Este perfume é ideal para quem busca uma fragrância fresca e sofisticada, que celebra a vivacidade e a arte italiana. É unissex, perfeito para homens e mulheres que apreciam aromas luminosos e refinados.",
+    "quandoUsar": "É mais adequado para uso diurno, especialmente em climas quentes como primavera e verão. Sua versatilidade permite que seja usado tanto em ocasiões casuais quanto profissionais.",
+    "comoSeComporta": "A projeção é marcante na primeira hora, criando uma aura notável, e a fixação pode durar de 6 a 8 horas, o que é excelente para um cítrico. Torna-se mais íntimo na pele com o passar do tempo."
   },
   {
     "id": "40-knots-xerjoff",
@@ -71759,34 +74169,77 @@
     "genero": "Unissex",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aquático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Sal marinho",
+        "Notas verdes",
+        "Limão",
+        "Lima",
+        "Mandarina"
+      ],
+      "coracao": [
+        "Madeira de cedro",
+        "Notas marinhas",
+        "Tomilho",
+        "Sálvia",
+        "Alecrim"
+      ],
+      "fundo": [
+        "Almíscar",
+        "Ambar gris",
+        "Notas amadeiradas",
+        "Café",
+        "Cravo"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1999,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Marinho",
+        "percentagem": 85
+      },
+      {
+        "nome": "Salgado",
+        "percentagem": 80
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 70
+      },
+      {
+        "nome": "Verde",
+        "percentagem": 65
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Bom",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma brisa marinha salgada, aquecida por notas verdes e cítricas, que evolui para um coração amadeirado e um fundo sutilmente adocicado e ambarado. É como velejar em um iate luxuoso no Mediterrâneo, com o sol beijando a pele.",
+    "paraQuem": "Para indivíduos que apreciam fragrâncias sofisticadas e versáteis, que evocam a liberdade do oceano com um toque de elegância. É um perfume unissex para quem busca uma experiência olfativa luxuosa e energizante.",
+    "quandoUsar": "Ideal para o dia a dia, especialmente em estações mais quentes como primavera e verão, mas sua complexidade o torna adequado para uso durante todo o ano, incluindo noites e eventos especiais.",
+    "comoSeComporta": "Possui longevidade impressionante, durando de 6 a mais de 8 horas na pele, com projeção moderada a forte nas primeiras horas, criando uma aura notável e elegante."
   },
   {
     "id": "mefisto-xerjoff",
@@ -71796,34 +74249,73 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "cítrico aromático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Toranja",
+        "Bergamota",
+        "Limão de Amalfi",
+        "Flores de Lavanda"
+      ],
+      "coracao": [
+        "Lavanda",
+        "Íris florentina",
+        "Rosa"
+      ],
+      "fundo": [
+        "Almíscar",
+        "Sândalo",
+        "Cedro da Virgínia",
+        "Âmbar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1999,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Atalcado",
+        "percentagem": 60
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 55
+      },
+      {
+        "nome": "Almiscarado",
+        "percentagem": 50
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 45
+      },
+      {
+        "nome": "Fresco especiado",
+        "percentagem": 40
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Mefisto é uma fragrância luminosa que evoca a leveza do céu azul e da brisa do oceano. Combina acordes cítricos vibrantes com um coração floral atalcado e uma base amadeirada, resultando em um aroma limpo e sofisticado.",
+    "paraQuem": "Este perfume é para o homem que aprecia elegância e exclusividade. É uma fragrância que agrada a todos, ideal para quem busca um aroma agradável e versátil.",
+    "quandoUsar": "É perfeito para uso diurno na primavera e no verão, transmitindo uma aura casual e prestigiada.",
+    "comoSeComporta": "Possui excelente projeção e fixação duradoura, com aproximadamente 8 horas na pele."
   },
   {
     "id": "lira-xerjoff",
@@ -71833,34 +74325,68 @@
     "genero": "Feminino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "ambar floral",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Laranja Sanguínea",
+        "Bergamota",
+        "Lavanda"
+      ],
+      "coracao": [
+        "Canela",
+        "Alcaçuz",
+        "Jasmim",
+        "Rosa"
+      ],
+      "fundo": [
+        "Caramelo",
+        "Baunilha",
+        "Almíscar"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 1699,
     "categoria": "nicho",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Doce",
+        "percentagem": 90
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 75
+      },
+      {
+        "nome": "Baunilha",
+        "percentagem": 85
+      },
+      {
+        "nome": "Caramelo",
+        "percentagem": 80
+      },
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Bom",
+      "primavera": "Ótimo",
+      "outono": "Ótimo",
+      "inverno": "Bom"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Ótimo"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Lira exala uma doçura magnética, com uma abertura cítrica vibrante que se mescla a um coração floral especiado. Na secagem, revela um abraço gourmand de caramelo e baunilha, criando uma aura deliciosamente envolvente.",
+    "paraQuem": "Este perfume é para a mulher empoderada e elegante que deseja uma fragrância sofisticada e hipnotizante. É para quem aprecia um gourmand chique, sem ser excessivamente doce.",
+    "quandoUsar": "Ideal para encontros românticos e ocasiões onde se deseja ser notada pela sofisticação. Sua versatilidade permite o uso tanto em eventos diurnos quanto em noites glamourosas.",
+    "comoSeComporta": "Possui uma fixação duradoura na pele, evoluindo como uma história de amor ao longo do dia. A projeção é moderada, criando um rastro agradável e envolvente."
   },
   {
     "id": "italica-xerjoff",
@@ -72092,34 +74618,72 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado especiado",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Tangerina sanguínea",
+        "Toranja",
+        "Hortelã"
+      ],
+      "coracao": [
+        "Rosa",
+        "Canela",
+        "Notas especiadas"
+      ],
+      "fundo": [
+        "Âmbar",
+        "Couro",
+        "Notas amadeiradas",
+        "Patchouli indiano"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 599.9,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Especiado Quente",
+        "percentagem": 92
+      },
+      {
+        "nome": "Canela",
+        "percentagem": 88
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Âmbar",
+        "percentagem": 75
+      },
+      {
+        "nome": "Amadeirado",
+        "percentagem": 70
+      },
+      {
+        "nome": "Couro",
+        "percentagem": 65
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Fraco",
+      "primavera": "Bom",
+      "outono": "Ótimo",
+      "inverno": "Ótimo"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Bom",
+      "profissional": "Fraco",
+      "noite": "Ótimo",
+      "esporte": "Fraco",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Uma explosão inicial de toranja e hortelã revela uma energia vibrante, abrindo espaço para um coração especiado de rosa e canela. A base de couro, âmbar e patchouli confere um calor sensual e um rastro sofisticado.",
+    "paraQuem": "Este perfume é para o homem audacioso e moderno, que busca expressar confiança e uma presença marcante. É um símbolo de status e luxo para quem não tem medo de se destacar.",
+    "quandoUsar": "Ideal para noites e eventos especiais, o 1 Million EDT se desenvolve com força e elegância, marcando presença sem precisar de reaplicação. Também pode ser usado em climas amenos ou frios.",
+    "comoSeComporta": "Possui excelente fixação e projeção, permanecendo na pele por várias horas e deixando um rastro envolvente. Sua performance é duradoura e marcante."
   },
   {
     "id": "invictus-edt-paco-rabanne",
@@ -72129,34 +74693,67 @@
     "genero": "Masculino",
     "inspiradoEm": null,
     "marcaOriginal": null,
-    "familia": "",
+    "familia": "amadeirado aquático",
     "notas": {
-      "topo": [],
-      "coracao": [],
-      "fundo": []
+      "topo": [
+        "Toranja",
+        "Notas Marinhas",
+        "Mandarina"
+      ],
+      "coracao": [
+        "Folha de Louro",
+        "Jasmim"
+      ],
+      "fundo": [
+        "Madeira Guaiac",
+        "Patchouli",
+        "Musgo de Carvalho",
+        "Âmbar Cinzento"
+      ]
     },
-    "preco_brl": 0,
+    "preco_brl": 640,
     "categoria": "importado-designer",
     "disponivel": true,
     "linkCompra": "",
-    "acordes": [],
+    "acordes": [
+      {
+        "nome": "Amadeirado",
+        "percentagem": 92
+      },
+      {
+        "nome": "Aquático",
+        "percentagem": 85
+      },
+      {
+        "nome": "Cítrico",
+        "percentagem": 78
+      },
+      {
+        "nome": "Fresco",
+        "percentagem": 75
+      },
+      {
+        "nome": "Aromático",
+        "percentagem": 60
+      }
+    ],
     "estacao": {
-      "verao": "",
-      "primavera": "",
-      "outono": "",
-      "inverno": ""
+      "verao": "Ótimo",
+      "primavera": "Ótimo",
+      "outono": "Bom",
+      "inverno": "Fraco"
     },
     "ocasiao": {
-      "casual": "",
-      "profissional": "",
-      "noite": "",
-      "esporte": "",
-      "romantico": ""
+      "casual": "Ótimo",
+      "profissional": "Bom",
+      "noite": "Fraco",
+      "esporte": "Ótimo",
+      "romantico": "Bom"
     },
-    "comoCheira": "",
-    "paraQuem": "",
-    "quandoUsar": "",
-    "comoSeComporta": ""
+    "comoCheira": "Invictus EDT exala uma frescura vibrante com um toque marinho e cítrico, evoluindo para uma base amadeirada e sensual. É uma fragrância dinâmica que evoca a sensação de poder e conquista.",
+    "paraQuem": "Este perfume é para o homem moderno, confiante e determinado, que busca uma fragrância que transmita energia e a sensação de ser invencível. É ideal para homens que valorizam frescor e uma presença marcante.",
+    "quandoUsar": "Invictus EDT é versátil e pode ser usado em diversas ocasiões, sendo ótimo para o dia a dia, atividades ao ar livre e climas quentes. Também é uma boa opção para ambientes de trabalho, com moderação.",
+    "comoSeComporta": "A fragrância apresenta uma projeção inicial alta que se torna moderada, com boa fixação na pele, durando por várias horas. A longevidade pode variar de 4 a 8 horas, dependendo do tipo de pele e clima."
   },
   {
     "id": "acqua-di-gio-pour-homme-giorgio-armani",
