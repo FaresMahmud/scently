@@ -20,10 +20,12 @@ interface PropsPerguntaOpcoes {
   opcoes: Opcao[]
   progresso: string
   multipla?: boolean
+  /** Apenas para multipla — valor que é mutuamente exclusivo com todos os outros (ex: "Nada específico"). */
+  valorExclusivo?: string
   onResponder: (valor: string) => void
 }
 
-export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla = false, onResponder }: PropsPerguntaOpcoes) {
+export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla = false, valorExclusivo, onResponder }: PropsPerguntaOpcoes) {
   // Seleção única
   const [selecionado, setSelecionado] = useState<string | null>(null)
   // Seleção múltipla
@@ -38,10 +40,18 @@ export default function PerguntaOpcoes({ pergunta, opcoes, progresso, multipla =
   }
 
   // ── Seleção múltipla — toggle ──
+  // valorExclusivo (ex: "Nada específico") desmarca o resto ao ser selecionado,
+  // e é desmarcado automaticamente se qualquer outra opção for escolhida.
   function toggleMultipla(valor: string) {
-    setSelecionados((prev) =>
-      prev.includes(valor) ? prev.filter((v) => v !== valor) : [...prev, valor]
-    )
+    setSelecionados((prev) => {
+      if (valorExclusivo && valor === valorExclusivo) {
+        return prev.includes(valor) ? [] : [valor]
+      }
+      const semExclusivo = valorExclusivo ? prev.filter((v) => v !== valorExclusivo) : prev
+      return semExclusivo.includes(valor)
+        ? semExclusivo.filter((v) => v !== valor)
+        : [...semExclusivo, valor]
+    })
   }
 
   function confirmarMultipla() {

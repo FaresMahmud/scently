@@ -7,11 +7,11 @@
 
 import { contratipoRepository } from "@/lib/repositories/ContratipoRepository"
 import { buscarSimilares, buscarPorNome } from "@/lib/fragella"
-import contratiposJson from "@/data/contratipos.json"
-import expandidoJson from "@/data/perfumes-expandido.json"
 import { traduzir } from "@/lib/utils"
 import regrasPreco from "@/data/regras-preco.json"
 import { CONSULTOR_TONE_GUIDE } from "@/lib/aiPrompts"
+import { buscarNoCatalogo, carregarCatalogo } from "@/lib/catalogoFragella"
+import { db } from "@/lib/db"
 import { z } from "zod"
 
 export interface RespostasQuiz {
@@ -367,92 +367,357 @@ Regras obrigatórias:
   return gerarFallback(respostas)
 }
 
-// ── Quiz novo: free (7q) / premium (18q) ─────────────────────────────────────
+// ── Quiz novo: free (6q) / premium (8q) — DeepSeek ────────────────────────────
 
 export interface RecomendacaoCard {
   nome: string
   marca: string
-  codigo: string | null  // null when DeepSeek returns an id not found in the catalog
+  concentracao: string
   explicacao: string
-  quando?: string     // when / ideal moment to wear — max 12 words
-  aplicacao?: string  // how many sprays, where to apply — max 12 words
-  linkCompra?: string // direct buy URL from expanded catalog or supplier map
+  notas: string[]
+  quandoUsar?: string
 }
 
 export interface RecomendacaoQuiz {
   ideal:       RecomendacaoCard
-  alternativo?: RecomendacaoCard
+  alternativa?: RecomendacaoCard
   ousado?:     RecomendacaoCard
 }
 
 const RecomendacaoCardSchema = z.object({
-  nome:       z.string().min(1),
-  marca:      z.string().min(1),
-  codigo:     z.string().min(1),
-  explicacao: z.string().min(1),
-  quando:     z.string().optional(),
-  aplicacao:  z.string().optional(),
+  nome:         z.string().min(1),
+  marca:        z.string().min(1),
+  concentracao: z.string().min(1).max(20),
+  explicacao:   z.string().min(1),
+  notas:        z.array(z.string()).min(1).max(6),
+  quandoUsar:   z.string().optional(),
 })
 
 const RecomendacaoQuizSchema = z.object({
   ideal:       RecomendacaoCardSchema,
-  alternativo: RecomendacaoCardSchema.optional(),
+  alternativa: RecomendacaoCardSchema.optional(),
   ousado:      RecomendacaoCardSchema.optional(),
 })
 
-// Human-readable labels for each quiz question id
+// Labels legíveis para cada id de pergunta (lib/quiz/questions.ts)
 const LABELS_QUIZ: Record<string, string> = {
-  // free (7q)
-  contexto:     "Contexto de uso",
-  genero:       "Gênero buscado",
-  presenca:     "Presença desejada",
-  cena:         "Cena de vida",
-  cidade:       "Estilo de vida",
-  sensacao:     "Sensação a transmitir",
-  olfato:       "Preferência olfativa",
-  orcamento:    "Orçamento",
-  // premium additions (18q)
-  idade:        "Faixa de idade",
-  experiencia:  "Experiência com perfumes",
-  clima:        "Clima",
-  rotina:       "Rotina diária",
-  vida_social:  "Vida social",
-  fds:          "Fim de semana ideal",
-  frequencia:   "Frequência de uso",
-  personalidade:"Personalidade",
-  impressao:    "Impressão desejada",
-  identidade:   "Identidade",
-  luxo:         "Relação com luxo",
-  estilo:       "Estilo visual",
-  imagem:       "Imagem sensorial",
-  bebida:       "Perfume como bebida",
-  estacao:      "Época de uso",
-  memoria:      "Memória olfativa",
-  incomodo:     "O que incomoda em perfumes",
+  genero:               "Gênero",
+  ocasiao:              "Ocasião",
+  cena:                 "Cena",
+  projecao:             "Projeção",
+  ousadia:              "Ousadia",
+  "perfume-existente":  "Perfume que já usa",
+  preco:                "Orçamento",
+  rejeicao:             "Rejeições",
+  impressao:            "Impressão desejada",
 }
 
 /**
- * Formats quiz answers (id → option text) into a readable multi-line string.
- * Answers are expected to already carry the option's full text (not the letter id).
+ * Formata as respostas do quiz (já resolvidas pra texto legível via
+ * resolverRespostas) no bloco "PERFIL DO USUÁRIO" injetado no prompt.
  */
 function formatarRespostasLegivel(respostas: Record<string, string>): string {
   return Object.entries(respostas)
-    .filter(([, v]) => Boolean(v))
-    .map(([k, v]) => {
-      const label = LABELS_QUIZ[k] ?? k
-      return `${label}: ${v}`
+    .filter(([k, v]) => Boolean(v) && Boolean(LABELS_QUIZ[k]))
+    .map(([k, v]) => `${LABELS_QUIZ[k]}: ${v}`)
+    .join("\n")
+}
+
+// ── Helpers de montarContextoCatalogo ─────────────────────────────────────
+
+function _normGeneroQuiz(g: string): "masculino" | "feminino" | "neutro" {
+  const l = g.toLowerCase()
+  if (l.includes("masculino") || l === "men") return "masculino"
+  if (l.includes("feminino")  || l === "women") return "feminino"
+  return "neutro"
+}
+
+function _normGeneroFragella(g: string): "masculino" | "feminino" | "neutro" {
+  const l = g.toLowerCase()
+  if (l === "men" || l === "male") return "masculino"
+  if (l === "women" || l === "female") return "feminino"
+  return "neutro"
+}
+
+function _parseFaixaPreco(txt: string): { min: number; max: number } | null {
+  if (txt.includes("Até R$150"))                              return { min: 0,   max: 150  }
+  if (txt.includes("R$150") && txt.includes("R$300"))        return { min: 150, max: 300  }
+  if (txt.includes("R$300") && txt.includes("R$500"))        return { min: 300, max: 500  }
+  if (txt.includes("R$500") && txt.includes("R$1"))          return { min: 500, max: 1000 }
+  return null // "Acima de R$1.000" → sem limite máximo
+}
+
+// Palavras-chave alinhadas com o texto RESOLVIDO das opções de cena e ocasião
+const CENA_PARA_FAMILIAS: Array<{ palavras: string[]; familias: string[] }> = [
+  { palavras: ["café da manhã", "janela aberta", "luz natural"],    familias: ["cítrico", "fresco", "aromático"] },
+  { palavras: ["noite na cidade", "luzes", "energia"],              familias: ["amadeirado", "oriental", "especiado"] },
+  { palavras: ["natureza", "viagem", "ar livre", "fim de semana"],  familias: ["aquático", "fresco", "verde"] },
+  { palavras: ["reunião", "postura firme"],                         familias: ["amadeirado", "floral", "oriental"] },
+  { palavras: ["encontros"],                                        familias: ["oriental", "amadeirado", "especiado"] },
+  { palavras: ["uso diário", "todo dia"],                           familias: ["fresco", "cítrico", "floral"] },
+  { palavras: ["trabalho", "faculdade"],                            familias: ["fresco", "aromático", "cítrico"] },
+  { palavras: ["assinatura pessoal"],                               familias: ["amadeirado", "oriental", "nicho"] },
+]
+
+/**
+ * Monta o bloco CATÁLOGO injetado no prompt do quiz.
+ * Três camadas: A) perfume existente + família olfativa, B) cena+ocasião → famílias
+ * com shuffle, C) diversidade forçada (contratipos, árabes/nicho).
+ * Filtros obrigatórios de gênero e preço em todas as camadas.
+ * Máximo 40 perfumes.
+ */
+async function montarContextoCatalogo(respostas: Record<string, string>): Promise<string> {
+  const generoAlvo  = _normGeneroQuiz(respostas["genero"] ?? "")
+  const faixaPreco  = _parseFaixaPreco(respostas["preco"] ?? "")
+  const cena        = respostas["cena"] ?? ""
+  const ocasiao     = respostas["ocasiao"] ?? ""
+  const pfExistente = respostas["perfume-existente"] ?? ""
+  const ousadiaTxt  = respostas["ousadia"] ?? ""
+
+  function generoFragellaOk(g: string): boolean {
+    if (generoAlvo === "neutro") return true
+    const gn = _normGeneroFragella(g)
+    return gn === "neutro" || gn === generoAlvo
+  }
+  function generoExpandidoOk(g: string): boolean {
+    if (generoAlvo === "neutro") return true
+    const l = g.toLowerCase()
+    if (l === "unissex" || l === "unisex") return true
+    return generoAlvo === "masculino" ? l === "masculino" : l === "feminino"
+  }
+  function precoOk(preco?: number): boolean {
+    if (!faixaPreco || preco === undefined) return true
+    return preco >= faixaPreco.min && preco <= faixaPreco.max
+  }
+
+  interface Candidato {
+    id: string; nome: string; marca: string; concentracao: string
+    genero: string; notas: string[]; preco?: number; familia: string; categoria?: string
+  }
+
+  const mapa = new Map<string, Candidato>()
+  function chave(nome: string, marca: string) { return `${nome.toLowerCase()}|${marca.toLowerCase()}` }
+
+  function addFragella(p: ReturnType<typeof carregarCatalogo>[number]) {
+    const k = chave(p.nome, p.marca)
+    if (mapa.has(k)) return
+    const notas = [...(p.notasTopo ?? []), ...(p.notasCoracao ?? []), ...(p.notasFundo ?? [])].slice(0, 5)
+    mapa.set(k, { id: p.id, nome: p.nome, marca: p.marca, concentracao: p.concentracao, genero: p.genero, notas, preco: p.preco, familia: p.familia, categoria: "importado" })
+  }
+  function addExpandido(p: PerfumeExpandido) {
+    const k = chave(p.nome, p.marca)
+    if (mapa.has(k)) return
+    mapa.set(k, { id: p.id, nome: p.nome, marca: p.marca, concentracao: p.tipo, genero: p.genero, notas: (p.notas ?? []).slice(0, 5), preco: p.preco_brl, familia: p.familia, categoria: p.categoria })
+  }
+
+  const catalogo  = carregarCatalogo()
+  const expandido = getExpandido()
+
+  // ── CAMADA A — Perfume existente + família ────────────────────────────────
+  if (pfExistente.trim()) {
+    const achados = buscarNoCatalogo(pfExistente, 3)
+    achados.forEach(addFragella)
+
+    const familias = [...new Set(achados.map(p => p.familia).filter(Boolean))]
+    for (const fam of familias) {
+      const fl = fam.toLowerCase()
+      catalogo .filter(p => p.familia.toLowerCase().includes(fl) && generoFragellaOk(p.genero) && precoOk(p.preco)).slice(0, 5).forEach(addFragella)
+      expandido.filter(p => p.familia.toLowerCase().includes(fl) && generoExpandidoOk(p.genero) && precoOk(p.preco_brl)).slice(0, 5).forEach(addExpandido)
+    }
+  }
+
+  // ── CAMADA B — Cena + Ocasião → famílias (com shuffle) ───────────────────
+  const textoBusca = `${cena} ${ocasiao}`.toLowerCase()
+  const familiasBusca = new Set<string>()
+  for (const { palavras, familias } of CENA_PARA_FAMILIAS) {
+    if (palavras.some(p => textoBusca.includes(p))) familias.forEach(f => familiasBusca.add(f))
+  }
+  if (ousadiaTxt.toLowerCase().includes("diferente")) {
+    familiasBusca.add("nicho"); familiasBusca.add("oud"); familiasBusca.add("oriental")
+  }
+
+  if (familiasBusca.size > 0) {
+    const fArr = [...familiasBusca]
+    ;[...catalogo].filter(p => fArr.some(f => p.familia.toLowerCase().includes(f)) && generoFragellaOk(p.genero) && precoOk(p.preco))
+      .sort(() => Math.random() - 0.5).slice(0, 20).forEach(addFragella)
+    ;[...expandido].filter(p => fArr.some(f => p.familia.toLowerCase().includes(f)) && generoExpandidoOk(p.genero) && precoOk(p.preco_brl))
+      .sort(() => Math.random() - 0.5).slice(0, 20).forEach(addExpandido)
+  }
+
+  // ── CAMADA C — Diversidade forçada ───────────────────────────────────────
+  if (mapa.size < 25) {
+    ;[...catalogo].filter(p => generoFragellaOk(p.genero) && precoOk(p.preco))
+      .sort(() => Math.random() - 0.5).slice(0, 30)
+      .forEach(p => { if (mapa.size < 40) addFragella(p) })
+  }
+
+  // Garante ≥ 3 contratipos/nacionais
+  const nContratipos = [...mapa.values()].filter(c => c.categoria === "contratipo" || c.categoria === "nacional").length
+  if (nContratipos < 3) {
+    expandido.filter(p => (p.categoria === "contratipo" || p.categoria === "nacional") && generoExpandidoOk(p.genero) && precoOk(p.preco_brl))
+      .slice(0, 3 - nContratipos).forEach(addExpandido)
+  }
+
+  // Garante ≥ 3 árabes/nicho (sem filtro de preço — costumam não ter preco_brl)
+  const nArabes = [...mapa.values()].filter(c => c.categoria === "arabe" || c.categoria === "nicho").length
+  if (nArabes < 3) {
+    expandido.filter(p => (p.categoria === "arabe" || p.categoria === "nicho") && generoExpandidoOk(p.genero))
+      .slice(0, 3 - nArabes).forEach(addExpandido)
+  }
+
+  // ── Editorial (enriquecimento opcional) ──────────────────────────────────
+  const lista = [...mapa.values()].slice(0, 40)
+
+  let editorialMap = new Map<string, { comoCheira: string; paraQuem: string }>()
+  try {
+    const rows = await db.perfumeEditorial.findMany({
+      where:  { perfumeId: { in: lista.map(p => p.id) } },
+      select: { perfumeId: true, comoCheira: true, paraQuem: true },
+    })
+    editorialMap = new Map(rows.map(r => [r.perfumeId, r]))
+  } catch {
+    // Editorial é enriquecimento opcional — segue sem ele
+  }
+
+  console.log("[QuizIA] Catálogo montado:", lista.slice(0, 3).map(p => p.nome).join(", "), `(total: ${lista.length}, gênero: ${generoAlvo}, faixa: ${JSON.stringify(faixaPreco)})`)
+
+  return lista
+    .map(p => {
+      const notasTxt = p.notas.length > 0 ? p.notas.join(", ") : "N/D"
+      const precoTxt = p.preco !== undefined ? `R$${p.preco}` : "N/D"
+      const ed       = editorialMap.get(p.id)
+      const base     = `- ${p.nome} | ${p.marca} | ${p.concentracao} | ${p.genero} | Notas: ${notasTxt} | Preço: ${precoTxt}`
+      return ed ? `${base} | ${ed.comoCheira} | ${ed.paraQuem}` : base
     })
     .join("\n")
 }
 
-// Brazilian supplier whitelist — both Azza spellings included
-const MARCAS_CONTRATIPOS = new Set([
-  "In The Box",
-  "JA Essence",
-  "Maison Viegas",
-  "Azza Parfum",
-  "Azza Parfums",
-])
+const FORMATO_OBRIGATORIO = `FORMATO OBRIGATÓRIO (siga exatamente):
+- "concentracao": use APENAS a sigla — "EDP", "EDT", "EDC", "Parfum" ou "EDS". Nunca "Eau de Parfum".
+- "notas": DEVE ser um array de strings. Nunca uma frase. Ex: ["bergamota", "cedro", "baunilha"].
+- Inclua APENAS os campos do exemplo. Não adicione campos extras como "familiaOlfativa", "faixaPreco" ou "porQueCombina".`
+
+const FORMATO_FREE = `${FORMATO_OBRIGATORIO}
+
+FORMATO (1 recomendação):
+{
+  "ideal": {
+    "nome": "Nome do Perfume",
+    "marca": "Marca",
+    "concentracao": "EDP",
+    "explicacao": "Por que esse perfume é pra você, em 2-3 frases curtas.",
+    "notas": ["nota 1 em português", "nota 2", "nota 3", "nota 4"],
+    "quandoUsar": "Situação ideal de uso em 1 frase."
+  }
+}`
+
+const FORMATO_PREMIUM = `${FORMATO_OBRIGATORIO}
+
+FORMATO (3 recomendações):
+{
+  "ideal": { ...mesmo formato... },
+  "alternativa": {
+    ...mesmo formato...
+    // Perfume com perfil similar ao ideal mas de marca/faixa diferente. Se ideal é importado, alternativa pode ser nacional ou contratipo.
+  },
+  "ousado": {
+    ...mesmo formato...
+    // Algo inesperado que amplia o repertório. Pode ser nicho, árabe, ou de uma família olfativa adjacente.
+  }
+}`
+
+function montarSystemPromptQuiz(respostasFormatadas: string, catalogo: string, mode: "free" | "premium"): string {
+  return `Você é o consultor de fragrâncias do nozze. Seu trabalho é recomendar o perfume certo com base no perfil do usuário.
+
+PERFIL DO USUÁRIO:
+${respostasFormatadas}
+
+CATÁLOGO DISPONÍVEL:
+${catalogo}
+
+REGRAS:
+- Responda APENAS com JSON válido. Sem markdown. Sem texto fora do JSON.
+- Explore o catálogo inteiro: importados, árabes, nacionais, nichos e contratipos.
+- NÃO recomende sempre os mesmos perfumes óbvios (Sauvage, 212, Malbec). Só recomende um popular se for genuinamente o melhor match.
+- Se o usuário informou um perfume que já usa, use como referência principal mas NÃO recomende o mesmo perfume nem flankers diretos dele.
+- Se o usuário informou rejeições, NUNCA recomende perfumes com essas características.
+- Descreva as notas em português acessível: "madeira quente e baunilha" — nunca "vetiver e tonka bean".
+- A explicação deve falar COM o usuário: "Combina com as suas noites na cidade" — nunca "Este perfume é indicado para..."
+- Frases curtas, máximo 18 palavras por frase.
+
+${mode === "premium" ? FORMATO_PREMIUM : FORMATO_FREE}
+
+Responda SOMENTE com o JSON. Sem texto antes ou depois. Sem markdown.`
+}
+
+export async function gerarRecomendacaoQuiz(
+  respostas: Record<string, string>,
+  mode: "free" | "premium"
+): Promise<RecomendacaoQuiz | null> {
+  const respostasFormatadas = formatarRespostasLegivel(respostas)
+  const catalogo            = await montarContextoCatalogo(respostas)
+  const systemPrompt        = montarSystemPromptQuiz(respostasFormatadas, catalogo, mode)
+
+  const chave = process.env.DEEPSEEK_API_KEY
+  if (!chave || chave === "sua_chave_aqui") {
+    console.error("[QuizIA] DEEPSEEK_API_KEY não configurada")
+    return null
+  }
+
+  console.log("[QuizIA] Catálogo enviado:", catalogo.substring(0, 500))
+
+  let textoResposta: string
+  try {
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${chave}`,
+      },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: "Gere a recomendação com base no perfil acima." },
+        ],
+        max_tokens: 1500,
+        temperature: 0.7,
+      }),
+    })
+
+    if (!response.ok) {
+      const err = await response.text()
+      throw new Error(`DeepSeek ${response.status}: ${err}`)
+    }
+
+    const data = await response.json()
+    textoResposta = data.choices[0].message.content
+  } catch (err) {
+    console.error("[QuizIA] DeepSeek falhou:", err instanceof Error ? err.message : String(err))
+    return null
+  }
+
+  console.log("[QuizIA] Raw response:", textoResposta)
+
+  const jsonLimpo = textoResposta.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim()
+
+  let rawParsed: unknown
+  try {
+    rawParsed = JSON.parse(jsonLimpo)
+  } catch {
+    console.error("[QuizIA] JSON inválido. Raw:", jsonLimpo.slice(0, 300))
+    return null
+  }
+
+  const parsed = RecomendacaoQuizSchema.safeParse(rawParsed)
+  if (!parsed.success) {
+    console.error("[QuizIA] Schema inválido:", parsed.error.issues.map(i => i.message).join("; "))
+    return null
+  }
+
+  console.log("[QuizIA] Sucesso —", mode, "—", parsed.data.ideal.nome)
+  return parsed.data
+}
 
 // ── Expanded catalog (perfumes-expandido.json) ────────────────────────────────
 
@@ -482,255 +747,6 @@ function getExpandido(): PerfumeExpandido[] {
     _expandido = []
   }
   return _expandido
-}
-
-// Budget answer text → max price in BRL
-const ORCAMENTO_TETO: Record<string, number> = {
-  "Até R$150":  150,
-  "R$150–300":  300,
-  "R$300–500":  500,
-  "Sem limite": Infinity,
-}
-
-/**
- * Builds the catalog snippet injected into the quiz prompt.
- * Merges contratipos.json + perfumes-expandido.json.
- * Filters purely by individual product price — no category exclusions.
- * A R$280 Montblanc is valid for a R$300 budget just as a R$150 arabic is.
- * Format: id | nome | marca | categoria | família | tipo | inspirado em | preço
- */
-function buildCatalogSnippet(orcamento?: string): string {
-  const teto = ORCAMENTO_TETO[orcamento ?? ""] ?? Infinity
-
-  const seen  = new Set<string>()
-  const todos: Array<{ id: string; nome: string; marca: string; familia: string; tipo: string; inspiradoEm: string | null; preco_brl: number; categoria: string }> = []
-
-  // ── Source 1: contratipos.json (legacy) ──────────────────────────────────
-  for (const p of contratipoRepository.findAll()) {
-    if (!MARCAS_CONTRATIPOS.has(p.marca)) continue
-    if (p.disponivel === false || p.preco_brl <= 0) continue
-    if (seen.has(p.id)) continue
-    seen.add(p.id)
-    todos.push({ id: p.id, nome: p.nome, marca: p.marca, familia: p.familia, tipo: p.tipo, inspiradoEm: p.inspiradoEm, preco_brl: p.preco_brl, categoria: "contratipo" })
-  }
-
-  // ── Source 2: perfumes-expandido.json ────────────────────────────────────
-  for (const p of getExpandido()) {
-    if (p.disponivel === false || p.preco_brl <= 0) continue
-    if (seen.has(p.id)) continue
-    seen.add(p.id)
-    todos.push({ id: p.id, nome: p.nome, marca: p.marca, familia: p.familia, tipo: p.tipo, inspiradoEm: p.inspiradoEm, preco_brl: p.preco_brl, categoria: p.categoria })
-  }
-
-  // ── Pure price filter ─────────────────────────────────────────────────────
-  const filtrados = todos.filter(p => p.preco_brl <= teto)
-
-  const formato = (p: (typeof todos)[number]) =>
-    `${p.id} | ${p.nome} | ${p.marca} | ${p.categoria} | ${p.familia} | ${p.tipo} | ${p.inspiradoEm ? `inspirado em ${p.inspiradoEm}` : "original"} | R$${p.preco_brl}`
-
-  // Safety fallback: ignore price ceiling if it filters everything
-  if (filtrados.length === 0) return todos.map(formato).join("\n")
-  return filtrados.map(formato).join("\n")
-}
-
-const CARD_SCHEMA_EXAMPLE = `{"nome":"...","marca":"...","codigo":"...","explicacao":"...","quando":"Noites de saída, jantares, encontros — situações onde você quer ser lembrado.","aplicacao":"2 borrifadas no pescoço. No calor, uma basta."}`
-const JSON_SCHEMA_FREE    = `{"ideal":${CARD_SCHEMA_EXAMPLE}}`
-const JSON_SCHEMA_PREMIUM = `{"ideal":${CARD_SCHEMA_EXAMPLE},"alternativo":${CARD_SCHEMA_EXAMPLE},"ousado":${CARD_SCHEMA_EXAMPLE}}`
-
-const CRITERIA_FREE    = `* ideal: maior correspondência com o perfil completo do usuário`
-const CRITERIA_PREMIUM = `* ideal: maior correspondência com o perfil completo do usuário
-* alternativo: mesma família olfativa e intensidade, mas inspirado em um perfume DIFERENTE do ideal — nunca o mesmo perfume de outra marca. Deve ser de um fornecedor diferente quando possível.
-* ousado: empurra o perfil 2 passos além — para quem quer explorar`
-
-const SYSTEM_PROMPT_QUIZ_TEMPLATE = (mode: "free" | "premium") => `Você é a consultora de fragrâncias do nozze — elegante, precisa e humana.
-Você recebe as respostas de um quiz olfativo e deve gerar recomendações de perfume do catálogo fornecido.
-REGRAS ABSOLUTAS:
-* Recomende APENAS perfumes desta lista. Não invente perfumes. Não recomende marcas originais.
-* O campo "codigo" deve ser exatamente o id da linha do catálogo (primeira coluna)
-* Nunca use termos técnicos de perfumaria na explicação ao usuário
-* Máximo 18 palavras por frase nas explicações
-* O usuário é o protagonista — o nozze é o guia
-* alternativo nunca pode ser o mesmo perfume inspirado de outra marca — deve ser uma fragrância diferente
-* quando: máximo 12 palavras. Contextualiza o momento ideal de uso.
-* aplicacao: instrução prática de uso. Máximo 12 palavras.
-  Regras por contexto:
-  - Frescos/aquáticos/cítricos no calor: mínimo 2 borrifadas, mencionar pescoço e pulsos
-  - Orientais/amadeirados/gourmands: 1-2 borrifadas bastam, avisar sobre intensidade
-  - Perfumes de uso diário: orientar pontos de calor (pescoço, pulsos, atrás das orelhas)
-  - Encontros/noite: mencionar rastro — borrifar no ar e passar por baixo, ou pescoço+peito
-  Nunca sugira menos que 2 borrifadas para frescos. Nunca sugira mais que 3 para orientais intensos.
-* O contexto tem peso 10/10 — nunca recomende algo que contradiga o contexto declarado
-
-PERFIL DO USUÁRIO (${mode === "premium" ? "quiz completo — 18 dimensões" : "quiz gratuito — 7 dimensões"}):
-{{QUIZ_ANSWERS}}
-
-═══ CONTEXTO — REGRA DE MAIOR PESO ═══
-O contexto é o filtro mais importante. Aplique antes de qualquer outro critério.
-
-SE contexto = "Encontros e sedução":
-→ OBRIGATÓRIO: perfumes com caráter sensual, envolvente, que deixam rastro
-→ Famílias preferidas: oriental, amadeirado quente, gourmand escuro, floral intenso
-→ PROIBIDO: frescos, aquáticos, cítricos, verdes, perfumes "limpos"
-→ Intensidade mínima: média-alta
-→ O usuário quer ser desejado — escolha com isso em mente
-
-SE contexto = "Uso diário":
-→ Perfumes versáteis, não invasivos, duráveis, adequados para qualquer hora
-→ Famílias preferidas: fresco aromático, madeira suave, floral discreto
-→ PROIBIDO: perfumes muito pesados, doces em excesso, alta fixação em ambientes fechados
-
-SE contexto = "Trabalho ou faculdade":
-→ Perfumes discretos, limpos, profissionais — presença sutil
-→ PROIBIDO: perfumes com muita projeção, gourmands pesados, orientais intensos
-
-SE contexto = "Minha assinatura pessoal":
-→ Perfume único e marcante, alinhado ao arquétipo completo do usuário
-→ Pode ser ousado — essa pessoa sabe o que quer
-═══════════════════════════════════════
-
-CATÁLOGO DE CONTRATIPOS DISPONÍVEIS (formato: id | nome | marca | família | concentração | inspiração | preço):
-{{CATALOG}}
-
-Gere as recomendações no seguinte JSON:
-${mode === "premium" ? JSON_SCHEMA_PREMIUM : JSON_SCHEMA_FREE}
-
-Critérios de seleção:
-${mode === "premium" ? CRITERIA_PREMIUM : CRITERIA_FREE}
-
-Responda SOMENTE com o JSON. Sem texto antes ou depois. Sem markdown.`
-
-export async function gerarRecomendacaoQuiz(
-  respostas: Record<string, string>,
-  mode: "free" | "premium"
-): Promise<RecomendacaoQuiz | null> {
-  const chave = process.env.DEEPSEEK_API_KEY
-  if (!chave || chave === "sua_chave_aqui") {
-    console.error("[QuizIA] DEEPSEEK_API_KEY não configurada")
-    return null
-  }
-
-  const quizAnswers = formatarRespostasLegivel(respostas)
-  const catalog     = buildCatalogSnippet(respostas["orcamento"])
-
-  console.log(`[QuizIA] Catalog: ${catalog.split("\n").length} contratipos | orcamento: "${respostas["orcamento"] ?? "não informado"}"`)
-
-  const systemPrompt = SYSTEM_PROMPT_QUIZ_TEMPLATE(mode)
-    .replace("{{QUIZ_ANSWERS}}", quizAnswers)
-    .replace("{{CATALOG}}", catalog)
-
-  const body = {
-    model: "deepseek-chat",
-    messages: [{ role: "system", content: systemPrompt }],
-    temperature: 0.4,
-    max_tokens: 900,
-    response_format: { type: "json_object" },
-  }
-
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), 20_000)
-
-  let res: Response
-  try {
-    res = await fetch("https://api.deepseek.com/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${chave}`,
-      },
-      body: JSON.stringify(body),
-      signal: controller.signal,
-    })
-  } finally {
-    clearTimeout(timeout)
-  }
-
-  if (!res.ok) {
-    const err = await res.text()
-    throw new Error(`DeepSeek ${res.status}: ${err}`)
-  }
-
-  const dados = await res.json()
-  const texto: string = dados?.choices?.[0]?.message?.content ?? ""
-  console.log("[Quiz] DeepSeek raw response:", texto)
-
-  const jsonMatch = texto.match(/\{[\s\S]*\}/)
-  if (!jsonMatch) throw new Error("[QuizIA] Sem JSON na resposta")
-
-  const rawParsed = JSON.parse(jsonMatch[0])
-  console.log("[Quiz] DeepSeek parsed keys:", Object.keys(rawParsed))
-
-  const parsed = RecomendacaoQuizSchema.safeParse(rawParsed)
-  if (!parsed.success) {
-    console.error("[QuizIA] JSON inválido:", parsed.error.issues.map(i => i.message).join("; "))
-    throw new Error("[QuizIA] JSON inválido")
-  }
-
-  console.log("[QuizIA] Sucesso —", mode, "—", parsed.data.ideal.nome)
-  return enriquecerLinks(validarCodigos(parsed.data))
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Pre-computed Set of all valid catalog IDs — built once, O(1) lookups thereafter
-let _catalogIds: Set<string> | null = null
-function getCatalogIds(): Set<string> {
-  if (_catalogIds) return _catalogIds
-  _catalogIds = new Set([
-    ...(contratiposJson as Array<{ id: string }>).map(p => p.id),
-    ...(expandidoJson as Array<{ id: string }>).map(p => p.id),
-  ])
-  return _catalogIds
-}
-
-/** Returns the codigo if it exists in the catalog, null otherwise. */
-function validarCodigo(codigo: string | null | undefined): string | null {
-  if (!codigo) return null
-  if (getCatalogIds().has(codigo)) return codigo
-  console.log("[QuizIA] codigo inválido — não encontrado no catálogo:", codigo)
-  return null
-}
-
-/**
- * Validates each card's codigo against the known catalog (contratipos + expandido).
- * If the id returned by DeepSeek doesn't exist in either source, sets codigo = null
- * so the "Ver perfume →" link is suppressed rather than pointing to a wrong page.
- */
-function validarCodigos(data: z.infer<typeof RecomendacaoQuizSchema>): RecomendacaoQuiz {
-  const validar = (card: z.infer<typeof RecomendacaoCardSchema>): RecomendacaoCard => ({
-    ...card,
-    codigo: validarCodigo(card.codigo),
-  })
-  return {
-    ideal:       validar(data.ideal),
-    alternativo: data.alternativo ? validar(data.alternativo) : undefined,
-    ousado:      data.ousado      ? validar(data.ousado)      : undefined,
-  }
-}
-
-/** Anexa linkCompra a cada card: tenta catálogo expandido, depois SUPPLIER_URLS */
-function enriquecerCard(card: RecomendacaoCard): RecomendacaoCard {
-  if (card.linkCompra) return card                          // já populado
-  // 1. Catálogo expandido — busca por id exato
-  const expandido = getExpandido().find(p => p.id === card.codigo)
-  if (expandido?.linkCompra) return { ...card, linkCompra: expandido.linkCompra }
-  // 2. Fallback por nome+marca no expandido
-  const porNome = getExpandido().find(
-    p => p.nome.toLowerCase() === card.nome.toLowerCase() &&
-         p.marca.toLowerCase() === card.marca.toLowerCase()
-  )
-  if (porNome?.linkCompra) return { ...card, linkCompra: porNome.linkCompra }
-  // 3. SUPPLIER_URLS como último recurso
-  const { SUPPLIER_URLS } = require("@/lib/suppliers") as { SUPPLIER_URLS: Record<string, string> }
-  if (SUPPLIER_URLS[card.marca]) return { ...card, linkCompra: SUPPLIER_URLS[card.marca] }
-  return card
-}
-
-function enriquecerLinks(rec: RecomendacaoQuiz): RecomendacaoQuiz {
-  return {
-    ideal:       enriquecerCard(rec.ideal),
-    alternativo: rec.alternativo ? enriquecerCard(rec.alternativo) : undefined,
-    ousado:      rec.ousado      ? enriquecerCard(rec.ousado)      : undefined,
-  }
 }
 
 function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {

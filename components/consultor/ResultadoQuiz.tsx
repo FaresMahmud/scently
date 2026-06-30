@@ -2,55 +2,32 @@
 // ARQUIVO: components/consultor/ResultadoQuiz.tsx
 // O QUE FAZ: exibe os cartões de recomendação do quiz
 //   FREE:    1 card (ideal) — centrado, largura total
-//   PREMIUM: 3 cards — ideal no topo, alternativo + ousado lado a lado
+//   PREMIUM: 3 cards — ideal no topo, alternativa + ousado lado a lado
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout do resultado do quiz
-// DEPENDE DE: lib/ai.ts (RecomendacaoQuiz), lib/suppliers.ts
+// DEPENDE DE: lib/ai.ts (RecomendacaoQuiz), lib/afiliados.ts
 // ============================================
 
 "use client"
 
 import Link from "next/link"
 import type { RecomendacaoQuiz, RecomendacaoCard } from "@/lib/ai"
-import { SUPPLIER_URLS } from "@/lib/suppliers"
-
-// ── SVG icons ────────────────────────────────────────────────────────────────
-
-function IconCalendar({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, marginTop: "2px" }}>
-      <rect x="1" y="2.5" width="12" height="10.5" rx="1.5" stroke="#C4714A" strokeWidth="1.2"/>
-      <path d="M1 5.5h12" stroke="#C4714A" strokeWidth="1.2"/>
-      <path d="M4.5 1v3M9.5 1v3" stroke="#C4714A" strokeWidth="1.2" strokeLinecap="round"/>
-    </svg>
-  )
-}
-
-function IconSpray({ size = 14 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, marginTop: "2px" }}>
-      <path d="M6 4.5V11a1.5 1.5 0 003 0V4.5" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
-      <rect x="5.5" y="2.5" width="4" height="2.5" rx="1" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2"/>
-      <path d="M9.5 3.5H11a1 1 0 011 1v0" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
-      <path d="M12 4.5h.5" stroke="rgba(26,26,24,0.5)" strokeWidth="1.2" strokeLinecap="round"/>
-    </svg>
-  )
-}
+import { getAffiliateLinks } from "@/lib/afiliados"
+import { track } from "@/lib/analytics-client"
 
 // ── Metadata por slot ─────────────────────────────────────────────────────────
 
 const SLOT_META: Record<
-  "ideal" | "alternativo" | "ousado",
-  { label: string; descricao: string; cor: string; destaque?: boolean }
+  "ideal" | "alternativa" | "ousado",
+  { label: string; descricao: string; cor: string }
 > = {
   ideal: {
     label: "Ideal para você",
     descricao: "Maior correspondência com o seu perfil",
     cor: "var(--cor-destaque)",
-    destaque: true,
   },
-  alternativo: {
-    label: "Alternativo",
-    descricao: "Mesma assinatura olfativa, caminho diferente",
+  alternativa: {
+    label: "Alternativa",
+    descricao: "Mesmo perfil, caminho diferente",
     cor: "var(--cor-texto-suave)",
   },
   ousado: {
@@ -60,259 +37,252 @@ const SLOT_META: Record<
   },
 }
 
-// ── Card ideal (full-width, rich) ─────────────────────────────────────────────
+// ── Chip de nota ───────────────────────────────────────────────────────────────
 
-function CardIdeal({ card }: { card: RecomendacaoCard }) {
-  const meta          = SLOT_META.ideal
-  const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
-  const linkPerfume   = card.codigo ? `/perfume/${card.codigo}` : null
-  const linkFornecedor = card.linkCompra ?? SUPPLIER_URLS[card.marca] ?? null
+function ChipNota({ texto }: { texto: string }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        padding: "0.3rem 0.75rem",
+        fontFamily: "var(--fonte-corpo)",
+        fontSize: "0.78rem",
+        color: "var(--cor-texto)",
+        border: "1px solid var(--cor-destaque)",
+        borderRadius: "99px",
+        backgroundColor: "transparent",
+      }}
+    >
+      {texto}
+    </span>
+  )
+}
+
+// ── Badge de concentração ───────────────────────────────────────────────────────
+
+function BadgeConcentracao({ texto }: { texto: string }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        padding: "0.2rem 0.6rem",
+        fontFamily: "var(--fonte-corpo)",
+        fontSize: "0.65rem",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        color: "var(--cor-texto-suave)",
+        border: "1px solid var(--cor-borda)",
+        borderRadius: "99px",
+      }}
+    >
+      {texto}
+    </span>
+  )
+}
+
+// ── Botão "Onde comprar" ────────────────────────────────────────────────────────
+
+function BotaoOndeComprar({ nome, marca }: { nome: string; marca: string }) {
+  const links = getAffiliateLinks(nome, marca)
+  const link = links[0]
+  if (!link) return null
+
+  return (
+    <a
+      href={link.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => track("quiz_result_click", { nome, marca })}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        minHeight: "44px",
+        padding: "0 21px",
+        fontFamily: "var(--fonte-corpo)",
+        fontSize: "0.875rem",
+        fontWeight: 500,
+        letterSpacing: "0.04em",
+        textDecoration: "none",
+        borderRadius: "var(--raio-borda)",
+        backgroundColor: "var(--cor-destaque)",
+        color: "#fff",
+        transition: "background-color 0.15s",
+      }}
+    >
+      Onde comprar →
+    </a>
+  )
+}
+
+// ── Card ─────────────────────────────────────────────────────────────────────
+
+function CardRecomendacao({
+  slot,
+  card,
+  destaque = false,
+}: {
+  slot: "ideal" | "alternativa" | "ousado"
+  card: RecomendacaoCard
+  destaque?: boolean
+}) {
+  const meta = SLOT_META[slot]
+  const linkCatalogo = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
 
   return (
     <div
       style={{
-        padding: "34px",
+        padding: destaque ? "34px" : "28px",
         backgroundColor: "var(--cor-card)",
-        border: "1px solid rgba(26,26,24,0.12)",
+        border: destaque ? "1px solid rgba(196,113,74,0.25)" : "1px solid var(--cor-borda)",
         borderRadius: "var(--raio-borda-suave)",
         display: "flex",
         flexDirection: "column",
       }}
     >
       {/* Slot label */}
-      <div style={{ marginBottom: "21px" }}>
-        <span style={{
-          display: "inline-block",
-          fontSize: "0.65rem",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: meta.cor,
-          marginBottom: "4px",
-        }}>
+      <div style={{ marginBottom: destaque ? "21px" : "13px" }}>
+        <span
+          style={{
+            display: "inline-block",
+            fontSize: "0.65rem",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: meta.cor,
+            marginBottom: "4px",
+          }}
+        >
           {meta.label}
         </span>
-        <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem", color: "var(--cor-texto-suave)", margin: 0 }}>
+        <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: destaque ? "0.72rem" : "0.68rem", color: "var(--cor-texto-suave)", margin: 0 }}>
           {meta.descricao}
         </p>
       </div>
 
       {/* Marca */}
-      <p style={{
-        fontFamily: "var(--fonte-corpo)",
-        fontSize: "0.75rem",
-        letterSpacing: "0.08em",
-        textTransform: "uppercase",
-        color: "var(--cor-texto-suave)",
-        marginBottom: "8px",
-      }}>
+      <p
+        style={{
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "14px",
+          letterSpacing: "0.04em",
+          color: "var(--cor-destaque)",
+          marginBottom: "6px",
+        }}
+      >
         {card.marca}
       </p>
 
-      {/* Nome */}
-      <h2 style={{
-        fontFamily: "var(--fonte-titulo)",
-        fontWeight: 300,
-        fontSize: "clamp(34px, 6vw, 52px)",
-        lineHeight: 1.05,
-        color: "var(--cor-texto)",
-        margin: "0 0 21px 0",
-      }}>
-        {card.nome}
-      </h2>
+      {/* Nome + badge de concentração */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "13px", flexWrap: "wrap", marginBottom: "13px" }}>
+        <h2
+          style={{
+            fontFamily: "var(--fonte-titulo)",
+            fontWeight: 300,
+            fontSize: destaque ? "clamp(26px, 5vw, 34px)" : "26px",
+            lineHeight: 1.1,
+            color: "#1A1A18",
+            margin: 0,
+          }}
+        >
+          {card.nome}
+        </h2>
+        <BadgeConcentracao texto={card.concentracao} />
+      </div>
 
       {/* Explicação */}
-      <p style={{
-        fontFamily: "var(--fonte-corpo)",
-        fontSize: "1.0625rem",
-        color: "rgba(26,26,24,0.85)",
-        lineHeight: 1.6,
-        marginBottom: "0",
-      }}>
+      <p
+        style={{
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "16px",
+          color: "rgba(26,26,24,0.85)",
+          lineHeight: 1.6,
+          marginBottom: "21px",
+        }}
+      >
         {card.explicacao}
       </p>
 
-      {/* Divisor + quando/aplicacao */}
-      {(card.quando || card.aplicacao) && (
-        <>
-          <div style={{ borderTop: "1px solid rgba(26,26,24,0.1)", margin: "21px 0" }} />
-          <div style={{ display: "flex", flexDirection: "column", gap: "13px" }}>
-            {card.quando && (
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-                <IconCalendar />
-                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", color: "rgba(26,26,24,0.7)", lineHeight: 1.5, margin: 0 }}>
-                  {card.quando}
-                </p>
-              </div>
-            )}
-            {card.aplicacao && (
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-                <IconSpray />
-                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem", color: "rgba(26,26,24,0.7)", lineHeight: 1.5, margin: 0 }}>
-                  {card.aplicacao}
-                </p>
-              </div>
-            )}
-          </div>
-        </>
+      {/* Notas — chips */}
+      {card.notas.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "21px" }}>
+          {card.notas.map((nota) => (
+            <ChipNota key={nota} texto={nota} />
+          ))}
+        </div>
+      )}
+
+      {/* Quando usar */}
+      {card.quandoUsar && (
+        <p
+          style={{
+            fontFamily: "var(--fonte-corpo)",
+            fontSize: "14px",
+            fontStyle: "italic",
+            color: "var(--cor-texto-suave)",
+            marginBottom: "21px",
+          }}
+        >
+          {card.quandoUsar}
+        </p>
       )}
 
       {/* Ações */}
-      <div style={{ display: "flex", gap: "21px", flexWrap: "wrap", alignItems: "center", marginTop: "21px" }}>
-        {linkPerfume && (
-          <Link href={linkPerfume} style={{
-            fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem",
-            color: "#C4714A", fontWeight: 500,
-            minHeight: "44px", display: "inline-flex", alignItems: "center",
-          }}>
-            Ver perfume →
-          </Link>
-        )}
-        <Link href={linkCatalogo} style={{
-          fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem",
-          color: "var(--cor-texto-suave)",
-          minHeight: "44px", display: "inline-flex", alignItems: "center",
-        }}>
+      <div style={{ display: "flex", gap: "13px", flexWrap: "wrap", alignItems: "center", marginTop: "auto" }}>
+        <BotaoOndeComprar nome={card.nome} marca={card.marca} />
+        <Link
+          href={linkCatalogo}
+          style={{
+            fontFamily: "var(--fonte-corpo)",
+            fontSize: "0.82rem",
+            color: "var(--cor-texto-suave)",
+            minHeight: "44px",
+            display: "inline-flex",
+            alignItems: "center",
+          }}
+        >
           Buscar no catálogo
         </Link>
-        {linkFornecedor && (
-          <a href={linkFornecedor} target="_blank" rel="noopener noreferrer" style={{
-            fontFamily: "var(--fonte-corpo)", fontSize: "0.875rem",
-            color: "#C4714A", fontWeight: 500,
-            minHeight: "44px", display: "inline-flex", alignItems: "center",
-          }}>
-            Comprar na {card.marca} →
-          </a>
-        )}
       </div>
     </div>
   )
 }
 
-// ── Card secundário (alternativo / ousado) ────────────────────────────────────
+// ── Ponte pro chat ───────────────────────────────────────────────────────────
 
-function CardSecundario({
-  slot,
-  card,
-}: {
-  slot: "alternativo" | "ousado"
-  card: RecomendacaoCard | undefined
-}) {
-  if (!card) return null
-
-  const meta          = SLOT_META[slot]
-  const linkCatalogo  = `/catalogo?busca=${encodeURIComponent(`${card.nome} ${card.marca}`)}`
-  const linkPerfume   = card.codigo ? `/perfume/${card.codigo}` : null
-  const linkFornecedor = card.linkCompra ?? SUPPLIER_URLS[card.marca] ?? null
-
+function PonteParaChat() {
   return (
-    <div style={{
-      padding: "28px",
-      backgroundColor: "var(--cor-card)",
-      border: "1px solid var(--cor-borda)",
-      borderRadius: "var(--raio-borda-suave)",
-      display: "flex",
-      flexDirection: "column",
-    }}>
-      {/* Slot label */}
-      <div style={{ marginBottom: "13px" }}>
-        <span style={{
-          display: "inline-block",
-          fontSize: "0.65rem",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: meta.cor,
-          marginBottom: "4px",
-        }}>
-          {meta.label}
-        </span>
-        <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.68rem", color: "var(--cor-texto-suave)", margin: 0 }}>
-          {meta.descricao}
-        </p>
-      </div>
-
-      {/* Marca */}
-      <p style={{
-        fontFamily: "var(--fonte-corpo)", fontSize: "0.72rem",
-        letterSpacing: "0.08em", textTransform: "uppercase",
-        color: "var(--cor-texto-suave)", marginBottom: "6px",
-      }}>
-        {card.marca}
-      </p>
-
-      {/* Nome */}
-      <h3 style={{
-        fontFamily: "var(--fonte-titulo)",
-        fontWeight: 300,
-        fontSize: "clamp(26px, 4vw, 38px)",
-        lineHeight: 1.05,
-        color: "var(--cor-texto)",
-        margin: "0 0 13px 0",
-      }}>
-        {card.nome}
-      </h3>
-
-      {/* Explicação */}
-      <p style={{
-        fontFamily: "var(--fonte-corpo)", fontSize: "0.9375rem",
-        color: "var(--cor-texto-suave)", lineHeight: 1.6,
-        marginBottom: "0",
-      }}>
-        {card.explicacao}
-      </p>
-
-      {/* quando / aplicacao */}
-      {(card.quando || card.aplicacao) && (
-        <>
-          <div style={{ borderTop: "1px solid rgba(26,26,24,0.1)", margin: "13px 0" }} />
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {card.quando && (
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-                <IconCalendar size={13} />
-                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8125rem", color: "rgba(26,26,24,0.7)", lineHeight: 1.5, margin: 0 }}>
-                  {card.quando}
-                </p>
-              </div>
-            )}
-            {card.aplicacao && (
-              <div style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-                <IconSpray size={13} />
-                <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "0.8125rem", color: "rgba(26,26,24,0.7)", lineHeight: 1.5, margin: 0 }}>
-                  {card.aplicacao}
-                </p>
-              </div>
-            )}
-          </div>
-        </>
-      )}
-
-      {/* Ações */}
-      <div style={{ display: "flex", gap: "13px", flexWrap: "wrap", alignItems: "center", marginTop: "21px" }}>
-        {linkPerfume && (
-          <Link href={linkPerfume} style={{
-            fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem",
-            color: meta.cor, fontWeight: 500,
-            minHeight: "44px", display: "inline-flex", alignItems: "center",
-          }}>
-            Ver perfume →
-          </Link>
-        )}
-        <Link href={linkCatalogo} style={{
-          fontFamily: "var(--fonte-corpo)", fontSize: "0.75rem",
+    <div style={{ textAlign: "center", padding: "21px 0" }}>
+      <p
+        style={{
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.9rem",
           color: "var(--cor-texto-suave)",
-          minHeight: "44px", display: "inline-flex", alignItems: "center",
-        }}>
-          Buscar no catálogo
-        </Link>
-        {linkFornecedor && (
-          <a href={linkFornecedor} target="_blank" rel="noopener noreferrer" style={{
-            fontFamily: "var(--fonte-corpo)", fontSize: "0.82rem",
-            color: "#C4714A", fontWeight: 500,
-            minHeight: "44px", display: "inline-flex", alignItems: "center",
-          }}>
-            Comprar na {card.marca} →
-          </a>
-        )}
-      </div>
+          marginBottom: "13px",
+        }}
+      >
+        Quer explorar mais opções?
+      </p>
+      <Link
+        href="/consultor/chat"
+        onClick={() => track("quiz_to_chat", {})}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          minHeight: "44px",
+          padding: "0 21px",
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.875rem",
+          fontWeight: 500,
+          letterSpacing: "0.04em",
+          color: "var(--cor-destaque)",
+          border: "1px solid var(--cor-destaque)",
+          borderRadius: "var(--raio-borda)",
+          textDecoration: "none",
+        }}
+      >
+        Falar com a consultora →
+      </Link>
     </div>
   )
 }
@@ -325,59 +295,68 @@ interface PropsResultadoQuiz {
 }
 
 export default function ResultadoQuiz({ recomendacao, onRecomecar }: PropsResultadoQuiz) {
-  const isPremium = Boolean(recomendacao.alternativo || recomendacao.ousado)
+  const isPremium = Boolean(recomendacao.alternativa || recomendacao.ousado)
 
   return (
     <div style={{ maxWidth: "680px", margin: "0 auto" }}>
       {/* Cabeçalho */}
-      <p style={{
-        fontSize: "0.6875rem",
-        letterSpacing: "0.12em",
-        textTransform: "uppercase",
-        color: "#C4714A",
-        marginBottom: "8px",
-      }}>
+      <p
+        style={{
+          fontSize: "0.6875rem",
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: "#C4714A",
+          marginBottom: "8px",
+        }}
+      >
         {isPremium ? "Suas recomendações" : "Sua recomendação"}
       </p>
-      <p style={{
-        fontFamily: "var(--fonte-corpo)",
-        fontSize: "0.9375rem",
-        color: "rgba(26,26,24,0.6)",
-        marginBottom: "34px",
-        lineHeight: 1.5,
-      }}>
+      <p
+        style={{
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.9375rem",
+          color: "rgba(26,26,24,0.6)",
+          marginBottom: "34px",
+          lineHeight: 1.5,
+        }}
+      >
         {isPremium
           ? "Três caminhos para o perfume certo — do mais próximo ao mais ousado."
           : "O perfume mais alinhado com o seu perfil."}
       </p>
 
-      {/* FREE — card ideal único */}
+      {/* FREE — card ideal único, centrado, largura total */}
       {!isPremium && (
         <div style={{ marginBottom: "34px" }}>
-          <CardIdeal card={recomendacao.ideal} />
+          <CardRecomendacao slot="ideal" card={recomendacao.ideal} destaque />
         </div>
       )}
 
-      {/* PREMIUM — ideal no topo + secundários em grid */}
+      {/* PREMIUM — ideal no topo + alternativa/ousado lado a lado */}
       {isPremium && (
         <div style={{ display: "flex", flexDirection: "column", gap: "13px", marginBottom: "34px" }}>
-          <CardIdeal card={recomendacao.ideal} />
+          <CardRecomendacao slot="ideal" card={recomendacao.ideal} destaque />
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-            gap: "13px",
-          }}>
-            <CardSecundario slot="alternativo" card={recomendacao.alternativo} />
-            <CardSecundario slot="ousado"      card={recomendacao.ousado} />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: "13px",
+            }}
+          >
+            {recomendacao.alternativa && <CardRecomendacao slot="alternativa" card={recomendacao.alternativa} />}
+            {recomendacao.ousado && <CardRecomendacao slot="ousado" card={recomendacao.ousado} />}
           </div>
         </div>
       )}
 
-      {/* Separador */}
-      <div style={{ borderTop: "1px solid var(--cor-borda)", marginBottom: "34px" }} />
+      {/* Ponte pro chat */}
+      <PonteParaChat />
 
-      {/* Recomeçar — full width on mobile, auto on desktop */}
+      {/* Separador */}
+      <div style={{ borderTop: "1px solid var(--cor-borda)", margin: "34px 0" }} />
+
+      {/* Recomeçar */}
       <button
         type="button"
         onClick={onRecomecar}

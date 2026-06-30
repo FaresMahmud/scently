@@ -1,8 +1,10 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse, after } from "next/server"
 import { gerarRecomendacao, gerarRecomendacaoQuiz } from "@/lib/ai"
 import { consultorRateLimit, getClientIp } from "@/lib/rateLimit"
 import { consultorSchema } from "@/lib/schemas"
 import { resolverRespostas } from "@/lib/quiz/questions"
+import { getAuthUser } from "@/lib/apiAuth"
+import { salvarRespostasQuizComoMemoria } from "@/lib/consultorMemoria"
 
 // Only the production domains — nozze.vercel.app removed
 const ORIGENS_PERMITIDAS =
@@ -56,6 +58,14 @@ export async function POST(request: NextRequest) {
       if (!recomendacao) {
         return NextResponse.json({ erro: "Não foi possível gerar a recomendação" }, { status: 500 })
       }
+
+      // Logado + quiz premium: respostas viram memória inicial do consultor chat.
+      // Roda após a resposta ser enviada — não atrasa o usuário.
+      const usuario = getAuthUser(request)
+      if (usuario && parsed.data.mode === "premium") {
+        after(() => salvarRespostasQuizComoMemoria(usuario.userId, respostasTexto))
+      }
+
       return NextResponse.json(recomendacao)
     }
 

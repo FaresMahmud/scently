@@ -81,6 +81,11 @@ export function consultorChatRateLimit(ip: string) {
   return check(`consultor-chat:${ip}`, 30, 60 * 1000)
 }
 
+/** 60 catalog autocomplete requests per IP per minute */
+export function catalogoBuscaRateLimit(ip: string) {
+  return check(`catalogo-busca:${ip}`, 60, 60 * 1000)
+}
+
 export function getClientIp(req: Request): string {
   return (
     req.headers.get("x-forwarded-for")?.split(",")[0].trim() ??

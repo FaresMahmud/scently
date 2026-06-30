@@ -7,7 +7,7 @@
 // ============================================
 
 import { NextRequest, NextResponse, after } from "next/server"
-import { GoogleGenerativeAI } from "@google/generative-ai"
+import { getGeminiFlash } from "@/lib/gemini"
 import { consultorChatSchema } from "@/lib/schemas"
 import { consultorChatRateLimit, getClientIp } from "@/lib/rateLimit"
 import { CONSULTOR_CHAT_SYSTEM_PROMPT } from "@/lib/aiPrompts"
@@ -151,12 +151,9 @@ export async function POST(request: NextRequest) {
     const catalogo = buscarContextoCatalogo(mensagem)
     const memoria = usuario ? await carregarMemorias(usuario.userId) : null
 
-    const genAI = new GoogleGenerativeAI(chave)
-    const model = genAI.getGenerativeModel({
-      model: "gemini-2.5-flash",
+    const model = getGeminiFlash({
       systemInstruction: montarSystemInstruction(catalogo, memoria),
       tools: [{ googleSearch: {} } as never],
-      generationConfig: { thinkingConfig: { thinkingBudget: 0 } } as never,
     })
 
     const chat = model.startChat({

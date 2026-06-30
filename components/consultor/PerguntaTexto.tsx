@@ -1,6 +1,7 @@
 // ============================================
 // ARQUIVO: components/consultor/PerguntaTexto.tsx
 // O QUE FAZ: pergunta com campo de texto livre — usada para "qual perfume você usa hoje?"
+//            input simples, sem autocomplete — o texto digitado vai direto pro prompt da IA
 // QUANDO MANDAR PRA IA: quando quiser mudar o comportamento da pergunta de texto
 // DEPENDE DE: components/ui/Botao.tsx, styles/globals.css
 // ============================================
@@ -36,19 +37,6 @@ export default function PerguntaTexto({
 
   return (
     <div style={{ maxWidth: "560px", margin: "0 auto" }}>
-      {/* Indicador de progresso */}
-      <p
-        style={{
-          fontSize: "0.72rem",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "var(--cor-destaque)",
-          marginBottom: "21px",
-        }}
-      >
-        {progresso}
-      </p>
-
       {/* Pergunta */}
       <h2
         style={{
@@ -101,7 +89,7 @@ export default function PerguntaTexto({
         {/* Botão de pular — só aparece em campos opcionais */}
         {opcional && (
           <Botao variante="fantasma" onClick={() => onResponder("")}>
-            Pular
+            Não tenho / não lembro
           </Botao>
         )}
       </div>

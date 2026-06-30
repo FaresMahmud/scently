@@ -7,12 +7,14 @@
 
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { track } from "@/lib/analytics-client"
-import SelecaoModo      from "./SelecaoModo"
-import PerguntaOpcoes   from "./PerguntaOpcoes"
-import BarraProgresso   from "./BarraProgresso"
-import ResultadoQuiz    from "./ResultadoQuiz"
+import SelecaoModo        from "./SelecaoModo"
+import PerguntaOpcoes     from "./PerguntaOpcoes"
+import PerguntaTexto       from "./PerguntaTexto"
+import PerguntaBinariaDupla from "./PerguntaBinariaDupla"
+import BarraProgresso     from "./BarraProgresso"
+import ResultadoQuiz      from "./ResultadoQuiz"
 import {
   FREE_QUIZ_QUESTIONS,
   PREMIUM_QUIZ_QUESTIONS,
@@ -46,23 +48,50 @@ export default function QuizConsultor() {
     if (modoEscolhido === "premium") track("premium_click", { origem: "quiz_selecao" })
   }
 
+  /**
+   * Dispara quiz_abandoned com o id da última pergunta respondida (null se
+   * nenhuma). Usa a última chave de `respostas` em vez de `passo` — `passo`
+   * reflete a pergunta sendo EXIBIDA, que recua ao clicar "Voltar" mesmo que
+   * a resposta anterior continue salva.
+   */
+  function trackAbandono() {
+    const chaves = Object.keys(respostas)
+    const idUltimaRespondida = chaves.length > 0 ? chaves[chaves.length - 1] : null
+    track("quiz_abandoned", { modo, idUltimaRespondida })
+  }
+
   function voltar() {
     if (passo === 0) {
+      trackAbandono()
       setEstado("selecao")
     } else {
-      setPasso(p => p - 1)
+      // Math.max evita passo negativo se o botão for clicado 2x rápido antes
+      // do re-render — a closure de `passo` ficaria desatualizada nas duas
+      // chamadas síncronas, e sem o guard ambas decrementariam o estado real.
+      setPasso(p => Math.max(0, p - 1))
     }
   }
 
   /**
-   * Single-select: store the chosen option id and auto-advance.
-   * MultiSelect questions use PerguntaOpcoes in multipla mode, which calls
-   * onResponder with a comma-joined string of selected ids — store as string[].
+   * Single-select / texto: store the chosen value (or raw text) and auto-advance.
+   * Multipla questions (PerguntaOpcoes em modo multipla) chamam com uma string
+   * de ids separados por vírgula — guardamos como string[].
+   * Binaria-dupla (PerguntaBinariaDupla) chama com um Record já contendo as
+   * chaves dos PARES (ex: { projecao: "rastro", ousadia: "diferente" }),
+   * não a chave da pergunta-pai — por isso o spread direto em vez de indexar
+   * por perguntaAtual.id.
    */
-  function responder(valor: string) {
-    const isMulti = perguntaAtual.multiSelect === true
-    const stored  = isMulti ? valor.split(",").filter(Boolean) : valor
-    const novas   = { ...respostas, [perguntaAtual.id]: stored }
+  function responder(valor: string | Record<string, string>) {
+    let novas: Record<string, string | string[]>
+
+    if (typeof valor === "string") {
+      const isMulti = perguntaAtual.tipo === "multipla"
+      const stored  = isMulti ? valor.split(",").filter(Boolean) : valor
+      novas = { ...respostas, [perguntaAtual.id]: stored }
+    } else {
+      novas = { ...respostas, ...valor }
+    }
+
     setRespostas(novas)
 
     track("quiz_question_answered", { modo, pergunta: passo + 1, perguntaId: perguntaAtual.id })
@@ -97,7 +126,7 @@ export default function QuizConsultor() {
       track("quiz_completed", { modo })
       track("quiz_result_shown", {
         modo,
-        perfumes: [data.ideal, data.alternativo, data.ousado]
+        perfumes: [data.ideal, data.alternativa, data.ousado]
           .filter(Boolean)
           .map(r => r!.nome),
       })
@@ -108,6 +137,7 @@ export default function QuizConsultor() {
   }
 
   function recomecar() {
+    if (estado === "pergunta") trackAbandono()
     setEstado("selecao")
     setPasso(0)
     setRespostas({})
@@ -121,6 +151,28 @@ export default function QuizConsultor() {
     window.addEventListener("resetar-quiz", handler)
     return () => window.removeEventListener("resetar-quiz", handler)
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Abandono por saída da página (fechar aba, navegar pra fora) ou desmontagem
+  // do componente em si — cobre os casos que não passam por voltar()/recomecar().
+  const estadoAtualRef = useRef({ estado, modo, respostas })
+  useEffect(() => {
+    estadoAtualRef.current = { estado, modo, respostas }
+  }, [estado, modo, respostas])
+
+  useEffect(() => {
+    function trackAbandonoSePergunta() {
+      const atual = estadoAtualRef.current
+      if (atual.estado !== "pergunta") return
+      const chaves = Object.keys(atual.respostas)
+      const idUltimaRespondida = chaves.length > 0 ? chaves[chaves.length - 1] : null
+      track("quiz_abandoned", { modo: atual.modo, idUltimaRespondida })
+    }
+    window.addEventListener("beforeunload", trackAbandonoSePergunta)
+    return () => {
+      window.removeEventListener("beforeunload", trackAbandonoSePergunta)
+      trackAbandonoSePergunta()
+    }
   }, [])
 
   // ── Telas ──────────────────────────────────────────────────────────────────
@@ -265,14 +317,38 @@ export default function QuizConsultor() {
       </div>
 
       {/* Pergunta — key força remontagem a cada passo, resetando seleção interna */}
-      <PerguntaOpcoes
-        key={passo}
-        pergunta={perguntaAtual.pergunta}
-        opcoes={perguntaAtual.opcoes.map(o => ({ valor: o.id, texto: o.texto }))}
-        progresso={progresso}
-        multipla={perguntaAtual.multiSelect === true}
-        onResponder={responder}
-      />
+      {perguntaAtual.tipo === "texto" && (
+        <PerguntaTexto
+          key={passo}
+          id={perguntaAtual.id}
+          pergunta={perguntaAtual.pergunta}
+          placeholder={perguntaAtual.placeholder}
+          opcional={perguntaAtual.opcional}
+          progresso={progresso}
+          onResponder={responder}
+        />
+      )}
+
+      {perguntaAtual.tipo === "binaria-dupla" && perguntaAtual.pares && (
+        <PerguntaBinariaDupla
+          key={passo}
+          pergunta={perguntaAtual.pergunta}
+          pares={perguntaAtual.pares}
+          onResponder={responder}
+        />
+      )}
+
+      {(!perguntaAtual.tipo || perguntaAtual.tipo === "escolha" || perguntaAtual.tipo === "multipla") && (
+        <PerguntaOpcoes
+          key={passo}
+          pergunta={perguntaAtual.pergunta}
+          opcoes={(perguntaAtual.opcoes ?? []).map(o => ({ valor: o.id, texto: o.texto }))}
+          progresso={progresso}
+          multipla={perguntaAtual.tipo === "multipla"}
+          valorExclusivo={perguntaAtual.exclusiva}
+          onResponder={responder}
+        />
+      )}
     </>
   )
 }

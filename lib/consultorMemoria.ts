@@ -24,6 +24,68 @@ function normalizar(fato: string): string {
   return fato.toLowerCase().trim()
 }
 
+/**
+ * Salva as respostas do quiz premium como memória inicial do consultor chat.
+ * Conversão determinística (sem chamada à IA) — os dados já vêm estruturados
+ * e legíveis de resolverRespostas(). Best-effort — nunca lança.
+ */
+export async function salvarRespostasQuizComoMemoria(
+  userId: string,
+  respostasResolvidas: Record<string, string>
+): Promise<void> {
+  try {
+    const fatos: FatoExtraido[] = []
+
+    if (respostasResolvidas["perfume-existente"]) {
+      fatos.push({ fato: `Já usa e gosta de ${respostasResolvidas["perfume-existente"]}`, categoria: "acervo" })
+    }
+    if (respostasResolvidas["ocasiao"]) {
+      fatos.push({ fato: `Procura perfume para: ${respostasResolvidas["ocasiao"]}`, categoria: "caracteristica" })
+    }
+    if (respostasResolvidas["cena"]) {
+      fatos.push({ fato: `Estilo de vida: ${respostasResolvidas["cena"]}`, categoria: "caracteristica" })
+    }
+    if (respostasResolvidas["projecao"]) {
+      fatos.push({ fato: `Projeção preferida: ${respostasResolvidas["projecao"]}`, categoria: "preferencia" })
+    }
+    if (respostasResolvidas["ousadia"]) {
+      fatos.push({ fato: `Ousadia preferida: ${respostasResolvidas["ousadia"]}`, categoria: "preferencia" })
+    }
+    if (respostasResolvidas["impressao"]) {
+      fatos.push({ fato: `Impressão que quer causar: ${respostasResolvidas["impressao"]}`, categoria: "preferencia" })
+    }
+    if (respostasResolvidas["rejeicao"] && respostasResolvidas["rejeicao"] !== "Nada específico") {
+      fatos.push({ fato: `Não gosta de: ${respostasResolvidas["rejeicao"]}`, categoria: "rejeicao" })
+    }
+
+    if (fatos.length === 0) return
+
+    const existentes = await db.consultorMemoria.findMany({
+      where: { userId },
+      select: { id: true, fato: true, criadoEm: true },
+      orderBy: { criadoEm: "asc" },
+    })
+    const fatosExistentesNormalizados = new Set(existentes.map(e => normalizar(e.fato)))
+    const novos = fatos.filter(f => !fatosExistentesNormalizados.has(normalizar(f.fato)))
+    if (novos.length === 0) return
+
+    await db.consultorMemoria.createMany({
+      data: novos.map(f => ({ userId, fato: f.fato, categoria: f.categoria })),
+    })
+
+    const total = existentes.length + novos.length
+    if (total > MAX_FATOS_POR_USUARIO) {
+      const excedente = total - MAX_FATOS_POR_USUARIO
+      const maisAntigos = existentes.slice(0, excedente).map(e => e.id)
+      if (maisAntigos.length > 0) {
+        await db.consultorMemoria.deleteMany({ where: { id: { in: maisAntigos } } })
+      }
+    }
+  } catch (err) {
+    console.error("[consultorMemoria] Erro ao salvar respostas do quiz:", err)
+  }
+}
+
 /** Extrai fatos novos da troca mais recente via Gemini e salva no banco. Best-effort — nunca lança. */
 export async function extrairEArmazenarFatos(
   userId: string,
