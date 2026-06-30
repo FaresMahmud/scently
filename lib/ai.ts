@@ -406,6 +406,7 @@ const LABELS_QUIZ: Record<string, string> = {
   genero:               "Gênero",
   ocasiao:              "Ocasião",
   clima:                "Clima",
+  estacao:              "Estação",
   cena:                 "Cena",
   projecao:             "Projeção",
   ousadia:              "Ousadia",
@@ -413,6 +414,14 @@ const LABELS_QUIZ: Record<string, string> = {
   preco:                "Orçamento",
   rejeicao:             "Rejeições",
   impressao:            "Impressão desejada",
+}
+
+// Mapa de id da resposta de estação → chave no campo estacao dos perfumes enriquecidos
+const ESTACAO_KEY: Record<string, string> = {
+  "verao":        "verao",
+  "inverno":      "inverno",
+  "meia-estacao": "primavera",
+  "ano-todo":     "",
 }
 
 /**
@@ -565,7 +574,7 @@ async function montarContextoCatalogo(respostas: Record<string, string>): Promis
     }
   }
 
-  // ── CAMADA B — Cena + Ocasião → famílias (com shuffle) ───────────────────
+  // ── CAMADA B — Cena + Ocasião → famílias (com shuffle + ordenação estação) ──
   const textoBusca = `${cena} ${ocasiao}`.toLowerCase()
   const familiasBusca = new Set<string>()
   for (const { palavras, familias } of CENA_PARA_FAMILIAS) {
@@ -580,12 +589,26 @@ async function montarContextoCatalogo(respostas: Record<string, string>): Promis
   const climaFamilias = CLIMA_BONUS[climaTexto] ?? []
   climaFamilias.forEach(f => familiasBusca.add(f))
 
+  // Estação: prioriza perfumes com rating "Ótimo" na estação escolhida
+  const estacaoId  = respostas["estacao"] ?? ""
+  const estacaoKey = ESTACAO_KEY[estacaoId] as keyof NonNullable<PerfumeExpandido["estacao"]> | undefined
+
+  function ratingEstacao(p: PerfumeExpandido): number {
+    if (!estacaoKey || !p.estacao) return 1
+    const r = p.estacao[estacaoKey]
+    if (r === "Ótimo") return 0
+    if (r === "Bom")   return 1
+    return 2 // "Fraco" ou ausente
+  }
+
   if (familiasBusca.size > 0) {
     const fArr = [...familiasBusca]
-    // Expandido primeiro (fonte primária: 25)
+    // Expandido primeiro (fonte primária: 25) — shuffle, depois ordena por estação
     ;[...expandido].filter(p => fArr.some(f => familiaMatch(p.familia, f)) && generoExpandidoOk(p.genero) && precoOk(p.preco_brl))
-      .sort(() => Math.random() - 0.5).slice(0, 25).forEach(addExpandido)
-    // Fragella depois (complementa: 15)
+      .sort(() => Math.random() - 0.5)
+      .sort((a, b) => ratingEstacao(a) - ratingEstacao(b))
+      .slice(0, 25).forEach(addExpandido)
+    // Fragella depois (complementa: 15) — sem campo estacao, só shuffle
     ;[...catalogo].filter(p => fArr.some(f => familiaMatch(p.familia, f)) && generoFragellaOk(p.genero) && precoOk(p.preco))
       .sort(() => Math.random() - 0.5).slice(0, 15).forEach(addFragella)
   }
@@ -812,6 +835,7 @@ interface PerfumeExpandido {
   categoria:     "contratipo" | "arabe" | "nacional" | "importado-designer" | "nicho"
   disponivel:    boolean
   linkCompra:    string
+  estacao?:      { verao?: string; primavera?: string; outono?: string; inverno?: string }
 }
 
 let _expandido: PerfumeExpandido[] | null = null

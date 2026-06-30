@@ -1,7 +1,7 @@
 {
-  "ultimoProcessado": "Blue Moon EDT|La Rive",
-  "totalProcessados": 735,
-  "totalRestantes": 0,
+  "ultimoProcessado": "Phantom Intense|Paco Rabanne",
+  "totalProcessados": 745,
+  "totalRestantes": 490,
   "processados": [
     "Acqua di Gio|Giorgio Armani",
     "Acqua di Gio Profumo|Giorgio Armani",
@@ -737,7 +737,17 @@
     "Kirke Extrait de Parfum|Tiziana Terenzi",
     "5.21|Amyi",
     "Oud for Greatness|Initio Parfums Privés",
-    "Blue Moon EDT|La Rive"
+    "Blue Moon EDT|La Rive",
+    "Acqua di Gio Pour Homme|Giorgio Armani",
+    "Acqua di Gio Parfum|Giorgio Armani",
+    "Armani Code EDT|Giorgio Armani",
+    "1 Million Royal|Paco Rabanne",
+    "Invictus Platinum|Paco Rabanne",
+    "Invictus Victory Elixir|Paco Rabanne",
+    "Lady Million Lucky|Paco Rabanne",
+    "Lady Million Fabulous|Paco Rabanne",
+    "Phantom Parfum|Paco Rabanne",
+    "Phantom Intense|Paco Rabanne"
   ],
   "falhas": [
     {

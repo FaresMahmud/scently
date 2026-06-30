@@ -76,6 +76,16 @@ export const FREE_QUIZ_QUESTIONS: PerguntaQuiz[] = [
     ],
   },
   {
+    id: "estacao",
+    pergunta: "Pra qual época do ano?",
+    opcoes: [
+      { id: "verao",        texto: "Verão, dias quentes" },
+      { id: "inverno",      texto: "Inverno, dias frios" },
+      { id: "meia-estacao", texto: "Primavera ou outono" },
+      { id: "ano-todo",     texto: "Quero usar o ano todo" },
+    ],
+  },
+  {
     id: "cena",
     pergunta: "Qual dessas cenas combina mais com você?",
     opcoes: [
@@ -122,7 +132,7 @@ export const FREE_QUIZ_QUESTIONS: PerguntaQuiz[] = [
   },
 ]
 
-// ── Quiz premium (Nozze+) — 8 perguntas (as 6 do free + 2 exclusivas) ────────
+// ── Quiz premium (Nozze+) — 10 perguntas (as 8 do free + 2 exclusivas) ───────
 
 export const PREMIUM_QUIZ_QUESTIONS: PerguntaQuiz[] = [
   ...FREE_QUIZ_QUESTIONS,
