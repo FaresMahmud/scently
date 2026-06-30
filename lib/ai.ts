@@ -867,9 +867,7 @@ function gerarFallback(respostas: Record<string, unknown>): RecomendacaoIA {
           marca: compativel.marca,
           concentracao: compativel.tipo,
           descricao: `${compativel.familia}. Inspirado em ${compativel.inspiradoEm} da ${compativel.marcaOriginal}.`,
-          notas: Array.isArray(compativel.notas)
-            ? compativel.notas.slice(0, 4)
-            : [...(compativel.notas?.topo ?? []), ...(compativel.notas?.coracao ?? []), ...(compativel.notas?.fundo ?? [])].slice(0, 4),
+          notas: compativel.notas.slice(0, 4),
         },
         conselho: clima === 'frio'
           ? 'Aplique no pulso e pescoço. O frio potencializa a fixação.'
