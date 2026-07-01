@@ -24,6 +24,7 @@ interface ContratipoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
   familia: string; notas: string[]; preco_brl: number
   inspiradoEm: string; marcaOriginal: string; categoria: string
+  imagemTransparente?: string; imagem?: string; imagemFallbacks?: string[]
 }
 
 interface ExpandidoEntry {

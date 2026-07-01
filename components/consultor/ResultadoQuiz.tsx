@@ -87,14 +87,42 @@ function BadgeConcentracao({ texto }: { texto: string }) {
 function BotaoOndeComprar({ nome, marca }: { nome: string; marca: string }) {
   const links = getAffiliateLinks(nome, marca)
   const link = links[0]
-  if (!link) return null
 
+  if (link) {
+    return (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => track("quiz_result_click", { nome, marca })}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          minHeight: "44px",
+          padding: "0 21px",
+          fontFamily: "var(--fonte-corpo)",
+          fontSize: "0.875rem",
+          fontWeight: 500,
+          letterSpacing: "0.04em",
+          textDecoration: "none",
+          borderRadius: "var(--raio-borda)",
+          backgroundColor: "var(--cor-destaque)",
+          color: "#fff",
+          transition: "background-color 0.15s",
+        }}
+      >
+        Onde comprar →
+      </a>
+    )
+  }
+
+  const query = encodeURIComponent(`${nome} ${marca} perfume comprar`)
   return (
     <a
-      href={link.url}
+      href={`https://www.google.com/search?q=${query}`}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => track("quiz_result_click", { nome, marca })}
+      onClick={() => track("quiz_result_click", { nome, marca, fallback: true })}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -102,16 +130,17 @@ function BotaoOndeComprar({ nome, marca }: { nome: string; marca: string }) {
         padding: "0 21px",
         fontFamily: "var(--fonte-corpo)",
         fontSize: "0.875rem",
-        fontWeight: 500,
+        fontWeight: 400,
         letterSpacing: "0.04em",
         textDecoration: "none",
         borderRadius: "var(--raio-borda)",
-        backgroundColor: "var(--cor-destaque)",
-        color: "#fff",
-        transition: "background-color 0.15s",
+        backgroundColor: "transparent",
+        color: "var(--cor-texto)",
+        border: "1px solid var(--cor-borda)",
+        transition: "border-color 0.15s, color 0.15s",
       }}
     >
-      Onde comprar →
+      Buscar online →
     </a>
   )
 }

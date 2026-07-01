@@ -11,7 +11,7 @@ import QuizConsultor from "@/components/consultor/QuizConsultor"
 
 export const metadata: Metadata = {
   title: "Consultor",
-  description: `Descubra seu perfume ideal com ${siteMeta.nome}. Consultoria personalizada em 4 perguntas.`,
+  description: `Descubra seu perfume ideal com ${siteMeta.nome}. Responda algumas perguntas e descubra o perfume ideal para você.`,
 }
 
 // Página do consultor — o QuizConsultor é um Client Component com toda a interatividade

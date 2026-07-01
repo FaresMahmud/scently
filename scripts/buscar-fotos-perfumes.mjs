@@ -46,13 +46,34 @@ function salvarCheckpoint(processados, falhas, ultimo, total, restantes) {
   }, null, 2))
 }
 
-// ── Verificar URL de imagem (HEAD request) ───────────────────────────────────
+// ── Verificar URL de imagem ───────────────────────────────────────────────────
+const DOMINIOS_CONFIAVEIS = new Set([
+  "fragrantica.com", "fimgs.net", "sephora.com.br", "sfrfrancaise.com",
+  "cdn.shopify.com", "media.douglas.de", "i.pinimg.com",
+  "perfumeboss.com.br", "epocacosmeticos.com.br", "belezanaweb.com.br",
+])
+const EXT_IMAGEM = /\.(jpg|jpeg|png|webp)(\?.*)?$/i
+
+function dominioConfiavel(url) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, "")
+    return [...DOMINIOS_CONFIAVEIS].some(d => host === d || host.endsWith("." + d))
+  } catch { return false }
+}
+
 function verificarUrl(url) {
   return new Promise((resolve) => {
     if (!url || !url.startsWith("http")) { resolve(false); return }
+    // Domínio confiável + extensão de imagem → aceita sem verificar
+    if (dominioConfiavel(url) && EXT_IMAGEM.test(url)) { resolve(true); return }
+    // Outros domínios → GET com timeout 5s
     try {
       const mod = url.startsWith("https") ? https : http
-      const req = mod.request(url, { method: "HEAD", timeout: 8000, headers: { "User-Agent": "Mozilla/5.0" } }, (res) => {
+      const req = mod.request(url, {
+        method: "GET", timeout: 5000,
+        headers: { "User-Agent": "Mozilla/5.0", "Referer": "" },
+      }, (res) => {
+        res.destroy() // descarta o body
         const ct = res.headers["content-type"] ?? ""
         resolve(res.statusCode === 200 && ct.startsWith("image/"))
       })

@@ -1,0 +1,9 @@
+[Enrich] 1233 já processados. 2 perfumes na fila.
+[Enrich] ✓ 1/2 — Amour|In The Box (4813ms)
+
+[Enrich] Concluído! 1 enriquecidos, 4 falhas.
+[Enrich] Falhas:
+  - Blue Moon EDT|La Rive: JSON inválido ou incompleto na resposta (tentativa 3): Infelizmente, não foi possível encontrar informações específicas sobre um perfume "Blue Moon EDT" masculino da marca La Rive. A maioria das informações encontradas se refere ao "La Rive Moon Eau de Pa
+  - Amour|In The Box: JSON inválido ou incompleto na resposta (tentativa 3): A marca In The Box possui um perfume feminino chamado "Amour", que é um contratipo. No entanto, é importante notar que há várias fragrâncias com o nome "Amour" de outras marcas, e a In The Box também 
+  - Viegas Vida|Maison Viegas: JSON inválido ou incompleto na resposta (tentativa 3): Infelizmente, não foi possível encontrar informações específicas e completas sobre o perfume "Viegas Vida" da marca "Maison Viegas" (EDP, Feminino) que incluam a pirâmide olfativa detalhada (notas de 
+  - Viegas Vida|Maison Viegas: JSON inválido ou incompleto na resposta (tentativa 3): Não foram encontradas informações específicas sobre o perfume "Viegas Vida" da marca "Maison Viegas". As buscas retornaram resultados sobre outros perfumes da Maison Viegas, como "Heaven", "Gin Tonic"

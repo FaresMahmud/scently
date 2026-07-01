@@ -29,7 +29,7 @@ interface ContratipoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
   familia: string; notas: string[]; preco_brl: number
   inspiradoEm: string; marcaOriginal: string; categoria: string
-  disponivel?: boolean
+  disponivel?: boolean; imagemTransparente?: string; imagem?: string; imagemFallbacks?: string[]
 }
 
 interface NotasExpandido { topo?: string[]; coracao?: string[]; fundo?: string[] }
@@ -38,7 +38,7 @@ interface ExpandidoEntry {
   id: string; nome: string; marca: string; tipo: string; genero: string
   familia: string; notas: string[] | NotasExpandido; preco_brl: number
   categoria: string; inspiradoEm?: string; marcaOriginal?: string
-  disponivel?: boolean
+  disponivel?: boolean; imagemTransparente?: string; imagem?: string; imagemFallbacks?: string[]
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 {
-  "ultimoProcessado": "Bleu de Chanel EDT|Chanel",
-  "totalProcessados": 1233,
-  "totalRestantes": 2,
+  "ultimoProcessado": "Viegas Vida|Maison Viegas",
+  "totalProcessados": 1234,
+  "totalRestantes": 1,
   "processados": [
     "Acqua di Gio|Giorgio Armani",
     "Acqua di Gio Profumo|Giorgio Armani",
@@ -1235,7 +1235,8 @@
     "Sauvage EDT|Dior",
     "Fahrenheit EDT|Dior",
     "Bleu de Chanel EDP|Chanel",
-    "Bleu de Chanel EDT|Chanel"
+    "Bleu de Chanel EDT|Chanel",
+    "Amour|In The Box"
   ],
   "falhas": [
     {
@@ -1252,6 +1253,11 @@
       "chave": "Viegas Vida|Maison Viegas",
       "erro": "JSON inválido ou incompleto na resposta (tentativa 3): Infelizmente, não foi possível encontrar informações específicas e completas sobre o perfume \"Viegas Vida\" da marca \"Maison Viegas\" (EDP, Feminino) que incluam a pirâmide olfativa detalhada (notas de ",
       "timestamp": "2026-06-30T20:27:39.143Z"
+    },
+    {
+      "chave": "Viegas Vida|Maison Viegas",
+      "erro": "JSON inválido ou incompleto na resposta (tentativa 3): Não foram encontradas informações específicas sobre o perfume \"Viegas Vida\" da marca \"Maison Viegas\". As buscas retornaram resultados sobre outros perfumes da Maison Viegas, como \"Heaven\", \"Gin Tonic\"",
+      "timestamp": "2026-06-30T20:45:52.206Z"
     }
   ]
 }
