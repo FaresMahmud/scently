@@ -9,6 +9,23 @@ function normalizeId(str) {
     .replace(/[^a-z0-9]/g, "");
 }
 
+function cleanNameForMatch(str) {
+  if (!str) return "";
+  return normalizeId(str)
+    .replace(/edp/g, "")
+    .replace(/edt/g, "")
+    .replace(/edc/g, "")
+    .replace(/extrait/g, "")
+    .replace(/parfum/g, "")
+    .replace(/cologne/g, "")
+    .replace(/intense/g, "")
+    .replace(/elixir/g, "")
+    .replace(/extreme/g, "")
+    .replace(/pourhomme/g, "")
+    .replace(/pourfemme/g, "")
+    .trim();
+}
+
 const EXPANDIDO_PATH = 'data/perfumes-expandido.json';
 const FRAGELLA_PATH = 'data/catalogo-fragella.json';
 
@@ -25,41 +42,33 @@ for (const p of expandido) {
 
   if (p.categoria === 'contratipo' && p.inspiradoEm) {
     // 1. Contratipos: busca pela inspiração original
-    const q = normalizeId(p.inspiradoEm);
+    const qRaw = normalizeId(p.inspiradoEm);
+    const qClean = cleanNameForMatch(p.inspiradoEm);
     const m = normalizeId(p.marcaOriginal || "");
 
-    // Pass 1: exact name + brand start match
+    // Pass 1: exact/start match
     matched = fragella.find(f => {
       const fn = normalizeId(f.nome);
       const fm = normalizeId(f.marca);
       const brandOk = fm === m || fm.includes(m) || m.includes(fm);
       if (!brandOk) return false;
-      return fn === q || fn.startsWith(q) || q.startsWith(fn);
+      return fn === qRaw || fn.startsWith(qRaw) || qRaw.startsWith(fn);
     });
 
-    // Pass 2: name-only exact or prefix match
+    // Pass 2: prefix/substring match on clean name
     if (!matched) {
       matched = fragella.find(f => {
-        const fn = normalizeId(f.nome);
-        return fn === q || fn.startsWith(q + "-") || q.startsWith(fn + "-");
-      });
-    }
-
-    // Pass 3: name substring with brand filter
-    if (!matched) {
-      matched = fragella.find(f => {
-        const fn = normalizeId(f.nome);
-        if (!fn.includes(q) && !q.includes(fn)) return false;
-        if (m) {
-          const fm = normalizeId(f.marca);
-          return fm.includes(m) || m.includes(fm);
-        }
-        return true;
+        const fn = cleanNameForMatch(f.nome);
+        const fm = normalizeId(f.marca);
+        const brandOk = fm === m || fm.includes(m) || m.includes(fm);
+        if (!brandOk) return false;
+        return fn.includes(qClean) || qClean.includes(fn);
       });
     }
   } else {
     // 2. Outras categorias: busca por nome + marca direta
-    const q = normalizeId(p.nome);
+    const qRaw = normalizeId(p.nome);
+    const qClean = cleanNameForMatch(p.nome);
     const m = normalizeId(p.marca);
 
     // Pass 1: exact name + brand match
@@ -68,17 +77,17 @@ for (const p of expandido) {
       const fm = normalizeId(f.marca);
       const brandOk = fm === m || fm.includes(m) || m.includes(fm);
       if (!brandOk) return false;
-      return fn === q || fn.startsWith(q) || q.startsWith(fn);
+      return fn === qRaw || fn.startsWith(qRaw) || qRaw.startsWith(fn);
     });
 
-    // Pass 2: name-only exact or prefix match + brand check
+    // Pass 2: clean name substring match with brand
     if (!matched) {
       matched = fragella.find(f => {
-        const fn = normalizeId(f.nome);
+        const fn = cleanNameForMatch(f.nome);
         const fm = normalizeId(f.marca);
-        const brandOk = fm.includes(m) || m.includes(fm);
+        const brandOk = fm === m || fm.includes(m) || m.includes(fm);
         if (!brandOk) return false;
-        return fn === q || fn.startsWith(q + "-") || q.startsWith(fn + "-");
+        return fn.includes(qClean) || qClean.includes(fn);
       });
     }
   }
