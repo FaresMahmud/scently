@@ -335,8 +335,6 @@ function buscarSimilares(
   perfume: PerfumeFragella,
   extra: { categoria?: string; inspiradoEm?: string; marcaOriginal?: string }
 ): CardUnificado[] {
-  const candidates: CardUnificado[] = []
-
   const normalizarGenero = (g: string | undefined): any => {
     if (!g) return undefined
     const lower = g.toLowerCase()
@@ -344,6 +342,146 @@ function buscarSimilares(
     if (lower === "feminino" || lower === "women" || lower === "female") return "Feminino"
     if (lower === "unissex" || lower === "unisex") return "Unissex"
     return undefined
+  }
+
+  const safeNormalize = (str: any): string => {
+    if (typeof str !== "string") return ""
+    return normalizeId(str)
+  }
+
+  const calcularSimilaridadeRaw = (p2: any, p2Categoria: string, p2Fonte: string): number => {
+    if (p2.id === id) return -1
+
+    let score = 0
+
+    // Gênero correspondente
+    const g1 = perfume.genero?.toLowerCase()
+    const g2 = p2.genero?.toLowerCase()
+    if (g1 && g2 && g1 !== "unissex" && g2 !== "unissex" && g1 !== g2) {
+      return -1
+    }
+
+    // Família Olfativa
+    const f1 = safeNormalize(perfume.familia || "")
+    const f2 = safeNormalize(p2.familia || "")
+    if (f1 && f2) {
+      if (f1 === f2) score += 35
+      else {
+        const words1 = f1.split(/\s+/)
+        const words2 = f2.split(/\s+/)
+        let sharedWords = 0
+        for (const w of words1) {
+          if (w.length > 3 && words2.includes(w)) sharedWords++
+        }
+        score += sharedWords * 12
+      }
+    }
+
+    // Notas olfativas compartilhadas
+    const n1 = new Set([
+      ...(perfume.notasTopo || []).map(safeNormalize),
+      ...(perfume.notasCoracao || []).map(safeNormalize),
+      ...(perfume.notasFundo || []).map(safeNormalize)
+    ].filter(Boolean))
+
+    const p2NotasRaw = Array.isArray(p2.notas)
+      ? p2.notas
+      : [...(p2.notas?.topo ?? []), ...(p2.notas?.coracao ?? []), ...(p2.notas?.fundo ?? [])]
+
+    const n2 = [
+      ...(p2.notasTopo || []).map(safeNormalize),
+      ...(p2.notasCoracao || []).map(safeNormalize),
+      ...(p2.notasFundo || []).map(safeNormalize),
+      ...p2NotasRaw.map(safeNormalize)
+    ].filter(Boolean)
+
+    let matchedNotes = 0
+    for (const note of n2) {
+      if (n1.has(note)) matchedNotes++
+    }
+    if (n1.size > 0) {
+      score += (matchedNotes / n1.size) * 35
+    }
+
+    // Acordes compartilhados
+    const a1 = perfume.acordesPorcentagem ? Object.keys(perfume.acordesPorcentagem).map(safeNormalize) : []
+    const a2Raw = p2.acordesPorcentagem ? Object.keys(p2.acordesPorcentagem).map(safeNormalize) : []
+    const a2 = p2.acordes ? p2.acordes.map(safeNormalize) : a2Raw
+    if (a1.length > 0 && a2.length > 0) {
+      let matchedAccords = 0
+      for (const acc of a2) {
+        if (a1.includes(acc)) matchedAccords++
+      }
+      score += (matchedAccords / a1.length) * 30
+    }
+
+    // Inspiração direta (Dá um boost de +55 ou +85 pontos)
+    const eContratipo1 = extra.categoria === "contratipo" || !!extra.inspiradoEm
+    const nomeInsp1 = eContratipo1 ? extra.inspiradoEm : perfume.nome
+    const marcaInsp1 = eContratipo1 ? extra.marcaOriginal : perfume.marca
+
+    if (nomeInsp1) {
+      const qClean = cleanNameForMatch(nomeInsp1)
+      const mNorm = safeNormalize(marcaInsp1 || "")
+
+      // Caso A: p2 é clone de nomeInsp1
+      if (p2.inspiradoEm) {
+        const p2InspClean = cleanNameForMatch(p2.inspiradoEm)
+        const p2MarcaNorm = safeNormalize(p2.marcaOriginal || "")
+        const nomeOk = p2InspClean.includes(qClean) || qClean.includes(p2InspClean)
+        const marcaOk = !mNorm || p2MarcaNorm === mNorm || p2MarcaNorm.includes(mNorm) || mNorm.includes(p2MarcaNorm)
+        if (nomeOk && marcaOk) {
+          score += 55
+        }
+      }
+
+      // Caso B: perfume visualizado é clone e p2 é o original importado correspondente
+      if (eContratipo1 && p2Fonte === "fragella") {
+        const fClean = cleanNameForMatch(p2.nome)
+        const fMarcaNorm = safeNormalize(p2.marca)
+        const brandOk = fMarcaNorm === mNorm || fMarcaNorm.includes(mNorm) || mNorm.includes(fMarcaNorm)
+        const nameOk = fClean.includes(qClean) || qClean.includes(fClean)
+        if (brandOk && nameOk) {
+          score += 85
+        }
+      }
+    }
+
+    return score
+  }
+
+  const candidatesScored: Array<{ raw: any; categoria: string; fonte: string; score: number }> = []
+
+  for (const p of contratiposData as any[]) {
+    const score = calcularSimilaridadeRaw(p, p.categoria || "contratipo", "contratipo")
+    if (score > 0) candidatesScored.push({ raw: p, categoria: p.categoria || "contratipo", fonte: "contratipo", score })
+  }
+
+  for (const p of expandidoData as any[]) {
+    const score = calcularSimilaridadeRaw(p, p.categoria || "expandido", "expandido")
+    if (score > 0) candidatesScored.push({ raw: p, categoria: p.categoria || "expandido", fonte: "expandido", score })
+  }
+
+  for (const p of fragellaCached()) {
+    const score = calcularSimilaridadeRaw(p, "importado-designer", "fragella")
+    if (score > 0) candidatesScored.push({ raw: p, categoria: "importado-designer", fonte: "fragella", score })
+  }
+
+  candidatesScored.sort((a, b) => b.score - a.score)
+
+  let clonesCount = 0
+  const selected: Array<{ raw: any; categoria: string; fonte: string }> = []
+
+  for (const item of candidatesScored) {
+    const isClone = item.categoria === "contratipo" || !!item.raw.inspiradoEm
+
+    if (isClone) {
+      if (clonesCount >= 2) continue
+      clonesCount++
+    }
+
+    selected.push(item)
+    if (selected.length >= 6) break
   }
 
   const contratipoParaCard = (p: any): CardUnificado => ({
@@ -364,7 +502,7 @@ function buscarSimilares(
   })
 
   const expandidoParaCard = (p: any): CardUnificado => {
-    const notas: string[] = Array.isArray(p.notas)
+    const notas = Array.isArray(p.notas)
       ? p.notas
       : [...(p.notas?.topo ?? []), ...(p.notas?.coracao ?? []), ...(p.notas?.fundo ?? [])]
     return {
@@ -398,74 +536,11 @@ function buscarSimilares(
     fonte: "fragella",
   })
 
-  const cCards = (contratiposData as any[]).map(contratipoParaCard)
-  const eCards = (expandidoData as any[]).map(expandidoParaCard)
-  const fCards = fragellaCached().map(fragellaParaCard)
-
-  const eContratipo = extra.categoria === "contratipo" || !!extra.inspiradoEm
-  const nomeInsp = eContratipo ? extra.inspiradoEm : perfume.nome
-  const marcaInsp = eContratipo ? extra.marcaOriginal : perfume.marca
-
-  if (nomeInsp) {
-    const qClean = cleanNameForMatch(nomeInsp)
-    const mNorm = normalizeId(marcaInsp || "")
-
-    const matches = [...cCards, ...eCards].filter(c => {
-      if (c.id === id) return false
-      const phys = (expandidoData as any[]).find(x => x.id === c.id) || (contratiposData as any[]).find(x => x.id === c.id)
-      if (!phys || !phys.inspiradoEm) return false
-
-      const physClean = cleanNameForMatch(phys.inspiradoEm)
-      const physMarcaNorm = normalizeId(phys.marcaOriginal || "")
-
-      const nomeOk = physClean.includes(qClean) || qClean.includes(physClean)
-      const marcaOk = !mNorm || physMarcaNorm === mNorm || physMarcaNorm.includes(mNorm) || mNorm.includes(physMarcaNorm)
-
-      return nomeOk && marcaOk
-    })
-
-    candidates.push(...matches)
-
-    if (eContratipo) {
-      const original = fCards.find(f => {
-        if (f.id === id) return false
-        const fClean = cleanNameForMatch(f.nome)
-        const fMarcaNorm = normalizeId(f.marca)
-        const brandOk = fMarcaNorm === mNorm || fMarcaNorm.includes(mNorm) || mNorm.includes(fMarcaNorm)
-        if (!brandOk) return false
-        return fClean.includes(qClean) || qClean.includes(fClean)
-      })
-      if (original) {
-        candidates.unshift(original)
-      }
-    }
-  }
-
-  if (candidates.length < 4) {
-    const famNorm = normalizeId(perfume.familia || "")
-    const genNorm = normalizarGenero(perfume.genero)
-
-    const fallbacks = [...eCards, ...cCards, ...fCards]
-      .filter(x => {
-        if (x.id === id) return false
-        if (candidates.some(c => c.id === x.id)) return false
-
-        const famOk = x.familia && normalizeId(x.familia).includes(famNorm)
-        const genOk = !genNorm || x.generoNorm === "Unissex" || genNorm === "Unissex" || x.generoNorm === genNorm
-
-        return famOk && genOk
-      })
-      .sort((a, b) => {
-        const aVal = a.fonte === "expandido" || a.fonte === "contratipo" ? 2 : 1
-        const bVal = b.fonte === "expandido" || b.fonte === "contratipo" ? 2 : 1
-        return bVal - aVal
-      })
-      .slice(0, 6 - candidates.length)
-
-    candidates.push(...fallbacks)
-  }
-
-  return candidates.slice(0, 6)
+  return selected.map(item => {
+    if (item.fonte === "contratipo") return contratipoParaCard(item.raw)
+    if (item.fonte === "expandido") return expandidoParaCard(item.raw)
+    return fragellaParaCard(item.raw)
+  })
 }
 
 // ── Static params ─────────────────────────────────────────────────────────────
