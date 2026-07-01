@@ -81,6 +81,7 @@ interface CandidatoGemini {
   marca: string
   genero: "masculino" | "feminino" | "unissex"
   posicaoGemini: number
+  descricao?: string
 }
 
 interface CandidatoScorado extends CandidatoGemini {
@@ -117,7 +118,13 @@ Priorize perfumes importados de marcas reconhecidas (Dior, Chanel, YSL, Tom Ford
 
 Retorne APENAS um JSON válido, sem markdown, sem texto antes ou depois:
 [
-  {"nome": "nome do perfume", "marca": "nome da marca", "genero": "masculino|feminino|unissex", "posicaoGemini": 1},
+  {
+    "nome": "nome do perfume",
+    "marca": "nome da marca",
+    "genero": "masculino|feminino|unissex",
+    "posicaoGemini": 1,
+    "descricao": "uma descrição sensorial curta e marcante em português (máximo 120 caracteres) sobre o perfume, focando no seu aroma e proposta (ex: 'Baunilha licorosa com lavanda fresca, exala extrema elegância')"
+  },
   ...
 ]
 
@@ -126,7 +133,8 @@ Regras:
 - Total: exatamente 20 itens (10 masculinos + 10 femininos)
 - nome: sem a marca, apenas o nome do produto
 - marca: apenas o nome da marca
-- genero: "masculino", "feminino" ou "unissex"`
+- genero: "masculino", "feminino" ou "unissex"
+- descricao: crie frases curtas e cativantes (máximo 120 caracteres), evite repetir o nome ou a marca do perfume.`
 
   const result = await model.generateContent(prompt)
   const texto  = result.response.text().trim()
@@ -158,6 +166,7 @@ Regras:
                        ? String(item.genero)
                        : "unissex") as CandidatoGemini["genero"],
       posicaoGemini: Number(item.posicaoGemini),
+      descricao:     item.descricao ? String(item.descricao).trim().slice(0, 200) : undefined,
     }))
 
   return candidatos
@@ -611,6 +620,7 @@ export async function GET(request: Request) {
           ativo:         true,
           pinned:        false,
           scrapedAt:     agora,
+          descricao:     c.descricao,
         },
         update: {
           tipo:          tipoDaMarca(c.marca),
@@ -622,6 +632,7 @@ export async function GET(request: Request) {
           ativo:         true,
           pinned:        false,
           scrapedAt:     agora,
+          descricao:     c.descricao,
         },
       })
     }
