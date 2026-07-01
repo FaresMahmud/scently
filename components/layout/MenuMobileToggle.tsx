@@ -77,7 +77,7 @@ export default function MenuMobileToggle() {
               bottom: 0,
               right: 0,
               width: "min(320px, 80vw)",
-              backgroundColor: "var(--cor-base)",
+              backgroundColor: "#F5F2ED",
               zIndex: 9999,
               display: "flex",
               flexDirection: "column",
