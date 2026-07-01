@@ -5,9 +5,6 @@
    DEPENDE DE: nada (é o arquivo base de estilo)
    ============================================ */
 
-/* Importação das fontes do Google */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
-
 /* Tailwind v4 — sintaxe correta para esta versão */
 @import "tailwindcss";
 
@@ -29,8 +26,8 @@
   --cor-destaque-hover: #B36340; /* terracota mais escuro — hover dos botões */
 
   /* Fontes */
-  --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
-  --fonte-corpo: 'DM Sans', system-ui, sans-serif;
+  --fonte-titulo: var(--font-cormorant), Georgia, serif;
+  --fonte-corpo: var(--font-dm-sans), system-ui, sans-serif;
 
   /* Espaçamentos padrão */
   --espaco-secao: 6rem;        /* distância entre seções grandes */

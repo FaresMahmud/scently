@@ -11,6 +11,23 @@ import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import BannerCookies from "@/components/ui/BannerCookies"
 import "@/styles/globals.css"
+import { Cormorant_Garamond, DM_Sans } from "next/font/google"
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+})
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-dm-sans",
+  display: "swap",
+})
 
 // Metadados padrão para SEO
 export const metadata: Metadata = {
@@ -29,7 +46,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className="h-full">
+    <html lang="pt-BR" className={`h-full ${cormorant.variable} ${dmSans.variable}`}>
       <head>
         {/* Script para evitar "flicker" de tema claro/escuro no Next.js (SSR) */}
         <script
