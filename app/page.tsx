@@ -74,6 +74,9 @@ export default function PaginaInicial() {
         notas: Array.isArray(p.notas)
           ? p.notas
           : [...(p.notas?.topo ?? []), ...(p.notas?.coracao ?? []), ...(p.notas?.fundo ?? [])],
+        imagemTransparente: p.imagemTransparente || undefined,
+        imagem:             p.imagem || undefined,
+        imagemFallbacks:    p.imagemFallbacks || undefined,
       }
     })
     .filter(Boolean) as any[]

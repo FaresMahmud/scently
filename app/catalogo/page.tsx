@@ -66,6 +66,9 @@ function contratipoParaCard(p: ContratipoEntry): CardUnificado {
     categoria:      p.categoria,
     generoNorm:     normalizarGenero(p.genero),
     fonte:          "contratipo",
+    imagemTransparente: p.imagemTransparente || undefined,
+    imagem:             p.imagem || undefined,
+    imagemFallbacks:    p.imagemFallbacks || undefined,
   }
 }
 
@@ -88,6 +91,9 @@ function expandidoParaCard(p: ExpandidoEntry): CardUnificado {
     categoria:      p.categoria,
     generoNorm:     normalizarGenero(p.genero),
     fonte:          "expandido",
+    imagemTransparente: p.imagemTransparente || undefined,
+    imagem:             p.imagem || undefined,
+    imagemFallbacks:    p.imagemFallbacks || undefined,
   }
 }
 
