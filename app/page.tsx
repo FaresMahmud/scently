@@ -10,7 +10,7 @@ import Link from "next/link"
 import { siteMeta, textosHome } from "@/config/site"
 import CardPerfume from "@/components/perfume/CardPerfume"
 import EmAltaAgora from "@/components/home/EmAltaAgora"
-import { perfumesPopulares } from "@/lib/catalogoFragella"
+import expandidoData from "@/data/perfumes-expandido.json"
 import { safeJsonLd } from "@/lib/jsonld"
 
 export const metadata: Metadata = {
@@ -50,7 +50,33 @@ const passos = [
 ]
 
 export default function PaginaInicial() {
-  const perfumes = perfumesPopulares(8)
+  const idsDestaques = [
+    "gypsy-water-byredo",
+    "santal-33-le-labo",
+    "parfums-de-marly-layton",
+    "maison-francis-kurkdjian-grand-soir",
+    "terre-dhermes-hermes",
+    "noir-extreme-parfum-tom-ford",
+    "lhomme-ideal-edp-guerlain",
+    "kharisma-nuancielo"
+  ]
+
+  const perfumes = idsDestaques
+    .map(id => {
+      const p = (expandidoData as any[]).find(x => x.id === id)
+      if (!p) return null
+      return {
+        id: p.id,
+        nome: p.nome,
+        marca: p.marca,
+        concentracao: p.tipo,
+        familia: p.familia,
+        notas: Array.isArray(p.notas)
+          ? p.notas
+          : [...(p.notas?.topo ?? []), ...(p.notas?.coracao ?? []), ...(p.notas?.fundo ?? [])],
+      }
+    })
+    .filter(Boolean) as any[]
 
   return (
     <main>
