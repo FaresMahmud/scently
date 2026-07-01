@@ -1,8 +1,9 @@
-// ============================================
 // ARQUIVO: app/page.tsx
 // O QUE FAZ: página inicial — hero, em alta, como funciona, CTA e catálogo em destaque
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout ou o conteúdo da home
 // DEPENDE DE: config/site.ts, lib/mockData.ts, lib/fragella.ts, components/perfume/CardPerfume.tsx, components/home/EmAltaAgora.tsx
+// TODO ROADMAP:
+//   - Fase 1.3: Adicionar animação de pulsação/linha laser contínua no mockup do scanner do celular na seção explicativa.
 // ============================================
 
 import type { Metadata } from "next"

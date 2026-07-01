@@ -1,8 +1,10 @@
-// ============================================
 // ARQUIVO: components/catalogo/CatalogClient.tsx
 // O QUE FAZ: catálogo interativo com busca, filtros, ordenação e scroll infinito
 // QUANDO MANDAR PRA IA: quando quiser mudar filtros, layout ou comportamento do catálogo
 // DEPENDE DE: components/perfume/CardPerfume.tsx
+// TODO ROADMAP:
+//   - Fase 1.2: Implementar transição de layout suave de grid usando animações CSS ao filtrar perfumes.
+//   - Fase 2.1: Integrar gatilho visual para a Prateleira de Perfumes ("Já tenho" / "Quero ter") salvando no localStorage.
 // ============================================
 
 "use client"

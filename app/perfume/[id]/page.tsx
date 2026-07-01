@@ -1,9 +1,12 @@
-// ============================================
 // ARQUIVO: app/perfume/[id]/page.tsx
 // O QUE FAZ: página individual de perfume
 //   Fontes: contratipos.json → expandido.json → catalogo-fragella.json (11k)
 // QUANDO MANDAR PRA IA: quando quiser mudar o layout da página de perfume
 // DEPENDE DE: data/*.json, lib/catalogoFragella, components/perfume/
+// TODO ROADMAP:
+//   - Fase 1.1: Criar Skeleton Shimmer Loader dourado para o carregamento assíncrono do detalhe do perfume.
+//   - Fase 3.1: Exibir carrossel de "Encontre Similares" cruzando com contratipos/nacionais que inspiram esta fragrância.
+//   - Fase 3.3: Criar componente visual interativo da Pirâmide Olfativa (Topo, Coração e Fundo).
 // ============================================
 
 import type { Metadata } from "next"
