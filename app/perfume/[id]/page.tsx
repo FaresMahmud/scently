@@ -30,6 +30,8 @@ import type { Acorde } from "@/lib/types"
 import { getEditorialContent } from "@/lib/perfumeEditorial"
 import PerfumeViewTracker from "@/components/perfume/PerfumeViewTracker"
 import { safeJsonLd } from "@/lib/jsonld"
+import CardPerfume from "@/components/perfume/CardPerfume"
+import type { CardUnificado } from "@/components/catalogo/CatalogClient"
 
 export const dynamicParams = true
 export const revalidate = 86400
@@ -311,6 +313,161 @@ async function resolverPerfume(id: string): Promise<ResolverResult | null> {
   return null
 }
 
+function cleanNameForMatch(str: string): string {
+  if (!str) return ""
+  return normalizeId(str)
+    .replace(/edp/g, "")
+    .replace(/edt/g, "")
+    .replace(/edc/g, "")
+    .replace(/extrait/g, "")
+    .replace(/parfum/g, "")
+    .replace(/cologne/g, "")
+    .replace(/intense/g, "")
+    .replace(/elixir/g, "")
+    .replace(/extreme/g, "")
+    .replace(/pourhomme/g, "")
+    .replace(/pourfemme/g, "")
+    .trim()
+}
+
+function buscarSimilares(
+  id: string,
+  perfume: PerfumeFragella,
+  extra: { categoria?: string; inspiradoEm?: string; marcaOriginal?: string }
+): CardUnificado[] {
+  const candidates: CardUnificado[] = []
+
+  const normalizarGenero = (g: string | undefined): any => {
+    if (!g) return undefined
+    const lower = g.toLowerCase()
+    if (lower === "masculino" || lower === "men" || lower === "male") return "Masculino"
+    if (lower === "feminino" || lower === "women" || lower === "female") return "Feminino"
+    if (lower === "unissex" || lower === "unisex") return "Unissex"
+    return undefined
+  }
+
+  const contratipoParaCard = (p: any): CardUnificado => ({
+    id: p.id,
+    nome: p.nome,
+    marca: p.marca,
+    concentracao: p.tipo,
+    familia: p.familia,
+    notas: p.notas,
+    preco_brl: p.preco_brl,
+    inspiracaoInfo: `inspirado em ${p.inspiradoEm} da ${p.marcaOriginal}`,
+    categoria: p.categoria,
+    generoNorm: normalizarGenero(p.genero),
+    fonte: "contratipo",
+    imagemTransparente: p.imagemTransparente || undefined,
+    imagem: p.imagem || undefined,
+    imagemFallbacks: p.imagemFallbacks || undefined,
+  })
+
+  const expandidoParaCard = (p: any): CardUnificado => {
+    const notas: string[] = Array.isArray(p.notas)
+      ? p.notas
+      : [...(p.notas?.topo ?? []), ...(p.notas?.coracao ?? []), ...(p.notas?.fundo ?? [])]
+    return {
+      id: p.id,
+      nome: p.nome,
+      marca: p.marca,
+      concentracao: p.tipo,
+      familia: p.familia,
+      notas,
+      preco_brl: p.preco_brl,
+      inspiracaoInfo: p.inspiradoEm ? `inspirado em ${p.inspiradoEm}${p.marcaOriginal ? ` da ${p.marcaOriginal}` : ""}` : undefined,
+      categoria: p.categoria,
+      generoNorm: normalizarGenero(p.genero),
+      fonte: "expandido",
+      imagemTransparente: p.imagemTransparente || undefined,
+      imagem: p.imagem || undefined,
+      imagemFallbacks: p.imagemFallbacks || undefined,
+    }
+  }
+
+  const fragellaParaCard = (p: PerfumeFragella): CardUnificado => ({
+    id: p.id,
+    nome: p.nome,
+    marca: p.marca,
+    concentracao: p.concentracao || undefined,
+    familia: p.familia || undefined,
+    imagemTransparente: p.imagemTransparente || undefined,
+    rating: p.rating ?? undefined,
+    categoria: "importado-designer",
+    generoNorm: normalizarGenero(p.genero),
+    fonte: "fragella",
+  })
+
+  const cCards = (contratiposData as any[]).map(contratipoParaCard)
+  const eCards = (expandidoData as any[]).map(expandidoParaCard)
+  const fCards = fragellaCached().map(fragellaParaCard)
+
+  const eContratipo = extra.categoria === "contratipo" || !!extra.inspiradoEm
+  const nomeInsp = eContratipo ? extra.inspiradoEm : perfume.nome
+  const marcaInsp = eContratipo ? extra.marcaOriginal : perfume.marca
+
+  if (nomeInsp) {
+    const qClean = cleanNameForMatch(nomeInsp)
+    const mNorm = normalizeId(marcaInsp || "")
+
+    const matches = [...cCards, ...eCards].filter(c => {
+      if (c.id === id) return false
+      const phys = (expandidoData as any[]).find(x => x.id === c.id) || (contratiposData as any[]).find(x => x.id === c.id)
+      if (!phys || !phys.inspiradoEm) return false
+
+      const physClean = cleanNameForMatch(phys.inspiradoEm)
+      const physMarcaNorm = normalizeId(phys.marcaOriginal || "")
+
+      const nomeOk = physClean.includes(qClean) || qClean.includes(physClean)
+      const marcaOk = !mNorm || physMarcaNorm === mNorm || physMarcaNorm.includes(mNorm) || mNorm.includes(physMarcaNorm)
+
+      return nomeOk && marcaOk
+    })
+
+    candidates.push(...matches)
+
+    if (eContratipo) {
+      const original = fCards.find(f => {
+        if (f.id === id) return false
+        const fClean = cleanNameForMatch(f.nome)
+        const fMarcaNorm = normalizeId(f.marca)
+        const brandOk = fMarcaNorm === mNorm || fMarcaNorm.includes(mNorm) || mNorm.includes(fMarcaNorm)
+        if (!brandOk) return false
+        return fClean.includes(qClean) || qClean.includes(fClean)
+      })
+      if (original) {
+        candidates.unshift(original)
+      }
+    }
+  }
+
+  if (candidates.length < 4) {
+    const famNorm = normalizeId(perfume.familia || "")
+    const genNorm = normalizarGenero(perfume.genero)
+
+    const fallbacks = [...eCards, ...cCards, ...fCards]
+      .filter(x => {
+        if (x.id === id) return false
+        if (candidates.some(c => c.id === x.id)) return false
+
+        const famOk = x.familia && normalizeId(x.familia).includes(famNorm)
+        const genOk = !genNorm || x.generoNorm === "Unissex" || genNorm === "Unissex" || x.generoNorm === genNorm
+
+        return famOk && genOk
+      })
+      .sort((a, b) => {
+        const aVal = a.fonte === "expandido" || a.fonte === "contratipo" ? 2 : 1
+        const bVal = b.fonte === "expandido" || b.fonte === "contratipo" ? 2 : 1
+        return bVal - aVal
+      })
+      .slice(0, 6 - candidates.length)
+
+    candidates.push(...fallbacks)
+  }
+
+  return candidates.slice(0, 6)
+}
+
 // ── Static params ─────────────────────────────────────────────────────────────
 // Pre-gera contratipos + expandido. Fragella (11k) é gerado on-demand via ISR.
 
@@ -379,6 +536,8 @@ export default async function PaginaPerfume(
   const result = await resolverPerfume(id)
   if (!result) notFound()
   const { perfume, fonte, extra } = result
+
+  const similares = buscarSimilares(id, perfume, extra)
 
   // Rankings de estação e ocasião
   const notasAll = [
@@ -774,6 +933,24 @@ export default async function PaginaPerfume(
 
           </div>
         </div>
+
+        {/* ── Encontre Similares ────────────────────────── */}
+        {similares.length > 0 && (
+          <section style={{ marginTop: "55px", paddingTop: "55px", borderTop: "1px solid var(--cor-borda)" }}>
+            <h3 style={{ fontFamily: "var(--fonte-titulo)", fontWeight: 300, fontSize: "clamp(21px, 4vw, 28px)", color: "var(--cor-texto)", marginBottom: "8px" }}>
+              Perfumes Similares & Custo-benefício
+            </h3>
+            <p style={{ fontFamily: "var(--fonte-corpo)", fontSize: "14px", color: "var(--cor-texto-suave)", marginBottom: "34px" }}>
+              Fragrâncias com o mesmo perfil olfativo, inspiração ou alternativas acessíveis.
+            </p>
+            <div className="perfumes-grid">
+              {similares.map((p) => (
+                <CardPerfume key={p.id} perfume={p} />
+              ))}
+            </div>
+          </section>
+        )}
+
       </div>
     </main>
   )
